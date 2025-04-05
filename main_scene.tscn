@@ -35,7 +35,7 @@ mesh = SubResource("TorusMesh_o3jxj")
 transform = Transform3D(-0.999916, 0, -0.0129674, 0, 1, 0, 0.0129674, 0, -0.999916, -4.07385, 1.90701, -7.092)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.397036, 0.917803, 0, -0.917803, -0.397036, 0.377669, 5.22115, -2.09301)
+transform = Transform3D(0.877557, -0.440062, -0.190368, 0, -0.397036, 0.917803, -0.479473, -0.805424, -0.348421, -6.46882, 5.22313, -2.09301)
 
 [node name="Background" type="MeshInstance3D" parent="."]
 transform = Transform3D(37.6405, 0, 0, 0, -136.684, -8.74229e-08, 0, 1.19493e-05, -1, -15.2935, -3.53758, 0)
