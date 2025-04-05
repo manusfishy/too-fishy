@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://durrtmu3i450r"]
 
 [ext_resource type="Script" uid="uid://b4nuxfxo3kvlq" path="res://scripts/player.gd" id="1_3vyb7"]
-[ext_resource type="Script" path="res://scripts/hook.gd" id="2_g2els"]
+[ext_resource type="Script" uid="uid://i04cakuwfc3r" path="res://scripts/hook.gd" id="2_g2els"]
 [ext_resource type="PackedScene" uid="uid://cdvfasjj4km5l" path="res://FishSub.fbx" id="2_qhqgy"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7cn6r"]

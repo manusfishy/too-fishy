@@ -1,6 +1,7 @@
 extends Node
-enum Stage {SURFACE, DEEP, DEEPER, SUPERDEEP, HOT, LAVA, VOID}
 
+#DEFINITIONS
+enum Stage {SURFACE, DEEP, DEEPER, SUPERDEEP, HOT, LAVA, VOID}
 var depthStageMap = {
 	0: Stage.SURFACE,
 	100: Stage.DEEP,
@@ -11,10 +12,30 @@ var depthStageMap = {
 	600: Stage.VOID
 }
 
+enum Upgrade {ROD_STRENGTH, DEPTH_RESISTANCE, PICKAXE_UNLOCKED}
+var upgradeCosts = {
+	Upgrade.ROD_STRENGTH: 25,
+	Upgrade.DEPTH_RESISTANCE: 25,
+	Upgrade.PICKAXE_UNLOCKED: 500,
+}
+
+var maxUpgrades = {
+	Upgrade.ROD_STRENGTH: 5,
+	Upgrade.DEPTH_RESISTANCE: 5,
+	Upgrade.PICKAXE_UNLOCKED: 1,
+}
+
+#STATE
+var upgrades = {
+	Upgrade.ROD_STRENGTH: 0,
+	Upgrade.DEPTH_RESISTANCE: 0,
+	Upgrade.PICKAXE_UNLOCKED: 0,
+}
 var depth = 0
 var maxDepthReached = 0
-var money = 0
-var upgrades = []
+var money = 600
+var isDocked = false
+
 var playerInStage: Stage = Stage.SURFACE
 
 func setDepth(d: int):
@@ -22,3 +43,15 @@ func setDepth(d: int):
 	if (maxDepthReached < d):
 		maxDepthReached = d
 	GameState.playerInStage = depthStageMap[snapped(d, 100)]
+	
+func getUpgradeCost(upgrade: Upgrade) -> float:
+	return (upgrades[upgrade] + 1) * upgradeCosts[upgrade]
+
+func upgrade(upgrade: Upgrade) -> bool:
+	var cost = getUpgradeCost(upgrade)
+	if money >= cost && upgrades[upgrade] < maxUpgrades[upgrade]:
+		money -= cost
+		upgrades[upgrade] +=1
+		return true
+	else:
+		return false

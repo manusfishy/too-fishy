@@ -55,6 +55,10 @@ func _process(_delta):
 		rope.scale.y = distance # Stretch cylinder
 		rope.global_transform.origin = (start + end) / 2 # Center it
 		rope.look_at(end, Vector3.UP) # Orient toward hook
+	if position.y >= 0 && position.x > -4:
+		GameState.isDocked = true
+	else:
+		GameState.isDocked = false
 
 func throw_hook():
 	# Detach hook from player

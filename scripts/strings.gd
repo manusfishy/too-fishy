@@ -9,3 +9,9 @@ var stageNames = {
 	GameState.Stage.LAVA: "Lava",
 	GameState.Stage.VOID: "THE VOID"
 }
+
+var upgradeNames = {
+	GameState.Upgrade.ROD_STRENGTH: "Rod Strength",
+	GameState.Upgrade.DEPTH_RESISTANCE: "Depth Resistance",
+	GameState.Upgrade.PICKAXE_UNLOCKED: "Unlock Pickaxe",
+}
