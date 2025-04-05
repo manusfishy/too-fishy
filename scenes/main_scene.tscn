@@ -84,6 +84,9 @@ script = ExtResource("7_c16ls")
 [node name="HUDContainer" type="VBoxContainer" parent="UI/HUD"]
 layout_mode = 2
 
+[node name="CurrentStageLabel" type="Label" parent="UI/HUD/HUDContainer"]
+layout_mode = 2
+
 [node name="DepthLabel" type="Label" parent="UI/HUD/HUDContainer"]
 layout_mode = 2
 
