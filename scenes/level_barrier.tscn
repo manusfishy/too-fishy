@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bekjel2ayhsva"]
+
+[ext_resource type="Material" uid="uid://cln8yo172nfsg" path="res://materials/barrier_material_3d.tres" id="1_s7vpu"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_o3jxj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gubc5"]
+size = Vector3(1.02258, 25.2398, 4.979)
+
+[node name="LevelBarrier" type="StaticBody3D"]
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 25, 0, 0, 0, 5, -0.017, 0, 0.003)
+material_override = ExtResource("1_s7vpu")
+mesh = SubResource("BoxMesh_o3jxj")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.026, 0, 0.006)
+shape = SubResource("BoxShape3D_gubc5")

@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://xqds4eqa4fys"]
+
+[ext_resource type="Material" uid="uid://jnk0gr5qktqh" path="res://materials/water_material_3d.tres" id="1_d41wi"]
+[ext_resource type="PackedScene" uid="uid://bekjel2ayhsva" path="res://scenes/level_barrier.tscn" id="2_fivou"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_o3jxj"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_d41wi"]
+
+[node name="Section" type="Node3D"]
+
+[node name="Background" type="MeshInstance3D" parent="."]
+transform = Transform3D(37.64, 0, 0, 0, 25, 0, 0, 0, 1, -15.293, 0, -3.007)
+mesh = SubResource("QuadMesh_o3jxj")
+skeleton = NodePath("../..")
+
+[node name="Water" type="MeshInstance3D" parent="."]
+transform = Transform3D(29.111, 0, 0, 0, 25, 0, 0, 0, 5.35, -15.082, 0, 1.685)
+material_override = ExtResource("1_d41wi")
+mesh = SubResource("QuadMesh_d41wi")
+skeleton = NodePath("")
+
+[node name="RightBarrier" parent="." instance=ExtResource("2_fivou")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0240569, 0, -0.819179)
+
+[node name="LeftBarrier" parent="." instance=ExtResource("2_fivou")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.94, 0, -0.812)
