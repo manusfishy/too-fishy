@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=12 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://xqds4eqa4fys" path="res://scenes/section.tscn" id="4_gubc5"]
 [ext_resource type="PackedScene" uid="uid://durrtmu3i450r" path="res://scenes/player.tscn" id="4_pu3yx"]
 [ext_resource type="PackedScene" uid="uid://bekjel2ayhsva" path="res://scenes/level_barrier.tscn" id="5_rt2n2"]
+[ext_resource type="Script" uid="uid://cldevqp1odjtl" path="res://scenes/hud.gd" id="7_c16ls"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_c16ls"]
 
@@ -13,10 +14,14 @@
 
 [sub_resource type="TorusMesh" id="TorusMesh_o3jxj"]
 
+[sub_resource type="Theme" id="Theme_18nlu"]
+
 [node name="Node3D" type="Node3D"]
 
 [node name="CharacterBody3D" parent="." instance=ExtResource("4_pu3yx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.586, 0, -0.33263)
+speed_vertical = 15.0
+speed_horizontal = 15.0
 
 [node name="Level" type="Node3D" parent="." node_paths=PackedStringArray("level_wrapper", "player")]
 script = ExtResource("3_c16ls")
@@ -57,3 +62,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.94702, 0.320556, -0.0199303, -0.0267635, 0.140602, 0.989705, 0.320058, -0.936736, 0.141732, -6.47082, 1.04463, 15.1856)
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_18nlu")
+
+[node name="HUD" type="PanelContainer" parent="UI" node_paths=PackedStringArray("level")]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("7_c16ls")
+level = NodePath("../../Level")
+
+[node name="DepthLabel" type="Label" parent="UI/HUD"]
+layout_mode = 2

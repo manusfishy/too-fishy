@@ -8,8 +8,10 @@ extends Node3D
 @export var preloadSectionsCount: int
 
 var lastSpawned = -15
+var depth = 0
 
 func _process(delta: float) -> void:
+	depth = snapped(player.position.y, 1) * -1
 	if player.position.y < (lastSpawned):
 		spawnNewSection(lastSpawned - sectionHeight)
 
