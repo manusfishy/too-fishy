@@ -25,18 +25,24 @@ func _physics_process(_delta: float) -> void:
 	
 	if Input.is_action_pressed("move_right"):
 		direction.x += 1
+		if $Pivot.rotation[1] < 0:
+			$Pivot.rotate_y(deg_to_rad(180))
 	if Input.is_action_pressed("move_left"):
 		direction.x -= 1
+		if $Pivot.rotation[1] >= 0:
+			$Pivot.rotate_y(deg_to_rad(180))
 	if Input.is_action_pressed("move_up"):
 		direction.y += 1
 		if position.y >= 0:
 			direction.y = 0
 	if Input.is_action_pressed("move_down"):
 		direction.y -= 1
-	
+		
 	target_velocity.x = direction.x * speed_horizontal
 	target_velocity.y = direction.y * speed_vertical
 	target_velocity.z = 0
+	
+	
 	
 	velocity = target_velocity
 	move_and_slide()

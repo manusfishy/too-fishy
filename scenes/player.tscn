@@ -25,11 +25,6 @@ shape = SubResource("CapsuleShape3D_7cn6r")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.935049, 0.35452, 0, -0.35452, 0.935049, 0, 2.39688, 5.76341)
 
-[node name="submarine" parent="." instance=ExtResource("2_qhqgy")]
-transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0.155944, 0)
-
-[node name="FishSub" parent="." instance=ExtResource("2_qhqgy")]
-
 [node name="hook" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.366111, 0.684915, 0.292612)
 physics_material_override = SubResource("PhysicsMaterial_qhqgy")
@@ -52,5 +47,10 @@ physics_material_override = SubResource("PhysicsMaterial_qhqgy")
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.350942, -0.156422, 0)
 mesh = SubResource("CapsuleMesh_dqkch")
 skeleton = NodePath("../..")
+
+[node name="Pivot" type="Node3D" parent="."]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0.155944, 0)
+
+[node name="submarine" parent="Pivot" instance=ExtResource("2_qhqgy")]
 
 [connection signal="body_entered" from="hook" to="hook" method="_on_body_entered"]
