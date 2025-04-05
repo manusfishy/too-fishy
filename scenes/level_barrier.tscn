@@ -10,7 +10,7 @@ size = Vector3(1.02258, 25.2398, 4.979)
 [node name="LevelBarrier" type="StaticBody3D"]
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 25, 0, 0, 0, 5, -0.017, 0, 0.003)
+transform = Transform3D(1, 0, 0, 0, 25, 0, 0, 0, 17.2673, -0.017, 0, 5.73977)
 material_override = ExtResource("1_s7vpu")
 mesh = SubResource("BoxMesh_o3jxj")
 skeleton = NodePath("../..")

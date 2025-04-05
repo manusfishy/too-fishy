@@ -19,15 +19,15 @@ func _physics_process(delta: float) -> void:
 		var random_rotation = randf_range(min_angle, max_angle)
 		rotate_y(deg_to_rad(180))
 		
-		rotation[2] = 0
-		rotate_z(deg_to_rad(randf_range(min_angle, max_angle)))
+		var deg = randf_range(min_angle, max_angle)
 		
-		if rotation[1] < 0:
-			velocity = Vector3.MODEL_RIGHT * speed
-			velocity = velocity.rotated(Vector3.FORWARD, rotation.z)
-		else:
-			velocity = Vector3.MODEL_LEFT * speed
-			velocity = velocity.rotated(Vector3.BACK, rotation.z)
+		set_z_rotation_and_velocity(deg)
+			
+	print(position.y)
+	if position.y >= -0.75:
+		if is_looking_up():
+			var deg = randf_range(min_angle, min_angle/2)
+			set_z_rotation_and_velocity(deg)
 		
 	move_and_slide()
 	
@@ -35,8 +35,24 @@ func initialize(start_position):
 	speed = randf_range(min_speed, max_speed)
 	position = start_position
 	
-	rotate_z(deg_to_rad(randf_range(min_angle, max_angle)))
+	set_z_rotation_and_velocity(randf_range(min_angle, max_angle))
 	
-	velocity = Vector3.MODEL_LEFT * speed
-	velocity = velocity.rotated(Vector3.BACK, rotation.z)
+func set_z_rotation_and_velocity(deg: float) -> void:
+	rotation[2] = 0
+	var rad = deg_to_rad(deg)
+		
+	if is_facing_left():
+		rotate_z(-rad)
+		velocity = Vector3.MODEL_RIGHT * speed
+		velocity = velocity.rotated(Vector3.FORWARD, rotation.z)
+	else:
+		rotate_z(rad)
+		velocity = Vector3.MODEL_LEFT * speed
+		velocity = velocity.rotated(Vector3.BACK, rotation.z)
 	
+	
+func is_facing_left() -> bool:
+	return rotation[1] < 0
+	
+func is_looking_up() -> bool:
+	return rotation[2] > 0
