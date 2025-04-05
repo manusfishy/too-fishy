@@ -6,8 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://xqds4eqa4fys" path="res://scenes/section.tscn" id="4_gubc5"]
 [ext_resource type="PackedScene" uid="uid://durrtmu3i450r" path="res://scenes/player.tscn" id="4_pu3yx"]
 [ext_resource type="PackedScene" uid="uid://bekjel2ayhsva" path="res://scenes/level_barrier.tscn" id="5_rt2n2"]
-[ext_resource type="Script" path="res://scripts/hud.gd" id="7_c16ls"]
-[ext_resource type="Script" path="res://scripts/upgrades.gd" id="10_6wevv"]
+[ext_resource type="Script" uid="uid://cldevqp1odjtl" path="res://scripts/hud.gd" id="7_c16ls"]
+[ext_resource type="Script" uid="uid://cau06s0ctjwx8" path="res://scripts/upgrades.gd" id="10_6wevv"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_c16ls"]
 
@@ -21,8 +21,8 @@
 
 [node name="CharacterBody3D" parent="." instance=ExtResource("4_pu3yx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.09305, 0, -0.333)
-speed_vertical = 15.0
-speed_horizontal = 15.0
+speed_vertical = 1.5
+speed_horizontal = 4.0
 
 [node name="Level" type="Node3D" parent="." node_paths=PackedStringArray("level_wrapper", "player")]
 script = ExtResource("3_c16ls")

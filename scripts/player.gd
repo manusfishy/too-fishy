@@ -41,8 +41,12 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_pressed("move_down"):
 		direction.y -= 1
 		
-	target_velocity.x = direction.x * speed_horizontal
-	target_velocity.y = direction.y * speed_vertical
+	target_velocity.x = direction.x * (speed_horizontal + ( GameState.upgrades[GameState.Upgrade.HOR_SPEED] * 1.5))
+	target_velocity.y = direction.y * (speed_vertical  + ( GameState.upgrades[GameState.Upgrade.VERT_SPEED] * 1.5))
+	
+	if direction.y >= 1:
+		target_velocity.y = target_velocity.y * 2
+	
 	target_velocity.z = 0
 	
 	
