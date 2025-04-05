@@ -1,6 +1,6 @@
 extends PanelContainer
 
-@export var level: Node3D
-
 func _process(delta: float) -> void:
-	$DepthLabel.text = "Depth: %s" % level.depth
+	$HUDContainer/DepthLabel.text = "Depth: %sm" % GameState.depth
+	$HUDContainer/MaxDepthLabel.text = "Depth Reached: %sm" % GameState.maxDepthReached
+	$HUDContainer/MoneyLabel.text = "Money: %s" % GameState.money

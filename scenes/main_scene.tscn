@@ -75,12 +75,20 @@ offset_right = 40.0
 offset_bottom = 40.0
 theme = SubResource("Theme_18nlu")
 
-[node name="HUD" type="PanelContainer" parent="UI" node_paths=PackedStringArray("level")]
+[node name="HUD" type="PanelContainer" parent="UI"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("7_c16ls")
-level = NodePath("../../Level")
 
-[node name="DepthLabel" type="Label" parent="UI/HUD"]
+[node name="HUDContainer" type="VBoxContainer" parent="UI/HUD"]
+layout_mode = 2
+
+[node name="DepthLabel" type="Label" parent="UI/HUD/HUDContainer"]
+layout_mode = 2
+
+[node name="MaxDepthLabel" type="Label" parent="UI/HUD/HUDContainer"]
+layout_mode = 2
+
+[node name="MoneyLabel" type="Label" parent="UI/HUD/HUDContainer"]
 layout_mode = 2
