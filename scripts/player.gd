@@ -8,6 +8,9 @@ var throw_strength = 15.0 # Adjust for distance
 var is_holding_hook = true
 var target_velocity = Vector3.ZERO
 
+@export var inventory: Inv
+
+
 @onready var rope = $rope # A MeshInstance3D with CylinderMesh
 var is_hook_thrown = false
 

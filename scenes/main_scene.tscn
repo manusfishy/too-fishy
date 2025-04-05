@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://vg72e433ggrx"]
 
-[ext_resource type="Script" path="res://scripts/fish_spawner.gd" id="1_18nlu"]
+[ext_resource type="Script" uid="uid://cwlafd685uclc" path="res://scripts/fish_spawner.gd" id="1_18nlu"]
 [ext_resource type="PackedScene" uid="uid://cojafugiswbsa" path="res://scenes/mobs/dummy_fish.tscn" id="2_c1pb6"]
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
