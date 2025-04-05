@@ -19,11 +19,16 @@ config/icon="res://icon.svg"
 
 GameState="*res://scripts/game_state.gd"
 Strings="*res://scripts/strings.gd"
+FishesConfig="*res://scripts/fishes_config.gd"
 
 [editor]
 
 version_control/plugin_name="GitPlugin"
 version_control/autoload_on_startup=true
+
+[global_group]
+
+fishes=""
 
 [input]
 

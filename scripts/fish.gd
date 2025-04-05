@@ -6,9 +6,12 @@ extends CharacterBody3D
 @export var max_angle = 30
 @export var difficulty = 0
 @export var rotation_cooldown = .1
+@export var weight = 1
+@export var price = 1
 
 var rotation_cooldown_left = 0
 var speed = 0
+var home_stage: GameState.Stage
 
 func _physics_process(delta: float) -> void:
 	if rotation_cooldown_left > 0:
@@ -22,8 +25,7 @@ func _physics_process(delta: float) -> void:
 		var deg = randf_range(min_angle, max_angle)
 		
 		set_z_rotation_and_velocity(deg)
-			
-	print(position.y)
+	
 	if position.y >= -0.75:
 		if is_looking_up():
 			var deg = randf_range(min_angle, min_angle/2)
@@ -31,9 +33,16 @@ func _physics_process(delta: float) -> void:
 		
 	move_and_slide()
 	
-func initialize(start_position):
+func initialize(start_position, stage, min_speed, max_speed, difficulty, min_weight, max_weight, price_weight_multiplier):
+	self.home_stage = stage
+	self.min_speed = min_speed
+	self.max_speed = max_speed
+	self.difficulty = difficulty
+	self.weight = randf_range(min_weight, max_weight)
+	self.price = round(weight * price_weight_multiplier)
 	speed = randf_range(min_speed, max_speed)
 	position = start_position
+	add_to_group("fishes")
 	
 	set_z_rotation_and_velocity(randf_range(min_angle, max_angle))
 	
