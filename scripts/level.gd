@@ -1,4 +1,5 @@
 extends Node3D
+enum Stage {SURFACE, DEEP, DEEPER, SUPERDEEP, HOT, LAVA, VOID}
 
 @export var section: PackedScene
 @export var level_wrapper: Node3D
@@ -19,4 +20,6 @@ func spawnNewSection(position):
 	var newSection = section.instantiate()
 	newSection.position.y = position
 	lastSpawned = position
+	if position <= -40:
+		newSection.setDepth(position * -1)
 	add_child(newSection)
