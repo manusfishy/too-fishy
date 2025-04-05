@@ -93,6 +93,20 @@ layout_mode = 2
 [node name="MoneyLabel" type="Label" parent="UI/HUD/HUDContainer"]
 layout_mode = 2
 
+[node name="HealthBarLabel" type="Label" parent="UI/HUD/HUDContainer"]
+layout_mode = 2
+text = "Health:"
+
+[node name="HealthBar" type="ProgressBar" parent="UI/HUD/HUDContainer"]
+layout_mode = 2
+
+[node name="PressureHeadroomLabel" type="Label" parent="UI/HUD/HUDContainer"]
+layout_mode = 2
+text = "Pressure Headroom:"
+
+[node name="PressureHeadroomBar" type="ProgressBar" parent="UI/HUD/HUDContainer"]
+layout_mode = 2
+
 [node name="Upgrades" type="PanelContainer" parent="UI"]
 layout_mode = 0
 offset_left = 294.0

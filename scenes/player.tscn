@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://durrtmu3i450r"]
+[gd_scene load_steps=13 format=3 uid="uid://durrtmu3i450r"]
 
 [ext_resource type="Script" uid="uid://b4nuxfxo3kvlq" path="res://scripts/player.gd" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://i04cakuwfc3r" path="res://scripts/hook.gd" id="2_g2els"]
@@ -6,6 +6,20 @@
 [ext_resource type="Resource" uid="uid://e0lxbmss3uuj" path="res://scenes/inventory/playerInventory.tres" id="2_qlg0r"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7cn6r"]
+
+[sub_resource type="Gradient" id="Gradient_qlg0r"]
+colors = PackedColorArray(0, 0.509804, 0.643137, 1, 0.54902, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tuyoq"]
+gradient = SubResource("Gradient_qlg0r")
+
+[sub_resource type="Environment" id="Environment_qlg0r"]
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.898
+volumetric_fog_albedo = Color(0, 0.354219, 0.390496, 1)
+volumetric_fog_emission = Color(0, 0.145392, 0.77677, 1)
+adjustment_enabled = true
+adjustment_color_correction = SubResource("GradientTexture2D_tuyoq")
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qhqgy"]
 
@@ -26,6 +40,7 @@ shape = SubResource("CapsuleShape3D_7cn6r")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.935049, 0.35452, 0, -0.35452, 0.935049, 0, 2.39688, 5.76341)
+environment = SubResource("Environment_qlg0r")
 
 [node name="hook" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.366111, 0.684915, 0.292612)

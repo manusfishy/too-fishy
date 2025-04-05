@@ -54,7 +54,7 @@ func _physics_process(_delta: float) -> void:
 	velocity = target_velocity
 	move_and_slide()
 
-func _process(_delta):
+func _process(delta):
 	if is_hook_thrown:
 		var start = global_transform.origin
 		var end = hook.global_transform.origin
@@ -62,10 +62,23 @@ func _process(_delta):
 		rope.scale.y = distance # Stretch cylinder
 		rope.global_transform.origin = (start + end) / 2 # Center it
 		rope.look_at(end, Vector3.UP) # Orient toward hook
+		
+	process_dock(delta)
+	process_depth_effects(delta)
+	
+
+func process_dock(delta):
 	if position.y >= 0 && position.x > -4:
+		if (GameState.health < 100.0):
+			GameState.health += 5 * delta
 		GameState.isDocked = true
 	else:
 		GameState.isDocked = false
+
+func process_depth_effects(delta):
+	GameState.headroom = ((GameState.upgrades[GameState.Upgrade.DEPTH_RESISTANCE] + 1) * 100 - GameState.depth)
+	if GameState.headroom < 0:
+		GameState.health += GameState.headroom * delta
 
 func throw_hook():
 	# Detach hook from player
