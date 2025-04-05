@@ -7,6 +7,8 @@
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_mj8h0"]
 
 [node name="Player" type="CharacterBody3D"]
+axis_lock_linear_z = true
+axis_lock_angular_z = true
 motion_mode = 1
 script = ExtResource("1_3vyb7")
 
