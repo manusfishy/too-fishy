@@ -5,5 +5,11 @@
 [node name="Node3D" type="Node3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.322206, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49063, 0.779184, 0)
 mesh = SubResource("BoxMesh_o3jxj")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.999916, 0, -0.0129674, 0, 1, 0, 0.0129674, 0, -0.999916, 0.22959, 0.779184, -2.36999)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.397036, 0.917803, 0, -0.917803, -0.397036, 0.377669, 5.22115, -2.09301)
