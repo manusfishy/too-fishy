@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://xqds4eqa4fys"]
+[gd_scene load_steps=6 format=3 uid="uid://xqds4eqa4fys"]
 
 [ext_resource type="Material" uid="uid://jnk0gr5qktqh" path="res://materials/water/surface.tres" id="1_d41wi"]
 [ext_resource type="Script" uid="uid://bkpen13pay85m" path="res://scripts/section.gd" id="1_fivou"]
@@ -8,12 +8,11 @@
 
 [sub_resource type="QuadMesh" id="QuadMesh_d41wi"]
 
-[sub_resource type="QuadMesh" id="QuadMesh_fivou"]
-
-[node name="Section" type="Node3D" node_paths=PackedStringArray("water", "spawn_area")]
+[node name="Section" type="Node3D" node_paths=PackedStringArray("water", "spawn_marker_a", "spawn_marker_b")]
 script = ExtResource("1_fivou")
 water = NodePath("Water")
-spawn_area = NodePath("SpawnArea")
+spawn_marker_a = NodePath("SpawnerA")
+spawn_marker_b = NodePath("SpawnerB")
 
 [node name="Background" type="MeshInstance3D" parent="."]
 transform = Transform3D(37.64, 0, 0, 0, 25, 0, 0, 0, 1, -15.293, 0, -3.007)
@@ -35,12 +34,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.94, 0, -0.812)
 [node name="VisibleOnScreenNotifier" type="VisibleOnScreenNotifier3D" parent="."]
 aabb = AABB(-30, -15, -3, 30, 30, 5)
 
-[node name="SpawnArea" type="MeshInstance3D" parent="."]
-transform = Transform3D(24.286, 0, 0, 0, 20.8576, 0, 0, 0, 1, -14.7917, 0, 0)
-visible = false
-layers = 0
-gi_mode = 0
-mesh = SubResource("QuadMesh_fivou")
+[node name="SpawnerA" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.1838, 11.0533, 0)
+
+[node name="SpawnerB" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.54129, -11.169, 0)
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier" to="." method="screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier" to="." method="screen_exited"]

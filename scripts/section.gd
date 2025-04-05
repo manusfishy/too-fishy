@@ -2,7 +2,8 @@ extends Node3D
 
 @export var sectionType: GameState.Stage = GameState.Stage.SURFACE
 @export var water: MeshInstance3D
-@export var spawn_area: MeshInstance3D
+@export var spawn_marker_a: Marker3D
+@export var spawn_marker_b: Marker3D
 
 var depth: int = 0
 var is_on_screen: bool = false
@@ -28,18 +29,18 @@ func setDepth(d: int):
 
 
 func spawn_fish(spawn_all: bool = false):
+	var stage_name = GameState.Stage.keys()[sectionType]
 	if !FishesConfig.fishSectionMap.has(sectionType):
 		print("No fish spawns defined for ", GameState.Stage.keys()[sectionType])
 		return
 	var amount = len(get_tree().get_nodes_in_group("fishes").filter(func(x): return x.home_stage == sectionType))
-	var spawn_aabb = spawn_area.get_aabb()
-	var start_pos = (spawn_aabb.position)
-	var end_pos = (spawn_aabb.position + spawn_aabb.size)
 	while amount < FishesConfig.fishSectionMap[sectionType].max_fish_amount:
 		var r = randf()
-		var spawn_pos = Vector3(randf_range(start_pos.x, end_pos.x), randf_range(start_pos.y, end_pos.y), 1)
+		var spawn_pos = Vector3(randf_range(spawn_marker_a.position.x, spawn_marker_b.position.x), 
+							randf_range(spawn_marker_a.position.y, spawn_marker_b.position.y), 1)
 		spawn_pos = to_global(spawn_pos)
 		spawn_pos.z = -0.3
+		print(stage_name, " spawn area ", spawn_marker_a.position, spawn_marker_b.position, " spawn pos ", spawn_pos)
 		var commulative_spawn_rate = 0
 		var spawn_fish_config = null
 		for type in FishesConfig.fishSectionMap[sectionType].spawnRates:
