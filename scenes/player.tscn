@@ -53,4 +53,8 @@ transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0.155944, 0)
 
 [node name="submarine" parent="Pivot" instance=ExtResource("2_qhqgy")]
 
+[node name="SpotLight3D" type="SpotLight3D" parent="Pivot"]
+transform = Transform3D(-0.00543467, 0.017621, -0.0464754, 0, 0.0467524, 0.017726, 0.0497038, 0.0019267, -0.00508168, 0.0540619, 0.0188983, -0.000746775)
+spot_range = 15.0794
+
 [connection signal="body_entered" from="hook" to="hook" method="_on_body_entered"]
