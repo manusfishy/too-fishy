@@ -27,12 +27,12 @@ material_override = ExtResource("1_2c62f")
 mesh = SubResource("BoxMesh_o3jxj")
 
 [node name="Base" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0491874, 2.59377, -0.236413)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0491874, 2.59377, -2.72396)
 material_override = ExtResource("2_gyfs4")
 mesh = SubResource("TorusMesh_o3jxj")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-0.999916, 0, -0.0129674, 0, 1, 0, 0.0129674, 0, -0.999916, -5.86048, 1.90701, -4.88317)
+transform = Transform3D(-0.999916, 0, -0.0129674, 0, 1, 0, 0.0129674, 0, -0.999916, -4.07385, 1.90701, -7.092)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.397036, 0.917803, 0, -0.917803, -0.397036, 0.377669, 5.22115, -2.09301)
@@ -42,11 +42,11 @@ transform = Transform3D(37.6405, 0, 0, 0, -136.684, -8.74229e-08, 0, 1.19493e-05
 mesh = SubResource("QuadMesh_o3jxj")
 
 [node name="Submarine" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.43522, 0, 0)
+transform = Transform3D(0.023804, -0.999717, 0, 0.999717, 0.023804, 0, 0, 0, 1, -5.43522, -0.30823, -1.40896)
 mesh = SubResource("CapsuleMesh_d5x1h")
 
 [node name="Water" type="MeshInstance3D" parent="."]
-transform = Transform3D(-28.5457, 0, -0.0432478, 0, 39.7189, 0, 0.370194, 0, -3.33484, -15.079, -20.0701, -1.78541)
+transform = Transform3D(-28.5457, 0, -0.0432478, 0, 39.7189, 0, 0.370194, 0, -3.33484, -15.0989, -20.05, -1.77885)
 material_override = ExtResource("3_gyfs4")
 mesh = SubResource("BoxMesh_gyfs4")
 skeleton = NodePath("../Camera3D")
