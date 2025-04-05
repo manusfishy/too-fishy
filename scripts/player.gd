@@ -8,6 +8,9 @@ var throw_strength = 15.0 # Adjust for distance
 var is_holding_hook = true
 var target_velocity = Vector3.ZERO
 
+@onready var rope = $rope # A MeshInstance3D with CylinderMesh
+var is_hook_thrown = false
+
 func _ready():
 	# Ensure hook starts as a child of the player
 	hook.freeze = true # Prevents physics until thrown
@@ -17,12 +20,11 @@ func _input(event):
 		if is_holding_hook:
 			throw_hook()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	var direction = Vector3.ZERO
 	
 	if Input.is_action_pressed("move_right"):
 		direction.x += 1
-		
 	if Input.is_action_pressed("move_left"):
 		direction.x -= 1
 	if Input.is_action_pressed("move_up"):
@@ -39,6 +41,14 @@ func _physics_process(delta: float) -> void:
 	velocity = target_velocity
 	move_and_slide()
 
+func _process(_delta):
+	if is_hook_thrown:
+		var start = global_transform.origin
+		var end = hook.global_transform.origin
+		var distance = start.distance_to(end)
+		rope.scale.y = distance # Stretch cylinder
+		rope.global_transform.origin = (start + end) / 2 # Center it
+		rope.look_at(end, Vector3.UP) # Orient toward hook
 
 func throw_hook():
 	# Detach hook from player
@@ -47,7 +57,7 @@ func throw_hook():
 	is_holding_hook = false
 	
 	# Calculate throw direction (forward from camera)
-	var throw_direction = - camera.global_transform.basis.x.normalized()
+	var throw_direction = camera.global_transform.basis.x.normalized()
 	
 	# Apply impulse to throw the hook
 	hook.apply_central_impulse(throw_direction * throw_strength)
