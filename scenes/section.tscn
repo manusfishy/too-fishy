@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://xqds4eqa4fys"]
+[gd_scene load_steps=20 format=3 uid="uid://xqds4eqa4fys"]
 
 [ext_resource type="Script" uid="uid://bkpen13pay85m" path="res://scripts/section.gd" id="1_fivou"]
 [ext_resource type="Texture2D" uid="uid://ba5womg2gd3ak" path="res://textures/bg_tiling_1.png" id="2_8l2i8"]
@@ -15,6 +15,59 @@ albedo_texture = ExtResource("2_8l2i8")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_t8qun"]
 size = Vector3(4.19824, 19.4489, 13.8901)
+
+[sub_resource type="Curve" id="Curve_ti0g3"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_ms04e"]
+curve_x = SubResource("Curve_ti0g3")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ti0g3"]
+emission_shape_offset = Vector3(0, 0, -3.275)
+emission_shape = 3
+emission_box_extents = Vector3(6.595, 4.96, 3)
+directional_velocity_min = 0.999984
+directional_velocity_max = 2.99998
+directional_velocity_curve = SubResource("CurveXYZTexture_ms04e")
+gravity = Vector3(0, 0.5, 0)
+linear_accel_min = -0.200002
+linear_accel_max = 2.0
+scale_min = 0.0
+scale_max = 0.05
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ti0g3"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.517647)
+roughness = 0.0
+rim = 0.0
+rim_tint = 0.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_ms04e"]
+material = SubResource("StandardMaterial3D_ti0g3")
+
+[sub_resource type="Curve" id="Curve_ms04e"]
+_limits = [0.0, 100.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_58ehv"]
+curve = SubResource("Curve_ms04e")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_70rpc"]
+lifetime_randomness = 0.15
+emission_shape_offset = Vector3(0, 0, -3.275)
+emission_shape = 3
+emission_box_extents = Vector3(6.595, 4.96, 3)
+gravity = Vector3(0, -1, 0)
+damping_curve = SubResource("CurveTexture_58ehv")
+scale_min = 0.01
+scale_max = 0.02
+anim_speed_max = 1.55
+turbulence_enabled = true
+
+[sub_resource type="PrismMesh" id="PrismMesh_ocpc0"]
+size = Vector3(0.7, 0.7, 0.7)
 
 [node name="Section" type="Node3D" node_paths=PackedStringArray("spawn_marker_a", "spawn_marker_b")]
 script = ExtResource("1_fivou")
@@ -86,6 +139,22 @@ shape = SubResource("BoxShape3D_t8qun")
 [node name="FishRespawnTimer" type="Timer" parent="."]
 wait_time = 15.0
 autostart = true
+
+[node name="Bubbles" type="GPUParticles3D" parent="."]
+transform = Transform3D(2.655, 0, 0, 0, 3.31466, 0, 0, 0, 1.308, -11.9884, -1.03899, 3.67558)
+amount = 400
+lifetime = 3.0
+randomness = 0.23
+process_material = SubResource("ParticleProcessMaterial_ti0g3")
+draw_pass_1 = SubResource("SphereMesh_ms04e")
+
+[node name="Debris" type="GPUParticles3D" parent="."]
+transform = Transform3D(2.655, 0, 0, 0, 3.31466, 0, 0, 0, 1.308, -11.9884, -1.03899, 3.67558)
+amount = 50000
+lifetime = 3.0
+randomness = 0.23
+process_material = SubResource("ParticleProcessMaterial_70rpc")
+draw_pass_1 = SubResource("PrismMesh_ocpc0")
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier" to="." method="screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier" to="." method="screen_exited"]
