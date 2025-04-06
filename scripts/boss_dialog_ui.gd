@@ -8,7 +8,6 @@ func _ready() -> void:
 			if Boss.boss_dialog_section == Boss.BossDialogSections.BOSS_KILLS_FRIEND:
 				GameState.health = 0
 			Boss.boss_dialog_displayed = false
-			Boss.boss_dialog_section += 1
 			Boss.boss_dialog_index = 0
 			GameState.paused = false
 			

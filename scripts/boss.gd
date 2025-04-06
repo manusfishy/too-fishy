@@ -2,8 +2,7 @@ extends Node
 var boss_spawned = false
 var boss_spawn_height = 25
 
-enum BossDialogSections {TUTORIAL1, TUTORIAL2, RESCUE_CALL, BOSS_INTRO, BOSS_KILLS_FRIEND}
-
+enum BossDialogSections {TUTORIAL1, TUTORIAL2, RESCUE_CALL, BOSS_INTRO, BOSS_KILLS_FRIEND, FRIEND_RESCUED}
 
 var boss_dialog_from = {
 	BossDialogSections.TUTORIAL1: "John",
@@ -11,6 +10,7 @@ var boss_dialog_from = {
 	BossDialogSections.RESCUE_CALL: "John",
 	BossDialogSections.BOSS_INTRO: "???",
 	BossDialogSections.BOSS_KILLS_FRIEND: "Blobfish",
+	BossDialogSections.FRIEND_RESCUED: "John",
 }
 	
 var boss_dialog_displayed = true
@@ -19,13 +19,13 @@ var boss_dialog_index = 0
 
 func setBossSpawned():
 	boss_spawned = true
-	boss_dialog_displayed = true
-	boss_dialog_index = 0
-	boss_dialog_section = BossDialogSections.BOSS_INTRO
-	GameState.paused = true
+	setDialogStage(BossDialogSections.BOSS_INTRO)
 
 func attackBoss():
-	boss_dialog_displayed = true
+	setDialogStage(BossDialogSections.BOSS_KILLS_FRIEND)
+
+func setDialogStage(section: BossDialogSections):
+	boss_dialog_section = section
 	boss_dialog_index = 0
-	boss_dialog_section = BossDialogSections.BOSS_KILLS_FRIEND
+	boss_dialog_displayed = true
 	GameState.paused = true

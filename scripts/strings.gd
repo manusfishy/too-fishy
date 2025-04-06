@@ -25,4 +25,5 @@ var boss_dialog_lines = {
 	Boss.BossDialogSections.RESCUE_CALL :["Uhhhh- I did an oopsie", "I think you need to come and get me :S"],
 	Boss.BossDialogSections.BOSS_INTRO :["Hahaha, I got your friend, looser!", "You better not attack me or he dies!"],
 	Boss.BossDialogSections.BOSS_KILLS_FRIEND :["Ohhhh, that was a mistake!", "*Splash*", "Your friend is dead now!"],
+	Boss.BossDialogSections.FRIEND_RESCUED :["Oh my god thank you!", "That fucker is a mind controlling blobfish!", "You getting close has freed me from his spell!", "We need to stay close together and fight him!"],
 	}

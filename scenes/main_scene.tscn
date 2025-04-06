@@ -224,9 +224,9 @@ offset_bottom = 258.0
 
 [node name="FPS Counter" type="Label" parent="UI"]
 layout_mode = 2
-offset_left = 198.0
-offset_top = 3.0
-offset_right = 387.0
-offset_bottom = 26.0
+offset_left = 202.0
+offset_top = 10.0
+offset_right = 391.0
+offset_bottom = 33.0
 text = "FPS"
 script = ExtResource("14_r6p65")

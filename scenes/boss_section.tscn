@@ -1,11 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://b3j6kki1bc2xs"]
+[gd_scene load_steps=8 format=3 uid="uid://b3j6kki1bc2xs"]
 
 [ext_resource type="PackedScene" uid="uid://xqds4eqa4fys" path="res://scenes/section.tscn" id="1_1j4rh"]
+[ext_resource type="Script" uid="uid://cmrhnhr7cedmp" path="res://scripts/friend.gd" id="2_b8wpq"]
 [ext_resource type="ArrayMesh" uid="uid://j1ghwew3fuj1" path="res://meshes/SM_FishSubmarine.obj" id="2_vk6kq"]
 [ext_resource type="ArrayMesh" uid="uid://dkew5403qhabh" path="res://meshes/gestein_v001.obj" id="3_vk6kq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b8wpq"]
 albedo_color = Color(0.0617123, 0.341111, 0.417972, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_oi768"]
+radius = 3.62441
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vk6kq"]
 size = Vector3(6.53244, 9.52234, 16.658)
@@ -21,12 +25,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -25, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 0)
 
 [node name="Friend" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.19162, -42.9264, -0.33)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.19162, -42.9264, -1.75951)
+script = ExtResource("2_b8wpq")
 
 [node name="SmFishSubmarine" type="MeshInstance3D" parent="Friend"]
 transform = Transform3D(0.17, 0, 0, 0, 0.17, 0, 0, 0, 0.17, 0.328859, 1.72861, 0)
 mesh = ExtResource("2_vk6kq")
 surface_material_override/0 = SubResource("StandardMaterial3D_b8wpq")
+
+[node name="Area3D" type="Area3D" parent="Friend"]
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Friend/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.691881, 1.91581, 0)
+shape = SubResource("SphereShape3D_oi768")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(-0.0290731, 0, -0.999577, -0.996283, -0.0811209, 0.0289773, -0.0810867, 0.996704, 0.00235844, -4.98166, -32.2469, -2.98919)
@@ -50,3 +62,6 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
 transform = Transform3D(1, 1.19209e-07, -7.08678e-09, -4.07547e-06, 1.00001, 8.70088e-07, 5.3129e-08, 6.47269e-08, 1, 0.396845, 4.71446, -0.160854)
 shape = SubResource("BoxShape3D_vk6kq")
+
+[connection signal="body_entered" from="Friend/Area3D" to="Friend" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Friend/Area3D" to="Friend" method="_on_area_3d_body_exited"]
