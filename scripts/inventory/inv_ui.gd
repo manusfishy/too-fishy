@@ -27,6 +27,9 @@ func _process(delta):
 			open()
 	if is_open:
 		update_display()
+	if Input.is_action_just_pressed("esc"):
+		close()
+		
 
 func open():
 	visible = true

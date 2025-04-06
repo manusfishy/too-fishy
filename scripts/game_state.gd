@@ -43,6 +43,8 @@ var money = 600
 var isDocked = false
 var fishes_lower_boarder = -15 - 12
 
+var player_node: CharacterBody3D = null
+var god_mode = false
 var health = 100.0
 var headroom = 0
 var death_screen = false

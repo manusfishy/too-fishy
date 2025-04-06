@@ -1,10 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=18 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
 [ext_resource type="Texture2D" uid="uid://b0r6xam3j6ui2" path="res://textures/background_beginning.jpg" id="4_c1pb6"]
 [ext_resource type="PackedScene" uid="uid://xqds4eqa4fys" path="res://scenes/section.tscn" id="4_gubc5"]
-[ext_resource type="PackedScene" uid="uid://sb2ta2ym3x84" path="res://scenes/player.tscn" id="4_pu3yx"]
+[ext_resource type="PackedScene" uid="uid://durrtmu3i450r" path="res://scenes/player.tscn" id="4_pu3yx"]
 [ext_resource type="PackedScene" uid="uid://bekjel2ayhsva" path="res://scenes/level_barrier.tscn" id="5_rt2n2"]
 [ext_resource type="Script" uid="uid://cldevqp1odjtl" path="res://scripts/hud.gd" id="7_c16ls"]
 [ext_resource type="PackedScene" uid="uid://bip40vv31g12d" path="res://scenes/inventory/inv_ui.tscn" id="9_c1pb6"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://dhv52dohn5s4r" path="res://scripts/death_screen.gd" id="10_e1cbu"]
 [ext_resource type="PackedScene" uid="uid://d0ykw70micab6" path="res://scenes/boss.tscn" id="11_e1cbu"]
 [ext_resource type="Script" uid="uid://dx1hxd4wnymb1" path="res://scripts/boss_dialog_ui.gd" id="12_mngbo"]
+[ext_resource type="PackedScene" uid="uid://b87oo8x46lj3r" path="res://scenes/cheats.tscn" id="13_4w45t"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_c16ls"]
 
@@ -32,11 +33,11 @@ speed_horizontal = 4.0
 [node name="Level" type="Node3D" parent="." node_paths=PackedStringArray("level_wrapper", "player")]
 script = ExtResource("3_c16ls")
 section = ExtResource("4_gubc5")
-level_wrapper = NodePath(".")
-player = NodePath("../CharacterBody3D")
 boss = ExtResource("11_e1cbu")
 sectionHeight = 25.0
 preloadSectionsCount = 2
+level_wrapper = NodePath(".")
+player = NodePath("../CharacterBody3D")
 
 [node name="StartSection" type="Node3D" parent="Level"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
@@ -178,3 +179,11 @@ Anyways... Lets keep going - we don't have all day!"
 [node name="ContinueButton" type="Button" parent="UI/BossDialog/VBoxContainer"]
 layout_mode = 2
 text = "Continue"
+
+[node name="Cheats" parent="UI" instance=ExtResource("13_4w45t")]
+visible = false
+layout_mode = 0
+offset_left = 434.0
+offset_top = 82.0
+offset_right = 748.0
+offset_bottom = 258.0

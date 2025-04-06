@@ -19,6 +19,7 @@ var can_shoot = true
 signal section_changed(sectionType)
 
 func _ready():
+	GameState.player_node = self
 	print("player ready")
 
 
@@ -54,7 +55,7 @@ func movement(_delta: float):
 
 func _physics_process(delta: float) -> void:
 	movement(delta)
-
+	
 	
 	var depthSnapped = snapped(GameState.depth, 100)
 	var sectionType = GameState.depthStageMap[depthSnapped]
@@ -73,6 +74,8 @@ func _process(delta):
 func onDock():
 	GameState.inventory.sellItems()
 	print("docked")
+	
+	
 func shoot_harpoon():
 	# Instance the harpoon
 	var harpoon = harpoon_scene.instantiate()

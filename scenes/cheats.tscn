@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://b87oo8x46lj3r"]
+
+[ext_resource type="Script" uid="uid://b8a1e6cv4yj62" path="res://scripts/cheats.gd" id="1_24huh"]
+
+[node name="Cheats" type="PanelContainer"]
+offset_left = 828.0
+offset_top = 131.0
+offset_right = 1142.0
+offset_bottom = 307.0
+script = ExtResource("1_24huh")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Cheats"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
+layout_mode = 2
+columns = 3
