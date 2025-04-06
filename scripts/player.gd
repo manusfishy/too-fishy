@@ -79,10 +79,12 @@ func _physics_process(delta: float) -> void:
 func _process(delta):
 	process_dock(delta)
 	process_depth_effects(delta)
+
+	
+func _unhandled_input(event):
 	if Input.is_action_just_pressed("throw") and can_shoot:
 		shoot_harpoon()
 	
-
 func onDock():
 	GameState.inventory.sellItems()
 	print("docked")
@@ -116,7 +118,6 @@ func _on_timer_timeout():
 	can_shoot = true
 
 func process_dock(delta):
-	print(position)
 	if position.y >= -1 && position.x > -7:
 		if (GameState.health < 100.0):
 			GameState.health += 5 * delta
