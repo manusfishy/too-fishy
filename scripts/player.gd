@@ -8,8 +8,6 @@ var throw_strength = 15.0 # Adjust for distance
 var is_holding_hook = true
 var target_velocity = Vector3.ZERO
 
-@export var inventory: Inv
-
 @onready var pickaxe_scene = preload("res://scenes/pickaxe.tscn")
 @onready var rope = $rope # A MeshInstance3D with CylinderMesh
 var is_hook_thrown = false
@@ -28,9 +26,35 @@ func _ready():
 	print("player ready")
 
 
-func _physics_process(_delta: float) -> void:
-	var direction = Vector3.ZERO
+func addFishToInv(data):
+	for item in GameState.inventory.items:
+		if item.id == data.id:
+			print("Duplicate fish ID detected: ", data.id)
+			return false 
+
+	var my_fish = InvItem.new()
+	my_fish.type = "fish"
+	my_fish.weight = data.weight
+	my_fish.price = data.price
+	my_fish.id = data.id
+	GameState.inventory.items.append(my_fish)
+	return true  
+
+func collision():
+	var collision = move_and_slide()
 	
+	# Check for collisions after movement
+	for i in get_slide_collision_count():
+		var collision_info = get_slide_collision(i)
+		var collider = collision_info.get_collider()
+		if collider is CharacterBody3D:
+			if collider.has_method("removeFish"):
+				var fish_details = collider.removeFish()
+				addFishToInv(fish_details)
+
+
+func movement(_delta: float):
+	var direction = Vector3.ZERO
 	if Input.is_action_pressed("move_right"):
 		direction.x += 1
 		if $Pivot.rotation[1] < 0:
@@ -55,11 +79,23 @@ func _physics_process(_delta: float) -> void:
 	target_velocity.z = 0
 	velocity = target_velocity
 	move_and_slide()
+
+
+
+func _physics_process(delta: float) -> void:
+	movement(delta)
+	# Check colision
+	collision()
 	
 	var depthSnapped = snapped(GameState.depth, 100)
 	var sectionType = GameState.depthStageMap[depthSnapped]
 	
 	$Camera3D.environment.fog_light_color = colorMap[sectionType]
+	
+	
+	
+	
+
 	
 
 func _process(delta):
@@ -67,13 +103,20 @@ func _process(delta):
 	process_depth_effects(delta)
 	
 
+func onDock():
+	GameState.inventory.sellItems()
+	print("docked")
+
 func process_dock(delta):
 	if position.y >= 0 && position.x > -4:
 		if (GameState.health < 100.0):
 			GameState.health += 5 * delta
-		GameState.isDocked = true
+		if not GameState.isDocked:
+			onDock()
+			GameState.isDocked = true
 	else:
-		GameState.isDocked = false
+		if GameState.isDocked:
+			GameState.isDocked = false
 
 func process_depth_effects(delta):
 	GameState.headroom = ((GameState.upgrades[GameState.Upgrade.DEPTH_RESISTANCE] + 1) * 100 - GameState.depth)

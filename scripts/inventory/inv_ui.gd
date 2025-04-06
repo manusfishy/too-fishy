@@ -31,15 +31,25 @@ func _process(delta):
 func open():
 	visible = true
 	is_open = true
+	getTotal()
 	update_display()
 
 func close():
 	visible = false
 	is_open = false
 
-func update_inventory_value(key, value):
-	inventory[key] = value
-	update_display()
+func getTotal():
+	var totalPrice = 0
+	var totalWeight = 0
+	var n = 0
+	for item in GameState.inventory.items:
+		totalPrice += item.price
+		totalWeight += item.weight
+		n =+ 1
+		
+	inventory[InventoryValues.TotalValue] = totalPrice
+	inventory[InventoryValues.TotalWeight] = totalWeight
+	inventory[InventoryValues.FishesCaught] = GameState.inventory.items.size()
 
 func update_display():
 	# Clear existing children (except any permanent ones you might have)

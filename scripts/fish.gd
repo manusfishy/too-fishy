@@ -13,6 +13,18 @@ var rotation_cooldown_left = 0
 var speed = 0
 var home: int
 
+
+func removeFish():
+	var fish_data = {
+		"price": price,
+		"weight": weight,
+		"id": get_instance_id()
+	}
+	queue_free()
+	return fish_data
+	
+
+
 func _physics_process(delta: float) -> void:
 	if rotation_cooldown_left > 0:
 		rotation_cooldown_left -= delta

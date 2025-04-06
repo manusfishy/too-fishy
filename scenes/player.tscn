@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://durrtmu3i450r"]
+[gd_scene load_steps=8 format=3 uid="uid://durrtmu3i450r"]
 
 [ext_resource type="Script" uid="uid://b4nuxfxo3kvlq" path="res://scripts/player.gd" id="1_3vyb7"]
 [ext_resource type="PackedScene" uid="uid://cdvfasjj4km5l" path="res://FishSub.fbx" id="2_qhqgy"]
-[ext_resource type="Resource" uid="uid://e0lxbmss3uuj" path="res://scenes/inventory/playerInventory.tres" id="2_qlg0r"]
 [ext_resource type="PackedScene" uid="uid://cwlmu2g8odpra" path="res://scenes/pickaxe.tscn" id="4_qlg0r"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7cn6r"]
@@ -27,7 +26,6 @@ axis_lock_linear_z = true
 axis_lock_angular_z = true
 motion_mode = 1
 script = ExtResource("1_3vyb7")
-inventory = ExtResource("2_qlg0r")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
