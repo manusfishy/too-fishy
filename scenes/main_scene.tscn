@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=18 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://xqds4eqa4fys" path="res://scenes/section.tscn" id="4_gubc5"]
 [ext_resource type="PackedScene" uid="uid://durrtmu3i450r" path="res://scenes/player.tscn" id="4_pu3yx"]
 [ext_resource type="Script" uid="uid://cldevqp1odjtl" path="res://scripts/hud.gd" id="7_c16ls"]
-[ext_resource type="ArrayMesh" uid="uid://dkew5403qhabh" path="res://meshes/gestein_v001.obj" id="7_mngbo"]
 [ext_resource type="PackedScene" path="res://scenes/lava.tscn" id="7_r6p65"]
 [ext_resource type="PackedScene" uid="uid://bip40vv31g12d" path="res://scenes/inventory/inv_ui.tscn" id="9_c1pb6"]
 [ext_resource type="Script" uid="uid://cau06s0ctjwx8" path="res://scripts/upgrades.gd" id="10_6wevv"]
@@ -21,9 +20,6 @@
 albedo_texture = ExtResource("4_c1pb6")
 
 [sub_resource type="TorusMesh" id="TorusMesh_o3jxj"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_mngbo"]
-size = Vector3(1, 24.5298, 11.689)
 
 [sub_resource type="Theme" id="Theme_18nlu"]
 
@@ -45,6 +41,7 @@ preloadSectionsCount = 2
 
 [node name="StartSection" type="Node3D" parent="Level"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
+visible = false
 
 [node name="Background" type="MeshInstance3D" parent="Level/StartSection"]
 transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 1, -15.8629, 0, -3.00963)
@@ -67,28 +64,8 @@ transform = Transform3D(2.45308, 0, 0, 0, 1.62324, 0, 0, 0, 1, -20.4469, -3.0248
 [node name="Section" parent="Level" instance=ExtResource("4_gubc5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -35, 0)
 
-[node name="StaticBody3D2" type="StaticBody3D" parent="Level"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.55464, -10.9413, 2.7562)
-
-[node name="GesteinV002" type="MeshInstance3D" parent="Level/StaticBody3D2"]
-transform = Transform3D(0.92432, 0, 0, 0, 0.0514902, -1.91631, 0, 1.20637, 0.0817914, 2.14848, 1.17493, -5.26057)
-mesh = ExtResource("7_mngbo")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Level/StaticBody3D2"]
-shape = SubResource("BoxShape3D_mngbo")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Level"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -11.0435, 0)
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Level/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.0818, 0.102249, 2.7562)
-shape = SubResource("BoxShape3D_mngbo")
-
-[node name="GesteinV001" type="MeshInstance3D" parent="Level/StaticBody3D"]
-transform = Transform3D(0.92432, 0, 0, 0, 0.0514902, -1.91631, 0, 1.20637, 0.0817914, -29.1315, 1.27718, -0.635346)
-mesh = ExtResource("7_mngbo")
-skeleton = NodePath("../..")
+[node name="Section2" parent="Level" instance=ExtResource("4_gubc5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.94702, 0.320556, -0.0199303, -0.0267635, 0.140602, 0.989705, 0.320058, -0.936736, 0.141732, -6.47082, 1.04463, 15.1856)

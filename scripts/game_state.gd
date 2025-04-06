@@ -48,7 +48,7 @@ var god_mode = false
 var health = 100.0
 var headroom = 0
 var death_screen = false
-var paused = false
+var paused = true
 
 var inventory: Inv = Inv.new()
 
