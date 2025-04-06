@@ -10,9 +10,10 @@ var target_velocity = Vector3.ZERO
 
 @export var inventory: Inv
 
-@onready var pickaxe_scene = preload("res://scenes/pickaxe.tscn")
-@onready var rope = $rope # A MeshInstance3D with CylinderMesh
-var is_hook_thrown = false
+#@onready var pickaxe_scene = preload("res://scenes/pickaxe.tscn")
+var harpoon_scene = preload("res://scenes/harpoon.tscn") # Path to harpoon scene
+@onready var cooldown_timer = $HarpoonCD # Timer node, set to one-shot, 2s wait time
+var can_shoot = true
 
 var colorMap = {
 	GameState.Stage.SURFACE: Color.AQUAMARINE,
@@ -46,8 +47,8 @@ func _physics_process(_delta: float) -> void:
 	if Input.is_action_pressed("move_down"):
 		direction.y -= 1
 		
-	target_velocity.x = direction.x * (speed_horizontal + ( GameState.upgrades[GameState.Upgrade.HOR_SPEED] * 1.5))
-	target_velocity.y = direction.y * (speed_vertical  + ( GameState.upgrades[GameState.Upgrade.VERT_SPEED] * 1.5))
+	target_velocity.x = direction.x * (speed_horizontal + (GameState.upgrades[GameState.Upgrade.HOR_SPEED] * 1.5))
+	target_velocity.y = direction.y * (speed_vertical + (GameState.upgrades[GameState.Upgrade.VERT_SPEED] * 1.5))
 	
 	if direction.y >= 1:
 		target_velocity.y = target_velocity.y * 2
@@ -65,7 +66,31 @@ func _physics_process(_delta: float) -> void:
 func _process(delta):
 	process_dock(delta)
 	process_depth_effects(delta)
+	if Input.is_action_just_pressed("throw") and can_shoot:
+		shoot_harpoon()
 	
+
+func shoot_harpoon():
+	# Instance the harpoon
+	var harpoon = harpoon_scene.instantiate()
+	get_parent().add_child(harpoon)
+	var dir = 1
+	
+	if ($Pivot.rotation[1] >= 0):
+		dir = -1
+	harpoon.position = position + dir * global_transform.basis.x * -2 
+	harpoon.rotation = global_transform.basis.get_euler() # Align with submarine
+	
+	# Pass submarine reference to harpoon for catching fish
+	harpoon.submarine = self
+	can_shoot = false
+	cooldown_timer.start()
+
+func catch_fish(fish):
+	print("Caught fish: ", fish.name) # Replace with inventory logic
+
+func _on_timer_timeout():
+	can_shoot = true
 
 func process_dock(delta):
 	if position.y >= 0 && position.x > -4:

@@ -7,10 +7,10 @@ var swing_duration = 0.4
 var swing_time = 5.0
 @onready var hand = get_parent()
 @onready var player = hand.get_parent()
-@onready var particles = $GPUParticles3D
+@onready var particles = null # $GPUParticles3D
 
 func _ready():
-	position = Vector3(0,0,0)
+	position = Vector3(0, 0, 0)
 	freeze_mode = RigidBody3D.FREEZE_MODE_KINEMATIC
 	gravity_scale = 0
 	if not has_node("GPUParticles3D"):
@@ -57,5 +57,5 @@ func _on_body_entered(body):
 	if body.is_in_group("abbaubare_objekte"):
 		print("Kollision mit: ", body.name)
 	if body.has_method("take_damage"):
-		body.take_damage(1)  # Schadenswert anpassen
+		body.take_damage(1) # Schadenswert anpassen
 		collision_detected = true
