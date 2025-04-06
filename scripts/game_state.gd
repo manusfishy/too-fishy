@@ -45,6 +45,7 @@ var fishes_lower_boarder = -15 - 12
 
 var health = 100.0
 var headroom = 0
+var death_screen = false
 
 var inventory: Inv = Inv.new()
 

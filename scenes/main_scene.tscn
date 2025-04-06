@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=15 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://cldevqp1odjtl" path="res://scripts/hud.gd" id="7_c16ls"]
 [ext_resource type="PackedScene" uid="uid://bip40vv31g12d" path="res://scenes/inventory/inv_ui.tscn" id="9_c1pb6"]
 [ext_resource type="Script" uid="uid://cau06s0ctjwx8" path="res://scripts/upgrades.gd" id="10_6wevv"]
+[ext_resource type="Script" uid="uid://dhv52dohn5s4r" path="res://scripts/death_screen.gd" id="10_e1cbu"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_c16ls"]
 
@@ -22,7 +23,7 @@ albedo_texture = ExtResource("4_c1pb6")
 [node name="Node3D" type="Node3D"]
 
 [node name="CharacterBody3D" parent="." instance=ExtResource("4_pu3yx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.09305, 0, -0.333)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -0.33)
 speed_vertical = 1.5
 speed_horizontal = 4.0
 
@@ -129,3 +130,24 @@ offset_left = 450.0
 offset_top = 82.0
 offset_right = 729.0
 offset_bottom = 247.0
+
+[node name="DeathScreen" type="PanelContainer" parent="UI"]
+layout_mode = 0
+offset_left = 295.0
+offset_top = 237.0
+offset_right = 888.0
+offset_bottom = 351.0
+script = ExtResource("10_e1cbu")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/DeathScreen"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/DeathScreen/VBoxContainer"]
+layout_mode = 2
+text = "Oh nooo, you died!
+Anyways... Lets keep going - we don't have all day!"
+
+[node name="Button" type="Button" parent="UI/DeathScreen/VBoxContainer"]
+layout_mode = 2
+text = "Respawn
+"
