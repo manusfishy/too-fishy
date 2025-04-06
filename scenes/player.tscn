@@ -70,6 +70,8 @@ transform = Transform3D(4.96379, 0.600684, 0, -0.600684, 4.96379, 0, 0, 0, 5, 2.
 
 [node name="pickaxe" parent="Pivot/SmFishSubmarine/Hand" instance=ExtResource("4_qlg0r")]
 transform = Transform3D(0.969579, 0.244783, 0, -0.244783, 0.969579, 0, 0, 0, 1, 0, 0, 0)
+collision_layer = 1
+collision_mask = 1
 
 [node name="HarpoonRay" type="RayCast3D" parent="."]
 transform = Transform3D(0.0432183, -0.999066, 0, 0.999066, 0.0432183, 0, 0, 0, 1, 0.84911, 0.396061, 0)

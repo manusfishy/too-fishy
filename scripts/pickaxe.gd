@@ -1,4 +1,5 @@
 extends StaticBody3D
+
 var swing_active = false
 var back_swing_active = false
 @export var collision_detected = false
@@ -7,12 +8,25 @@ var swing_duration = 0.4
 var swing_time = 5.0
 @onready var hand = get_parent()
 @onready var player = hand.get_parent()
-@onready var particles = null # $GPUParticles3D
+@onready var particles = null
 
 func _ready():
-	position = Vector3(0, 0, 0)
-	#freeze_mode = RigidBody3D.FREEZE_MODE_KINEMATIC
-	#gravity_scale = 0
+	# Grundeinstellungen für die Pickaxe
+	collision_layer = 0  # Keine Kollision für den StaticBody
+	collision_mask = 0   # Keine Kollision mit anderen Objekten
+	
+	
+	# Hitbox konfigurieren
+	$PickaxeHitbox.collision_layer = 0
+	$PickaxeHitbox.collision_mask = 3
+	
+	# Signal verbinden
+	$PickaxeHitbox.body_entered.connect(_on_hitbox_body_entered)
+	
+	
+	print("Pickaxe mit Hitbox initialisiert")
+	
+	# Partikel einrichten
 	if not has_node("GPUParticles3D"):
 		var particle_node = GPUParticles3D.new()
 		particle_node.name = "GPUParticles3D"
@@ -22,11 +36,13 @@ func _ready():
 		particles.explosiveness = 0.8
 		particles.amount = 16
 		particles.lifetime = 0.5
+		add_child(particles)
 
 func _process(delta):
 	if Input.is_action_just_pressed("swing_pickaxe") and not swing_active and not back_swing_active:
 		swing_active = true
 		swing_time = 0.0
+		print("Schwung begonnen")
 
 	if swing_active:
 		swing_time += delta
@@ -39,6 +55,7 @@ func _process(delta):
 			back_swing_active = true
 			collision_detected = false
 			swing_time = 0.0
+			print("Schwung beendet")
 
 	if back_swing_active:
 		swing_time += delta
@@ -49,13 +66,20 @@ func _process(delta):
 		if progress >= 1.0:
 			rotation_degrees.z = 0
 			back_swing_active = false
-			
+
 func ease_in_out(t):
 	return t * t * (3.0 - 2.0 * t)
+
+func _on_hitbox_body_entered(body):
+	if not swing_active:
+		return
+		
+	print("Pickaxe trifft:", body.name)
 	
-func _on_body_entered(body):
-	if body.is_in_group("abbaubare_objekte"):
-		print("Kollision mit: ", body.name)
 	if body.has_method("take_damage"):
-		body.take_damage(1) # Schadenswert anpassen
+		print("Schaden wird angewendet!")
+		body.take_damage(1)
 		collision_detected = true
+
+func is_pickaxe() -> bool:
+	return true
