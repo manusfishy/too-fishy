@@ -10,6 +10,19 @@ var target_velocity = Vector3.ZERO
 
 @export var inventory: Inv
 
+@onready var pickaxe_scene = preload("res://scenes/pickaxe.tscn")
+@onready var rope = $rope # A MeshInstance3D with CylinderMesh
+var is_hook_thrown = false
+
+var colorMap = {
+	GameState.Stage.SURFACE: Color.AQUAMARINE,
+	GameState.Stage.DEEP: Color.AQUA,
+	GameState.Stage.DEEPER: Color.CADET_BLUE,
+	GameState.Stage.SUPERDEEP: Color.DARK_CYAN,
+	GameState.Stage.HOT: Color.CORNFLOWER_BLUE,
+	GameState.Stage.LAVA: Color.ORANGE_RED,
+	GameState.Stage.VOID: Color.BLACK
+}
 
 func _ready():
 	print("player ready")
@@ -40,8 +53,49 @@ func _physics_process(_delta: float) -> void:
 		target_velocity.y = target_velocity.y * 2
 	
 	target_velocity.z = 0
-	
-	
-	
 	velocity = target_velocity
 	move_and_slide()
+	
+	var depthSnapped = snapped(GameState.depth, 100)
+	var sectionType = GameState.depthStageMap[depthSnapped]
+	
+	$Camera3D.environment.fog_light_color = colorMap[sectionType]
+	
+
+func _process(delta):
+	if is_hook_thrown:
+		var start = global_transform.origin
+		var end = hook.global_transform.origin
+		var distance = start.distance_to(end)
+		rope.scale.y = distance # Stretch cylinder
+		rope.global_transform.origin = (start + end) / 2 # Center it
+		rope.look_at(end, Vector3.UP) # Orient toward hook
+		
+	process_dock(delta)
+	process_depth_effects(delta)
+	
+
+func process_dock(delta):
+	if position.y >= 0 && position.x > -4:
+		if (GameState.health < 100.0):
+			GameState.health += 5 * delta
+		GameState.isDocked = true
+	else:
+		GameState.isDocked = false
+
+func process_depth_effects(delta):
+	GameState.headroom = ((GameState.upgrades[GameState.Upgrade.DEPTH_RESISTANCE] + 1) * 100 - GameState.depth)
+	if GameState.headroom < 0:
+		GameState.health += GameState.headroom * delta
+
+func throw_hook():
+	# Detach hook from player
+	hook.reparent(get_tree().root.get_child(0)) # Move to world root
+	hook.freeze = false # Enable physics
+	is_holding_hook = false
+	
+	# Calculate throw direction (forward from camera)
+	var throw_direction = camera.global_transform.basis.x.normalized()
+	
+	# Apply impulse to throw the hook
+	hook.apply_central_impulse(throw_direction * throw_strength)

@@ -7,7 +7,7 @@ extends Node3D
 @export var sectionHeight: float
 @export var preloadSectionsCount: int
 
-var lastSpawned = -15
+var lastSpawned = -35
 var snappedDepth = 0
 func _process(delta: float) -> void:
 	GameState.setDepth(player.position.y * -1)
@@ -19,6 +19,7 @@ func spawnNewSection(position):
 	var newSection = section.instantiate()
 	newSection.position.y = position
 	lastSpawned = position
-	if position <= -40:
+	GameState.fishes_lower_boarder = lastSpawned - sectionHeight/2 - 1
+	if position <= -50:
 		newSection.setDepth(position * -1)
 	add_child(newSection)

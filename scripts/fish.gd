@@ -11,7 +11,7 @@ extends CharacterBody3D
 
 var rotation_cooldown_left = 0
 var speed = 0
-var home_stage: GameState.Stage
+var home: int
 
 func _physics_process(delta: float) -> void:
 	if rotation_cooldown_left > 0:
@@ -19,22 +19,28 @@ func _physics_process(delta: float) -> void:
 	
 	if get_slide_collision_count() > 0 && rotation_cooldown_left <= 0:
 		rotation_cooldown_left = rotation_cooldown
-		var random_rotation = randf_range(min_angle, max_angle)
 		rotate_y(deg_to_rad(180))
 		
 		var deg = randf_range(min_angle, max_angle)
 		
 		set_z_rotation_and_velocity(deg)
-	
-	if position.y >= -0.75:
+		
+	if global_position.y >= -0.75:
 		if is_looking_up():
 			var deg = randf_range(min_angle, min_angle/2)
 			set_z_rotation_and_velocity(deg)
+	elif global_position.y <= GameState.fishes_lower_boarder:
+		if !is_looking_up():
+			var deg = randf_range(max_angle/2, max_angle)
+			set_z_rotation_and_velocity(deg)
+	elif randf() < .004:
+		set_z_rotation_and_velocity(randf_range(min_angle, max_angle))
+		
 		
 	move_and_slide()
 	
-func initialize(start_position, stage, min_speed, max_speed, difficulty, min_weight, max_weight, price_weight_multiplier):
-	self.home_stage = stage
+func initialize(start_position, home, min_speed, max_speed, difficulty, min_weight, max_weight, price_weight_multiplier):
+	self.home = home
 	self.min_speed = min_speed
 	self.max_speed = max_speed
 	self.difficulty = difficulty
