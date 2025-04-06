@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cj100dmxx12lt"]
+
+[ext_resource type="Material" uid="uid://bf8hfoo5qmcgc" path="res://materials/shaders/lava_shader_material.tres" id="1_a5s42"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_r6p65"]
+
+[node name="Lava" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+mesh = SubResource("QuadMesh_r6p65")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_a5s42")

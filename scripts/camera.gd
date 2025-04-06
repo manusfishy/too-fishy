@@ -1,7 +1,7 @@
 extends Camera3D
 
 var environment_color_map = {
-	GameState.Stage.SURFACE: Color.AQUAMARINE,
+	GameState.Stage.SURFACE: Color.AQUAMARINE * 0.4,
 	GameState.Stage.DEEP: Color.AQUA,
 	GameState.Stage.DEEPER: Color.CADET_BLUE,
 	GameState.Stage.SUPERDEEP: Color.DARK_CYAN,
