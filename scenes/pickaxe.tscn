@@ -1,12 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://cwlmu2g8odpra"]
+[gd_scene load_steps=7 format=3 uid="uid://cwlmu2g8odpra"]
 
 [ext_resource type="Script" uid="uid://dronp26id7m8c" path="res://scripts/pickaxe.gd" id="1_40cab"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qhqgy"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_40cab"]
-
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_dqkch"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_40cab"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_2ikqw"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_40cab"]
 
 [node name="pickaxe" type="StaticBody3D"]
 axis_lock_linear_z = true
@@ -14,10 +18,6 @@ axis_lock_angular_x = true
 axis_lock_angular_y = true
 physics_material_override = SubResource("PhysicsMaterial_qhqgy")
 script = ExtResource("1_40cab")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.330642, 0, 0)
-shape = SubResource("CapsuleShape3D_40cab")
 
 [node name="Pivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.319393, 0, 0)
@@ -37,3 +37,18 @@ skeleton = NodePath("../../..")
 transform = Transform3D(0.483977, 0.0360157, 0.124264, 0.0140292, 0.967955, -0.124776, -0.124776, 0.248528, 0.467963, 3.0264, 0.758962, 4.47035e-08)
 mesh = SubResource("CapsuleMesh_dqkch")
 skeleton = NodePath("../../..")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_40cab")
+draw_pass_1 = SubResource("CapsuleMesh_2ikqw")
+
+[node name="HitboxShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.292326, -0.117686, 0)
+shape = SubResource("CapsuleShape3D_40cab")
+
+[node name="PickaxeHitbox" type="Area3D" parent="."]
+
+[node name="HitboxShape" type="CollisionShape3D" parent="PickaxeHitbox"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.292326, -0.22449, 0)
+shape = SubResource("CapsuleShape3D_40cab")
