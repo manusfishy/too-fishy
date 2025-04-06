@@ -41,6 +41,7 @@ var depth = 0
 var maxDepthReached = 0
 var money = 600
 var isDocked = false
+var fishes_lower_boarder = -15 - 12
 
 var playerInStage: Stage = Stage.SURFACE
 
