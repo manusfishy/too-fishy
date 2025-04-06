@@ -19,7 +19,6 @@ func _physics_process(delta: float) -> void:
 	
 	if get_slide_collision_count() > 0 && rotation_cooldown_left <= 0:
 		rotation_cooldown_left = rotation_cooldown
-		var random_rotation = randf_range(min_angle, max_angle)
 		rotate_y(deg_to_rad(180))
 		
 		var deg = randf_range(min_angle, max_angle)
@@ -34,6 +33,9 @@ func _physics_process(delta: float) -> void:
 		if !is_looking_up():
 			var deg = randf_range(max_angle/2, max_angle)
 			set_z_rotation_and_velocity(deg)
+	elif randf() < .004:
+		set_z_rotation_and_velocity(randf_range(min_angle, max_angle))
+		
 		
 	move_and_slide()
 	
