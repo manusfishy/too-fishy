@@ -2,7 +2,7 @@
 
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
-[ext_resource type="Material" uid="uid://jnk0gr5qktqh" path="res://materials/water/surface.tres" id="3_gubc5"]
+[ext_resource type="Texture2D" uid="uid://b0r6xam3j6ui2" path="res://textures/background_beginning.jpg" id="4_c1pb6"]
 [ext_resource type="PackedScene" uid="uid://xqds4eqa4fys" path="res://scenes/section.tscn" id="4_gubc5"]
 [ext_resource type="PackedScene" uid="uid://durrtmu3i450r" path="res://scenes/player.tscn" id="4_pu3yx"]
 [ext_resource type="PackedScene" uid="uid://bekjel2ayhsva" path="res://scenes/level_barrier.tscn" id="5_rt2n2"]
@@ -12,7 +12,8 @@
 
 [sub_resource type="QuadMesh" id="QuadMesh_c16ls"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_18nlu"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6wevv"]
+albedo_texture = ExtResource("4_c1pb6")
 
 [sub_resource type="TorusMesh" id="TorusMesh_o3jxj"]
 
@@ -34,18 +35,13 @@ sectionHeight = 25.0
 preloadSectionsCount = 2
 
 [node name="StartSection" type="Node3D" parent="Level"]
-transform = Transform3D(1, 0, 0, 0, 0.2, 0, 0, 0, 1, -0.002, 0, -0.01)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
 
 [node name="Background" type="MeshInstance3D" parent="Level/StartSection"]
-transform = Transform3D(37.64, 0, 0, 0, 25, 0, 0, 0, 1, -15.293, 0, -3.007)
+transform = Transform3D(28.7793, 0, 0, 0, 25, 0, 0, 0, 1, -14.9077, 0, -3.00963)
 mesh = SubResource("QuadMesh_c16ls")
 skeleton = NodePath("../../..")
-
-[node name="Water" type="MeshInstance3D" parent="Level/StartSection"]
-transform = Transform3D(-29.111, 0, 1.50996e-06, 0, 15.036, 0, -4.39564e-06, 0, -10, -15.1, -5, 0)
-material_override = ExtResource("3_gubc5")
-mesh = SubResource("BoxMesh_18nlu")
-skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_6wevv")
 
 [node name="RightBarrier" parent="Level/StartSection" instance=ExtResource("5_rt2n2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0240569, 0, -0.819179)
@@ -60,7 +56,7 @@ mesh = SubResource("TorusMesh_o3jxj")
 skeleton = NodePath("../../..")
 
 [node name="Section" parent="Level" instance=ExtResource("4_gubc5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -35, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.94702, 0.320556, -0.0199303, -0.0267635, 0.140602, 0.989705, 0.320058, -0.936736, 0.141732, -6.47082, 1.04463, 15.1856)

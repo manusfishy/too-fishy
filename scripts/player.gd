@@ -14,6 +14,16 @@ var target_velocity = Vector3.ZERO
 @onready var rope = $rope # A MeshInstance3D with CylinderMesh
 var is_hook_thrown = false
 
+var colorMap = {
+	GameState.Stage.SURFACE: Color.AQUAMARINE,
+	GameState.Stage.DEEP: Color.AQUA,
+	GameState.Stage.DEEPER: Color.CADET_BLUE,
+	GameState.Stage.SUPERDEEP: Color.DARK_CYAN,
+	GameState.Stage.HOT: Color.CORNFLOWER_BLUE,
+	GameState.Stage.LAVA: Color.ORANGE_RED,
+	GameState.Stage.VOID: Color.BLACK
+}
+
 func _ready():
 	# Ensure hook starts as a child of the player
 	hook.freeze = true # Prevents physics until thrown
@@ -48,11 +58,14 @@ func _physics_process(_delta: float) -> void:
 		target_velocity.y = target_velocity.y * 2
 	
 	target_velocity.z = 0
-	
-	
-	
 	velocity = target_velocity
 	move_and_slide()
+	
+	var depthSnapped = snapped(GameState.depth, 100)
+	var sectionType = GameState.depthStageMap[depthSnapped]
+	
+	$Camera3D.environment.fog_light_color = colorMap[sectionType]
+	
 
 func _process(delta):
 	if is_hook_thrown:

@@ -1,16 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://xqds4eqa4fys"]
+[gd_scene load_steps=4 format=3 uid="uid://xqds4eqa4fys"]
 
-[ext_resource type="Material" uid="uid://jnk0gr5qktqh" path="res://materials/water/surface.tres" id="1_d41wi"]
 [ext_resource type="Script" uid="uid://bkpen13pay85m" path="res://scripts/section.gd" id="1_fivou"]
 [ext_resource type="PackedScene" uid="uid://bekjel2ayhsva" path="res://scenes/level_barrier.tscn" id="2_fivou"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_o3jxj"]
 
-[sub_resource type="QuadMesh" id="QuadMesh_d41wi"]
-
 [node name="Section" type="Node3D" node_paths=PackedStringArray("water", "spawn_marker_a", "spawn_marker_b")]
 script = ExtResource("1_fivou")
-water = NodePath("Water")
+water = NodePath("")
 spawn_marker_a = NodePath("SpawnerA")
 spawn_marker_b = NodePath("SpawnerB")
 
@@ -19,12 +16,6 @@ transform = Transform3D(37.64, 0, 0, 0, 25, 0, 0, 0, 1, -15.293, 0, -3.007)
 mesh = SubResource("QuadMesh_o3jxj")
 skeleton = NodePath("../..")
 
-[node name="Water" type="MeshInstance3D" parent="."]
-transform = Transform3D(29.111, 0, 0, 0, 25, 0, 0, 0, 5.35, -15.082, 0, 5)
-mesh = SubResource("QuadMesh_d41wi")
-skeleton = NodePath("")
-surface_material_override/0 = ExtResource("1_d41wi")
-
 [node name="RightBarrier" parent="." instance=ExtResource("2_fivou")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0240569, 0, -0.819179)
 
@@ -32,7 +23,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0240569, 0, -0.819179)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.94, 0, -0.812)
 
 [node name="VisibleOnScreenNotifier" type="VisibleOnScreenNotifier3D" parent="."]
-aabb = AABB(-30, -15, -3, 30, 30, 5)
+aabb = AABB(-30, -12.5, -3, 30, 25, 5)
 
 [node name="SpawnerA" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.1838, 11.0533, 0)
