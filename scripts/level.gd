@@ -22,5 +22,4 @@ func spawnNewSection(position):
 	GameState.fishes_lower_boarder = lastSpawned - sectionHeight/2 - 1
 	if position <= -40:
 		newSection.setDepth(position * -1)
-	print(to_global(newSection.position))
 	add_child(newSection)
