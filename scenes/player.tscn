@@ -1,11 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://durrtmu3i450r"]
+[gd_scene load_steps=11 format=3 uid="uid://durrtmu3i450r"]
 
 [ext_resource type="Script" uid="uid://b4nuxfxo3kvlq" path="res://scripts/player.gd" id="1_3vyb7"]
 [ext_resource type="PackedScene" uid="uid://cdvfasjj4km5l" path="res://meshes/FishSub.fbx" id="2_qhqgy"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="3_qlg0r"]
 [ext_resource type="PackedScene" uid="uid://cwlmu2g8odpra" path="res://scenes/pickaxe.tscn" id="4_qlg0r"]
+[ext_resource type="ArrayMesh" uid="uid://j1ghwew3fuj1" path="res://meshes/SM_FishSubmarine.obj" id="4_tuyoq"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7cn6r"]
+height = 2.79761
 
 [sub_resource type="Gradient" id="Gradient_qlg0r"]
 
@@ -22,6 +24,9 @@ volumetric_fog_albedo = Color(0.054902, 0.317647, 1, 1)
 volumetric_fog_ambient_inject = 0.08
 adjustment_color_correction = SubResource("GradientTexture1D_tuyoq")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qlg0r"]
+albedo_color = Color(0.444845, 0.212952, 0.366369, 1)
+
 [node name="Player" type="CharacterBody3D"]
 axis_lock_linear_z = true
 axis_lock_angular_z = true
@@ -29,7 +34,7 @@ motion_mode = 1
 script = ExtResource("1_3vyb7")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.0102715, 0.129017, 0.00199914)
 shape = SubResource("CapsuleShape3D_7cn6r")
 
 [node name="Camera3D" type="Camera3D" parent="."]
@@ -41,11 +46,17 @@ script = ExtResource("3_qlg0r")
 transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0.155944, 0)
 
 [node name="submarine" parent="Pivot" instance=ExtResource("2_qhqgy")]
+visible = false
 
-[node name="Hand" type="Node3D" parent="Pivot/submarine"]
-transform = Transform3D(0.0496379, 0.00600684, 0, -0.00600684, 0.0496379, 0, 0, 0, 0.05, 0.0206686, -0.0096295, 0.0154887)
+[node name="SmFishSubmarine" type="MeshInstance3D" parent="Pivot"]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0.000392032, -1.16415e-08, -3.18527e-05)
+mesh = ExtResource("4_tuyoq")
+surface_material_override/0 = SubResource("StandardMaterial3D_qlg0r")
 
-[node name="pickaxe" parent="Pivot/submarine/Hand" instance=ExtResource("4_qlg0r")]
+[node name="Hand" type="Node3D" parent="Pivot/SmFishSubmarine"]
+transform = Transform3D(4.96379, 0.600684, 0, -0.600684, 4.96379, 0, 0, 0, 5, 2.02766, -0.962949, 1.55206)
+
+[node name="pickaxe" parent="Pivot/SmFishSubmarine/Hand" instance=ExtResource("4_qlg0r")]
 transform = Transform3D(0.969579, 0.244783, 0, -0.244783, 0.969579, 0, 0, 0, 1, 0, 0, 0)
 axis_lock_linear_z = false
 can_sleep = false
