@@ -23,7 +23,6 @@ func _ready():
 	print("player ready")
 
 
-
 func collision():
 	var collision = move_and_slide()
 	
@@ -118,6 +117,7 @@ func _on_timer_timeout():
 	can_shoot = true
 
 func process_dock(delta):
+	# print(position)
 	if position.y >= -1 && position.x > -7:
 		if (GameState.health < 100.0):
 			GameState.health += 5 * delta

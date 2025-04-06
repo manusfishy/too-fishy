@@ -67,7 +67,7 @@ func upgrade(upgrade: Upgrade) -> bool:
 	var cost = getUpgradeCost(upgrade)
 	if money >= cost && upgrades[upgrade] < maxUpgrades[upgrade]:
 		money -= cost
-		upgrades[upgrade] +=1
+		upgrades[upgrade] += 1
 		return true
 	else:
 		return false
