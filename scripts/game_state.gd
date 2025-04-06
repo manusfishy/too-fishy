@@ -12,13 +12,14 @@ var depthStageMap = {
 	600: Stage.VOID
 }
 
-enum Upgrade {ROD_STRENGTH, DEPTH_RESISTANCE, PICKAXE_UNLOCKED, VERT_SPEED, HOR_SPEED}
+enum Upgrade {ROD_STRENGTH, DEPTH_RESISTANCE, PICKAXE_UNLOCKED, VERT_SPEED, HOR_SPEED, LAMP_UNLOCKED}
 var upgradeCosts = {
 	Upgrade.ROD_STRENGTH: 25,
 	Upgrade.DEPTH_RESISTANCE: 25,
 	Upgrade.PICKAXE_UNLOCKED: 500,
 	Upgrade.VERT_SPEED: 15,
 	Upgrade.HOR_SPEED: 15,
+	Upgrade.LAMP_UNLOCKED: 200,
 }
 
 var maxUpgrades = {
@@ -27,6 +28,7 @@ var maxUpgrades = {
 	Upgrade.PICKAXE_UNLOCKED: 1,
 	Upgrade.VERT_SPEED: 5,
 	Upgrade.HOR_SPEED: 5,
+	Upgrade.LAMP_UNLOCKED: 1,
 }
 
 #STATE
@@ -36,6 +38,7 @@ var upgrades = {
 	Upgrade.PICKAXE_UNLOCKED: 0,
 	Upgrade.VERT_SPEED: 0,
 	Upgrade.HOR_SPEED: 0,
+	Upgrade.LAMP_UNLOCKED: 0,
 }
 var depth = 0
 var maxDepthReached = 0

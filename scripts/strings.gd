@@ -16,6 +16,7 @@ var upgradeNames = {
 	GameState.Upgrade.PICKAXE_UNLOCKED: "Unlock Pickaxe",
 	GameState.Upgrade.VERT_SPEED: "Agillity",
 	GameState.Upgrade.HOR_SPEED: "Thrust",
+	GameState.Upgrade.LAMP_UNLOCKED: "Unlock Lamp",
 }
 
 var boss_dialog_lines = {

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b4nuxfxo3kvlq" path="res://scripts/player.gd" id="1_3vyb7"]
 [ext_resource type="PackedScene" uid="uid://cdvfasjj4km5l" path="res://meshes/FishSub.fbx" id="2_qhqgy"]
-[ext_resource type="Script" uid="uid://cwbxcfefm5qdj" path="res://scripts/camera.gd" id="3_qlg0r"]
+[ext_resource type="Script" path="res://scripts/camera.gd" id="3_qlg0r"]
 [ext_resource type="PackedScene" uid="uid://cwlmu2g8odpra" path="res://scenes/pickaxe.tscn" id="4_qlg0r"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7cn6r"]
@@ -52,6 +52,14 @@ can_sleep = false
 lock_rotation = true
 freeze_mode = 1
 script = null
+
+[node name="UnlockableLamp" type="SpotLight3D" parent="Pivot/submarine"]
+transform = Transform3D(-4.37114e-08, 0.173648, -0.984808, 0, 0.984808, 0.173648, 1, 7.5904e-09, -4.30473e-08, 0.0509291, 0.00774923, 0)
+visible = false
+light_energy = 10.0
+spot_range = 15.0
+spot_angle = 20.0
+spot_angle_attenuation = 2.92817
 
 [node name="HarpoonRay" type="RayCast3D" parent="."]
 transform = Transform3D(0.0432183, -0.999066, 0, 0.999066, 0.0432183, 0, 0, 0, 1, 0.84911, 0.396061, 0)

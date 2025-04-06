@@ -120,6 +120,10 @@ func process_dock(delta):
 	if position.y >= -1 && position.x > -7:
 		if (GameState.health < 100.0):
 			GameState.health += 5 * delta
+		# enable upgrade (doing this only when docked avoids checking every frame during the entire game)
+		if GameState.upgrades[GameState.Upgrade.LAMP_UNLOCKED] == 1 and $Pivot/submarine/UnlockableLamp.visible == false:
+			print("Lamp turned on")
+			$Pivot/submarine/UnlockableLamp.visible = true
 		if not GameState.isDocked:
 			onDock()
 			GameState.isDocked = true
