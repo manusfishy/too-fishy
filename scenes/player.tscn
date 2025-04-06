@@ -15,7 +15,6 @@ gradient = SubResource("Gradient_qlg0r")
 [sub_resource type="Environment" id="Environment_fjrip"]
 fog_enabled = true
 fog_light_color = Color(0.0941176, 0.180392, 0.607843, 1)
-fog_density = 0.0476
 fog_sky_affect = 0.39
 volumetric_fog_density = 1000.0
 volumetric_fog_albedo = Color(0.054902, 0.317647, 1, 1)

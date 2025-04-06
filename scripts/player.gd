@@ -29,6 +29,9 @@ func _ready():
 
 
 func _physics_process(_delta: float) -> void:
+	if (GameState.death_screen):
+		return
+	
 	var direction = Vector3.ZERO
 	
 	if Input.is_action_pressed("move_right"):
@@ -60,6 +63,7 @@ func _physics_process(_delta: float) -> void:
 	var sectionType = GameState.depthStageMap[depthSnapped]
 	
 	$Camera3D.environment.fog_light_color = colorMap[sectionType]
+	process_death()
 	
 
 func _process(delta):
@@ -79,3 +83,9 @@ func process_depth_effects(delta):
 	GameState.headroom = ((GameState.upgrades[GameState.Upgrade.DEPTH_RESISTANCE] + 1) * 100 - GameState.depth)
 	if GameState.headroom < 0:
 		GameState.health += GameState.headroom * delta
+
+func process_death():
+	if GameState.health <= 0:
+		GameState.death_screen = true
+		GameState.health = 100
+		position = Vector3(-8, 0, 0.33)
