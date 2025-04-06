@@ -1,7 +1,6 @@
 extends Node
 
 
-
 enum FishType {
 	GOLD_FISH,
 	CLOWN_FISH,
@@ -16,7 +15,7 @@ var fishConfigMap = {
 		speed_min = 1,
 		speed_max = 2.5,
 		difficulty = 1,
-		scene = preload("res://scenes/mobs/dummy_fish.tscn")
+		scene = preload("res://scenes/mobs/gold_fish.tscn")
 	},
 	FishType.CLOWN_FISH: {
 		weight_min = 1,
@@ -25,7 +24,7 @@ var fishConfigMap = {
 		speed_min = 2,
 		speed_max = 5,
 		difficulty = 1,
-		scene = preload("res://scenes/mobs/dummy_fish.tscn")
+		scene = preload("res://scenes/mobs/clown_fish.tscn")
 	},
 	FishType.RARE_FISH: {
 		weight_min = 5,
@@ -34,7 +33,7 @@ var fishConfigMap = {
 		speed_min = 0.5,
 		speed_max = 1.5,
 		difficulty = 5,
-		scene = preload("res://scenes/mobs/dummy_fish.tscn")
+		scene = preload("res://scenes/mobs/rare_fish.tscn")
 	}
 }
 
@@ -42,7 +41,7 @@ var fishSectionMap = {
 	GameState.Stage.SURFACE: {
 		max_fish_amount = 4,
 		spawnRates = {
-			FishType.GOLD_FISH: 1
+			FishType.RARE_FISH: 1
 		}
 	},
 	GameState.Stage.DEEP: {

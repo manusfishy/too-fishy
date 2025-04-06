@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://cdvfasjj4km5l"
-path="res://.godot/imported/FishSub.fbx-f9aaedcbaebd9f0589c397d3a43e61f9.scn"
+path="res://.godot/imported/FishSub.fbx-8602d845083180124550222f74c59487.scn"
 
 [deps]
 
-source_file="res://FishSub.fbx"
-dest_files=["res://.godot/imported/FishSub.fbx-f9aaedcbaebd9f0589c397d3a43e61f9.scn"]
+source_file="res://meshes/FishSub.fbx"
+dest_files=["res://.godot/imported/FishSub.fbx-8602d845083180124550222f74c59487.scn"]
 
 [params]
 
