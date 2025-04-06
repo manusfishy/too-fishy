@@ -2,39 +2,49 @@ extends Node
 
 
 enum FishType {
-	GOLD_FISH,
-	CLOWN_FISH,
-	RARE_FISH,
+	FISH_A,
+	FISH_B,
+	ANGLER_FISH,
+	DUMMY_FISH,
 	SPIKEY_FISH
 }
 
 var fishConfigMap = {
-	FishType.GOLD_FISH: {
+	FishType.FISH_A: {
 		weight_min = 1,
 		weight_max = 10,
 		price_weight_multiplier = 1,
 		speed_min = 1,
 		speed_max = 2.5,
 		difficulty = 1,
-		scene = preload("res://scenes/mobs/gold_fish.tscn")
+		scene = preload("res://scenes/mobs/BasicFishA.tscn")
 	},
-	FishType.CLOWN_FISH: {
+	FishType.FISH_B: {
 		weight_min = 1,
 		weight_max = 5,
 		price_weight_multiplier = 1.2,
 		speed_min = 2,
 		speed_max = 5,
 		difficulty = 1,
-		scene = preload("res://scenes/mobs/clown_fish.tscn")
+		scene = preload("res://scenes/mobs/BasicFishB.tscn")
 	},
-	FishType.RARE_FISH: {
+	FishType.ANGLER_FISH: {
 		weight_min = 5,
 		weight_max = 10,
 		price_weight_multiplier = 3,
-		speed_min = 0.5,
-		speed_max = 1.5,
+		speed_min = 0.1,
+		speed_max = 1,
 		difficulty = 5,
-		scene = preload("res://scenes/mobs/rare_fish.tscn")
+		scene = preload("res://scenes/mobs/AnglerFish.tscn")
+	},
+	FishType.DUMMY_FISH: {
+		weight_min = 5,
+		weight_max = 10,
+		price_weight_multiplier = 10,
+		speed_min = 3,
+		speed_max = 7,
+		difficulty = 10,
+		scene = preload("res://scenes/mobs/dummy_fish.tscn")
 	},
 	FishType.SPIKEY_FISH: {
 		weight_min = 5,
@@ -49,23 +59,59 @@ var fishConfigMap = {
 
 var fishSectionMap = {
 	GameState.Stage.SURFACE: {
-		max_fish_amount = 4,
+		max_fish_amount = 15,
 		spawnRates = {
-			FishType.SPIKEY_FISH: 1
+			FishType.FISH_A: .9,
+			FishType.FISH_B: .1,
 		}
 	},
 	GameState.Stage.DEEP: {
-		max_fish_amount = 6,
+		max_fish_amount = 10,
 		spawnRates = {
-			FishType.GOLD_FISH: .5,
-			FishType.CLOWN_FISH: .5
+			FishType.FISH_A: .7,
+			FishType.FISH_B: .3,
 		}
 	},
 	GameState.Stage.DEEPER: {
+		max_fish_amount = 10,
+		spawnRates = {
+			FishType.FISH_A: .5,
+			FishType.FISH_B: .4,
+			FishType.SPIKEY_FISH: .1
+		}
+	},
+	GameState.Stage.SUPERDEEP: {
+		max_fish_amount = 8,
+		spawnRates = {
+			FishType.FISH_A: .2,
+			FishType.FISH_B: .45,
+			FishType.ANGLER_FISH: .14,
+			FishType.DUMMY_FISH: .01,
+			FishType.SPIKEY_FISH: .2
+		}
+	},
+	GameState.Stage.HOT: {
+		max_fish_amount = 5,
+		spawnRates = {
+			FishType.FISH_B: .2,
+			FishType.ANGLER_FISH: .55,
+			FishType.DUMMY_FISH: .05,
+			FishType.SPIKEY_FISH: .2
+		}
+	},
+	GameState.Stage.LAVA: {
 		max_fish_amount = 4,
 		spawnRates = {
-			FishType.CLOWN_FISH: .9,
-			FishType.RARE_FISH: .1
+			FishType.ANGLER_FISH: .7,
+			FishType.DUMMY_FISH: .2,
+			FishType.SPIKEY_FISH: .1
+		}
+	},
+	GameState.Stage.VOID: {
+		max_fish_amount = 10,
+		spawnRates = {
+			FishType.DUMMY_FISH: .2,
+			FishType.SPIKEY_FISH: .8
 		}
 	}
 }

@@ -22,6 +22,9 @@ func _process(delta: float) -> void:
 func spawnNewSection(position: float):
 	var newSection = section.instantiate()
 	newSection.position.y = position
+	var i = snapped(-position, 100)
+	i = min(i, GameState.depthStageMap.keys()[len(GameState.depthStageMap.keys())-1])
+	newSection.sectionType = GameState.depthStageMap[i]
 	lastSpawned = position
 	GameState.fishes_lower_boarder = lastSpawned - sectionHeight/2 - 1
 	if position <= -50:

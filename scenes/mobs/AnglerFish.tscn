@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://l8teme4ff6qn"]
+
+[ext_resource type="Script" uid="uid://ckbs05slsrxf2" path="res://scripts/fish.gd" id="1_s4kbk"]
+[ext_resource type="ArrayMesh" uid="uid://ddip24ssl728e" path="res://meshes/SM_AnglerFish.obj" id="2_s4kbk"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_b0grq"]
+radius = 0.395173
+height = 1.53551
+
+[node name="BasicFishA" type="CharacterBody3D"]
+motion_mode = 1
+script = ExtResource("1_s4kbk")
+
+[node name="Pivot" type="Node3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+
+[node name="SmBasicFishB" type="MeshInstance3D" parent="Pivot"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.559967, 0)
+mesh = ExtResource("2_s4kbk")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.000111341, -0.0767789, 0)
+shape = SubResource("CapsuleShape3D_b0grq")
