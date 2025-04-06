@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://58m73norfj2g"]
+
+[ext_resource type="Script" uid="uid://dusm0c412ow3e" path="res://scripts/destroyable_barier.gd" id="1_yxy8j"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_bck6g"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_64ftb"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yxy8j"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_yxy8j"]
+
+[node name="DestroyableBarier" type="StaticBody3D"]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_yxy8j")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_bck6g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_64ftb")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+emitting = false
+collision_base_size = 0.0
+process_material = SubResource("ParticleProcessMaterial_yxy8j")
+draw_pass_1 = SubResource("CapsuleMesh_yxy8j")
