@@ -20,6 +20,6 @@ func _physics_process(delta):
 		if body.is_in_group("fishes"):
 			if submarine:
 				submarine.catch_fish(body) # Call catch_fish on submarine
-			body.queue_free() # Remove fish
+			#body.queue_free() # Remove fish *handled in fish.gd
 			queue_free() # Remove harpoon after hit
 			break # Only catch one fish per harpoon

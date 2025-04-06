@@ -20,8 +20,13 @@ func removeFish():
 		"weight": weight,
 		"id": get_instance_id()
 	}
+	var my_fish = InvItem.new()
+	my_fish.type = "fish"
+	my_fish.weight = fish_data.weight
+	my_fish.price = fish_data.price
+	my_fish.id = fish_data.id
 	queue_free()
-	return fish_data
+	return my_fish
 	
 
 

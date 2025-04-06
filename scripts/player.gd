@@ -22,19 +22,6 @@ func _ready():
 	print("player ready")
 
 
-func addFishToInv(data):
-	for item in GameState.inventory.items:
-		if item.id == data.id:
-			print("Duplicate fish ID detected: ", data.id)
-			return false
-
-	var my_fish = InvItem.new()
-	my_fish.type = "fish"
-	my_fish.weight = data.weight
-	my_fish.price = data.price
-	my_fish.id = data.id
-	GameState.inventory.add(my_fish)
-	return true
 
 func collision():
 	var collision = move_and_slide()
@@ -44,9 +31,7 @@ func collision():
 		var collision_info = get_slide_collision(i)
 		var collider = collision_info.get_collider()
 		if collider is CharacterBody3D:
-			if collider.has_method("removeFish"):
-				var fish_details = collider.removeFish()
-				addFishToInv(fish_details)
+			catch_fish(collider)
 
 
 func movement(_delta: float):
@@ -99,6 +84,7 @@ func _process(delta):
 func onDock():
 	GameState.inventory.sellItems()
 	print("docked")
+	
 func shoot_harpoon():
 	# Instance the harpoon
 	var harpoon = harpoon_scene.instantiate()
@@ -119,6 +105,9 @@ func shoot_harpoon():
 
 func catch_fish(fish):
 	print("Caught fish: ", fish.name) # Replace with inventory logic
+	if fish.has_method("removeFish"):
+		var fish_details = fish.removeFish()
+		GameState.inventory.add(fish_details)
 
 func _on_timer_timeout():
 	can_shoot = true
@@ -142,5 +131,6 @@ func process_depth_effects(delta):
 func process_death():
 	if GameState.health <= 0:
 		GameState.death_screen = true
+		GameState.inventory.items.clear()
 		GameState.health = 100
 		position = Vector3(-8, 0, 0.33)
