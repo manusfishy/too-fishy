@@ -78,8 +78,10 @@ func shoot_harpoon():
 	
 	if ($Pivot.rotation[1] >= 0):
 		dir = -1
-	harpoon.position = position + dir * global_transform.basis.x * -2 
+	harpoon.position = position + dir * global_transform.basis.x * -2
 	harpoon.rotation = global_transform.basis.get_euler() # Align with submarine
+
+	harpoon.direction = global_transform.basis.x.normalized() * -dir
 	
 	# Pass submarine reference to harpoon for catching fish
 	harpoon.submarine = self
