@@ -53,3 +53,9 @@ lock_rotation = true
 freeze_mode = 1
 
 [connection signal="section_changed" from="." to="Camera3D" method="change_section_environment"]
+[node name="HarpoonRay" type="RayCast3D" parent="."]
+transform = Transform3D(0.0432183, -0.999066, 0, 0.999066, 0.0432183, 0, 0, 0, 1, 0.84911, 0.396061, 0)
+
+[node name="HarpoonCD" type="Timer" parent="."]
+
+[connection signal="timeout" from="HarpoonCD" to="." method="_on_timer_timeout"]

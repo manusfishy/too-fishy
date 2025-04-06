@@ -39,11 +39,11 @@ func _physics_process(delta: float) -> void:
 		
 	if global_position.y >= -0.75:
 		if is_looking_up():
-			var deg = randf_range(min_angle, min_angle/2)
+			var deg = randf_range(min_angle, min_angle / 2)
 			set_z_rotation_and_velocity(deg)
 	elif global_position.y <= GameState.fishes_lower_boarder:
 		if !is_looking_up():
-			var deg = randf_range(max_angle/2, max_angle)
+			var deg = randf_range(max_angle / 2, max_angle)
 			set_z_rotation_and_velocity(deg)
 	elif randf() < .004:
 		set_z_rotation_and_velocity(randf_range(min_angle, max_angle))
