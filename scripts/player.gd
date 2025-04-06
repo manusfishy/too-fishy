@@ -22,18 +22,6 @@ func _ready():
 	print("player ready")
 
 
-
-func collision():
-	var collision = move_and_slide()
-	
-	# Check for collisions after movement
-	for i in get_slide_collision_count():
-		var collision_info = get_slide_collision(i)
-		var collider = collision_info.get_collider()
-		if collider is CharacterBody3D:
-			catch_fish(collider)
-
-
 func movement(_delta: float):
 	var direction = Vector3.ZERO
 	if Input.is_action_pressed("move_right"):
@@ -66,8 +54,7 @@ func movement(_delta: float):
 
 func _physics_process(delta: float) -> void:
 	movement(delta)
-	# Check colision
-	collision()
+
 	
 	var depthSnapped = snapped(GameState.depth, 100)
 	var sectionType = GameState.depthStageMap[depthSnapped]
