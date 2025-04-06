@@ -12,15 +12,7 @@ var target_velocity = Vector3.ZERO
 @onready var rope = $rope # A MeshInstance3D with CylinderMesh
 var is_hook_thrown = false
 
-var colorMap = {
-	GameState.Stage.SURFACE: Color.AQUAMARINE,
-	GameState.Stage.DEEP: Color.AQUA,
-	GameState.Stage.DEEPER: Color.CADET_BLUE,
-	GameState.Stage.SUPERDEEP: Color.DARK_CYAN,
-	GameState.Stage.HOT: Color.CORNFLOWER_BLUE,
-	GameState.Stage.LAVA: Color.ORANGE_RED,
-	GameState.Stage.VOID: Color.BLACK
-}
+signal section_changed(sectionType)
 
 func _ready():
 	print("player ready")
@@ -89,15 +81,10 @@ func _physics_process(delta: float) -> void:
 	
 	var depthSnapped = snapped(GameState.depth, 100)
 	var sectionType = GameState.depthStageMap[depthSnapped]
+	section_changed.emit(sectionType)
 	
-	$Camera3D.environment.fog_light_color = colorMap[sectionType]
 	process_death()
-	
-	
-	
-	
 
-	
 
 func _process(delta):
 	process_dock(delta)
