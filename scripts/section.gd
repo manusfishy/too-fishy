@@ -49,3 +49,7 @@ func screen_entered() -> void:
 
 func screen_exited() -> void:
 	is_on_screen = false
+
+func respawn_timer_expired() -> void:
+	if !is_on_screen:
+		spawn_fish()

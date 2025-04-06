@@ -83,5 +83,10 @@ surface_material_override/0 = ExtResource("7_ti0g3")
 transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, 0, 0, 1, 1.57438, -0.818055, 0.261556)
 shape = SubResource("BoxShape3D_t8qun")
 
+[node name="FishRespawnTimer" type="Timer" parent="."]
+wait_time = 15.0
+autostart = true
+
 [connection signal="screen_entered" from="VisibleOnScreenNotifier" to="." method="screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier" to="." method="screen_exited"]
+[connection signal="timeout" from="FishRespawnTimer" to="." method="respawn_timer_expired"]
