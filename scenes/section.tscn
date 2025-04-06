@@ -1,9 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://xqds4eqa4fys"]
+[gd_scene load_steps=8 format=3 uid="uid://xqds4eqa4fys"]
 
 [ext_resource type="Script" uid="uid://bkpen13pay85m" path="res://scripts/section.gd" id="1_fivou"]
+[ext_resource type="Texture2D" uid="uid://ba5womg2gd3ak" path="res://textures/bg_tiling_1.png" id="2_8l2i8"]
 [ext_resource type="PackedScene" uid="uid://bekjel2ayhsva" path="res://scenes/level_barrier.tscn" id="2_fivou"]
+[ext_resource type="ArrayMesh" uid="uid://dkew5403qhabh" path="res://meshes/gestein_v001.obj" id="3_fivou"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_o3jxj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yxup0"]
+albedo_texture = ExtResource("2_8l2i8")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8l2i8"]
+size = Vector3(1, 25.4579, 11.689)
 
 [node name="Section" type="Node3D" node_paths=PackedStringArray("spawn_marker_a", "spawn_marker_b")]
 script = ExtResource("1_fivou")
@@ -11,15 +19,18 @@ spawn_marker_a = NodePath("SpawnerA")
 spawn_marker_b = NodePath("SpawnerB")
 
 [node name="Background" type="MeshInstance3D" parent="."]
-transform = Transform3D(37.64, 0, 0, 0, 25, 0, 0, 0, 1, -15.293, 0, -3.007)
+transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 1, -15.293, 0, -3.007)
 mesh = SubResource("QuadMesh_o3jxj")
 skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_yxup0")
 
 [node name="RightBarrier" parent="." instance=ExtResource("2_fivou")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0240569, 0, -0.819179)
+visible = false
 
 [node name="LeftBarrier" parent="." instance=ExtResource("2_fivou")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.94, 0, -0.812)
+visible = false
 
 [node name="VisibleOnScreenNotifier" type="VisibleOnScreenNotifier3D" parent="."]
 aabb = AABB(-30, -12.5, -3, 30, 25, 5)
@@ -29,6 +40,31 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.1838, 11.0533, 0)
 
 [node name="SpawnerB" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.54129, -11.169, 0)
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.55464, 0.102249, 2.7562)
+
+[node name="GesteinV002" type="MeshInstance3D" parent="StaticBody3D2"]
+transform = Transform3D(0.92432, 0, 0, 0, 0.0514902, -1.91631, 0, 1.20637, 0.0817914, 2.14848, 1.17493, -5.26057)
+mesh = ExtResource("3_fivou")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.200813, 0)
+shape = SubResource("BoxShape3D_8l2i8")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.0818, -0.160999, 2.7562)
+shape = SubResource("BoxShape3D_8l2i8")
+
+[node name="GesteinV001" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(0.92432, 0, 0, 0, 0.0514902, -1.91631, 0, 1.20637, 0.0817914, -29.1315, 1.27718, -0.635346)
+mesh = ExtResource("3_fivou")
+skeleton = NodePath("../..")
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier" to="." method="screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier" to="." method="screen_exited"]
