@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=24 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://b3j6kki1bc2xs" path="res://scenes/boss_section.tscn" id="5_si52b"]
 [ext_resource type="Script" uid="uid://cldevqp1odjtl" path="res://scripts/hud.gd" id="7_c16ls"]
 [ext_resource type="PackedScene" path="res://scenes/lava.tscn" id="7_r6p65"]
+[ext_resource type="StyleBox" uid="uid://bx8skthds5uiu" path="res://scenes/inventory/main_scene.tres" id="9_6u1mn"]
 [ext_resource type="PackedScene" uid="uid://bip40vv31g12d" path="res://scenes/inventory/inv_ui.tscn" id="9_c1pb6"]
 [ext_resource type="Texture2D" uid="uid://criy5nis30pph" path="res://textures/UI_element_background.png" id="10_01n6w"]
 [ext_resource type="Script" uid="uid://cau06s0ctjwx8" path="res://scripts/upgrades.gd" id="10_6wevv"]
@@ -24,15 +25,17 @@ albedo_texture = ExtResource("4_c1pb6")
 
 [sub_resource type="TorusMesh" id="TorusMesh_o3jxj"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_01n6w"]
-bg_color = Color(0, 0.352941, 1, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6u1mn"]
+bg_color = Color(0, 0.360784, 0.831373, 1)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [sub_resource type="Theme" id="Theme_18nlu"]
-ProgressBar/styles/fill = SubResource("StyleBoxFlat_01n6w")
+Button/styles/normal = null
+PanelContainer/styles/panel = ExtResource("9_6u1mn")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_6u1mn")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_01n6w"]
 
