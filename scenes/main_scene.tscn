@@ -84,9 +84,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -35, 0)
 [node name="Section2" parent="Level" instance=ExtResource("4_gubc5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
 
-[node name="DestroyableBarier" parent="Level/Section2" instance=ExtResource("8_si52b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.92443, 7.05023, 0)
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.94702, 0.320556, -0.0199303, -0.0267635, 0.140602, 0.989705, 0.320058, -0.936736, 0.141732, -6.47082, 1.04463, 15.1856)
 
