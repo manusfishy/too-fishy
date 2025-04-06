@@ -1,4 +1,4 @@
-extends RigidBody3D
+extends StaticBody3D
 var swing_active = false
 var back_swing_active = false
 @export var collision_detected = false
@@ -11,8 +11,8 @@ var swing_time = 5.0
 
 func _ready():
 	position = Vector3(0, 0, 0)
-	freeze_mode = RigidBody3D.FREEZE_MODE_KINEMATIC
-	gravity_scale = 0
+	#freeze_mode = RigidBody3D.FREEZE_MODE_KINEMATIC
+	#gravity_scale = 0
 	if not has_node("GPUParticles3D"):
 		var particle_node = GPUParticles3D.new()
 		particle_node.name = "GPUParticles3D"

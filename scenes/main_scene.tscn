@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=19 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
@@ -12,6 +12,8 @@
 [ext_resource type="Script" uid="uid://dhv52dohn5s4r" path="res://scripts/death_screen.gd" id="10_e1cbu"]
 [ext_resource type="PackedScene" uid="uid://d0ykw70micab6" path="res://scenes/boss.tscn" id="11_e1cbu"]
 [ext_resource type="Script" uid="uid://dx1hxd4wnymb1" path="res://scripts/boss_dialog_ui.gd" id="12_mngbo"]
+[ext_resource type="PackedScene" path="res://scenes/cheats.tscn" id="13_4w45t"]
+[ext_resource type="Script" uid="uid://bjp67tva3ov6n" path="res://scripts/fps_counter.gd" id="14_r6p65"]
 [ext_resource type="PackedScene" uid="uid://b87oo8x46lj3r" path="res://scenes/cheats.tscn" id="13_4w45t"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_c16ls"]
@@ -191,3 +193,12 @@ offset_left = 434.0
 offset_top = 82.0
 offset_right = 748.0
 offset_bottom = 258.0
+
+[node name="Label" type="Label" parent="UI"]
+layout_mode = 2
+offset_left = 167.0
+offset_top = 1.0
+offset_right = 326.0
+offset_bottom = 24.0
+text = "FPS"
+script = ExtResource("14_r6p65")

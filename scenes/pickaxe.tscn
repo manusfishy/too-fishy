@@ -8,7 +8,7 @@
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_dqkch"]
 
-[node name="pickaxe" type="RigidBody3D"]
+[node name="pickaxe" type="StaticBody3D"]
 axis_lock_linear_z = true
 axis_lock_angular_x = true
 axis_lock_angular_y = true
@@ -37,5 +37,3 @@ skeleton = NodePath("../../..")
 transform = Transform3D(0.483977, 0.0360157, 0.124264, 0.0140292, 0.967955, -0.124776, -0.124776, 0.248528, 0.467963, 3.0264, 0.758962, 4.47035e-08)
 mesh = SubResource("CapsuleMesh_dqkch")
 skeleton = NodePath("../../..")
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
