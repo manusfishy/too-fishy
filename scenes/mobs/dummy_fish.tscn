@@ -20,7 +20,7 @@ radius = 0.819336
 
 [node name="DummyFish" type="CharacterBody3D" groups=["fishes"]]
 axis_lock_linear_z = true
-axis_lock_angular_y = true
+axis_lock_angular_x = true
 motion_mode = 1
 script = ExtResource("1_e3e0o")
 

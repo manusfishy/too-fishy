@@ -8,6 +8,8 @@ radius = 0.395173
 height = 1.53551
 
 [node name="BasicFishA" type="CharacterBody3D"]
+axis_lock_linear_z = true
+axis_lock_angular_x = true
 motion_mode = 1
 script = ExtResource("1_s4kbk")
 
