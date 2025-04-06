@@ -88,3 +88,15 @@ func is_facing_left() -> bool:
 	
 func is_looking_up() -> bool:
 	return rotation[2] > 0
+	
+func scatter(body: Node3D) -> void:
+	if (body.global_position.x < global_position.x && is_facing_left() or 
+		body.global_position.x > global_position.x && !is_facing_left()):
+		rotate_y(deg_to_rad(180))
+	if (body.global_position.y < global_position.y):
+		set_z_rotation_and_velocity(randf_range(35, 55))
+	else:
+		set_z_rotation_and_velocity(randf_range(-35, -55))
+	
+		
+	pass

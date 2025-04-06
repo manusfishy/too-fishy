@@ -144,3 +144,8 @@ func process_death():
 		GameState.paused = true
 		GameState.health = 100
 		position = Vector3(-8, 0, 0.33)
+
+
+func scatter_area_entered(body: Node3D) -> void:
+	if body.is_in_group("fishes"):
+		body.scatter(self)
