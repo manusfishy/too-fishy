@@ -26,6 +26,7 @@ func _process(delta):
 		else:
 			open()
 	if is_open:
+		getTotal()
 		update_display()
 	if Input.is_action_just_pressed("esc"):
 		close()
