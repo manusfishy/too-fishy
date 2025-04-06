@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://cldevqp1odjtl" path="res://scripts/hud.gd" id="7_c16ls"]
 [ext_resource type="PackedScene" uid="uid://bip40vv31g12d" path="res://scenes/inventory/inv_ui.tscn" id="9_c1pb6"]
 [ext_resource type="Script" uid="uid://cau06s0ctjwx8" path="res://scripts/upgrades.gd" id="10_6wevv"]
-[ext_resource type="Script" uid="uid://dhv52dohn5s4r" path="res://scripts/death_screen.gd" id="10_e1cbu"]
+[ext_resource type="Script" path="res://scripts/death_screen.gd" id="10_e1cbu"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_c16ls"]
 

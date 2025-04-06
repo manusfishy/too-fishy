@@ -37,7 +37,7 @@ func addFishToInv(data):
 	my_fish.weight = data.weight
 	my_fish.price = data.price
 	my_fish.id = data.id
-	GameState.inventory.items.append(my_fish)
+	GameState.inventory.add(my_fish)
 	return true  
 
 func collision():
