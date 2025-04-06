@@ -35,7 +35,5 @@ func spawnBoss(position: float):
 	spawned_boss.position.z = 0.33
 	spawned_boss.position.x = -5
 	add_child(spawned_boss)
-	Boss.boss_spawned = true
-	Boss.boss_dialog_displayed = true
-	GameState.paused = true
+	Boss.setBossSpawned()
 	
