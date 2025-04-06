@@ -13,6 +13,8 @@
 [ext_resource type="Script" uid="uid://dhv52dohn5s4r" path="res://scripts/death_screen.gd" id="10_e1cbu"]
 [ext_resource type="PackedScene" uid="uid://d0ykw70micab6" path="res://scenes/boss.tscn" id="11_e1cbu"]
 [ext_resource type="Script" uid="uid://dx1hxd4wnymb1" path="res://scripts/boss_dialog_ui.gd" id="12_mngbo"]
+[ext_resource type="PackedScene" path="res://scenes/cheats.tscn" id="13_4w45t"]
+[ext_resource type="Script" uid="uid://bjp67tva3ov6n" path="res://scripts/fps_counter.gd" id="14_r6p65"]
 [ext_resource type="PackedScene" uid="uid://b87oo8x46lj3r" path="res://scenes/cheats.tscn" id="13_4w45t"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_c16ls"]
