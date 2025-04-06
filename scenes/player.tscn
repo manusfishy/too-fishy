@@ -7,11 +7,11 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7cn6r"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qhqgy"]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dqkch"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_dqkch"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_qlg0r"]
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_qlg0r"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_tuyoq"]
 
 [node name="Player" type="CharacterBody3D"]
 axis_lock_linear_z = true
@@ -27,32 +27,23 @@ shape = SubResource("CapsuleShape3D_7cn6r")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.935049, 0.35452, 0, -0.35452, 0.935049, 0, 2.39688, 5.76341)
 
-[node name="hook" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.366111, 0.684915, 0.292612)
-physics_material_override = SubResource("PhysicsMaterial_qhqgy")
-script = ExtResource("2_g2els")
-
-[node name="hook mesh" type="MeshInstance3D" parent="hook"]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, -0.156422, 0)
-mesh = SubResource("CapsuleMesh_dqkch")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="hook"]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
-shape = SubResource("CylinderShape3D_qlg0r")
-
-[node name="rope" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.366111, 0.684915, 0.292612)
-physics_material_override = SubResource("PhysicsMaterial_qhqgy")
-
-[node name="rope" type="MeshInstance3D" parent="rope"]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.350942, -0.156422, 0)
-mesh = SubResource("CapsuleMesh_dqkch")
-skeleton = NodePath("../..")
-
 [node name="Pivot" type="Node3D" parent="."]
 transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0.155944, 0)
 
 [node name="submarine" parent="Pivot" instance=ExtResource("2_qhqgy")]
+
+[node name="hook" type="RigidBody3D" parent="."]
+transform = Transform3D(-0.968605, 0.248605, 0, -0.248605, -0.968605, 0, 0, 0, 1, -0.621571, 0.645113, 0.645601)
+physics_material_override = SubResource("PhysicsMaterial_dqkch")
+script = ExtResource("2_g2els")
+
+[node name="hook mesh" type="MeshInstance3D" parent="hook"]
+transform = Transform3D(0.170834, 0.0974581, -0.0362987, -0.0890701, 0.173146, 0.0456837, 0.0536861, -0.022856, 0.191299, -0.0268681, -0.125002, -0.0539815)
+mesh = SubResource("CapsuleMesh_qlg0r")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="hook"]
+transform = Transform3D(0.170322, 0.104836, 0, -0.104836, 0.170322, 0, 0, 0, 0.2, -0.0592441, -0.162764, -0.0526057)
+shape = SubResource("CylinderShape3D_tuyoq")
 
 [connection signal="body_entered" from="hook" to="hook" method="_on_body_entered"]
