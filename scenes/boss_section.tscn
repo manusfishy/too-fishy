@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://b3j6kki1bc2xs"]
+
+[ext_resource type="PackedScene" uid="uid://xqds4eqa4fys" path="res://scenes/section.tscn" id="1_1j4rh"]
+[ext_resource type="ArrayMesh" uid="uid://j1ghwew3fuj1" path="res://meshes/SM_FishSubmarine.obj" id="2_vk6kq"]
+[ext_resource type="ArrayMesh" uid="uid://dkew5403qhabh" path="res://meshes/gestein_v001.obj" id="3_vk6kq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b8wpq"]
+albedo_color = Color(0.0617123, 0.341111, 0.417972, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vk6kq"]
+size = Vector3(5.37152, 9.52234, 17.485)
+
+[node name="BossSection" type="Node3D"]
+
+[node name="Section" parent="." instance=ExtResource("1_1j4rh")]
+
+[node name="Section2" parent="." instance=ExtResource("1_1j4rh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -25, 0)
+
+[node name="Section3" parent="." instance=ExtResource("1_1j4rh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 0)
+
+[node name="Friend" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.19162, -42.9264, -0.33)
+
+[node name="SmFishSubmarine" type="MeshInstance3D" parent="Friend"]
+transform = Transform3D(0.17, 0, 0, 0, 0.17, 0, 0, 0, 0.17, 0.328859, 1.72861, 0)
+mesh = ExtResource("2_vk6kq")
+surface_material_override/0 = SubResource("StandardMaterial3D_b8wpq")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(-0.0290731, 0, -0.999577, -0.996283, -0.0811209, 0.0289773, -0.0810867, 0.996704, 0.00235844, -4.98166, -32.2469, -2.98919)
+
+[node name="GesteinV001" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = ExtResource("3_vk6kq")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0726013, 4.62616, 0.645325)
+shape = SubResource("BoxShape3D_vk6kq")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+transform = Transform3D(0.890488, 0.073508, -0.44903, -0.447723, -0.0343101, -0.893514, -0.0810867, 0.996704, 0.00235844, -15.6951, -38.3413, -2.98919)
+
+[node name="GesteinV001" type="MeshInstance3D" parent="StaticBody3D2"]
+mesh = ExtResource("3_vk6kq")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0726013, 4.62616, 0.645325)
+shape = SubResource("BoxShape3D_vk6kq")

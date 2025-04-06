@@ -4,6 +4,7 @@ extends Node3D
 @export var level_wrapper: Node3D
 @export var player: CharacterBody3D
 @export var boss: PackedScene
+@export var boss_section: PackedScene
 
 @export var sectionHeight: float
 @export var preloadSectionsCount: int
@@ -39,4 +40,16 @@ func spawnBoss(position: float):
 	spawned_boss.position.x = -5
 	add_child(spawned_boss)
 	Boss.setBossSpawned()
+	
+	position = lastSpawned - sectionHeight
+	var bossSection = boss_section.instantiate()
+	bossSection.position.y = position
+	var i = snapped(-position, 100)
+	
+	i = min(i, GameState.depthStageMap.keys()[len(GameState.depthStageMap.keys())-1])
+	
+	lastSpawned = position + 50
+	GameState.fishes_lower_boarder = lastSpawned - sectionHeight/2 - 1
+
+	add_child(bossSection)
 	
