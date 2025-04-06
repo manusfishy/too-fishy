@@ -23,3 +23,9 @@ func setBossSpawned():
 	boss_dialog_index = 0
 	boss_dialog_section = BossDialogSections.BOSS_INTRO
 	GameState.paused = true
+
+func attackBoss():
+	boss_dialog_displayed = true
+	boss_dialog_index = 0
+	boss_dialog_section = BossDialogSections.BOSS_KILLS_FRIEND
+	GameState.paused = true

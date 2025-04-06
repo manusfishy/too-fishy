@@ -51,7 +51,7 @@ var god_mode = false
 var health = 100.0
 var headroom = 0
 var death_screen = false
-var paused = false
+var paused = true
 
 var inventory: Inv = Inv.new()
 
@@ -70,7 +70,7 @@ func upgrade(upgrade: Upgrade) -> bool:
 	var cost = getUpgradeCost(upgrade)
 	if money >= cost && upgrades[upgrade] < maxUpgrades[upgrade]:
 		money -= cost
-		upgrades[upgrade] +=1
+		upgrades[upgrade] += 1
 		return true
 	else:
 		return false

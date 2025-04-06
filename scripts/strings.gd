@@ -24,5 +24,5 @@ var boss_dialog_lines = {
 	Boss.BossDialogSections.TUTORIAL2 :["I found that the pickaxe is actually very useful", "You can break the barriers with them"],
 	Boss.BossDialogSections.RESCUE_CALL :["Uhhhh- I did an oopsie", "I think you need to come and get me :S"],
 	Boss.BossDialogSections.BOSS_INTRO :["Hahaha, I got your friend, looser!", "You better not attack me or he dies!"],
-	Boss.BossDialogSections.BOSS_KILLS_FRIEND :["Lalala Test"],
+	Boss.BossDialogSections.BOSS_KILLS_FRIEND :["Ohhhh, that was a mistake!", "*Splash*", "Your friend is dead now!"],
 	}

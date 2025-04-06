@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://dv7qrtiq87nj0"]
+
+[ext_resource type="Texture2D" uid="uid://dwvab1ggd2k72" path="res://textures/BASE_color_Stein_v001.png" id="1_6ynrs"]
+[ext_resource type="Texture2D" uid="uid://ba5hdxbc7djed" path="res://textures/NORMAL_Stein_v001.png" id="2_e6ajb"]
+
+[resource]
+albedo_texture = ExtResource("1_6ynrs")
+normal_enabled = true
+normal_scale = 0.21
+normal_texture = ExtResource("2_e6ajb")
