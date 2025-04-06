@@ -10,7 +10,7 @@ var target_velocity = Vector3.ZERO
 
 @export var inventory: Inv
 
-
+@onready var pickaxe_scene = preload("res://scenes/pickaxe.tscn")
 @onready var rope = $rope # A MeshInstance3D with CylinderMesh
 var is_hook_thrown = false
 
@@ -27,6 +27,7 @@ var colorMap = {
 func _ready():
 	# Ensure hook starts as a child of the player
 	hook.freeze = true # Prevents physics until thrown
+	var pickaxe_instance = pickaxe_scene.instantiate()
 
 func _input(event):
 	if event.is_action_pressed("throw"): # Bind "throw" to a key (e.g., left mouse)

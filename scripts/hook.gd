@@ -5,5 +5,5 @@ func _on_body_entered(body):
 		# Stop the hook (e.g., stick to surface)
 		linear_velocity = Vector3.ZERO
 		angular_velocity = Vector3.ZERO
-		freeze = true
+		#freeze = true
 		print("Hook hit: ", body.name)

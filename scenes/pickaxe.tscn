@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://cwlmu2g8odpra"]
+
+[ext_resource type="Script" uid="uid://dronp26id7m8c" path="res://scripts/pickaxe.gd" id="1_40cab"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qhqgy"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_40cab"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_dqkch"]
+
+[node name="pickaxe" type="RigidBody3D"]
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+physics_material_override = SubResource("PhysicsMaterial_qhqgy")
+script = ExtResource("1_40cab")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.330642, 0, 0)
+shape = SubResource("CapsuleShape3D_40cab")
+
+[node name="Pivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.319393, 0, 0)
+
+[node name="pickaxe mesh" type="CSGCombiner3D" parent="Pivot"]
+transform = Transform3D(0.2, 0, 0, 0, 0.193717, 0.049738, 0, -0.049738, 0.193717, -0.622667, -0.156422, 0)
+operation = 1
+calculate_tangents = false
+use_collision = true
+
+[node name="shaft mesh" type="MeshInstance3D" parent="Pivot/pickaxe mesh"]
+transform = Transform3D(-2.18557e-08, -1, -4.44089e-16, 0.5, -4.37114e-08, -1.94118e-23, 1.57772e-30, -8.88178e-16, 0.5, 2.2324, 0.758962, 1.49012e-08)
+mesh = SubResource("CapsuleMesh_dqkch")
+skeleton = NodePath("../../..")
+
+[node name="shaft mesh2" type="MeshInstance3D" parent="Pivot/pickaxe mesh"]
+transform = Transform3D(0.483977, 0.0360157, 0.124264, 0.0140292, 0.967955, -0.124776, -0.124776, 0.248528, 0.467963, 3.0264, 0.758962, 4.47035e-08)
+mesh = SubResource("CapsuleMesh_dqkch")
+skeleton = NodePath("../../..")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
