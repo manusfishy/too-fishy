@@ -94,13 +94,13 @@ func shoot_harpoon():
 	var harpoon = harpoon_scene.instantiate()
 	get_parent().add_child(harpoon)
 	var dir = 1
-	
 	if ($Pivot.rotation[1] >= 0):
 		dir = -1
-	harpoon.position = position + dir * global_transform.basis.x * -2
-	harpoon.rotation = global_transform.basis.get_euler() # Align with submarine
+		# harpoon.rotation = global_transform.basis.z.normalized() # rotate only on the correct side
+		harpoon.rotate_z(deg_to_rad(180))
 
-	harpoon.direction = global_transform.basis.x.normalized() * -dir
+	harpoon.position = position + dir * global_transform.basis.x * -1 # move harpoon to correct side
+	harpoon.direction = global_transform.basis.y.normalized() # set correct direction for the movement in harpoon
 	
 	# Pass submarine reference to harpoon for catching fish
 	harpoon.submarine = self
