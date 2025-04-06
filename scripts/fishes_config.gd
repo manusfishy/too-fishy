@@ -4,7 +4,8 @@ extends Node
 enum FishType {
 	GOLD_FISH,
 	CLOWN_FISH,
-	RARE_FISH
+	RARE_FISH,
+	SPIKEY_FISH
 }
 
 var fishConfigMap = {
@@ -34,6 +35,15 @@ var fishConfigMap = {
 		speed_max = 1.5,
 		difficulty = 5,
 		scene = preload("res://scenes/mobs/rare_fish.tscn")
+	},
+	FishType.SPIKEY_FISH: {
+		weight_min = 5,
+		weight_max = 10,
+		price_weight_multiplier = 3,
+		speed_min = 0.5,
+		speed_max = 1.5,
+		difficulty = 5,
+		scene = preload("res://scenes/mobs/spikey_fish.tscn")
 	}
 }
 
@@ -41,7 +51,7 @@ var fishSectionMap = {
 	GameState.Stage.SURFACE: {
 		max_fish_amount = 4,
 		spawnRates = {
-			FishType.RARE_FISH: 1
+			FishType.SPIKEY_FISH: 1
 		}
 	},
 	GameState.Stage.DEEP: {
