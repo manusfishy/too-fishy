@@ -4,7 +4,7 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6wevv"]
 
-[node name="Boss" type="CharacterBody3D"]
+[node name="Boss" type="CharacterBody3D" groups=["boss"]]
 
 [node name="Pivot" type="Node3D" parent="."]
 
