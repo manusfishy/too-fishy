@@ -63,14 +63,6 @@ func _physics_process(_delta: float) -> void:
 	
 
 func _process(delta):
-	if is_hook_thrown:
-		var start = global_transform.origin
-		var end = hook.global_transform.origin
-		var distance = start.distance_to(end)
-		rope.scale.y = distance # Stretch cylinder
-		rope.global_transform.origin = (start + end) / 2 # Center it
-		rope.look_at(end, Vector3.UP) # Orient toward hook
-		
 	process_dock(delta)
 	process_depth_effects(delta)
 	
@@ -87,15 +79,3 @@ func process_depth_effects(delta):
 	GameState.headroom = ((GameState.upgrades[GameState.Upgrade.DEPTH_RESISTANCE] + 1) * 100 - GameState.depth)
 	if GameState.headroom < 0:
 		GameState.health += GameState.headroom * delta
-
-func throw_hook():
-	# Detach hook from player
-	hook.reparent(get_tree().root.get_child(0)) # Move to world root
-	hook.freeze = false # Enable physics
-	is_holding_hook = false
-	
-	# Calculate throw direction (forward from camera)
-	var throw_direction = camera.global_transform.basis.x.normalized()
-	
-	# Apply impulse to throw the hook
-	hook.apply_central_impulse(throw_direction * throw_strength)

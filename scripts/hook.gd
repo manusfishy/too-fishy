@@ -39,4 +39,3 @@ func _on_body_entered(body):
 		var new_parent = get_parent().get_node("Pivot")
 		reparent(new_parent)
 		global_transform = new_parent.global_transform
-		

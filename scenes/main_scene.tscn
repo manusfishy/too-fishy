@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=14 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://xqds4eqa4fys" path="res://scenes/section.tscn" id="4_gubc5"]
 [ext_resource type="PackedScene" uid="uid://durrtmu3i450r" path="res://scenes/player.tscn" id="4_pu3yx"]
 [ext_resource type="PackedScene" uid="uid://bekjel2ayhsva" path="res://scenes/level_barrier.tscn" id="5_rt2n2"]
-[ext_resource type="PackedScene" uid="uid://dmfvhyoli7g7" path="res://scenes/destroyable_barier.tscn" id="7_6wevv"]
 [ext_resource type="Script" uid="uid://cldevqp1odjtl" path="res://scripts/hud.gd" id="7_c16ls"]
 [ext_resource type="PackedScene" uid="uid://bip40vv31g12d" path="res://scenes/inventory/inv_ui.tscn" id="9_c1pb6"]
 [ext_resource type="Script" uid="uid://cau06s0ctjwx8" path="res://scripts/upgrades.gd" id="10_6wevv"]
@@ -59,8 +58,18 @@ skeleton = NodePath("../../..")
 [node name="Section" parent="Level" instance=ExtResource("4_gubc5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -35, 0)
 
-[node name="DestroyableBarier" parent="Level/Section" instance=ExtResource("7_6wevv")]
+[node name="DestroyableBarier" parent="Level/Section"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -5.71801, 17.2179, 2.99864)
+script = null
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.94702, 0.320556, -0.0199303, -0.0267635, 0.140602, 0.989705, 0.320058, -0.936736, 0.141732, -6.47082, 1.04463, 15.1856)
