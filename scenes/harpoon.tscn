@@ -12,6 +12,8 @@ script = ExtResource("1_psboj")
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 shape = SubResource("CylinderShape3D_psboj")
 
 [node name="Lanceharpoon" parent="." instance=ExtResource("2_wbtou")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)

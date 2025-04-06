@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://cv7cru1o8ec0"]
+
+[ext_resource type="PackedScene" uid="uid://fs8tke7i5p2e" path="res://meshes/ak47_0406195124_texture.fbx" id="1_jfj41"]
+
+[node name="ak47_0406195124_texture" instance=ExtResource("1_jfj41")]

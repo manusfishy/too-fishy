@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b4nuxfxo3kvlq" path="res://scripts/player.gd" id="1_3vyb7"]
 [ext_resource type="PackedScene" uid="uid://cdvfasjj4km5l" path="res://meshes/FishSub.fbx" id="2_qhqgy"]
-[ext_resource type="Script" path="res://scripts/camera.gd" id="3_qlg0r"]
+[ext_resource type="Script" uid="uid://cwbxcfefm5qdj" path="res://scripts/camera.gd" id="3_qlg0r"]
 [ext_resource type="PackedScene" uid="uid://cwlmu2g8odpra" path="res://scenes/pickaxe.tscn" id="4_qlg0r"]
 [ext_resource type="ArrayMesh" uid="uid://j1ghwew3fuj1" path="res://meshes/SM_FishSubmarine.obj" id="4_tuyoq"]
 
@@ -27,9 +27,8 @@ adjustment_color_correction = SubResource("GradientTexture1D_tuyoq")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qlg0r"]
 albedo_color = Color(0.444845, 0.212952, 0.366369, 1)
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qlg0r"]
-radius = 1.11249
-height = 3.72887
+[sub_resource type="BoxShape3D" id="BoxShape3D_qlg0r"]
+size = Vector3(1, 1.13977, 1)
 
 [node name="Player" type="CharacterBody3D"]
 axis_lock_linear_z = true
@@ -62,15 +61,19 @@ transform = Transform3D(4.96379, 0.600684, 0, -0.600684, 4.96379, 0, 0, 0, 5, 2.
 
 [node name="pickaxe" parent="Pivot/SmFishSubmarine/Hand" instance=ExtResource("4_qlg0r")]
 transform = Transform3D(0.969579, 0.244783, 0, -0.244783, 0.969579, 0, 0, 0, 1, 0, 0, 0)
-collision_layer = 1
-collision_mask = 1
 
 [node name="UnlockableLamp" type="SpotLight3D" parent="Pivot/SmFishSubmarine"]
 transform = Transform3D(-4.37114e-08, 0.207912, -0.978148, 0, 0.978148, 0.207912, 1, 9.08811e-09, -4.27562e-08, 5.34924, 1.78326, 0.00318527)
 visible = false
-light_energy = 10.0
-spot_range = 15.0
-spot_angle = 20.0
+light_energy = 16.0
+light_indirect_energy = 16.0
+light_volumetric_fog_energy = 6.98
+light_size = 0.121
+light_specular = 3.086
+shadow_normal_bias = 2.717
+distance_fade_enabled = true
+spot_range = 37.798
+spot_angle = 16.37
 spot_angle_attenuation = 2.92817
 
 [node name="HarpoonRay" type="RayCast3D" parent="."]
@@ -79,11 +82,12 @@ transform = Transform3D(0.0432183, -0.999066, 0, 0.999066, 0.0432183, 0, 0, 0, 1
 [node name="HarpoonCD" type="Timer" parent="."]
 
 [node name="ScatterArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.20848, 0)
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ScatterArea"]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, -2.90511e-08, 0.0151062)
-shape = SubResource("CapsuleShape3D_qlg0r")
+transform = Transform3D(7.99981, 0.0550123, 0, -0.0550123, 7.99981, 0, 0, 0, 8, 0.0548361, -1.6927, 0.0304167)
+shape = SubResource("BoxShape3D_qlg0r")
 debug_color = Color(0.864206, 0.357529, 1.92523e-07, 0.42)
 
 [connection signal="section_changed" from="." to="Camera3D" method="change_section_environment"]
