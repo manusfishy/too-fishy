@@ -13,7 +13,7 @@ func _ready():
 	addButton("Upgrade All", func(): upgrade_all())
 	addButton("1000+ $", func(): GameState.money += 1000)
 	addButton("Down 100", func(): GameState.player_node.position.y -= 100)
-	addButton("Up 100", func(): GameState.player_node.position.y += 100)
+	addButton("Go Up", func(): GameState.player_node.position.y = 0)
 	addButton("God mode", func(): GameState.god_mode = not GameState.god_mode)
 	
 
