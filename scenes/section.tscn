@@ -5,9 +5,8 @@
 
 [sub_resource type="QuadMesh" id="QuadMesh_o3jxj"]
 
-[node name="Section" type="Node3D" node_paths=PackedStringArray("water", "spawn_marker_a", "spawn_marker_b")]
+[node name="Section" type="Node3D" node_paths=PackedStringArray("spawn_marker_a", "spawn_marker_b")]
 script = ExtResource("1_fivou")
-water = NodePath("")
 spawn_marker_a = NodePath("SpawnerA")
 spawn_marker_b = NodePath("SpawnerB")
 
