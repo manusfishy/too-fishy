@@ -11,7 +11,7 @@ radius = 0.819336
 
 [node name="RareFish" type="CharacterBody3D" groups=["fishes"]]
 axis_lock_linear_z = true
-axis_lock_angular_y = true
+axis_lock_angular_x = true
 motion_mode = 1
 script = ExtResource("1_i55c0")
 

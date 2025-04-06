@@ -8,12 +8,12 @@ var direction = Vector3.ZERO # Direction set by submarine
 func _ready():
 	# Start a timer to despawn if it doesn't hit anything
 	await get_tree().create_timer(lifetime).timeout
-	
 	queue_free()
 
 func _physics_process(delta):
 	# Move harpoon# Move in the direction set by the submarine
 	translate(direction * speed * delta)
+
 	
 	# Check for collisions with fish
 	for body in $Area3D.get_overlapping_bodies():
