@@ -51,6 +51,7 @@ axis_lock_linear_z = false
 can_sleep = false
 lock_rotation = true
 freeze_mode = 1
+script = null
 
 [node name="HarpoonRay" type="RayCast3D" parent="."]
 transform = Transform3D(0.0432183, -0.999066, 0, 0.999066, 0.0432183, 0, 0, 0, 1, 0.84911, 0.396061, 0)

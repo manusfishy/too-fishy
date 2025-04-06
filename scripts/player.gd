@@ -59,6 +59,8 @@ func movement(_delta: float):
 	
 	target_velocity.z = 0
 	velocity = target_velocity
+	if GameState.paused:
+		velocity = Vector3.ZERO
 	move_and_slide()
 
 
@@ -84,7 +86,6 @@ func _process(delta):
 func onDock():
 	GameState.inventory.sellItems()
 	print("docked")
-	
 func shoot_harpoon():
 	# Instance the harpoon
 	var harpoon = harpoon_scene.instantiate()
@@ -132,5 +133,6 @@ func process_death():
 	if GameState.health <= 0:
 		GameState.death_screen = true
 		GameState.inventory.items.clear()
+		GameState.paused = true
 		GameState.health = 100
 		position = Vector3(-8, 0, 0.33)

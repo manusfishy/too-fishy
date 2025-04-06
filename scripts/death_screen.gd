@@ -7,4 +7,7 @@ func _process(delta: float) -> void:
 		visible = false
 
 func _ready() -> void:
-	$VBoxContainer/Button.pressed.connect(func (): GameState.death_screen = false)
+	$VBoxContainer/Button.pressed.connect(func (): 
+		GameState.death_screen = false
+		GameState.paused = false
+	)
