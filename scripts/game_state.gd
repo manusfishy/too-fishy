@@ -42,7 +42,7 @@ var upgrades = {
 }
 var depth = 0
 var maxDepthReached = 0
-var money = 600
+var money = 25
 var isDocked = false
 var fishes_lower_boarder = -15 - 12
 
