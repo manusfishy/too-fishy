@@ -104,7 +104,7 @@ shape = SubResource("BoxShape3D_qlg0r")
 debug_color = Color(0.864206, 0.357529, 1.92523e-07, 0.42)
 
 [node name="PopupSpawnPosition" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0282827, 0.666139, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.153614, 0.666139, 0)
 
 [connection signal="section_changed" from="." to="Camera3D" method="change_section_environment"]
 [connection signal="timeout" from="HarpoonCD" to="." method="_on_timer_timeout"]
