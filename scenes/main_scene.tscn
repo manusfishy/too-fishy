@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=28 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://b87oo8x46lj3r" path="res://scenes/cheats.tscn" id="13_4w45t"]
 [ext_resource type="Script" path="res://scripts/fps_counter.gd" id="14_r6p65"]
 [ext_resource type="PackedScene" uid="uid://b35mxcc3d74di" path="res://scenes/WaterPlane.tscn" id="20_k6f3i"]
+[ext_resource type="Script" uid="uid://d1aerdanr4q2e" path="res://scripts/soundplayer.gd" id="21_xdqt8"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_c16ls"]
 
@@ -51,6 +52,13 @@ transform = Transform3D(0.94702, 0.320556, -0.0199305, -0.0267635, 0.140602, 0.9
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -0.33)
 speed_vertical = 1.5
 speed_horizontal = 1.5
+
+[node name="SoundPlayer" type="AudioStreamPlayer3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.258023, 0, 0.33)
+script = ExtResource("21_xdqt8")
+
+[node name="player" type="AudioStreamPlayer2D" parent="CharacterBody3D/SoundPlayer"]
+volume_db = -11.876
 
 [node name="Level" type="Node3D" parent="." node_paths=PackedStringArray("level_wrapper", "player")]
 script = ExtResource("3_c16ls")

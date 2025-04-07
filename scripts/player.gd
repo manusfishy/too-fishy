@@ -8,7 +8,7 @@ var throw_strength = 15.0 # Adjust for distance
 var is_holding_hook = true
 var target_velocity = Vector3.ZERO
 
-
+@onready var sound_player = $SoundPlayer
 @onready var pickaxe_scene = preload("res://scenes/pickaxe.tscn")
 @export var inventory: Inv
 @onready var cooldown_timer = $HarpoonCD # Timer node, set to one-shot, 2s wait time
@@ -42,6 +42,7 @@ var can_be_hurt = true
 func hurtPlayer(damage: int):
 	if can_be_hurt:
 		GameState.health -= damage
+		sound_player.play_sound("ughhh")
 		can_be_hurt = false
 		get_tree().create_timer(1.0).timeout.connect(reset_hurt_cooldown)
 
@@ -107,6 +108,7 @@ func shoot_harpoon():
 	# Instance the harpoon
 	var harpoon = harpoon_scene.instantiate()
 	get_parent().add_child(harpoon)
+	sound_player.play_sound("harp")
 	var dir = 1
 	if ($Pivot.rotation[1] >= 0):
 		dir = -1
@@ -124,6 +126,7 @@ func shoot_harpoon():
 func catch_fish(fish):
 	print("Caught fish: ", fish.name) # Replace with inventory logic
 	if fish.has_method("removeFish"):
+		sound_player.play_sound("bup")
 		var fish_details = fish.removeFish()
 		GameState.inventory.add(fish_details)
 
@@ -156,6 +159,7 @@ func process_depth_effects(delta):
 
 func process_death():
 	if GameState.health <= 0:
+		sound_player.play_sound("ughhh")
 		GameState.death_screen = true
 		GameState.inventory.items.clear()
 		GameState.paused = true
