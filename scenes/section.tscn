@@ -36,6 +36,8 @@ directional_velocity_min = 0.999984
 directional_velocity_max = 1.99998
 directional_velocity_curve = SubResource("CurveXYZTexture_ms04e")
 gravity = Vector3(0, 0.5, 0)
+linear_accel_min = -0.200002
+linear_accel_max = 2.0
 scale_min = 0.0
 scale_max = 0.05
 

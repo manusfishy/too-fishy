@@ -16,6 +16,7 @@ shader_parameter/albedo = Color(0, 0.321569, 0.431373, 1)
 shader_parameter/albedo2 = Color(0, 0.47451, 0.764706, 1)
 shader_parameter/metallic = 0.0
 shader_parameter/roughness = 0.02
+shader_parameter/transparency = 0.7
 shader_parameter/wave = SubResource("NoiseTexture2D_qniod")
 shader_parameter/texture_normal = ExtResource("2_24cl4")
 shader_parameter/texture_normal2 = ExtResource("2_24cl4")
