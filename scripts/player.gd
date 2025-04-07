@@ -130,7 +130,13 @@ func catch_fish(fish):
 	if fish.has_method("removeFish"):
 		sound_player.play_sound("bup")
 		var fish_details = fish.removeFish()
-		GameState.inventory.add(fish_details)
+		if GameState.inventory.add(fish_details):
+			var weight_str = "Weight added: " + str(fish_details.weight) + " kg"
+			var price_str = "Value: $" + str(fish_details.price)
+			PopupManager.show_popup(weight_str, $PopupSpawnPosition.global_position, Color.GREEN)
+		else:
+			var inv_full_str = "Inventory full!"
+			PopupManager.show_popup(inv_full_str, $PopupSpawnPosition.global_position, Color.RED)
 
 func _on_timer_timeout():
 	can_shoot = true
