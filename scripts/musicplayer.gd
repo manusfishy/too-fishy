@@ -33,10 +33,9 @@ func _ready():
 #	600: Stage.VOID
 
 
-
 func _process(delta):
 	# Example trigger: Press "ui_accept" (e.g., Enter key) to start crossfade
-	if Signal. and not is_crossfading:
+	if Input.is_action_just_pressed("ui_accept") and not is_crossfading:
 		start_crossfade()
 	
 	# Handle the crossfade
@@ -80,5 +79,5 @@ func play_sound(sound_name: String):
 
 func _on_stage_changed(new_stage):
 	# Trigger crossfade when the stage changes
-	if new_stage == "Stage2":  # Example condition
+	if new_stage == "Stage2": # Example condition
 		start_crossfade()
