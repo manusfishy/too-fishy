@@ -96,10 +96,15 @@ func _process(delta):
 	process_dock(delta)
 	process_depth_effects(delta)
 	processTrauma(delta)		
-	
+
+
 func _input(event):
-	if Input.is_action_just_pressed("throw") and can_shoot and !GameState.paused:
-		shoot_harpoon()
+	if event is InputEventMouseButton and event.pressed:
+		if can_shoot and !GameState.paused and !is_mouse_over_ui():
+			shoot_harpoon()
+
+func is_mouse_over_ui() -> bool:
+	return get_viewport().gui_get_focus_owner() != null
 	
 func onDock():
 	GameState.inventory.sellItems()
