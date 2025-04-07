@@ -99,9 +99,10 @@ func _process(delta):
 
 
 func _input(event):
-	if event is InputEventMouseButton and event.pressed:
+	if Input.is_action_just_pressed("throw"):
 		if can_shoot and !GameState.paused and !is_mouse_over_ui():
 			shoot_harpoon()
+
 
 func is_mouse_over_ui() -> bool:
 	return get_viewport().gui_get_focus_owner() != null
