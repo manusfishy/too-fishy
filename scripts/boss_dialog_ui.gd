@@ -13,7 +13,7 @@ func _ready() -> void:
 			
 		)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Boss.boss_dialog_displayed:
 		$VBoxContainer/MessageLabel.text = Strings.boss_dialog_lines[Boss.boss_dialog_section][Boss.boss_dialog_index]
 		$VBoxContainer/NameLabel.text = Boss.boss_dialog_from[Boss.boss_dialog_section]

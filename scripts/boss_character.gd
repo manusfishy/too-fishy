@@ -35,7 +35,7 @@ func _physics_process(delta):
 			velocity = charge_direction * charge_speed
 			check_player_collision()
 	
-			var collision = move_and_slide()
+			var _collision = move_and_slide()
 			timer -= delta
 			if timer <= 0:
 				state = BossStates.COOLDOWN
@@ -62,7 +62,7 @@ func check_player_collision():
 			velocity = Vector3.ZERO
 			break
 		
-func on_player_collision(player):
+func on_player_collision(_player):
 	print("Boss hit the player!")
 	player.add_trauma(1)
 	player.sound_player.play_sound("urrgh")

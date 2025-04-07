@@ -3,10 +3,10 @@ extends PanelContainer
 @onready var grid = $VBoxContainer/GridContainer
 @export var is_open = false
 
-func addButton(text, call):
+func addButton(text, mCall):
 	var upgradeButton: Button = Button.new()
 	upgradeButton.text = text
-	upgradeButton.pressed.connect(call) 
+	upgradeButton.pressed.connect(mCall) 
 	grid.add_child(upgradeButton)
 
 func _ready():
@@ -31,12 +31,13 @@ func upgrade_all():
 	pass
 	
 func skip_dialog() -> void:
+	@warning_ignore("int_as_enum_without_cast")
 	Boss.boss_dialog_section = 999
 	Boss.boss_dialog_displayed = false
 	Boss.boss_dialog_index = 0
 	GameState.paused = false
 
-func _process(delta):
+func _process(_delta):
 	if GameState.god_mode:
 		GameState.health = 100
 	if GameState.isDocked:

@@ -49,11 +49,11 @@ func _physics_process(delta: float) -> void:
 		return
 	elif global_position.y >= -0.75:
 		if is_looking_up():
-			var deg = randf_range(min_angle, min_angle / 2)
+			var deg = randf_range(min_angle, min_angle / 2.0)
 			set_z_rotation_and_velocity(deg)
 	elif global_position.y <= GameState.fishes_lower_boarder:
 		if !is_looking_up():
-			var deg = randf_range(max_angle / 2, max_angle)
+			var deg = randf_range(max_angle / 2.0, max_angle)
 			set_z_rotation_and_velocity(deg)
 	elif randf() < .004:
 		set_z_rotation_and_velocity(randf_range(min_angle, max_angle))
@@ -61,24 +61,24 @@ func _physics_process(delta: float) -> void:
 		
 	move_and_slide()
 	
-func initialize(start_position, home, min_speed, max_speed, 
-difficulty, min_weight, max_weight, price_weight_multiplier, type, weight_multiplier, is_shiny = false):
-	self.home = home
-	self.min_speed = min_speed
-	self.max_speed = max_speed
-	self.difficulty = difficulty
-	self.weight = clamp(randf_range(min_weight, max_weight) * weight_multiplier, 
-							min_weight, max_weight)
+func initialize(mStart_position, mHome, mMin_speed, mMax_speed, 
+mDifficulty, mMin_weight, mMax_weight, price_weight_multiplier, mType, weight_multiplier, mIs_shiny = false):
+	self.home = mHome
+	self.min_speed = mMin_speed
+	self.max_speed = mMax_speed
+	self.difficulty = mDifficulty
+	self.weight = clamp(randf_range(mMin_weight, mMax_weight) * weight_multiplier, 
+							mMin_weight, mMax_weight)
 	self.price = round(weight * price_weight_multiplier)
-	self.type = type
-	self.is_shiny = is_shiny
+	self.type = mType
+	self.is_shiny = mIs_shiny
 	
-	scale = get_scale_for_weight(max_weight, min_weight, weight)
+	scale = get_scale_for_weight(mMax_weight, mMin_weight, weight)
 	
 	if self.is_shiny:
 		price = price * 3
 	speed = randf_range(min_speed, max_speed)
-	position = start_position
+	position = mStart_position
 	add_to_group("fishes")
 	
 	set_z_rotation_and_velocity(randf_range(min_angle, max_angle))
@@ -118,10 +118,10 @@ func scatter(body: Node3D) -> void:
 		
 	pass
 
-func get_scale_for_weight(max_weight, min_weight, weight) -> Vector3:
+func get_scale_for_weight(max_weight, min_weight, mWeight) -> Vector3:
 	var weight_range = (max_weight - min_weight)
 	var normal_weight = weight_range/2
-	var weight_sanitized = weight - min_weight
+	var weight_sanitized = mWeight - min_weight
 	var weight_factor = weight_sanitized / normal_weight
 	var scale_factor = 1+weight_factor*.3
 	return Vector3(scale_factor,scale_factor,1)

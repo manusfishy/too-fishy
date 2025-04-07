@@ -1,6 +1,6 @@
 extends PanelContainer
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	$MarginContainer/HUDContainer/DepthLabel.text = "Depth: %sm" % GameState.depth
 	$MarginContainer/HUDContainer/MaxDepthLabel.text = "Depth Reached: %sm" % GameState.maxDepthReached
 	$MarginContainer/HUDContainer/MoneyLabel.text = "Money: %s" % GameState.money
