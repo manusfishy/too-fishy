@@ -7,7 +7,7 @@ var fire_rate = 0.1 # Seconds between shots (600 RPM for AK-47)
 var can_shoot_ak = true
 
 func _process(delta):
-	if Input.is_action_pressed("shoot") and can_shoot_ak and GameState.upgrades[GameState.Upgrade.DualAK47]:
+	if Input.is_action_pressed("shoot") and can_shoot_ak and GameState.upgrades[GameState.Upgrade.DUALAK47]:
 			shoot()
 			can_shoot_ak = false
 			await get_tree().create_timer(fire_rate).timeout

@@ -12,7 +12,7 @@ var target_velocity = Vector3.ZERO
 @onready var pickaxe_scene = preload("res://scenes/pickaxe.tscn")
 @export var inventory: Inv
 @export var traumaShakeMode = 1
-@onready var cooldown_timer = $HarpoonCD # Timer node, set to one-shot, 2s wait time 
+@onready var cooldown_timer = $HarpoonCD # Timer node, set to one-shot, 2s wait time
 
 var harpoon_scene = preload("res://scenes/harpoon.tscn") # Path to harpoon scene
 var bullet_scene = preload("res://scenes/bullet.tscn")
@@ -95,7 +95,7 @@ func _physics_process(delta: float) -> void:
 func _process(delta):
 	process_dock(delta)
 	process_depth_effects(delta)
-	processTrauma(delta)		
+	processTrauma(delta)
 
 
 func _input(_event):
@@ -108,6 +108,7 @@ func is_mouse_over_ui() -> bool:
 	
 var sold = 0
 func onDock():
+	sound_player.play_sound("coins")
 	sold = GameState.inventory.sellItems()
 
 
@@ -117,7 +118,6 @@ func onDock():
 		#print("docked")
 	
 
-	
 func shoot_harpoon():
 	# Instance the harpoon
 	var harpoon = harpoon_scene.instantiate()
@@ -165,9 +165,9 @@ func process_dock(delta):
 		if GameState.upgrades[GameState.Upgrade.AK47] == 1 \
 			and $Pivot/SmFishSubmarine/ak47_0406195124_texture.visible == false:
 			$Pivot/SmFishSubmarine/ak47_0406195124_texture.visible = true
-		if GameState.upgrades[GameState.Upgrade.DualAK47] == 1 \
+		if GameState.upgrades[GameState.Upgrade.DUALAK47] == 1 \
 			and $Pivot/SmFishSubmarine/ak47_69420_texture2.visible == false:
-			$Pivot/SmFishSubmarine/ak47_69420_texture2.visible = true	
+			$Pivot/SmFishSubmarine/ak47_69420_texture2.visible = true
 		if not GameState.isDocked:
 			onDock()
 			GameState.isDocked = true
@@ -196,8 +196,6 @@ func scatter_area_entered(body: Node3D) -> void:
 		body.scatter(self)
 
 
-
-
 @export var trauma_reduction_rate := 1.0
 
 @export var max_x := 10.0
@@ -222,7 +220,7 @@ func processTrauma(delta):
 		trauma = max(trauma - delta * trauma_reduction_rate, 0.0)
 
 		if trauma > 0:
-			var intensity = 0.1  # Adjust shake strength
+			var intensity = 0.1 # Adjust shake strength
 			var shake = trauma * trauma * intensity
 			camera.rotation_degrees.x = initial_rotation.x + randf_range(-max_x, max_x) * shake
 			camera.rotation_degrees.y = initial_rotation.y + randf_range(-max_y, max_y) * shake
@@ -236,7 +234,7 @@ func processTrauma(delta):
 		trauma = max(trauma - delta * trauma_reduction_rate, 0.0)
 		
 		if trauma > 0:
-			var intensity = 0.1  # Adjust shake strength
+			var intensity = 0.1 # Adjust shake strength
 			var shake = trauma * trauma * intensity
 			var shake_x = sin(time * 20.0) * max_x * shake
 			var shake_y = cos(time * 15.0) * max_y * shake
@@ -246,7 +244,7 @@ func processTrauma(delta):
 			camera.rotation_degrees.y = initial_rotation.y + shake_y
 			camera.rotation_degrees.z = initial_rotation.z + shake_z
 		else:
-			camera.rotation_degrees = initial_rotation		
+			camera.rotation_degrees = initial_rotation
 	
 	if traumaShakeMode == 3:
 		# 3. Pseudo-Random Version (active)
@@ -254,7 +252,7 @@ func processTrauma(delta):
 		trauma = max(trauma - delta * trauma_reduction_rate, 0.0)
 		
 		if trauma > 0:
-			var intensity = 0.1  # Adjust shake strength (0.1-1.0)
+			var intensity = 0.1 # Adjust shake strength (0.1-1.0)
 			var shake = trauma * trauma * intensity
 			camera.rotation_degrees.x = initial_rotation.x + pseudo_random(time) * max_x * shake
 			camera.rotation_degrees.y = initial_rotation.y + pseudo_random(time + 100.0) * max_y * shake
@@ -264,7 +262,7 @@ func processTrauma(delta):
 		
 
 func pseudo_random(mSeed: float) -> float:
-	return (fmod(sin(mSeed * 12.9898) * 43758.5453, 1.0)) * 2.0 - 1.0  # Returns -1 to 1
+	return (fmod(sin(mSeed * 12.9898) * 43758.5453, 1.0)) * 2.0 - 1.0 # Returns -1 to 1
 
-func add_trauma(trauma_amount : float):
+func add_trauma(trauma_amount: float):
 	trauma = clamp(trauma + trauma_amount, 0.0, 1.0)
