@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=33 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
@@ -18,6 +18,11 @@
 [ext_resource type="PackedScene" uid="uid://d0ykw70micab6" path="res://scenes/boss.tscn" id="11_e1cbu"]
 [ext_resource type="Script" uid="uid://dx1hxd4wnymb1" path="res://scripts/boss_dialog_ui.gd" id="12_mngbo"]
 [ext_resource type="PackedScene" uid="uid://b87oo8x46lj3r" path="res://scenes/cheats.tscn" id="13_4w45t"]
+[ext_resource type="Script" uid="uid://bjp67tva3ov6n" path="res://scripts/fps_counter.gd" id="14_r6p65"]
+[ext_resource type="ArrayMesh" uid="uid://gw7pdmvoe3yh" path="res://meshes/gestein_v003.obj" id="21_to7gp"]
+[ext_resource type="Material" uid="uid://dv7qrtiq87nj0" path="res://materials/walls/walls.tres" id="22_u0fll"]
+[ext_resource type="ArrayMesh" uid="uid://c54e8dk8jsryd" path="res://meshes/vains_v003.obj" id="23_6p3nn"]
+[ext_resource type="Material" uid="uid://bupgrlcbs4i6k" path="res://materials/walls/veins.tres" id="24_k67gn"]
 [ext_resource type="Script" path="res://scripts/fps_counter.gd" id="14_r6p65"]
 [ext_resource type="PackedScene" uid="uid://b35mxcc3d74di" path="res://scenes/WaterPlane.tscn" id="20_k6f3i"]
 [ext_resource type="Script" uid="uid://d1aerdanr4q2e" path="res://scripts/soundplayer.gd" id="21_xdqt8"]
@@ -42,6 +47,14 @@ PanelContainer/styles/panel = ExtResource("9_6u1mn")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_6u1mn")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_01n6w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k3g67"]
+render_priority = 1
+transparency = 1
+albedo_color = Color(0.0627451, 0.243137, 0.368627, 0.862745)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4bgka"]
+size = Vector3(4.19824, 19.4489, 13.8901)
 
 [node name="Node3D" type="Node3D"]
 
@@ -249,3 +262,25 @@ script = ExtResource("14_r6p65")
 
 [node name="Water" parent="." instance=ExtResource("20_k6f3i")]
 transform = Transform3D(-43.6006, 0, 0, 0, 1, 0, 0, 0, 15.708, -14.3034, 0.00877783, 0.808204)
+
+[node name="LeftWall" type="StaticBody3D" parent="."]
+transform = Transform3D(-0.00814527, 1.2191, 0.00407302, -0.672664, -0.00789123, 1.01674, 1.01673, 0.0045457, 0.672698, -13.6118, -4.41036, -8.67722)
+
+[node name="Node3D2" type="Node3D" parent="LeftWall"]
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Gestein" type="MeshInstance3D" parent="LeftWall/Node3D2"]
+transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0, 0)
+material_overlay = SubResource("StandardMaterial3D_k3g67")
+mesh = ExtResource("21_to7gp")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("22_u0fll")
+
+[node name="Veins" type="MeshInstance3D" parent="LeftWall/Node3D2"]
+transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0, 0)
+mesh = ExtResource("23_6p3nn")
+surface_material_override/0 = ExtResource("24_k67gn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftWall"]
+transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, 0, 0, 1, 1.57438, -0.818055, 0.261556)
+shape = SubResource("BoxShape3D_4bgka")

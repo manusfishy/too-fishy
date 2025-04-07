@@ -21,12 +21,12 @@ var upgradeNames = {
 }
 
 var boss_dialog_lines = {
-	Boss.BossDialogSections.TUTORIAL1: ["Hey man! Is you sub ready yet?", "Yes? Awesome! Go shoot some fish with that spear of yours!", "You can move the vessel by using W A S D, or the Arrow Keys", "'Right-CLICK' to shoot a spear." ,"Some items can be Trown, with a 'Left-CLICK'", "Need to break something? Use your pickaxe by pressing SPACE to mine barriers and other objects.",  "Each tool has a unique purpose - experiment to see what works best in different situations.", "Watch your preassure and Health levels and return to the surface when needed!", "Remember, you can swim near the dock to upgrade your sub and sell fish."],
+	Boss.BossDialogSections.TUTORIAL1: ["Hey man! Is your sub ready yet?", "Yes? Awesome! Go shoot some fish with that spear of yours!", "You can move the vessel by using W A S D, or the Arrow Keys", "'Right-CLICK' to shoot a spear." ,"Some items can be Trown, with a 'Left-CLICK'", "Need to break something? Use your pickaxe by pressing SPACE to mine barriers and other objects.",  "Each tool has a unique purpose - experiment to see what works best in different situations.", "Watch your preassure and Health levels and return to the surface when needed!", "Remember, you can swim near the dock to upgrade your sub and sell fish."],
 	Boss.BossDialogSections.TUTORIAL2: ["There are some crazy fish down here!", "I was able to sell some of them for a lot of money!"],
 	Boss.BossDialogSections.TUTORIAL3: ["I found that the pickaxe is actually very useful", "You can break the barriers with them", "Press 'SPACE' to use it!"],
-	Boss.BossDialogSections.TUTORIAL4: ["Its awesome down here, you gotta check it out!", "Catch fish, load them off at the base and upgrade your vessel to come down and meet up with me."],
+	Boss.BossDialogSections.TUTORIAL4: ["Its awesome down here, you gotta check it out!", "The blobfish is looking very suspicious though", "I think he is trying to control my mind!", "You should be careful!"],
 	Boss.BossDialogSections.RESCUE_CALL: ["Uhhhh- I did an oopsie", "I think you need to come and get me :S"],
 	Boss.BossDialogSections.BOSS_INTRO: ["Hahaha, I got your friend, looser!", "You better not attack me or he dies!"],
 	Boss.BossDialogSections.BOSS_KILLS_FRIEND: ["Ohhhh, that was a mistake!", "*Splash*", "Your friend is dead now!"],
-	Boss.BossDialogSections.FRIEND_RESCUED: ["Oh my god thank you!", "That fucker is a mind controlling blobfish!", "You getting close has freed me from his spell!", "We need to stay close together and fight him!"],
+	Boss.BossDialogSections.FRIEND_RESCUED: ["Oh my god thank you!", "That fucker is a mind controlling blobfish!", "You getting close has freed me from his spell!", "You need to stay close to me and escort me to the top!"],
 	}

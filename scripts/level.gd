@@ -21,7 +21,9 @@ func _process(delta: float) -> void:
 	if GameState.maxDepthReached > Boss.boss_spawn_height && Boss.boss_spawned == false:
 		var boss_spawn_loc = (GameState.maxDepthReached * -1) - 25
 		spawnBoss(boss_spawn_loc)
-
+	
+	Boss.process_dialog_depth()
+	
 func spawnNewSection(position: float):
 	
 	var newSection = section.instantiate()
@@ -58,6 +60,4 @@ func spawnBoss(position: float):
 	GameState.fishes_lower_boarder = lastSpawned - sectionHeight/2 - 1
 
 	add_child(bossSection)
-	
-#func process_dialog_options():
 	

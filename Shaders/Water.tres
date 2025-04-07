@@ -10,7 +10,7 @@ seamless = true
 noise = SubResource("FastNoiseLite_aggf3")
 
 [resource]
-render_priority = 0
+render_priority = 5
 shader = ExtResource("1_wq4uc")
 shader_parameter/albedo = Color(0, 0.321569, 0.431373, 1)
 shader_parameter/albedo2 = Color(0, 0.47451, 0.764706, 1)

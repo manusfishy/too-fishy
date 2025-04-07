@@ -14,7 +14,14 @@ var boss_dialog_from = {
 	BossDialogSections.BOSS_KILLS_FRIEND: "Blobfish",
 	BossDialogSections.FRIEND_RESCUED: "John",
 }
-	
+
+var dialog_depth_map = {
+	BossDialogSections.TUTORIAL1: 0,
+	BossDialogSections.TUTORIAL2: 25,
+	BossDialogSections.TUTORIAL3: 50,
+	BossDialogSections.TUTORIAL4: 300,
+}
+
 var boss_dialog_displayed = true
 var boss_dialog_section = BossDialogSections.TUTORIAL1
 var boss_dialog_index = 0
@@ -31,3 +38,12 @@ func setDialogStage(section: BossDialogSections):
 	boss_dialog_index = 0
 	boss_dialog_displayed = true
 	GameState.paused = true
+	
+func process_dialog_depth():
+	for section in dialog_depth_map.keys():
+		if GameState.maxDepthReached >= dialog_depth_map[section]:
+			if boss_dialog_section < section:
+				setDialogStage(section)
+				
+	
+	
