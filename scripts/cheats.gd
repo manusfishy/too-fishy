@@ -15,6 +15,8 @@ func _ready():
 	addButton("Down 100", func(): GameState.player_node.position.y -= 100)
 	addButton("Go Up", func(): GameState.player_node.position.y = 0)
 	addButton("God mode", func(): GameState.god_mode = not GameState.god_mode)
+	addButton("Kill", func(): GameState.health = 0)
+	addButton("Skip Dialog", func(): skip_dialog())
 	
 
 	close()
@@ -24,6 +26,12 @@ func upgrade_all():
 	for key in GameState.upgrades:
 		GameState.upgrades[key] = GameState.maxUpgrades[key]
 	pass
+	
+func skip_dialog() -> void:
+	Boss.boss_dialog_section = 999
+	Boss.boss_dialog_displayed = false
+	Boss.boss_dialog_index = 0
+	GameState.paused = false
 
 func _process(delta):
 	if GameState.god_mode:

@@ -61,6 +61,7 @@ var fishSectionMap = {
 	GameState.Stage.SURFACE: {
 		max_fish_amount = 15,
 		shiny_rate = .02,
+		weight_multiplier = .8,
 		spawnRates = {
 			FishType.FISH_A: .9,
 			FishType.FISH_B: .1,
@@ -69,6 +70,7 @@ var fishSectionMap = {
 	GameState.Stage.DEEP: {
 		max_fish_amount = 10,
 		shiny_rate = .02,
+		weight_multiplier = .9,
 		spawnRates = {
 			FishType.FISH_A: .7,
 			FishType.FISH_B: .3,
@@ -77,6 +79,7 @@ var fishSectionMap = {
 	GameState.Stage.DEEPER: {
 		max_fish_amount = 10,
 		shiny_rate = .04,
+		weight_multiplier = 1,
 		spawnRates = {
 			FishType.FISH_A: .5,
 			FishType.FISH_B: .4,
@@ -86,6 +89,7 @@ var fishSectionMap = {
 	GameState.Stage.SUPERDEEP: {
 		max_fish_amount = 8,
 		shiny_rate = .04,
+		weight_multiplier = 1.1,
 		spawnRates = {
 			FishType.FISH_A: .2,
 			FishType.FISH_B: .45,
@@ -97,6 +101,7 @@ var fishSectionMap = {
 	GameState.Stage.HOT: {
 		max_fish_amount = 5,
 		shiny_rate = .05,
+		weight_multiplier = 1.15,
 		spawnRates = {
 			FishType.FISH_B: .2,
 			FishType.ANGLER_FISH: .55,
@@ -107,6 +112,7 @@ var fishSectionMap = {
 	GameState.Stage.LAVA: {
 		max_fish_amount = 4,
 		shiny_rate = .06,
+		weight_multiplier = 1.15,
 		spawnRates = {
 			FishType.ANGLER_FISH: .7,
 			FishType.DUMMY_FISH: .2,
@@ -116,6 +122,7 @@ var fishSectionMap = {
 	GameState.Stage.VOID: {
 		max_fish_amount = 10,
 		shiny_rate = .08,
+		weight_multiplier = 1.2,
 		spawnRates = {
 			FishType.DUMMY_FISH: .2,
 			FishType.SPIKEY_FISH: .8
