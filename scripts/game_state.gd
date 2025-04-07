@@ -15,11 +15,11 @@ var depthStageMap = {
 enum Upgrade {ROD_STRENGTH, DEPTH_RESISTANCE, PICKAXE_UNLOCKED, VERT_SPEED, HOR_SPEED, LAMP_UNLOCKED}
 var upgradeCosts = {
 	Upgrade.ROD_STRENGTH: 25,
-	Upgrade.DEPTH_RESISTANCE: 25,
-	Upgrade.PICKAXE_UNLOCKED: 500,
-	Upgrade.VERT_SPEED: 15,
-	Upgrade.HOR_SPEED: 15,
-	Upgrade.LAMP_UNLOCKED: 200,
+	Upgrade.DEPTH_RESISTANCE: 50,
+	Upgrade.PICKAXE_UNLOCKED: 200,
+	Upgrade.VERT_SPEED: 25,
+	Upgrade.HOR_SPEED: 25,
+	Upgrade.LAMP_UNLOCKED: 50,
 }
 
 var maxUpgrades = {
