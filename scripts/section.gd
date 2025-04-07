@@ -25,17 +25,22 @@ func spawn_fish(spawn_all: bool = false):
 		spawn_pos.z = -0.3
 		var commulative_spawn_rate = 0
 		var spawn_fish_config = null
+		var fishType = null
 		for type in FishesConfig.fishSectionMap[sectionType].spawnRates:
 			commulative_spawn_rate += FishesConfig.fishSectionMap[sectionType].spawnRates[type]
 			if r <= commulative_spawn_rate:
+				fishType = type
 				spawn_fish_config = FishesConfig.fishConfigMap[type]
 				break
 		var fish = spawn_fish_config.scene.instantiate()
+	
 		fish.initialize(spawn_pos, self.get_instance_id(), 
 			spawn_fish_config.speed_min, spawn_fish_config.speed_max, 
 			spawn_fish_config.difficulty, 
 			spawn_fish_config.weight_min, spawn_fish_config.weight_max, 
-			spawn_fish_config.price_weight_multiplier)
+			spawn_fish_config.price_weight_multiplier,
+			fishType
+			)
 		add_child(fish)
 		amount += 1
 		if !spawn_all:

@@ -12,7 +12,7 @@ extends CharacterBody3D
 var rotation_cooldown_left = 0
 var speed = 0
 var home: int
-
+var type: int
 
 func removeFish():
 	var fish_data = {
@@ -56,13 +56,14 @@ func _physics_process(delta: float) -> void:
 		
 	move_and_slide()
 	
-func initialize(start_position, home, min_speed, max_speed, difficulty, min_weight, max_weight, price_weight_multiplier):
+func initialize(start_position, home, min_speed, max_speed, difficulty, min_weight, max_weight, price_weight_multiplier, type):
 	self.home = home
 	self.min_speed = min_speed
 	self.max_speed = max_speed
 	self.difficulty = difficulty
 	self.weight = randf_range(min_weight, max_weight)
 	self.price = round(weight * price_weight_multiplier)
+	self.type = type
 	speed = randf_range(min_speed, max_speed)
 	position = start_position
 	add_to_group("fishes")

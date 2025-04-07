@@ -33,8 +33,20 @@ func collision():
 		var collision_info = get_slide_collision(i)
 		var collider = collision_info.get_collider()
 		if collider is CharacterBody3D:
-			catch_fish(collider)
+			if "type" in collider:
+				if collider.type == FishesConfig.FishType.SPIKEY_FISH:
+					hurtPlayer(5)
 
+var can_be_hurt = true
+
+func hurtPlayer(damage: int):
+	if can_be_hurt:
+		GameState.health -= damage
+		can_be_hurt = false
+		get_tree().create_timer(1.0).timeout.connect(reset_hurt_cooldown)
+
+func reset_hurt_cooldown():
+	can_be_hurt = true
 
 func movement(_delta: float):
 	var direction = Vector3.ZERO
@@ -68,7 +80,7 @@ func movement(_delta: float):
 
 func _physics_process(delta: float) -> void:
 	movement(delta)
-	
+	collision()
 	
 	var depthSnapped = snapped(GameState.depth, 100)
 	var sectionType = GameState.depthStageMap[depthSnapped]
