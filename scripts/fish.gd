@@ -59,12 +59,13 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 func initialize(start_position, home, min_speed, max_speed, 
-difficulty, min_weight, max_weight, price_weight_multiplier, type, is_shiny = false):
+difficulty, min_weight, max_weight, price_weight_multiplier, type, weight_multiplier, is_shiny = false):
 	self.home = home
 	self.min_speed = min_speed
 	self.max_speed = max_speed
 	self.difficulty = difficulty
-	self.weight = randf_range(min_weight, max_weight)
+	self.weight = clamp(randf_range(min_weight, max_weight) * weight_multiplier, 
+							min_weight, max_weight)
 	self.price = round(weight * price_weight_multiplier)
 	self.type = type
 	self.is_shiny = is_shiny
