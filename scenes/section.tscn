@@ -150,27 +150,6 @@ surface_material_override/0 = ExtResource("7_ti0g3")
 transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, 0, 0, 1, 1.57438, -0.818055, 0.261556)
 shape = SubResource("BoxShape3D_t8qun")
 
-[node name="StaticBody3D2" type="StaticBody3D" parent="."]
-transform = Transform3D(-0.872939, 0, -0.578229, 0, 1.36003, 0, 0.538507, 0, -0.937329, 2.65484, 1.37305, 2.04345)
-visible = false
-
-[node name="Node3D2" type="Node3D" parent="StaticBody3D2"]
-transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-
-[node name="Gestein" type="MeshInstance3D" parent="StaticBody3D2/Node3D2"]
-mesh = ExtResource("5_ti0g3")
-skeleton = NodePath("../../..")
-surface_material_override/0 = ExtResource("6_ms04e")
-
-[node name="Veins" type="MeshInstance3D" parent="StaticBody3D2/Node3D2"]
-transform = Transform3D(1, 0, 8.9407e-08, 0, 1, 0, 0, 0, 1, -0.0310316, 0.00964308, 0.0626144)
-mesh = ExtResource("7_58ehv")
-surface_material_override/0 = ExtResource("7_ti0g3")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
-transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, 0, 0, 1, 1.57438, -0.818055, 0.261556)
-shape = SubResource("BoxShape3D_t8qun")
-
 [node name="FishRespawnTimer" type="Timer" parent="."]
 wait_time = 15.0
 autostart = true

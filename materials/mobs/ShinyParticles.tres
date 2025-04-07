@@ -1,0 +1,20 @@
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3 uid="uid://ntxihwik5ww0"]
+
+[sub_resource type="Curve" id="Curve_f8yle"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.251497, 1), 0.0, 0.0, 0, 0, Vector2(0.745509, 0.668475), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_qfexs"]
+curve = SubResource("Curve_f8yle")
+
+[resource]
+resource_local_to_scene = true
+lifetime_randomness = 1.0
+emission_shape_scale = Vector3(0.6, 0.4, 0.4)
+emission_shape = 1
+emission_sphere_radius = 1.0
+velocity_pivot = Vector3(0.5, 0, 0)
+direction = Vector3(-1, 0, 0)
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_qfexs")

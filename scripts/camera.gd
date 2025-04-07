@@ -31,3 +31,9 @@ func change_section_environment(sectionType):
 	tween.tween_property(environment, "fog_light_color", environment_color_map[sectionType], 1)
 	if (directional_light):
 		tween.tween_property(directional_light, "light_energy", environment_light_map[sectionType], 3)
+		
+func _process(_delta: float) -> void:
+	if global_position.y <= -0.2:
+		environment.fog_enabled = true
+	else:
+		environment.fog_enabled = false

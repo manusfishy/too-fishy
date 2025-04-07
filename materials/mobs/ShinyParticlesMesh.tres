@@ -1,0 +1,14 @@
+[gd_resource type="PrismMesh" load_steps=2 format=3 uid="uid://dkttjpdmphyxv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fvm5c"]
+transparency = 1
+albedo_color = Color(0.864675, 0.601447, 0, 0.541176)
+emission_enabled = true
+emission = Color(0.517711, 0.434439, 4.81307e-07, 1)
+emission_energy_multiplier = 10.0
+disable_receive_shadows = true
+grow_amount = -0.308
+
+[resource]
+material = SubResource("StandardMaterial3D_fvm5c")
+size = Vector3(0.02, 0.02, 0.02)
