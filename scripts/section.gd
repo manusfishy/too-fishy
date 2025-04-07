@@ -6,6 +6,7 @@ extends Node3D
 @export var spawn_marker_a: Marker3D
 @export var spawn_marker_b: Marker3D
 @export var background_mat: StandardMaterial3D
+@export var lava_vine_mat: StandardMaterial3D = preload("res://materials/walls/veins_lava.tres")
 
 var sectionBackgroundMap: Dictionary = {
 	GameState.Stage.SURFACE: preload("res://materials/backgrounds/bg_loop.tres"),
@@ -74,6 +75,10 @@ func _ready() -> void:
 			background_mat = sectionBackgroundMap[GameState.Stage.SURFACE]
 	$Background.set_surface_override_material(0, background_mat)
 
+	if sectionType == GameState.Stage.LAVA:
+		$LeftWall/Node3D2/Veins.set_surface_override_material(0, lava_vine_mat)
+		$LeftWall2/Node3D2/Veins.set_surface_override_material(0, lava_vine_mat)
+	
 func screen_entered() -> void:
 	is_on_screen = true
 

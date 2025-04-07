@@ -8,7 +8,7 @@ var environment_color_map = {
 	GameState.Stage.DEEPER: Color.from_rgba8(12, 59, 94, 255),
 	GameState.Stage.SUPERDEEP: Color.from_rgba8(12, 59, 94, 255),
 	GameState.Stage.HOT: Color.from_rgba8(217, 103, 4, 255),
-	GameState.Stage.LAVA: Color.from_rgba8(217, 46, 4, 255),
+	GameState.Stage.LAVA: Color.from_rgba8(217, 103, 4, 255),
 	GameState.Stage.VOID: Color.from_rgba8(10, 10, 10, 255)
 }
 
