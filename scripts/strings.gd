@@ -11,7 +11,7 @@ var stageNames = {
 }
 
 var upgradeNames = {
-	GameState.Upgrade.ROD_STRENGTH: "Rod Strength",
+	GameState.Upgrade.CARGO_SIZE: "Increased Cargo Space",
 	GameState.Upgrade.DEPTH_RESISTANCE: "Depth Resistance",
 	GameState.Upgrade.PICKAXE_UNLOCKED: "Unlock Pickaxe",
 	GameState.Upgrade.VERT_SPEED: "Agillity",

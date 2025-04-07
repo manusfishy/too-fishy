@@ -9,14 +9,21 @@ var inventoryCumulatedValues = {
 	InventoryValues.TotalWeight: 0,
 	InventoryValues.TotalValue: 0,
 }
-@export var max_weight = 100
+
+func get_max_weight() -> int:
+	var cargo_level = (GameState.upgrades[GameState.Upgrade.CARGO_SIZE] + 1)
+	
+	if cargo_level <= 4:
+		return 25 * cargo_level;
+	else:
+		return 100 + 50 * (cargo_level-4)
 
 func add(item: InvItem):
 	for i in GameState.inventory.items:
 		if i.id == item.id:
 			print("Duplicate fish ID detected: ", item.id)
 			return false
-	if item.weight + inventoryCumulatedValues[InventoryValues.TotalWeight] > max_weight:
+	if item.weight + inventoryCumulatedValues[InventoryValues.TotalWeight] > get_max_weight():
 		return false
 	else:
 		items.append(item)
