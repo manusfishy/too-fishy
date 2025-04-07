@@ -6,14 +6,14 @@ var is_open = false
 
 func _ready():
 	update_display()
-	close()
+	open()
 
 func _process(delta):
-	if GameState.isDocked:
-		close()
+	#if GameState.isDocked:
+	#	close()
 	if Input.is_action_just_pressed("inv_toggle"):
-		if GameState.isDocked:
-			return
+		#if GameState.isDocked:
+		#	return
 		if is_open:
 			close()
 		else:
