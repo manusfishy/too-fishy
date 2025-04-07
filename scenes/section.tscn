@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://xqds4eqa4fys"]
+[gd_scene load_steps=21 format=3 uid="uid://xqds4eqa4fys"]
 
 [ext_resource type="Script" uid="uid://bkpen13pay85m" path="res://scripts/section.gd" id="1_fivou"]
 [ext_resource type="PackedScene" uid="uid://bekjel2ayhsva" path="res://scenes/level_barrier.tscn" id="2_fivou"]
@@ -19,8 +19,11 @@ albedo_color = Color(0.0627451, 0.243137, 0.368627, 0.862745)
 size = Vector3(4.19824, 19.4489, 13.8901)
 
 [sub_resource type="Curve" id="Curve_ti0g3"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_limits = [-1.0, 1.0, -1.0, 1.0]
+_data = [Vector2(-1, -0.428571), 0.0, 0.0, 0, 0, Vector2(4.47035e-08, 1), 0.0, 0.0, 0, 0, Vector2(1, -0.428571), 0.0, 0.0, 0, 0]
 point_count = 3
+metadata/_snap_enabled = true
+metadata/_snap_count = 14
 
 [sub_resource type="CurveXYZTexture" id="CurveXYZTexture_ms04e"]
 curve_x = SubResource("Curve_ti0g3")
@@ -29,12 +32,11 @@ curve_x = SubResource("Curve_ti0g3")
 emission_shape_offset = Vector3(0, 0, -3.275)
 emission_shape = 3
 emission_box_extents = Vector3(6.595, 4.96, 3)
+spread = 0.0
 directional_velocity_min = 0.999984
-directional_velocity_max = 2.99998
+directional_velocity_max = 1.99998
 directional_velocity_curve = SubResource("CurveXYZTexture_ms04e")
 gravity = Vector3(0, 0.5, 0)
-linear_accel_min = -0.200002
-linear_accel_max = 2.0
 scale_min = 0.0
 scale_max = 0.05
 
@@ -68,7 +70,12 @@ scale_max = 0.02
 anim_speed_max = 1.55
 turbulence_enabled = true
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_58ehv"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.552941)
+
 [sub_resource type="PrismMesh" id="PrismMesh_ocpc0"]
+material = SubResource("StandardMaterial3D_58ehv")
 size = Vector3(0.7, 0.7, 0.7)
 
 [node name="Section" type="Node3D" node_paths=PackedStringArray("spawn_marker_a", "spawn_marker_b")]
