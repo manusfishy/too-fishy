@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=27 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
@@ -18,7 +18,8 @@
 [ext_resource type="PackedScene" uid="uid://d0ykw70micab6" path="res://scenes/boss.tscn" id="11_e1cbu"]
 [ext_resource type="Script" uid="uid://dx1hxd4wnymb1" path="res://scripts/boss_dialog_ui.gd" id="12_mngbo"]
 [ext_resource type="PackedScene" uid="uid://b87oo8x46lj3r" path="res://scenes/cheats.tscn" id="13_4w45t"]
-[ext_resource type="Script" uid="uid://bjp67tva3ov6n" path="res://scripts/fps_counter.gd" id="14_r6p65"]
+[ext_resource type="Script" path="res://scripts/fps_counter.gd" id="14_r6p65"]
+[ext_resource type="PackedScene" uid="uid://b35mxcc3d74di" path="res://scenes/WaterPlane.tscn" id="20_k6f3i"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_c16ls"]
 
@@ -234,3 +235,6 @@ offset_right = 409.0
 offset_bottom = 33.0
 text = "FPS"
 script = ExtResource("14_r6p65")
+
+[node name="Water" parent="." instance=ExtResource("20_k6f3i")]
+transform = Transform3D(-43.6006, 0, 0, 0, 1, 0, 0, 0, 15.708, -14.3034, 0.00877783, 0.808204)
