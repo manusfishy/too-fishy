@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=36 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
@@ -23,6 +23,7 @@
 [ext_resource type="ArrayMesh" uid="uid://gw7pdmvoe3yh" path="res://meshes/gestein_v003.obj" id="21_to7gp"]
 [ext_resource type="Script" uid="uid://d1aerdanr4q2e" path="res://scripts/soundplayer.gd" id="21_xdqt8"]
 [ext_resource type="PackedScene" uid="uid://cb3p3ua8fuhk3" path="res://scenes/dock_3.tscn" id="22_6p3nn"]
+[ext_resource type="Script" uid="uid://q0tu1in7y6pf" path="res://scripts/musicplayer.gd" id="22_k67gn"]
 [ext_resource type="Material" uid="uid://dv7qrtiq87nj0" path="res://materials/walls/walls.tres" id="22_u0fll"]
 [ext_resource type="ArrayMesh" uid="uid://c54e8dk8jsryd" path="res://meshes/vains_v003.obj" id="23_6p3nn"]
 [ext_resource type="Material" uid="uid://bupgrlcbs4i6k" path="res://materials/walls/veins.tres" id="24_k67gn"]
@@ -262,6 +263,13 @@ script = ExtResource("14_r6p65")
 
 [node name="Water" parent="." instance=ExtResource("20_k6f3i")]
 transform = Transform3D(-43.6006, 0, 0, 0, 1, 0, 0, 0, 15.708, -14.3034, 0.00877783, 0.808204)
+
+[node name="Audiomanager" type="Node" parent="."]
+script = ExtResource("22_k67gn")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Audiomanager"]
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="Audiomanager"]
 
 [node name="dock3" parent="." instance=ExtResource("22_6p3nn")]
 transform = Transform3D(1.20927, 0, 0.154741, 0.0016312, 1.21907, -0.0127477, -0.154731, 0.0128516, 1.20921, -2.87032, 0.580536, 0.0149053)
