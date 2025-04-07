@@ -7,7 +7,8 @@
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y25gk"]
 albedo_color = Color(0.973, 1, 0.19, 1)
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_h1aey"]
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_mkf8s"]
+height = 20.811
 
 [node name="Bullet" type="Node3D"]
 script = ExtResource("1_mkf8s")
@@ -15,13 +16,13 @@ script = ExtResource("1_mkf8s")
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, -0.00201972, 0)
+transform = Transform3D(0.0999986, 0.000523596, 0, -0.000523596, 0.0999986, 0, 0, 0, 0.1, 0, -0.00201972, 0)
 mesh = SubResource("SphereMesh_mkf8s")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_y25gk")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, -0.000485934, 0)
-shape = SubResource("SphereShape3D_h1aey")
+transform = Transform3D(0.2, 0, 0, 0, -8.74228e-09, -0.2, 0, 0.2, -8.74228e-09, 0, -0.000485934, 0)
+shape = SubResource("CylinderShape3D_mkf8s")
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_body_entered"]
