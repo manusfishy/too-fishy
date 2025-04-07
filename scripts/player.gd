@@ -161,7 +161,7 @@ func process_death():
 	if GameState.health <= 0:
 		sound_player.play_sound("ughhh")
 		GameState.death_screen = true
-		GameState.inventory.items.clear()
+		GameState.inventory.clear()
 		GameState.paused = true
 		GameState.health = 100
 		position = Vector3(-8, 0, 0.33)

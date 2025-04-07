@@ -50,3 +50,7 @@ func updateTotal():
 	inventoryCumulatedValues[InventoryValues.TotalValue] = totalPrice
 	inventoryCumulatedValues[InventoryValues.TotalWeight] = totalWeight
 	inventoryCumulatedValues[InventoryValues.FishesCaught] = items.size()
+	
+func clear() -> void:
+	items.clear()
+	updateTotal()

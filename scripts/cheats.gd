@@ -15,6 +15,7 @@ func _ready():
 	addButton("Down 100", func(): GameState.player_node.position.y -= 100)
 	addButton("Go Up", func(): GameState.player_node.position.y = 0)
 	addButton("God mode", func(): GameState.god_mode = not GameState.god_mode)
+	addButton("Kill", func(): GameState.health = 0)
 	
 
 	close()
