@@ -95,8 +95,9 @@ func _process(delta):
 	process_depth_effects(delta)
 
 	
-func _unhandled_input(event):
-	if Input.is_action_just_pressed("throw") and can_shoot:
+func _input(event):
+	if Input.is_action_just_pressed("throw") and can_shoot and !GameState.paused:
+		print("shoot harpoon")
 		shoot_harpoon()
 	
 func onDock():

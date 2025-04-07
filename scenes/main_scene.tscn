@@ -93,10 +93,76 @@ background_mat = ExtResource("9_bcnxi")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = SubResource("Theme_18nlu")
+
+[node name="CenterContainer" type="CenterContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="inv_ui" parent="UI/CenterContainer" instance=ExtResource("9_c1pb6")]
+layout_mode = 2
+
+[node name="BossDialog" type="PanelContainer" parent="UI/CenterContainer"]
+layout_mode = 2
+script = ExtResource("12_mngbo")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/CenterContainer/BossDialog"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="UI/CenterContainer/BossDialog/VBoxContainer"]
+layout_mode = 2
+text = "Blobfish:"
+
+[node name="MessageLabel" type="Label" parent="UI/CenterContainer/BossDialog/VBoxContainer"]
+layout_mode = 2
+text = "Oh nooo, you died!
+Anyways... Lets keep going - we don't have all day!"
+
+[node name="ContinueButton" type="Button" parent="UI/CenterContainer/BossDialog/VBoxContainer"]
+layout_mode = 2
+text = "Continue"
+
+[node name="Upgrades" type="PanelContainer" parent="UI/CenterContainer"]
+layout_mode = 2
+script = ExtResource("10_6wevv")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/CenterContainer/Upgrades"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/CenterContainer/Upgrades/VBoxContainer"]
+layout_mode = 2
+text = "Upgrades"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="UI/CenterContainer/Upgrades/VBoxContainer"]
+layout_mode = 2
+
+[node name="DeathScreen" type="PanelContainer" parent="UI/CenterContainer"]
+layout_mode = 2
+script = ExtResource("10_e1cbu")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/CenterContainer/DeathScreen"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/CenterContainer/DeathScreen/VBoxContainer"]
+layout_mode = 2
+text = "Oh nooo, you died!
+Anyways... Lets keep going - we don't have all day!"
+
+[node name="Button" type="Button" parent="UI/CenterContainer/DeathScreen/VBoxContainer"]
+layout_mode = 2
+text = "Respawn
+"
 
 [node name="HUD" type="PanelContainer" parent="UI"]
 layout_mode = 0
@@ -145,78 +211,6 @@ text = "Pressure Headroom:"
 
 [node name="PressureHeadroomBar" type="ProgressBar" parent="UI/HUD/MarginContainer/HUDContainer"]
 layout_mode = 2
-
-[node name="Upgrades" type="PanelContainer" parent="UI"]
-layout_mode = 0
-offset_left = 294.0
-offset_top = 137.0
-offset_right = 888.0
-offset_bottom = 485.0
-script = ExtResource("10_6wevv")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Upgrades"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UI/Upgrades/VBoxContainer"]
-layout_mode = 2
-text = "Upgrades"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="GridContainer" type="GridContainer" parent="UI/Upgrades/VBoxContainer"]
-layout_mode = 2
-
-[node name="inv_ui" parent="UI" instance=ExtResource("9_c1pb6")]
-layout_mode = 0
-offset_left = 450.0
-offset_top = 82.0
-offset_right = 729.0
-offset_bottom = 247.0
-
-[node name="DeathScreen" type="PanelContainer" parent="UI"]
-layout_mode = 0
-offset_left = 295.0
-offset_top = 237.0
-offset_right = 888.0
-offset_bottom = 351.0
-script = ExtResource("10_e1cbu")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/DeathScreen"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UI/DeathScreen/VBoxContainer"]
-layout_mode = 2
-text = "Oh nooo, you died!
-Anyways... Lets keep going - we don't have all day!"
-
-[node name="Button" type="Button" parent="UI/DeathScreen/VBoxContainer"]
-layout_mode = 2
-text = "Respawn
-"
-
-[node name="BossDialog" type="PanelContainer" parent="UI"]
-layout_mode = 0
-offset_left = 295.0
-offset_top = 237.0
-offset_right = 888.0
-offset_bottom = 351.0
-script = ExtResource("12_mngbo")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/BossDialog"]
-layout_mode = 2
-
-[node name="NameLabel" type="Label" parent="UI/BossDialog/VBoxContainer"]
-layout_mode = 2
-text = "Blobfish:"
-
-[node name="MessageLabel" type="Label" parent="UI/BossDialog/VBoxContainer"]
-layout_mode = 2
-text = "Oh nooo, you died!
-Anyways... Lets keep going - we don't have all day!"
-
-[node name="ContinueButton" type="Button" parent="UI/BossDialog/VBoxContainer"]
-layout_mode = 2
-text = "Continue"
 
 [node name="Cheats" parent="UI" instance=ExtResource("13_4w45t")]
 visible = false
