@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://durrtmu3i450r"]
+[gd_scene load_steps=16 format=3 uid="uid://durrtmu3i450r"]
 
 [ext_resource type="Script" uid="uid://b4nuxfxo3kvlq" path="res://scripts/player.gd" id="1_3vyb7"]
+[ext_resource type="Texture2D" uid="uid://bygn7y3qpn8xs" path="res://Shaders/AllSkyFree_Sky_EpicBlueSunset_Equirect.png" id="2_fjrip"]
 [ext_resource type="PackedScene" uid="uid://cdvfasjj4km5l" path="res://meshes/FishSub.fbx" id="2_qhqgy"]
 [ext_resource type="Script" uid="uid://cwbxcfefm5qdj" path="res://scripts/camera.gd" id="3_qlg0r"]
 [ext_resource type="PackedScene" uid="uid://cwlmu2g8odpra" path="res://scenes/pickaxe.tscn" id="4_qlg0r"]
@@ -15,7 +16,15 @@ height = 2.79761
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_tuyoq"]
 gradient = SubResource("Gradient_qlg0r")
 
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_smehm"]
+panorama = ExtResource("2_fjrip")
+
+[sub_resource type="Sky" id="Sky_ur7pv"]
+sky_material = SubResource("PanoramaSkyMaterial_smehm")
+
 [sub_resource type="Environment" id="Environment_fjrip"]
+background_mode = 2
+sky = SubResource("Sky_ur7pv")
 ambient_light_color = Color(0.105882, 0.203922, 0.647059, 1)
 fog_enabled = true
 fog_light_color = Color(0.0941176, 0.180392, 0.607843, 1)

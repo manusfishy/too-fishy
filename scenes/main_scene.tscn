@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=27 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
@@ -20,7 +20,6 @@
 [ext_resource type="PackedScene" uid="uid://b87oo8x46lj3r" path="res://scenes/cheats.tscn" id="13_4w45t"]
 [ext_resource type="Script" path="res://scripts/fps_counter.gd" id="14_r6p65"]
 [ext_resource type="PackedScene" uid="uid://b35mxcc3d74di" path="res://scenes/WaterPlane.tscn" id="20_k6f3i"]
-[ext_resource type="Texture2D" uid="uid://bygn7y3qpn8xs" path="res://Shaders/AllSkyFree_Sky_EpicBlueSunset_Equirect.png" id="21_xdqt8"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_c16ls"]
 
@@ -42,16 +41,6 @@ PanelContainer/styles/panel = ExtResource("9_6u1mn")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_6u1mn")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_01n6w"]
-
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_k6f3i"]
-panorama = ExtResource("21_xdqt8")
-
-[sub_resource type="Sky" id="Sky_xdqt8"]
-sky_material = SubResource("PanoramaSkyMaterial_k6f3i")
-
-[sub_resource type="Environment" id="Environment_k6f3i"]
-background_mode = 2
-sky = SubResource("Sky_xdqt8")
 
 [node name="Node3D" type="Node3D"]
 
@@ -252,6 +241,3 @@ script = ExtResource("14_r6p65")
 
 [node name="Water" parent="." instance=ExtResource("20_k6f3i")]
 transform = Transform3D(-43.6006, 0, 0, 0, 1, 0, 0, 0, 15.708, -14.3034, 0.00877783, 0.808204)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_k6f3i")
