@@ -1,17 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://bj1bmfbysxv0r"]
+[gd_scene load_steps=6 format=3 uid="uid://bj1bmfbysxv0r"]
 
 [ext_resource type="Script" uid="uid://ckbs05slsrxf2" path="res://scripts/fish.gd" id="1_gpnaq"]
 [ext_resource type="ArrayMesh" uid="uid://hf7v42ui5i6q" path="res://meshes/SM_BasicFishB.obj" id="2_gpnaq"]
+[ext_resource type="Material" uid="uid://ntxihwik5ww0" path="res://materials/mobs/ShinyParticles.tres" id="3_u68cf"]
+[ext_resource type="PrismMesh" uid="uid://dkttjpdmphyxv" path="res://materials/mobs/ShinyParticlesMesh.tres" id="4_yeaik"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_b0grq"]
 radius = 0.201007
 height = 0.961105
 
-[node name="BasicFishA" type="CharacterBody3D"]
+[node name="BasicFishB" type="CharacterBody3D" node_paths=PackedStringArray("shiny_particles")]
 axis_lock_linear_z = true
 axis_lock_angular_x = true
 motion_mode = 1
 script = ExtResource("1_gpnaq")
+shiny_particles = NodePath("ShinyParticles")
 
 [node name="Pivot" type="Node3D" parent="."]
 transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0)
@@ -24,3 +27,10 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-0.108849, 0.994058, 0, -0.994058, -0.108849, 0, 0, 0, 1, -0.00212356, 0.0263436, 0)
 shape = SubResource("CapsuleShape3D_b0grq")
+
+[node name="ShinyParticles" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 500
+randomness = 1.0
+process_material = ExtResource("3_u68cf")
+draw_pass_1 = ExtResource("4_yeaik")

@@ -8,6 +8,8 @@ extends CharacterBody3D
 @export var rotation_cooldown = .1
 @export var weight = 1
 @export var price = 1
+@export var is_shiny = false
+@export var shiny_particles: GPUParticles3D
 
 var rotation_cooldown_left = 0
 var speed = 0
@@ -56,7 +58,8 @@ func _physics_process(delta: float) -> void:
 		
 	move_and_slide()
 	
-func initialize(start_position, home, min_speed, max_speed, difficulty, min_weight, max_weight, price_weight_multiplier, type):
+func initialize(start_position, home, min_speed, max_speed, 
+difficulty, min_weight, max_weight, price_weight_multiplier, type, is_shiny = false):
 	self.home = home
 	self.min_speed = min_speed
 	self.max_speed = max_speed
@@ -64,11 +67,17 @@ func initialize(start_position, home, min_speed, max_speed, difficulty, min_weig
 	self.weight = randf_range(min_weight, max_weight)
 	self.price = round(weight * price_weight_multiplier)
 	self.type = type
+	self.is_shiny = is_shiny
+	if self.is_shiny:
+		price = price * 3
 	speed = randf_range(min_speed, max_speed)
 	position = start_position
 	add_to_group("fishes")
 	
 	set_z_rotation_and_velocity(randf_range(min_angle, max_angle))
+	
+	if self.shiny_particles != null:
+		shiny_particles.emitting = self.is_shiny
 	
 func set_z_rotation_and_velocity(deg: float) -> void:
 	rotation[2] = 0

@@ -52,13 +52,16 @@ func spawn_fish(spawn_all: bool = false):
 				spawn_fish_config = FishesConfig.fishConfigMap[type]
 				break
 		var fish = spawn_fish_config.scene.instantiate()
+		
+		var shiny = randf() < FishesConfig.fishSectionMap[sectionType].shiny_rate
 	
 		fish.initialize(spawn_pos, self.get_instance_id(), 
 			spawn_fish_config.speed_min, spawn_fish_config.speed_max, 
 			spawn_fish_config.difficulty, 
 			spawn_fish_config.weight_min, spawn_fish_config.weight_max, 
 			spawn_fish_config.price_weight_multiplier,
-			fishType
+			fishType,
+			shiny
 			)
 		add_child(fish)
 		amount += 1
