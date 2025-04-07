@@ -7,13 +7,14 @@ extends CharacterBody3D
 @export var damage_amount: int = 30
 
 
-
-
 enum BossStates {COOLDOWN, CHARGING, PREPARING}
 var state = BossStates.PREPARING
 var timer = 0.0
 var charge_direction = Vector3.ZERO
 var has_hit_player = false
+
+func _ready():
+	$Area3D.body_entered.connect(_on_body_entered)
 
 func _physics_process(delta):
 	if player == null:
@@ -33,9 +34,9 @@ func _physics_process(delta):
 			
 		BossStates.CHARGING:
 			velocity = charge_direction * charge_speed
-			check_player_collision()
-	
 			var _collision = move_and_slide()
+			check_player_collision()
+			
 			timer -= delta
 			if timer <= 0:
 				state = BossStates.COOLDOWN
@@ -67,3 +68,8 @@ func on_player_collision(_player):
 	player.add_trauma(1)
 	player.sound_player.play_sound("urrgh")
 	GameState.health -= damage_amount
+
+func _on_body_entered(body):
+	if state == BossStates.CHARGING and body == player:
+		on_player_collision(player)
+		has_hit_player = true
