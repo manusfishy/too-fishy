@@ -11,6 +11,7 @@
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_2ikqw"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_40cab"]
+height = 1.15895
 
 [node name="pickaxe" type="StaticBody3D"]
 axis_lock_linear_z = true
@@ -29,12 +30,12 @@ calculate_tangents = false
 use_collision = true
 
 [node name="shaft mesh" type="MeshInstance3D" parent="Pivot/pickaxe mesh"]
-transform = Transform3D(-2.18557e-08, -1, -4.44089e-16, 0.5, -4.37114e-08, -1.94118e-23, 1.57772e-30, -8.88178e-16, 0.5, 2.2324, 0.758962, 1.49012e-08)
+transform = Transform3D(-2.18557e-08, -2.62021, -4.44089e-16, 0.5, -1.14533e-07, 0, 7.45058e-09, -5.32907e-15, 0.5, 3.88009, 0.758962, 2.98023e-08)
 mesh = SubResource("CapsuleMesh_dqkch")
 skeleton = NodePath("../../..")
 
 [node name="shaft mesh2" type="MeshInstance3D" parent="Pivot/pickaxe mesh"]
-transform = Transform3D(0.483977, 0.0360157, 0.124264, 0.0140292, 0.967955, -0.124776, -0.124776, 0.248528, 0.467963, 3.0264, 0.758962, 4.47035e-08)
+transform = Transform3D(0.456875, 0.0937923, 0.122477, 0.0132436, 2.52076, -0.122982, -0.117789, 0.647218, 0.461235, 6.28501, 0.758962, 4.47035e-08)
 mesh = SubResource("CapsuleMesh_dqkch")
 skeleton = NodePath("../../..")
 
@@ -44,11 +45,11 @@ process_material = SubResource("ParticleProcessMaterial_40cab")
 draw_pass_1 = SubResource("CapsuleMesh_2ikqw")
 
 [node name="HitboxShape" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.292326, -0.117686, 0)
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.949888, -0.117686, 0)
 shape = SubResource("CapsuleShape3D_40cab")
 
 [node name="PickaxeHitbox" type="Area3D" parent="."]
 
 [node name="HitboxShape" type="CollisionShape3D" parent="PickaxeHitbox"]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.292326, -0.22449, 0)
+transform = Transform3D(0.1, 0, 0, 0, 0.79065, 0, 0, 0, 0.1, 0.943962, -0.00903125, 0.00048995)
 shape = SubResource("CapsuleShape3D_40cab")
