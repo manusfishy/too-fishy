@@ -43,8 +43,11 @@ func _physics_process(delta: float) -> void:
 		var deg = randf_range(min_angle, max_angle)
 		
 		set_z_rotation_and_velocity(deg)
-		
-	if global_position.y >= -0.75:
+	
+	if global_position.y >= -0.5:
+		queue_free()
+		return
+	elif global_position.y >= -0.75:
 		if is_looking_up():
 			var deg = randf_range(min_angle, min_angle / 2)
 			set_z_rotation_and_velocity(deg)
