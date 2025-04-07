@@ -12,7 +12,7 @@ var target_velocity = Vector3.ZERO
 @onready var pickaxe_scene = preload("res://scenes/pickaxe.tscn")
 @export var inventory: Inv
 @export var traumaShakeMode = 1
-@onready var cooldown_timer = $HarpoonCD # Timer node, set to one-shot, 2s wait time
+@onready var cooldown_timer = $HarpoonCD # Timer node, set to one-shot, 2s wait time 
 
 var harpoon_scene = preload("res://scenes/harpoon.tscn") # Path to harpoon scene
 var bullet_scene = preload("res://scenes/bullet.tscn")
@@ -96,10 +96,15 @@ func _process(delta):
 	process_dock(delta)
 	process_depth_effects(delta)
 	processTrauma(delta)		
-	
+
+
 func _input(event):
-	if Input.is_action_just_pressed("throw") and can_shoot and !GameState.paused:
-		shoot_harpoon()
+	if event is InputEventMouseButton and event.pressed:
+		if can_shoot and !GameState.paused and !is_mouse_over_ui():
+			shoot_harpoon()
+
+func is_mouse_over_ui() -> bool:
+	return get_viewport().gui_get_focus_owner() != null
 	
 func onDock():
 	GameState.inventory.sellItems()
@@ -198,7 +203,7 @@ var time := 0.0
 @onready var initial_rotation := camera.rotation_degrees as Vector3
 
 
-
+# yes get traumatized <3 :3 test
 # 1. Random Jitter Version (commented out)
 func processTrauma(delta):
 	if traumaShakeMode == 1:

@@ -4,7 +4,7 @@ A 2.5D underwater exploration game where you dive deeper into the ocean to catch
 
 ## About
 
-In Too Fishy, you play as a deep-sea diver exploring the mysterious depths of the ocean. Catch rare fish to sell at the surface, upgrade your submerine, and dive deeper to find your friend who went missing in the darkest depths.
+In Too Fishy, you play as a deep-sea diver exploring the mysterious depths of the ocean. Catch rare fish to sell at the surface, upgrade your submarine, and dive deeper to find your friend who went missing in the darkest depths.
 
 ## Getting Started with Godot
 
