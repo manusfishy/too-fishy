@@ -18,10 +18,11 @@ var upgradeNames = {
 	GameState.Upgrade.HOR_SPEED: "Thrust",
 	GameState.Upgrade.LAMP_UNLOCKED: "Unlock Lamp",
 	GameState.Upgrade.AK47: "Unlock Gun",
+	GameState.Upgrade.HARPOON: "Upgrade Harpoon",
 }
 
 var boss_dialog_lines = {
-	Boss.BossDialogSections.TUTORIAL1: ["Hey man! Is you sub ready yet?", "Yes? Awesome! Go shoot some fish with that spear of yours!", "You can move the vessel by using W A S D, or the Arrow Keys", "'Right-CLICK' to shoot a spear." ,"Some items can be Trown, with a 'Left-CLICK'", "Need to break something? Use your pickaxe by pressing SPACE to mine barriers and other objects.",  "Each tool has a unique purpose - experiment to see what works best in different situations.", "Watch your preassure and Health levels and return to the surface when needed!", "Remember, you can swim near the dock to upgrade your sub and sell fish."],
+	Boss.BossDialogSections.TUTORIAL1: ["Hey man! Is you sub ready yet?", "Yes? Awesome! Go shoot some fish with that spear of yours!", "You can move the vessel by using W A S D, or the Arrow Keys", "'Right-CLICK' to shoot a spear." ,"Some items can be Trown, with a 'Left-CLICK'", "Need to break something? Use your pickaxe by pressing SPACE to mine barriers and other objects.",  "Each tool has a unique purpose - experiment to see what works best in different situations.", "Watch your Preassure and Health levels and return to the surface when needed!", "Remember, you can swim near the dock to upgrade your sub and sell fish."],
 	Boss.BossDialogSections.TUTORIAL2: ["There are some crazy fish down here!", "I was able to sell some of them for a lot of money!"],
 	Boss.BossDialogSections.TUTORIAL3: ["I found that the pickaxe is actually very useful", "You can break the barriers with them", "Press 'SPACE' to use it!"],
 	Boss.BossDialogSections.TUTORIAL4: ["Its awesome down here, you gotta check it out!", "Catch fish, load them off at the base and upgrade your vessel to come down and meet up with me."],
