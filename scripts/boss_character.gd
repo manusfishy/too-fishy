@@ -1,9 +1,9 @@
 extends CharacterBody3D
 
 @export var player: Node3D
-@export var charge_speed: float = 15.0
+@export var charge_speed: float = 25.0
 @export var charge_duration: float = 1.0
-@export var cooldown_duration: float = 1.5
+@export var cooldown_duration: float = 3.0
 @export var damage_amount: int = 30
 
 
