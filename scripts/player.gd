@@ -197,7 +197,7 @@ var time := 0.0
 @onready var initial_rotation := camera.rotation_degrees as Vector3
 
 
-# yes get traumatized <3 :3
+# yes get traumatized <3 :3 test
 # 1. Random Jitter Version (commented out)
 func processTrauma(delta):
 	if traumaShakeMode == 1:
