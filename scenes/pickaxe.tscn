@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://cwlmu2g8odpra"]
 
-[ext_resource type="Script" uid="uid://dronp26id7m8c" path="res://scripts/pickaxe.gd" id="1_40cab"]
+[ext_resource type="Script" uid="uid://dronp26id7m8c" path="res://scripts/items/pickaxe.gd" id="1_40cab"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qhqgy"]
 

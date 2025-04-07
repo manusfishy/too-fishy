@@ -13,7 +13,6 @@ func _ready():
 func _physics_process(delta):
 	# Move harpoon# Move in the direction set by the submarine
 	translate(direction * speed * delta)
-
 	
 	# Check for collisions with fish
 	for body in $Area3D.get_overlapping_bodies():

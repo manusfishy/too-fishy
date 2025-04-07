@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bjp1frafc5gmu"]
 
-[ext_resource type="Script" uid="uid://cgbwpsdq4gfjm" path="res://scripts/harpoon.gd" id="1_psboj"]
+[ext_resource type="Script" uid="uid://cgbwpsdq4gfjm" path="res://scripts/items/harpoon.gd" id="1_psboj"]
 [ext_resource type="PackedScene" uid="uid://bxkdo76yarnv3" path="res://meshes/Lanceharpoon.fbx" id="2_wbtou"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_psboj"]

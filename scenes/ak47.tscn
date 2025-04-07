@@ -1,5 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://cv7cru1o8ec0"]
+[gd_scene load_steps=3 format=3 uid="uid://cv7cru1o8ec0"]
 
 [ext_resource type="PackedScene" uid="uid://fs8tke7i5p2e" path="res://meshes/ak47_0406195124_texture.fbx" id="1_jfj41"]
+[ext_resource type="Script" uid="uid://berm86ra14l2m" path="res://scripts/items/ak47.gd" id="2_e25y1"]
 
-[node name="ak47_0406195124_texture" instance=ExtResource("1_jfj41")]
+[node name="ak47" instance=ExtResource("1_jfj41")]
+script = ExtResource("2_e25y1")
+
+[node name="Muzzle" type="Node3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.982369, 0.228667, 0.0308859)

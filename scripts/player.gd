@@ -14,6 +14,8 @@ var target_velocity = Vector3.ZERO
 @onready var cooldown_timer = $HarpoonCD # Timer node, set to one-shot, 2s wait time
 
 var harpoon_scene = preload("res://scenes/harpoon.tscn") # Path to harpoon scene
+var bullet_scene = preload("res://scenes/bullet.tscn")
+var ak_scene = preload("res://scenes/ak47.tscn")
 var can_shoot = true
 
 signal section_changed(sectionType)

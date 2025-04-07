@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://r5g4iu0tgf53"]
+[gd_scene load_steps=8 format=3 uid="uid://dh5isxij1ptvi"]
 
 [ext_resource type="Material" uid="uid://cln8yo172nfsg" path="res://materials/barrier_material_3d.tres" id="1_2c62f"]
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_gyfs4"]
