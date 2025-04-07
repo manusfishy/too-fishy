@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://xqds4eqa4fys"]
+[gd_scene load_steps=20 format=3 uid="uid://xqds4eqa4fys"]
 
 [ext_resource type="Script" uid="uid://bkpen13pay85m" path="res://scripts/section.gd" id="1_fivou"]
 [ext_resource type="PackedScene" uid="uid://bekjel2ayhsva" path="res://scenes/level_barrier.tscn" id="2_fivou"]
@@ -9,6 +9,11 @@
 [ext_resource type="Material" uid="uid://bupgrlcbs4i6k" path="res://materials/walls/veins.tres" id="7_ti0g3"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_o3jxj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ms04e"]
+render_priority = 1
+transparency = 1
+albedo_color = Color(0.0627451, 0.243137, 0.368627, 0.862745)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_t8qun"]
 size = Vector3(4.19824, 19.4489, 13.8901)
@@ -95,27 +100,53 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.8985, 9.53181, 0)
 [node name="SpawnerB" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.71813, -11.169, 0)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="LeftWall" type="StaticBody3D" parent="."]
 transform = Transform3D(0.917378, 0, -0.492565, 0, 1.36003, 0, 0.458728, 0, 0.985046, -30.8771, 1.37305, 1.14596)
 
-[node name="Node3D2" type="Node3D" parent="StaticBody3D"]
+[node name="Node3D2" type="Node3D" parent="LeftWall"]
 transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
-[node name="GesteinV002" type="MeshInstance3D" parent="StaticBody3D/Node3D2"]
+[node name="Gestein" type="MeshInstance3D" parent="LeftWall/Node3D2"]
+transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0, 0)
+material_overlay = SubResource("StandardMaterial3D_ms04e")
 mesh = ExtResource("5_ti0g3")
 skeleton = NodePath("../../..")
 surface_material_override/0 = ExtResource("6_ms04e")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/Node3D2"]
+[node name="Veins" type="MeshInstance3D" parent="LeftWall/Node3D2"]
+transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0, 0)
 mesh = ExtResource("7_58ehv")
 surface_material_override/0 = ExtResource("7_ti0g3")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftWall"]
+transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, 0, 0, 1, 1.57438, -0.818055, 0.261556)
+shape = SubResource("BoxShape3D_t8qun")
+
+[node name="LeftWall2" type="StaticBody3D" parent="."]
+transform = Transform3D(-0.840678, 0, -0.630943, 0, 1.36003, 0, 0.5876, 0, -0.902689, 2.58816, 1.37305, 1.14596)
+
+[node name="Node3D2" type="Node3D" parent="LeftWall2"]
+transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Gestein" type="MeshInstance3D" parent="LeftWall2/Node3D2"]
+transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0, 0)
+material_overlay = SubResource("StandardMaterial3D_ms04e")
+mesh = ExtResource("5_ti0g3")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("6_ms04e")
+
+[node name="Veins" type="MeshInstance3D" parent="LeftWall2/Node3D2"]
+transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0, 0)
+mesh = ExtResource("7_58ehv")
+surface_material_override/0 = ExtResource("7_ti0g3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftWall2"]
 transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, 0, 0, 1, 1.57438, -0.818055, 0.261556)
 shape = SubResource("BoxShape3D_t8qun")
 
 [node name="StaticBody3D2" type="StaticBody3D" parent="."]
 transform = Transform3D(-0.872939, 0, -0.578229, 0, 1.36003, 0, 0.538507, 0, -0.937329, 2.65484, 1.37305, 2.04345)
+visible = false
 
 [node name="Node3D2" type="Node3D" parent="StaticBody3D2"]
 transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 0, 0, 1, 0, 0, 0)
@@ -126,7 +157,7 @@ skeleton = NodePath("../../..")
 surface_material_override/0 = ExtResource("6_ms04e")
 
 [node name="Veins" type="MeshInstance3D" parent="StaticBody3D2/Node3D2"]
-transform = Transform3D(1, 0, 5.96046e-08, 0, 1, 0, 2.98023e-08, 0, 1, -0.0310316, 0.00964308, 0.0626147)
+transform = Transform3D(1, 0, 8.9407e-08, 0, 1, 0, 0, 0, 1, -0.0310316, 0.00964308, 0.0626144)
 mesh = ExtResource("7_58ehv")
 surface_material_override/0 = ExtResource("7_ti0g3")
 
