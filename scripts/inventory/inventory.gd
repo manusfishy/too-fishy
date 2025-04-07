@@ -16,9 +16,13 @@ func add(item: InvItem):
 		if i.id == item.id:
 			print("Duplicate fish ID detected: ", item.id)
 			return false
-	items.append(item)
-	updateTotal()
-	return true
+	if item.weight + inventoryCumulatedValues[InventoryValues.TotalWeight] > max_weight:
+		return false
+	else:
+		items.append(item)
+		updateTotal()
+		return true
+	
 
 func sellItems():
 	while 0 < GameState.inventory.items.size():

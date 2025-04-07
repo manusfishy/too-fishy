@@ -39,16 +39,17 @@ func update_display():
 	
 	# Create text elements
 	var fishes_text = Label.new()
-	fishes_text.text = "Fishes: %d" % \
+	fishes_text.text = "Stored fish: %d" % \
 			GameState.inventory.inventoryCumulatedValues[GameState.inventory.InventoryValues.FishesCaught]
 	grid.add_child(fishes_text)
 	
 	var weight_text = Label.new()
-	weight_text.text = "Weight: %.1f kg" % \
-			GameState.inventory.inventoryCumulatedValues[GameState.inventory.InventoryValues.TotalWeight]
+	weight_text.text = "Total weight: %.1f / %.1f" % \
+			[GameState.inventory.inventoryCumulatedValues[GameState.inventory.InventoryValues.TotalWeight], \
+			GameState.inventory.max_weight]
 	grid.add_child(weight_text)
 	
 	var value_text = Label.new()
-	value_text.text = "Value: $%.2f" % \
+	value_text.text = "Total value: $%.2f" % \
 			GameState.inventory.inventoryCumulatedValues[GameState.inventory.InventoryValues.TotalValue]
 	grid.add_child(value_text)
