@@ -27,7 +27,7 @@ func _ready():
 	
 
 func collision():
-	var collision = move_and_slide()
+	var _collision = move_and_slide()
 	
 	# Check for collisions after movement
 	for i in get_slide_collision_count():
@@ -98,7 +98,7 @@ func _process(delta):
 	processTrauma(delta)		
 
 
-func _input(event):
+func _input(_event):
 	if Input.is_action_just_pressed("throw"):
 		if can_shoot and !GameState.paused and !is_mouse_over_ui():
 			shoot_harpoon()
@@ -255,8 +255,8 @@ func processTrauma(delta):
 			camera.rotation_degrees = initial_rotation
 		
 
-func pseudo_random(seed: float) -> float:
-	return (fmod(sin(seed * 12.9898) * 43758.5453, 1.0)) * 2.0 - 1.0  # Returns -1 to 1
+func pseudo_random(mSeed: float) -> float:
+	return (fmod(sin(mSeed * 12.9898) * 43758.5453, 1.0)) * 2.0 - 1.0  # Returns -1 to 1
 
 func add_trauma(trauma_amount : float):
 	trauma = clamp(trauma + trauma_amount, 0.0, 1.0)

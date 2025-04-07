@@ -9,13 +9,14 @@ var fade_duration = 2.0 # Duration of the crossfade in seconds
 var fade_timer = 0.0
 var is_crossfading = false
 
+var surface = preload("res://music/surface.mp3")
+var deep = preload("res://music/deep.mp3")
+var bossfight = preload("res://music/bossfight.mp3")
+var hotzone = preload("res://music/hotzone.mp3")
+
 func _ready():
 	# Load the audio files
 	# Preload the sound files
-	var surface = preload("res://music/surface.mp3")
-	var deep = preload("res://music/deep.mp3")
-	var bossfight = preload("res://music/bossfight.mp3")
-	var hotzone = preload("res://music/hotzone.mp3")
 	player1.stream = surface
 	player2.stream = deep
 	

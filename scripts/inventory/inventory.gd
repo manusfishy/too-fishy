@@ -41,11 +41,9 @@ func sellItems():
 func updateTotal():
 	var totalPrice = 0
 	var totalWeight = 0
-	var n = 0
 	for item in GameState.inventory.items:
 		totalPrice += item.price
 		totalWeight += item.weight
-		n =+ 1
 		
 	inventoryCumulatedValues[InventoryValues.TotalValue] = totalPrice
 	inventoryCumulatedValues[InventoryValues.TotalWeight] = totalWeight

@@ -7,7 +7,7 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 		if Boss.boss_dialog_section != Boss.BossDialogSections.FRIEND_RESCUED:
 			Boss.setDialogStage(Boss.BossDialogSections.FRIEND_RESCUED)
 			
-func _physics_process(delta):
+func _physics_process(_delta):
 	if player == null:
 		return
 	var direction = player.global_position - global_position

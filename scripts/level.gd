@@ -13,8 +13,8 @@ var last_section_type: GameState.Stage = GameState.Stage.SURFACE
 
 var lastSpawned = -35
 var snappedDepth = 0
-func _process(delta: float) -> void:
-	GameState.setDepth(player.position.y * -1)
+func _process(_delta: float) -> void:
+	GameState.setDepth(int(player.position.y) * -1)
 	snappedDepth = snapped(player.position.y, 1) * -1
 	if player.position.y < (lastSpawned):
 		spawnNewSection(lastSpawned - sectionHeight)
@@ -24,39 +24,39 @@ func _process(delta: float) -> void:
 	
 	Boss.process_dialog_depth()
 	
-func spawnNewSection(position: float):
+func spawnNewSection(mPosition: float):
 	
 	var newSection = section.instantiate()
-	newSection.position.y = position
-	var i = snapped(-position, 100)
+	newSection.position.y = mPosition
+	var i = snapped(-mPosition, 100)
 	i = min(i, GameState.depthStageMap.keys()[len(GameState.depthStageMap.keys())-1])
 	newSection.sectionType = GameState.depthStageMap[i]
 	newSection.lastSectionType = last_section_type
-	lastSpawned = position
+	lastSpawned = mPosition
 	GameState.fishes_lower_boarder = lastSpawned - sectionHeight/2 - 1
-	if position <= -50:
-		newSection.setDepth(position * -1)
+	if mPosition <= -50:
+		newSection.setDepth(mPosition * -1)
 	add_child(newSection)
 	last_section_type = GameState.depthStageMap[i]
 
-func spawnBoss(position: float):
-	print("Spawn boss", position)
+func spawnBoss(mPosition: float):
+	print("Spawn boss", mPosition)
 	var spawned_boss = boss.instantiate()
-	spawned_boss.position.y = position
+	spawned_boss.position.y = mPosition
 	spawned_boss.position.z = -0.33
 	spawned_boss.position.x = -5
 	spawned_boss.player = player
 	add_child(spawned_boss)
 	Boss.setBossSpawned()
 	
-	position = lastSpawned - sectionHeight
+	mPosition = lastSpawned - sectionHeight
 	var bossSection = boss_section.instantiate()
-	bossSection.position.y = position
-	var i = snapped(-position, 100)
+	bossSection.position.y = mPosition
+	var i = snapped(-mPosition, 100)
 	
 	i = min(i, GameState.depthStageMap.keys()[len(GameState.depthStageMap.keys())-1])
 	
-	lastSpawned = position + 50
+	lastSpawned = mPosition + 50
 	GameState.fishes_lower_boarder = lastSpawned - sectionHeight/2 - 1
 
 	add_child(bossSection)

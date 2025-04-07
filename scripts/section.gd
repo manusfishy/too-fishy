@@ -30,10 +30,8 @@ var is_on_screen: bool = false
 
 func setDepth(d: int):
 	depth = d
-	var depthSnapped = snapped(depth, 100)
 
 func spawn_fish(spawn_all: bool = false):
-	var stage_name = GameState.Stage.keys()[sectionType]
 	if !FishesConfig.fishSectionMap.has(sectionType):
 		print("No fish spawns defined for ", GameState.Stage.keys()[sectionType])
 		return
