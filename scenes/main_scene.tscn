@@ -87,6 +87,7 @@ transform = Transform3D(2.45308, 0, 0, 0, 1.62324, 0, 0, 0, 1, -20.4469, -3.0248
 [node name="FirstSection" parent="Level" instance=ExtResource("4_gubc5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
 background_mat = ExtResource("9_7nt27")
+particles_enabled = false
 
 [node name="SecondSection" parent="Level" instance=ExtResource("4_gubc5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -35, 0)
