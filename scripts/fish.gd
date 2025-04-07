@@ -68,6 +68,9 @@ difficulty, min_weight, max_weight, price_weight_multiplier, type, is_shiny = fa
 	self.price = round(weight * price_weight_multiplier)
 	self.type = type
 	self.is_shiny = is_shiny
+	
+	scale = get_scale_for_weight(max_weight, min_weight, weight)
+	
 	if self.is_shiny:
 		price = price * 3
 	speed = randf_range(min_speed, max_speed)
@@ -110,3 +113,12 @@ func scatter(body: Node3D) -> void:
 	
 		
 	pass
+
+func get_scale_for_weight(max_weight, min_weight, weight) -> Vector3:
+	var weight_range = (max_weight - min_weight)
+	var normal_weight = weight_range/2
+	var weight_sanitized = weight - min_weight
+	var weight_factor = weight_sanitized / normal_weight
+	var scale_factor = 1+weight_factor*.3
+	return Vector3(scale_factor,scale_factor,1)
+	
