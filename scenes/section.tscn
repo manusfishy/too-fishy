@@ -1,8 +1,7 @@
-[gd_scene load_steps=21 format=3 uid="uid://xqds4eqa4fys"]
+[gd_scene load_steps=20 format=3 uid="uid://xqds4eqa4fys"]
 
 [ext_resource type="Script" uid="uid://bkpen13pay85m" path="res://scripts/section.gd" id="1_fivou"]
 [ext_resource type="PackedScene" uid="uid://bekjel2ayhsva" path="res://scenes/level_barrier.tscn" id="2_fivou"]
-[ext_resource type="Material" uid="uid://dw536siyh8hrk" path="res://materials/backgrounds/bg_loop.tres" id="3_ms04e"]
 [ext_resource type="ArrayMesh" uid="uid://gw7pdmvoe3yh" path="res://meshes/gestein_v003.obj" id="5_ti0g3"]
 [ext_resource type="Material" uid="uid://dv7qrtiq87nj0" path="res://materials/walls/walls.tres" id="6_ms04e"]
 [ext_resource type="ArrayMesh" uid="uid://c54e8dk8jsryd" path="res://meshes/vains_v003.obj" id="7_58ehv"]
@@ -82,13 +81,11 @@ size = Vector3(0.7, 0.7, 0.7)
 script = ExtResource("1_fivou")
 spawn_marker_a = NodePath("SpawnerA")
 spawn_marker_b = NodePath("SpawnerB")
-background_mat = ExtResource("3_ms04e")
 
 [node name="Background" type="MeshInstance3D" parent="."]
 transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 1, -15.293, 0, -3.007)
 mesh = SubResource("QuadMesh_o3jxj")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("3_ms04e")
 
 [node name="RightBarrier" parent="." instance=ExtResource("2_fivou")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0240569, 0, -0.819179)

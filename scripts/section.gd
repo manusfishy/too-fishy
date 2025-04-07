@@ -1,10 +1,26 @@
 extends Node3D
 
 @export var sectionType: GameState.Stage = GameState.Stage.SURFACE
+@export var lastSectionType: GameState.Stage = GameState.Stage.SURFACE
 @export var water: MeshInstance3D
 @export var spawn_marker_a: Marker3D
 @export var spawn_marker_b: Marker3D
 @export var background_mat: StandardMaterial3D
+
+var sectionBackgroundMap: Dictionary = {
+	GameState.Stage.SURFACE: preload("res://materials/backgrounds/bg_loop.tres"),
+	GameState.Stage.DEEP: preload("res://materials/backgrounds/bg_loop.tres"),
+	GameState.Stage.DEEPER: preload("res://materials/backgrounds/bg_loop.tres"),
+	GameState.Stage.SUPERDEEP: preload("res://materials/backgrounds/bg_loop.tres"),
+	GameState.Stage.HOT: preload("res://materials/backgrounds/bg_loop.tres"),
+	GameState.Stage.LAVA: preload("res://materials/backgrounds/bg_lava.tres"),
+	GameState.Stage.VOID: preload("res://materials/backgrounds/bg_lava.tres"),
+}
+
+var sectionTransitions: Dictionary = {
+	GameState.Stage.HOT: preload("res://materials/backgrounds/bg_deep_to_lava.tres"),
+	GameState.Stage.LAVA: preload("res://materials/backgrounds/bg_lava_to_void.tres"),
+}
 
 var depth: int = 0
 var is_on_screen: bool = false
@@ -49,6 +65,13 @@ func spawn_fish(spawn_all: bool = false):
 
 func _ready() -> void:
 	spawn_fish(true)
+	
+	if background_mat == null:
+		if sectionBackgroundMap[sectionType] != null:
+			background_mat = sectionBackgroundMap[sectionType]
+		else:
+			print("No background material found for ", GameState.Stage.keys()[sectionType])
+			background_mat = sectionBackgroundMap[GameState.Stage.SURFACE]
 	$Background.set_surface_override_material(0, background_mat)
 
 func screen_entered() -> void:

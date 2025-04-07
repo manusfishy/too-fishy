@@ -26,8 +26,8 @@ var maxUpgrades = {
 	Upgrade.ROD_STRENGTH: 5,
 	Upgrade.DEPTH_RESISTANCE: 5,
 	Upgrade.PICKAXE_UNLOCKED: 1,
-	Upgrade.VERT_SPEED: 5,
-	Upgrade.HOR_SPEED: 5,
+	Upgrade.VERT_SPEED: 2,
+	Upgrade.HOR_SPEED: 3,
 	Upgrade.LAMP_UNLOCKED: 1,
 }
 

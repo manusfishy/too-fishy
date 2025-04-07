@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 @export var speed_vertical = 1.0
-@export var speed_horizontal = 3.0
+@export var speed_horizontal = 1.0
 
 @onready var camera = $Camera3D
 var throw_strength = 15.0 # Adjust for distance
@@ -104,7 +104,6 @@ func onDock():
 	GameState.inventory.sellItems()
 	
 	print("docked")
-	
 	
 func shoot_harpoon():
 	# Instance the harpoon
