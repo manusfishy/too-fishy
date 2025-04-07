@@ -9,6 +9,8 @@ extends Node3D
 @export var sectionHeight: float
 @export var preloadSectionsCount: int
 
+var last_section_type: GameState.Stage = GameState.Stage.SURFACE
+
 var lastSpawned = -35
 var snappedDepth = 0
 func _process(delta: float) -> void:
@@ -21,16 +23,19 @@ func _process(delta: float) -> void:
 		spawnBoss(boss_spawn_loc)
 
 func spawnNewSection(position: float):
+	
 	var newSection = section.instantiate()
 	newSection.position.y = position
 	var i = snapped(-position, 100)
 	i = min(i, GameState.depthStageMap.keys()[len(GameState.depthStageMap.keys())-1])
 	newSection.sectionType = GameState.depthStageMap[i]
+	newSection.lastSectionType = last_section_type
 	lastSpawned = position
 	GameState.fishes_lower_boarder = lastSpawned - sectionHeight/2 - 1
 	if position <= -50:
 		newSection.setDepth(position * -1)
 	add_child(newSection)
+	last_section_type = GameState.depthStageMap[i]
 
 func spawnBoss(position: float):
 	print("Spawn boss", position)

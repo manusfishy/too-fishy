@@ -2,6 +2,7 @@ extends Node3D
 
 @export var sectionType: GameState.Stage = GameState.Stage.SURFACE
 @export var lastSectionType: GameState.Stage = GameState.Stage.SURFACE
+
 @export var water: MeshInstance3D
 @export var spawn_marker_a: Marker3D
 @export var spawn_marker_b: Marker3D
@@ -67,12 +68,23 @@ func spawn_fish(spawn_all: bool = false):
 func _ready() -> void:
 	spawn_fish(true)
 	
-	if background_mat == null:
-		if sectionBackgroundMap[sectionType] != null:
-			background_mat = sectionBackgroundMap[sectionType]
-		else:
-			print("No background material found for ", GameState.Stage.keys()[sectionType])
-			background_mat = sectionBackgroundMap[GameState.Stage.SURFACE]
+	var shouldBeTransition = false
+	var shouldTransitionTo: GameState.Stage = GameState.Stage.SURFACE
+	if sectionTransitions.has(lastSectionType) and sectionTransitions.has(sectionType):
+		if lastSectionType == GameState.Stage.HOT and sectionType == GameState.Stage.LAVA:
+			shouldBeTransition = true
+			shouldTransitionTo = GameState.Stage.HOT
+	
+	if shouldBeTransition:
+		background_mat = sectionTransitions[shouldTransitionTo]
+		$Background.set_surface_override_material(0, background_mat)
+	else:
+		if background_mat == null:
+			if sectionBackgroundMap[sectionType] != null:
+				background_mat = sectionBackgroundMap[sectionType]
+			else:
+				print("No background material found for ", GameState.Stage.keys()[sectionType])
+				background_mat = sectionBackgroundMap[GameState.Stage.SURFACE]
 	$Background.set_surface_override_material(0, background_mat)
 
 	if sectionType == GameState.Stage.LAVA:

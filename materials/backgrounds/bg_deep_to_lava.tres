@@ -1,6 +1,6 @@
 [gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bxny1ou3svigx"]
 
-[ext_resource type="Texture2D" uid="uid://ddvvfqwela7xf" path="res://textures/backgrounds/Loop_for_Deep_v002.png" id="1_0q7wd"]
+[ext_resource type="Texture2D" uid="uid://kikuk1pg4qvp" path="res://textures/backgrounds/trans_to_Lava.png" id="1_0q7wd"]
 
 [resource]
 albedo_texture = ExtResource("1_0q7wd")
