@@ -1,7 +1,4 @@
-extends Node3D
-
-
-@onready var player = $player
+extends Node
 
 @onready var player1 = $AudioStreamPlayer # First audio player
 @onready var player2 = $AudioStreamPlayer2 # Second audio player
@@ -36,9 +33,6 @@ func _ready():
 
 func _process(delta):
 	# Example trigger: Press "ui_accept" (e.g., Enter key) to start crossfade
-	if Input.is_action_just_pressed("ui_accept") and not is_crossfading:
-		start_crossfade()
-	
 	# Handle the crossfade
 	if is_crossfading:
 		fade_timer += delta
@@ -74,8 +68,8 @@ func play_sound(sound_name: String):
 			return
 	
 	# Assign the sound and play it
-	player.stream = sound_to_play
-	player.play()
+	player1.stream = sound_to_play
+	player1.play()
 
 
 func _on_stage_changed(new_stage):
