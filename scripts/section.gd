@@ -8,6 +8,7 @@ extends Node3D
 @export var spawn_marker_b: Marker3D
 @export var background_mat: StandardMaterial3D
 @export var lava_vine_mat: StandardMaterial3D = preload("res://materials/walls/veins_lava.tres")
+@export var particles_enabled: bool = true
 
 var sectionBackgroundMap: Dictionary = {
 	GameState.Stage.SURFACE: preload("res://materials/backgrounds/bg_loop.tres"),
@@ -69,6 +70,9 @@ func spawn_fish(spawn_all: bool = false):
 			break
 
 func _ready() -> void:
+	if not particles_enabled:
+		$Debris.visible = false
+		$Bubbles.visible = false
 	spawn_fish(true)
 	
 	var shouldBeTransition = false

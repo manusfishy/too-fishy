@@ -2,11 +2,13 @@ extends Node
 var boss_spawned = false
 var boss_spawn_height = 500
 
-enum BossDialogSections {TUTORIAL1, TUTORIAL2, RESCUE_CALL, BOSS_INTRO, BOSS_KILLS_FRIEND, FRIEND_RESCUED}
+enum BossDialogSections {TUTORIAL1, TUTORIAL2, TUTORIAL3, TUTORIAL4, RESCUE_CALL, BOSS_INTRO, BOSS_KILLS_FRIEND, FRIEND_RESCUED}
 
 var boss_dialog_from = {
 	BossDialogSections.TUTORIAL1: "John",
 	BossDialogSections.TUTORIAL2: "John",
+	BossDialogSections.TUTORIAL3: "John",
+	BossDialogSections.TUTORIAL4: "John",
 	BossDialogSections.RESCUE_CALL: "John",
 	BossDialogSections.BOSS_INTRO: "???",
 	BossDialogSections.BOSS_KILLS_FRIEND: "Blobfish",

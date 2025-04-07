@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://durrtmu3i450r" path="res://scenes/player.tscn" id="4_pu3yx"]
 [ext_resource type="PackedScene" uid="uid://b3j6kki1bc2xs" path="res://scenes/boss_section.tscn" id="5_si52b"]
 [ext_resource type="Script" uid="uid://cldevqp1odjtl" path="res://scripts/hud.gd" id="7_c16ls"]
-[ext_resource type="PackedScene" uid="uid://cj100dmxx12lt" path="res://scenes/lava.tscn" id="7_r6p65"]
+[ext_resource type="PackedScene" path="res://scenes/lava.tscn" id="7_r6p65"]
 [ext_resource type="StyleBox" uid="uid://bx8skthds5uiu" path="res://scenes/inventory/main_scene.tres" id="9_6u1mn"]
 [ext_resource type="Material" uid="uid://bq68gffx25aw4" path="res://materials/backgrounds/bg_first.tres" id="9_7nt27"]
 [ext_resource type="Material" uid="uid://dohoucrjnnkwp" path="res://materials/backgrounds/bg_afterfirst.tres" id="9_bcnxi"]
@@ -18,8 +18,8 @@
 [ext_resource type="PackedScene" uid="uid://d0ykw70micab6" path="res://scenes/boss.tscn" id="11_e1cbu"]
 [ext_resource type="Script" uid="uid://dx1hxd4wnymb1" path="res://scripts/boss_dialog_ui.gd" id="12_mngbo"]
 [ext_resource type="PackedScene" uid="uid://b87oo8x46lj3r" path="res://scenes/cheats.tscn" id="13_4w45t"]
-[ext_resource type="Script" path="res://scripts/fps_counter.gd" id="14_r6p65"]
-[ext_resource type="PackedScene" uid="uid://b35mxcc3d74di" path="res://scenes/WaterPlane.tscn" id="20_k6f3i"]
+[ext_resource type="Script" uid="uid://bjp67tva3ov6n" path="res://scripts/fps_counter.gd" id="14_r6p65"]
+[ext_resource type="PackedScene" path="res://scenes/WaterPlane.tscn" id="20_k6f3i"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_c16ls"]
 
