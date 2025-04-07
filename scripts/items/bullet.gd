@@ -1,6 +1,6 @@
 extends Node3D
 
-var speed = 5.0 # Meters per second
+var speed = 50.0 # Meters per second
 var velocity = Vector3.ZERO
 var lifetime = 2.0 # Seconds before despawn
 var direction = Vector3.LEFT # Default direction
