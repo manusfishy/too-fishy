@@ -1,7 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://b3j6kki1bc2xs"]
+[gd_scene load_steps=9 format=3 uid="uid://b3j6kki1bc2xs"]
 
 [ext_resource type="PackedScene" uid="uid://xqds4eqa4fys" path="res://scenes/section.tscn" id="1_1j4rh"]
-[ext_resource type="Material" uid="uid://dw536siyh8hrk" path="res://materials/backgrounds/bg_loop.tres" id="2_5p7sp"]
 [ext_resource type="Script" uid="uid://cmrhnhr7cedmp" path="res://scripts/friend.gd" id="2_b8wpq"]
 [ext_resource type="ArrayMesh" uid="uid://j1ghwew3fuj1" path="res://meshes/SM_FishSubmarine.obj" id="2_vk6kq"]
 [ext_resource type="ArrayMesh" uid="uid://dkew5403qhabh" path="res://meshes/gestein_v001.obj" id="3_vk6kq"]
@@ -19,15 +18,12 @@ size = Vector3(6.53244, 9.52234, 16.658)
 [node name="BossSection" type="Node3D"]
 
 [node name="Section" parent="." instance=ExtResource("1_1j4rh")]
-background_mat = ExtResource("2_5p7sp")
 
 [node name="Section2" parent="." instance=ExtResource("1_1j4rh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -25, 0)
-background_mat = ExtResource("2_5p7sp")
 
 [node name="Section3" parent="." instance=ExtResource("1_1j4rh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 0)
-background_mat = ExtResource("2_5p7sp")
 
 [node name="Friend" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.19162, -42.9264, -1.75951)
