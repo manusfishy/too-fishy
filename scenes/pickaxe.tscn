@@ -1,6 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cwlmu2g8odpra"]
+[gd_scene load_steps=9 format=3 uid="uid://cwlmu2g8odpra"]
 
 [ext_resource type="Script" uid="uid://dronp26id7m8c" path="res://scripts/items/pickaxe.gd" id="1_40cab"]
+[ext_resource type="ArrayMesh" uid="uid://no6hp0fypmgn" path="res://meshes/SM_Pickaxe.obj" id="2_ln4w3"]
+[ext_resource type="Material" uid="uid://dihllutqhvrt8" path="res://materials/assets.tres" id="3_07kgg"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qhqgy"]
 
@@ -25,6 +27,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.319393, 0, 0)
 
 [node name="pickaxe mesh" type="CSGCombiner3D" parent="Pivot"]
 transform = Transform3D(0.2, 0, 0, 0, 0.193717, 0.049738, 0, -0.049738, 0.193717, -0.622667, -0.156422, 0)
+visible = false
 operation = 1
 calculate_tangents = false
 use_collision = true
@@ -39,13 +42,18 @@ transform = Transform3D(0.456875, 0.0937923, 0.122477, 0.0132436, 2.52076, -0.12
 mesh = SubResource("CapsuleMesh_dqkch")
 skeleton = NodePath("../../..")
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pivot"]
+transform = Transform3D(-1.70474e-08, 0.39, 0, 1.70474e-08, 7.45167e-16, -0.39, -0.39, -1.70474e-08, -1.70474e-08, 0, 0, 0)
+mesh = ExtResource("2_ln4w3")
+surface_material_override/0 = ExtResource("3_07kgg")
+
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
 emitting = false
 process_material = SubResource("ParticleProcessMaterial_40cab")
 draw_pass_1 = SubResource("CapsuleMesh_2ikqw")
 
 [node name="HitboxShape" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.949888, -0.117686, 0)
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.845953, -0.552837, 0)
 shape = SubResource("CapsuleShape3D_40cab")
 
 [node name="PickaxeHitbox" type="Area3D" parent="."]

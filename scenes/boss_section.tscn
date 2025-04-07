@@ -6,7 +6,7 @@
 [ext_resource type="ArrayMesh" uid="uid://j1ghwew3fuj1" path="res://meshes/SM_FishSubmarine.obj" id="2_vk6kq"]
 [ext_resource type="Material" uid="uid://bcrl1b5ffaqsx" path="res://materials/backgrounds/bg_lava_to_void.tres" id="3_jws3u"]
 [ext_resource type="ArrayMesh" uid="uid://dkew5403qhabh" path="res://meshes/gestein_v001.obj" id="3_vk6kq"]
-[ext_resource type="PackedScene" path="res://scenes/destroyable_barier.tscn" id="5_oi768"]
+[ext_resource type="PackedScene" uid="uid://cnicgksdkot2f" path="res://scenes/destroyable_barier.tscn" id="5_oi768"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_oi768"]
 radius = 3.62441
@@ -66,28 +66,14 @@ transform = Transform3D(1, 1.19209e-07, -7.08678e-09, -4.07547e-06, 1.00001, 8.7
 shape = SubResource("BoxShape3D_vk6kq")
 
 [node name="DestroyableBarier" parent="." instance=ExtResource("5_oi768")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.9159, -46.7574, -0.33)
-
-[node name="DestroyableBarier2" parent="." instance=ExtResource("5_oi768")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.9159, -47.8469, -0.33)
-
-[node name="DestroyableBarier3" parent="." instance=ExtResource("5_oi768")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.2752, -46.7574, -0.33)
-
-[node name="DestroyableBarier4" parent="." instance=ExtResource("5_oi768")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.2752, -47.8469, -0.33)
-
-[node name="DestroyableBarier5" parent="." instance=ExtResource("5_oi768")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5688, -46.7574, -0.33)
-
-[node name="DestroyableBarier6" parent="." instance=ExtResource("5_oi768")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5688, -47.8469, -0.33)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.0308, -35.9612, -0.33)
+max_health = 1
+current_health = 1
 
 [node name="DestroyableBarier7" parent="." instance=ExtResource("5_oi768")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.85375, -46.7574, -0.33)
-
-[node name="DestroyableBarier8" parent="." instance=ExtResource("5_oi768")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.85375, -47.8469, -0.33)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.7442, -54.631, -0.33)
+max_health = 1
+current_health = 1
 
 [connection signal="body_entered" from="Friend/Area3D" to="Friend" method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Friend/Area3D" to="Friend" method="_on_area_3d_body_exited"]
