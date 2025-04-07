@@ -27,13 +27,15 @@ func _physics_process(delta):
 			charge_direction.z = 0
 			state = BossStates.CHARGING
 			timer = charge_duration
+		
+			#rotate towards player
+			look_at(player.global_position, Vector3(0, 0, 1))
 			
 		BossStates.CHARGING:
 			velocity = charge_direction * charge_speed
-			var collision = move_and_slide()
-			
 			check_player_collision()
-			
+	
+			var collision = move_and_slide()
 			timer -= delta
 			if timer <= 0:
 				state = BossStates.COOLDOWN
@@ -57,6 +59,7 @@ func check_player_collision():
 		if collider == player:
 			on_player_collision(collider)
 			has_hit_player = true
+			velocity = Vector3.ZERO
 			break
 		
 func on_player_collision(player):
