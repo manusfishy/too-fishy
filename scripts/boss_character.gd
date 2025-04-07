@@ -6,6 +6,9 @@ extends CharacterBody3D
 @export var cooldown_duration: float = 1.5
 @export var damage_amount: int = 30
 
+
+
+
 enum BossStates {COOLDOWN, CHARGING, PREPARING}
 var state = BossStates.PREPARING
 var timer = 0.0
@@ -52,11 +55,12 @@ func check_player_collision():
 		var collider = collision.get_collider()
 		
 		if collider == player:
-			on_player_collision()
+			on_player_collision(collider)
 			has_hit_player = true
 			break
 		
-func on_player_collision():
+func on_player_collision(player):
 	print("Boss hit the player!")
-	
+	player.add_trauma(1)
+	player.sound_player.play_sound("urrgh")
 	GameState.health -= damage_amount

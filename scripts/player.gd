@@ -11,6 +11,7 @@ var target_velocity = Vector3.ZERO
 @onready var sound_player = $SoundPlayer
 @onready var pickaxe_scene = preload("res://scenes/pickaxe.tscn")
 @export var inventory: Inv
+@export var traumaShakeMode = 1
 @onready var cooldown_timer = $HarpoonCD # Timer node, set to one-shot, 2s wait time
 
 var harpoon_scene = preload("res://scenes/harpoon.tscn") # Path to harpoon scene
@@ -40,6 +41,7 @@ func collision():
 var can_be_hurt = true
 
 func hurtPlayer(damage: int):
+	add_trauma(1)
 	if can_be_hurt:
 		GameState.health -= damage
 		sound_player.play_sound("ughhh")
@@ -93,7 +95,7 @@ func _physics_process(delta: float) -> void:
 func _process(delta):
 	process_dock(delta)
 	process_depth_effects(delta)
-
+	processTrauma(delta)		
 	
 func _input(event):
 	if Input.is_action_just_pressed("throw") and can_shoot and !GameState.paused:
@@ -170,3 +172,77 @@ func process_death():
 func scatter_area_entered(body: Node3D) -> void:
 	if body.is_in_group("fishes"):
 		body.scatter(self)
+
+
+
+
+@export var trauma_reduction_rate := 1.0
+
+@export var max_x := 10.0
+@export var max_y := 10.0
+@export var max_z := 5.0
+
+@export var noise_speed := 50.0
+
+var trauma := 0.0
+
+var time := 0.0
+
+
+@onready var initial_rotation := camera.rotation_degrees as Vector3
+
+
+
+# 1. Random Jitter Version (commented out)
+func processTrauma(delta):
+	if traumaShakeMode == 1:
+		time += delta
+		trauma = max(trauma - delta * trauma_reduction_rate, 0.0)
+
+		if trauma > 0:
+			var intensity = 0.1  # Adjust shake strength
+			var shake = trauma * trauma * intensity
+			camera.rotation_degrees.x = initial_rotation.x + randf_range(-max_x, max_x) * shake
+			camera.rotation_degrees.y = initial_rotation.y + randf_range(-max_y, max_y) * shake
+			camera.rotation_degrees.z = initial_rotation.z + randf_range(-max_z, max_z) * shake
+		else:
+			camera.rotation_degrees = initial_rotation
+		
+	if traumaShakeMode == 2:
+		# 2. Sine Wave Version (commented out)
+		time += delta
+		trauma = max(trauma - delta * trauma_reduction_rate, 0.0)
+		
+		if trauma > 0:
+			var intensity = 0.1  # Adjust shake strength
+			var shake = trauma * trauma * intensity
+			var shake_x = sin(time * 20.0) * max_x * shake
+			var shake_y = cos(time * 15.0) * max_y * shake
+			var shake_z = sin(time * 10.0) * max_z * shake
+			
+			camera.rotation_degrees.x = initial_rotation.x + shake_x
+			camera.rotation_degrees.y = initial_rotation.y + shake_y
+			camera.rotation_degrees.z = initial_rotation.z + shake_z
+		else:
+			camera.rotation_degrees = initial_rotation		
+	
+	if traumaShakeMode == 3:
+		# 3. Pseudo-Random Version (active)
+		time += delta
+		trauma = max(trauma - delta * trauma_reduction_rate, 0.0)
+		
+		if trauma > 0:
+			var intensity = 0.1  # Adjust shake strength (0.1-1.0)
+			var shake = trauma * trauma * intensity
+			camera.rotation_degrees.x = initial_rotation.x + pseudo_random(time) * max_x * shake
+			camera.rotation_degrees.y = initial_rotation.y + pseudo_random(time + 100.0) * max_y * shake
+			camera.rotation_degrees.z = initial_rotation.z + pseudo_random(time + 200.0) * max_z * shake
+		else:
+			camera.rotation_degrees = initial_rotation
+		
+
+func pseudo_random(seed: float) -> float:
+	return (fmod(sin(seed * 12.9898) * 43758.5453, 1.0)) * 2.0 - 1.0  # Returns -1 to 1
+
+func add_trauma(trauma_amount : float):
+	trauma = clamp(trauma + trauma_amount, 0.0, 1.0)
