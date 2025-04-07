@@ -32,11 +32,14 @@ func add(item: InvItem):
 	
 
 func sellItems():
+	var sold = 0
 	while 0 < GameState.inventory.items.size():
 		var item = GameState.inventory.items[0]
-		GameState.money += item.price
+		sold += item.price
 		GameState.inventory.items.remove_at(0)
+	GameState.money += sold
 	updateTotal()
+	return sold
 
 func updateTotal():
 	var totalPrice = 0
