@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 @export var speed_vertical = 1.0
-@export var speed_horizontal = 3.0
+@export var speed_horizontal = 1.0
 
 @onready var camera = $Camera3D
 var throw_strength = 15.0 # Adjust for distance
@@ -24,7 +24,6 @@ func _ready():
 	GameState.player_node = self
 	print("player ready")
 	
-
 
 func collision():
 	var collision = move_and_slide()
@@ -95,15 +94,14 @@ func _process(delta):
 	process_depth_effects(delta)
 
 	
-func _unhandled_input(event):
-	if Input.is_action_just_pressed("throw") and can_shoot:
+func _input(event):
+	if Input.is_action_just_pressed("throw") and can_shoot and !GameState.paused:
 		shoot_harpoon()
 	
 func onDock():
 	GameState.inventory.sellItems()
 	
 	print("docked")
-	
 	
 func shoot_harpoon():
 	# Instance the harpoon
@@ -141,6 +139,9 @@ func process_dock(delta):
 		if GameState.upgrades[GameState.Upgrade.LAMP_UNLOCKED] == 1 \
 				and $Pivot/SmFishSubmarine/UnlockableLamp.visible == false:
 			$Pivot/SmFishSubmarine/UnlockableLamp.visible = true
+		if GameState.upgrades[GameState.Upgrade.AK47] == 1 \
+			and $Pivot/SmFishSubmarine/ak47_0406195124_texture.visible == false:
+			$Pivot/SmFishSubmarine/ak47_0406195124_texture.visible = true
 		if not GameState.isDocked:
 			onDock()
 			GameState.isDocked = true

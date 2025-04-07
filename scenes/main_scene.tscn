@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://durrtmu3i450r" path="res://scenes/player.tscn" id="4_pu3yx"]
 [ext_resource type="PackedScene" uid="uid://b3j6kki1bc2xs" path="res://scenes/boss_section.tscn" id="5_si52b"]
 [ext_resource type="Script" uid="uid://cldevqp1odjtl" path="res://scripts/hud.gd" id="7_c16ls"]
-[ext_resource type="PackedScene" path="res://scenes/lava.tscn" id="7_r6p65"]
+[ext_resource type="PackedScene" uid="uid://cj100dmxx12lt" path="res://scenes/lava.tscn" id="7_r6p65"]
 [ext_resource type="StyleBox" uid="uid://bx8skthds5uiu" path="res://scenes/inventory/main_scene.tres" id="9_6u1mn"]
 [ext_resource type="Material" uid="uid://bq68gffx25aw4" path="res://materials/backgrounds/bg_first.tres" id="9_7nt27"]
 [ext_resource type="Material" uid="uid://dohoucrjnnkwp" path="res://materials/backgrounds/bg_afterfirst.tres" id="9_bcnxi"]
@@ -50,7 +50,7 @@ transform = Transform3D(0.94702, 0.320556, -0.0199305, -0.0267635, 0.140602, 0.9
 [node name="CharacterBody3D" parent="." instance=ExtResource("4_pu3yx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -0.33)
 speed_vertical = 1.5
-speed_horizontal = 4.0
+speed_horizontal = 1.5
 
 [node name="Level" type="Node3D" parent="." node_paths=PackedStringArray("level_wrapper", "player")]
 script = ExtResource("3_c16ls")
@@ -94,10 +94,84 @@ background_mat = ExtResource("9_bcnxi")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = SubResource("Theme_18nlu")
+
+[node name="inv_ui" parent="UI" instance=ExtResource("9_c1pb6")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -227.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 156.0
+grow_horizontal = 0
+
+[node name="CenterContainer" type="CenterContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BossDialog" type="PanelContainer" parent="UI/CenterContainer"]
+layout_mode = 2
+script = ExtResource("12_mngbo")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/CenterContainer/BossDialog"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="UI/CenterContainer/BossDialog/VBoxContainer"]
+layout_mode = 2
+text = "Blobfish:"
+
+[node name="MessageLabel" type="Label" parent="UI/CenterContainer/BossDialog/VBoxContainer"]
+layout_mode = 2
+text = "Oh nooo, you died!
+Anyways... Lets keep going - we don't have all day!"
+
+[node name="ContinueButton" type="Button" parent="UI/CenterContainer/BossDialog/VBoxContainer"]
+layout_mode = 2
+text = "Continue"
+
+[node name="Upgrades" type="PanelContainer" parent="UI/CenterContainer"]
+layout_mode = 2
+script = ExtResource("10_6wevv")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/CenterContainer/Upgrades"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/CenterContainer/Upgrades/VBoxContainer"]
+layout_mode = 2
+text = "Upgrades"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="UI/CenterContainer/Upgrades/VBoxContainer"]
+layout_mode = 2
+
+[node name="DeathScreen" type="PanelContainer" parent="UI/CenterContainer"]
+layout_mode = 2
+script = ExtResource("10_e1cbu")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/CenterContainer/DeathScreen"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/CenterContainer/DeathScreen/VBoxContainer"]
+layout_mode = 2
+text = "Oh nooo, you died!
+Anyways... Lets keep going - we don't have all day!"
+
+[node name="Button" type="Button" parent="UI/CenterContainer/DeathScreen/VBoxContainer"]
+layout_mode = 2
+text = "Respawn
+"
 
 [node name="HUD" type="PanelContainer" parent="UI"]
 layout_mode = 0
@@ -146,78 +220,6 @@ text = "Pressure Headroom:"
 
 [node name="PressureHeadroomBar" type="ProgressBar" parent="UI/HUD/MarginContainer/HUDContainer"]
 layout_mode = 2
-
-[node name="Upgrades" type="PanelContainer" parent="UI"]
-layout_mode = 0
-offset_left = 294.0
-offset_top = 137.0
-offset_right = 888.0
-offset_bottom = 485.0
-script = ExtResource("10_6wevv")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Upgrades"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UI/Upgrades/VBoxContainer"]
-layout_mode = 2
-text = "Upgrades"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="GridContainer" type="GridContainer" parent="UI/Upgrades/VBoxContainer"]
-layout_mode = 2
-
-[node name="inv_ui" parent="UI" instance=ExtResource("9_c1pb6")]
-layout_mode = 0
-offset_left = 450.0
-offset_top = 82.0
-offset_right = 729.0
-offset_bottom = 247.0
-
-[node name="DeathScreen" type="PanelContainer" parent="UI"]
-layout_mode = 0
-offset_left = 295.0
-offset_top = 237.0
-offset_right = 888.0
-offset_bottom = 351.0
-script = ExtResource("10_e1cbu")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/DeathScreen"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UI/DeathScreen/VBoxContainer"]
-layout_mode = 2
-text = "Oh nooo, you died!
-Anyways... Lets keep going - we don't have all day!"
-
-[node name="Button" type="Button" parent="UI/DeathScreen/VBoxContainer"]
-layout_mode = 2
-text = "Respawn
-"
-
-[node name="BossDialog" type="PanelContainer" parent="UI"]
-layout_mode = 0
-offset_left = 295.0
-offset_top = 237.0
-offset_right = 888.0
-offset_bottom = 351.0
-script = ExtResource("12_mngbo")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/BossDialog"]
-layout_mode = 2
-
-[node name="NameLabel" type="Label" parent="UI/BossDialog/VBoxContainer"]
-layout_mode = 2
-text = "Blobfish:"
-
-[node name="MessageLabel" type="Label" parent="UI/BossDialog/VBoxContainer"]
-layout_mode = 2
-text = "Oh nooo, you died!
-Anyways... Lets keep going - we don't have all day!"
-
-[node name="ContinueButton" type="Button" parent="UI/BossDialog/VBoxContainer"]
-layout_mode = 2
-text = "Continue"
 
 [node name="Cheats" parent="UI" instance=ExtResource("13_4w45t")]
 visible = false

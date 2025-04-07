@@ -46,7 +46,7 @@ func update_display():
 	var weight_text = Label.new()
 	weight_text.text = "Total weight: %.1f / %.1f" % \
 			[GameState.inventory.inventoryCumulatedValues[GameState.inventory.InventoryValues.TotalWeight], \
-			GameState.inventory.max_weight]
+			GameState.inventory.get_max_weight()]
 	grid.add_child(weight_text)
 	
 	var value_text = Label.new()
