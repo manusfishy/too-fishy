@@ -17,8 +17,11 @@ func _ready():
 	addButton("God mode", func(): GameState.god_mode = not GameState.god_mode)
 	addButton("Kill", func(): GameState.health = 0)
 	addButton("Skip Dialog", func(): skip_dialog())
+	addButton("trauma 1", func(): GameState.player_node.traumaShakeMode = 1 )
+	addButton("trauma 2", func(): GameState.player_node.traumaShakeMode = 2 )
+	addButton("trauma 3", func(): GameState.player_node.traumaShakeMode = 3 )
 	
-
+	
 	close()
 
 
