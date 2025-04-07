@@ -3,12 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://wo0a04y5bsno"
-valid=false
+uid="uid://dnqru17ouu7u0"
+path="res://.godot/imported/dock3.fbx-63d8ae1e80bf10bc004aad19f50a2ef3.scn"
 
 [deps]
 
-source_file="res://meshes/dock2_texture.fbx"
+source_file="res://meshes/dock3.fbx"
+dest_files=["res://.godot/imported/dock3.fbx-63d8ae1e80bf10bc004aad19f50a2ef3.scn"]
 
 [params]
 
@@ -32,6 +33,6 @@ animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={}
-fbx/importer=1
+fbx/importer=0
 fbx/allow_geometry_helper_nodes=false
 fbx/embedded_image_handling=1

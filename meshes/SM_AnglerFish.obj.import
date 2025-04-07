@@ -3,15 +3,15 @@
 importer="wavefront_obj"
 importer_version=1
 type="Mesh"
-uid="uid://cs08v8jrkehpl"
-path="res://.godot/imported/SM_Anglerfish.obj-c0d4f1ebb3db1c953ace845fc6012643.mesh"
+uid="uid://ctklcadrxkjay"
+path="res://.godot/imported/SM_AnglerFish.obj-248ca871287a9b16226ca2cd75580217.mesh"
 
 [deps]
 
-files=["res://.godot/imported/SM_Anglerfish.obj-c0d4f1ebb3db1c953ace845fc6012643.mesh"]
+files=["res://.godot/imported/SM_AnglerFish.obj-248ca871287a9b16226ca2cd75580217.mesh"]
 
-source_file="res://meshes/SM_Anglerfish.obj"
-dest_files=["res://.godot/imported/SM_Anglerfish.obj-c0d4f1ebb3db1c953ace845fc6012643.mesh", "res://.godot/imported/SM_Anglerfish.obj-c0d4f1ebb3db1c953ace845fc6012643.mesh"]
+source_file="res://meshes/SM_AnglerFish.obj"
+dest_files=["res://.godot/imported/SM_AnglerFish.obj-248ca871287a9b16226ca2cd75580217.mesh", "res://.godot/imported/SM_AnglerFish.obj-248ca871287a9b16226ca2cd75580217.mesh"]
 
 [params]
 

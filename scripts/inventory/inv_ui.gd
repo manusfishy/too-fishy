@@ -8,7 +8,7 @@ func _ready():
 	update_display()
 	open()
 
-func _process(delta):
+func _process(_delta):
 	#if GameState.isDocked:
 	#	close()
 	if Input.is_action_just_pressed("inv_toggle"):

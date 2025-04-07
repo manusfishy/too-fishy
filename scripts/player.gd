@@ -27,7 +27,7 @@ func _ready():
 	
 
 func collision():
-	var collision = move_and_slide()
+	var _collision = move_and_slide()
 	
 	# Check for collisions after movement
 	for i in get_slide_collision_count():
@@ -98,18 +98,25 @@ func _process(delta):
 	processTrauma(delta)		
 
 
-func _input(event):
-	if event is InputEventMouseButton and event.pressed:
+func _input(_event):
+	if Input.is_action_just_pressed("throw"):
 		if can_shoot and !GameState.paused and !is_mouse_over_ui():
 			shoot_harpoon()
 
 func is_mouse_over_ui() -> bool:
 	return get_viewport().gui_get_focus_owner() != null
 	
+var sold = 0
 func onDock():
-	GameState.inventory.sellItems()
+	sold = GameState.inventory.sellItems()
+
+
+	#if sold != 0:
+		#var price_str = "Sold Items Value: $" + str(sold)
+		#PopupManager.show_popup(price_str, $PopupSpawnPosition.global_position, Color.GREEN)
+		#print("docked")
 	
-	print("docked")
+
 	
 func shoot_harpoon():
 	# Instance the harpoon
@@ -159,6 +166,9 @@ func process_dock(delta):
 		if GameState.upgrades[GameState.Upgrade.AK47] == 1 \
 			and $Pivot/SmFishSubmarine/ak47_0406195124_texture.visible == false:
 			$Pivot/SmFishSubmarine/ak47_0406195124_texture.visible = true
+		if GameState.upgrades[GameState.Upgrade.DualAK47] == 1 \
+			and $Pivot/SmFishSubmarine/ak47_69420_texture2.visible == false:
+			$Pivot/SmFishSubmarine/ak47_69420_texture2.visible = true	
 		if not GameState.isDocked:
 			onDock()
 			GameState.isDocked = true
@@ -169,6 +179,7 @@ func process_dock(delta):
 func process_depth_effects(delta):
 	GameState.headroom = ((GameState.upgrades[GameState.Upgrade.DEPTH_RESISTANCE] + 1) * 100 - GameState.depth)
 	if GameState.headroom < 0:
+		add_trauma(0.1)
 		GameState.health += GameState.headroom * delta
 
 func process_death():
@@ -253,8 +264,8 @@ func processTrauma(delta):
 			camera.rotation_degrees = initial_rotation
 		
 
-func pseudo_random(seed: float) -> float:
-	return (fmod(sin(seed * 12.9898) * 43758.5453, 1.0)) * 2.0 - 1.0  # Returns -1 to 1
+func pseudo_random(mSeed: float) -> float:
+	return (fmod(sin(mSeed * 12.9898) * 43758.5453, 1.0)) * 2.0 - 1.0  # Returns -1 to 1
 
 func add_trauma(trauma_amount : float):
 	trauma = clamp(trauma + trauma_amount, 0.0, 1.0)

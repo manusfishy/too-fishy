@@ -1,6 +1,6 @@
 extends PanelContainer
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if GameState.death_screen:
 		visible = true
 	else:

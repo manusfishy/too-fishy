@@ -2,20 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cx0d7121ohp8v"
-path.s3tc="res://.godot/imported/dock2_texture_0.png-524de78176b64789a96d486ec03cf2b3.s3tc.ctex"
+uid="uid://dtd33ucgh1m66"
+path.s3tc="res://.godot/imported/SM_Assets_initialShadingGroup_Roughness.png-d9fb02908b141458ca038c8e45c2b833.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
-generator_parameters={
-"md5": "a18f9a88cfcb32cbb38c31bb0a71dde4"
-}
 
 [deps]
 
-source_file="res://meshes/dock2_texture_0.png"
-dest_files=["res://.godot/imported/dock2_texture_0.png-524de78176b64789a96d486ec03cf2b3.s3tc.ctex"]
+source_file="res://textures/misc/SM_Assets_initialShadingGroup_Roughness.png"
+dest_files=["res://.godot/imported/SM_Assets_initialShadingGroup_Roughness.png-d9fb02908b141458ca038c8e45c2b833.s3tc.ctex"]
 
 [params]
 

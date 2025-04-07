@@ -32,20 +32,21 @@ func add(item: InvItem):
 	
 
 func sellItems():
+	var sold = 0
 	while 0 < GameState.inventory.items.size():
 		var item = GameState.inventory.items[0]
-		GameState.money += item.price
+		sold += item.price
 		GameState.inventory.items.remove_at(0)
+	GameState.money += sold
 	updateTotal()
+	return sold
 
 func updateTotal():
 	var totalPrice = 0
 	var totalWeight = 0
-	var n = 0
 	for item in GameState.inventory.items:
 		totalPrice += item.price
 		totalWeight += item.weight
-		n =+ 1
 		
 	inventoryCumulatedValues[InventoryValues.TotalValue] = totalPrice
 	inventoryCumulatedValues[InventoryValues.TotalWeight] = totalWeight

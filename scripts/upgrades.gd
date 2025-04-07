@@ -11,7 +11,7 @@ func _ready():
 		buttons[key] = upgradeButton
 	pass
 
-func _process(delta):
+func _process(_delta):
 	if GameState.isDocked:
 		visible = true
 	else:
