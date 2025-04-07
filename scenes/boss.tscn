@@ -1,10 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://d0ykw70micab6"]
+[gd_scene load_steps=4 format=3 uid="uid://d0ykw70micab6"]
+
+[ext_resource type="Script" uid="uid://dwvvnqqk7jqak" path="res://scripts/boss_character.gd" id="1_dlmty"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_6wevv"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6wevv"]
 
 [node name="Boss" type="CharacterBody3D" groups=["boss"]]
+script = ExtResource("1_dlmty")
 
 [node name="Pivot" type="Node3D" parent="."]
 

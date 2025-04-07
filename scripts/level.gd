@@ -36,8 +36,9 @@ func spawnBoss(position: float):
 	print("Spawn boss", position)
 	var spawned_boss = boss.instantiate()
 	spawned_boss.position.y = position
-	spawned_boss.position.z = 0.33
+	spawned_boss.position.z = -0.33
 	spawned_boss.position.x = -5
+	spawned_boss.player = player
 	add_child(spawned_boss)
 	Boss.setBossSpawned()
 	
