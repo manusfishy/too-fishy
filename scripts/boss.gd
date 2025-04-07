@@ -1,6 +1,6 @@
 extends Node
 var boss_spawned = false
-var boss_spawn_height = 25
+var boss_spawn_height = 500
 
 enum BossDialogSections {TUTORIAL1, TUTORIAL2, RESCUE_CALL, BOSS_INTRO, BOSS_KILLS_FRIEND, FRIEND_RESCUED}
 

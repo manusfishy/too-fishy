@@ -23,6 +23,7 @@ signal section_changed(sectionType)
 func _ready():
 	GameState.player_node = self
 	print("player ready")
+	
 
 
 func collision():
@@ -76,6 +77,7 @@ func movement(_delta: float):
 	if GameState.paused:
 		velocity = Vector3.ZERO
 	move_and_slide()
+	position.z = 0.33
 
 
 func _physics_process(delta: float) -> void:
@@ -88,7 +90,6 @@ func _physics_process(delta: float) -> void:
 	
 	process_death()
 
-
 func _process(delta):
 	process_dock(delta)
 	process_depth_effects(delta)
@@ -100,6 +101,7 @@ func _unhandled_input(event):
 	
 func onDock():
 	GameState.inventory.sellItems()
+	
 	print("docked")
 	
 	

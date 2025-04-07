@@ -4,6 +4,7 @@ extends Node3D
 @export var water: MeshInstance3D
 @export var spawn_marker_a: Marker3D
 @export var spawn_marker_b: Marker3D
+@export var background_mat: StandardMaterial3D
 
 var depth: int = 0
 var is_on_screen: bool = false
@@ -48,6 +49,7 @@ func spawn_fish(spawn_all: bool = false):
 
 func _ready() -> void:
 	spawn_fish(true)
+	$Background.set_surface_override_material(0, background_mat)
 
 func screen_entered() -> void:
 	is_on_screen = true

@@ -1,22 +1,24 @@
-[gd_scene load_steps=24 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=26 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
-[ext_resource type="Texture2D" uid="uid://b0r6xam3j6ui2" path="res://textures/background_beginning.jpg" id="4_c1pb6"]
+[ext_resource type="Texture2D" uid="uid://b0r6xam3j6ui2" path="res://textures/backgrounds/background_beginning.jpg" id="4_c1pb6"]
 [ext_resource type="PackedScene" uid="uid://xqds4eqa4fys" path="res://scenes/section.tscn" id="4_gubc5"]
 [ext_resource type="PackedScene" uid="uid://durrtmu3i450r" path="res://scenes/player.tscn" id="4_pu3yx"]
 [ext_resource type="PackedScene" uid="uid://b3j6kki1bc2xs" path="res://scenes/boss_section.tscn" id="5_si52b"]
 [ext_resource type="Script" uid="uid://cldevqp1odjtl" path="res://scripts/hud.gd" id="7_c16ls"]
 [ext_resource type="PackedScene" path="res://scenes/lava.tscn" id="7_r6p65"]
 [ext_resource type="StyleBox" uid="uid://bx8skthds5uiu" path="res://scenes/inventory/main_scene.tres" id="9_6u1mn"]
+[ext_resource type="Material" uid="uid://bq68gffx25aw4" path="res://materials/backgrounds/bg_first.tres" id="9_7nt27"]
+[ext_resource type="Material" uid="uid://dohoucrjnnkwp" path="res://materials/backgrounds/bg_afterfirst.tres" id="9_bcnxi"]
 [ext_resource type="PackedScene" uid="uid://bip40vv31g12d" path="res://scenes/inventory/inv_ui.tscn" id="9_c1pb6"]
 [ext_resource type="Texture2D" uid="uid://criy5nis30pph" path="res://textures/UI_element_background.png" id="10_01n6w"]
 [ext_resource type="Script" uid="uid://cau06s0ctjwx8" path="res://scripts/upgrades.gd" id="10_6wevv"]
 [ext_resource type="Script" uid="uid://dhv52dohn5s4r" path="res://scripts/death_screen.gd" id="10_e1cbu"]
 [ext_resource type="PackedScene" uid="uid://d0ykw70micab6" path="res://scenes/boss.tscn" id="11_e1cbu"]
 [ext_resource type="Script" uid="uid://dx1hxd4wnymb1" path="res://scripts/boss_dialog_ui.gd" id="12_mngbo"]
-[ext_resource type="PackedScene" uid="uid://b87oo8x46lj3r" path="res://scenes/cheats.tscn" id="13_4w45t"]
-[ext_resource type="Script" path="res://scripts/fps_counter.gd" id="14_r6p65"]
+[ext_resource type="PackedScene" uid="uid://n0h5fdv36bo2" path="res://scenes/cheats.tscn" id="13_4w45t"]
+[ext_resource type="Script" uid="uid://bjp67tva3ov6n" path="res://scripts/fps_counter.gd" id="14_r6p65"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_c16ls"]
 
@@ -81,11 +83,13 @@ transform = Transform3D(0.538622, 0, 0, 0, 4.32167, 0, 0, 0, 1, -19.2295, 0.1801
 [node name="Lava2" parent="Level/StartSection" instance=ExtResource("7_r6p65")]
 transform = Transform3D(2.45308, 0, 0, 0, 1.62324, 0, 0, 0, 1, -20.4469, -3.0248, -2.69743)
 
-[node name="Section" parent="Level" instance=ExtResource("4_gubc5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -35, 0)
-
-[node name="Section2" parent="Level" instance=ExtResource("4_gubc5")]
+[node name="FirstSection" parent="Level" instance=ExtResource("4_gubc5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
+background_mat = ExtResource("9_7nt27")
+
+[node name="SecondSection" parent="Level" instance=ExtResource("4_gubc5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -35, 0)
+background_mat = ExtResource("9_bcnxi")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -108,10 +112,10 @@ expand_mode = 4
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/HUD"]
 layout_mode = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
 
 [node name="HUDContainer" type="VBoxContainer" parent="UI/HUD/MarginContainer"]
 layout_mode = 2
@@ -224,9 +228,9 @@ offset_bottom = 258.0
 
 [node name="FPS Counter" type="Label" parent="UI"]
 layout_mode = 2
-offset_left = 202.0
+offset_left = 220.0
 offset_top = 10.0
-offset_right = 391.0
+offset_right = 409.0
 offset_bottom = 33.0
 text = "FPS"
 script = ExtResource("14_r6p65")

@@ -1,10 +1,10 @@
 extends CharacterBody3D
 
 @export var player: Node3D
-@export var charge_speed: float = 10.0
+@export var charge_speed: float = 15.0
 @export var charge_duration: float = 1.0
-@export var cooldown_duration: float = 3.0
-@export var damage_amount: int = 10
+@export var cooldown_duration: float = 1.5
+@export var damage_amount: int = 30
 
 enum BossStates {COOLDOWN, CHARGING, PREPARING}
 var state = BossStates.PREPARING
@@ -59,4 +59,4 @@ func check_player_collision():
 func on_player_collision():
 	print("Boss hit the player!")
 	
-	GameState.health -= 30
+	GameState.health -= damage_amount
