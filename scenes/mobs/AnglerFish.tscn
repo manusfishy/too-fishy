@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://l8teme4ff6qn"]
+[gd_scene load_steps=7 format=3 uid="uid://l8teme4ff6qn"]
 
 [ext_resource type="Script" uid="uid://ckbs05slsrxf2" path="res://scripts/fish.gd" id="1_s4kbk"]
-[ext_resource type="ArrayMesh" uid="uid://ddip24ssl728e" path="res://meshes/SM_AnglerFish.obj" id="2_s4kbk"]
+[ext_resource type="ArrayMesh" uid="uid://cs08v8jrkehpl" path="res://meshes/SM_Anglerfish.obj" id="2_2wna0"]
 [ext_resource type="Material" uid="uid://ntxihwik5ww0" path="res://materials/mobs/ShinyParticles.tres" id="3_pbdao"]
+[ext_resource type="Material" uid="uid://dxhaj24revj7w" path="res://materials/fishes.tres" id="3_v3fgv"]
 [ext_resource type="PrismMesh" uid="uid://dkttjpdmphyxv" path="res://materials/mobs/ShinyParticlesMesh.tres" id="4_v3fgv"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_b0grq"]
@@ -21,8 +22,9 @@ transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="SmBasicFishB" type="MeshInstance3D" parent="Pivot"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.559967, 0)
-mesh = ExtResource("2_s4kbk")
+mesh = ExtResource("2_2wna0")
 skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("3_v3fgv")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Pivot/SmBasicFishB"]
 transform = Transform3D(1, 0, 6.25278e-14, 0, 1, 0, -6.25278e-14, 0, 1, -2.95979, 1.79049, -2.58753e-07)

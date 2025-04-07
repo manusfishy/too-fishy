@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bj1bmfbysxv0r"]
+[gd_scene load_steps=7 format=3 uid="uid://bj1bmfbysxv0r"]
 
 [ext_resource type="Script" uid="uid://ckbs05slsrxf2" path="res://scripts/fish.gd" id="1_gpnaq"]
-[ext_resource type="ArrayMesh" uid="uid://hf7v42ui5i6q" path="res://meshes/SM_BasicFishB.obj" id="2_gpnaq"]
+[ext_resource type="ArrayMesh" uid="uid://bi4ptin3otyxh" path="res://meshes/SM_Fish_B.obj" id="2_yeaik"]
 [ext_resource type="Material" uid="uid://ntxihwik5ww0" path="res://materials/mobs/ShinyParticles.tres" id="3_u68cf"]
+[ext_resource type="Material" uid="uid://dxhaj24revj7w" path="res://materials/fishes.tres" id="3_y7ijj"]
 [ext_resource type="PrismMesh" uid="uid://dkttjpdmphyxv" path="res://materials/mobs/ShinyParticlesMesh.tres" id="4_yeaik"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_b0grq"]
@@ -21,8 +22,9 @@ transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, 0, 0)
 
 [node name="SmBasicFishB" type="MeshInstance3D" parent="Pivot"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
-mesh = ExtResource("2_gpnaq")
+mesh = ExtResource("2_yeaik")
 skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("3_y7ijj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-0.108849, 0.994058, 0, -0.994058, -0.108849, 0, 0, 0, 1, -0.00212356, 0.0263436, 0)

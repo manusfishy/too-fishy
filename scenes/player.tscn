@@ -5,7 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://cdvfasjj4km5l" path="res://meshes/FishSub.fbx" id="2_qhqgy"]
 [ext_resource type="Script" uid="uid://cwbxcfefm5qdj" path="res://scripts/camera.gd" id="3_qlg0r"]
 [ext_resource type="PackedScene" uid="uid://cwlmu2g8odpra" path="res://scenes/pickaxe.tscn" id="4_qlg0r"]
-[ext_resource type="ArrayMesh" uid="uid://j1ghwew3fuj1" path="res://meshes/SM_FishSubmarine.obj" id="4_tuyoq"]
+[ext_resource type="ArrayMesh" uid="uid://dva5riw4x0j1l" path="res://meshes/SM_FishSubmarine_FINAL.obj" id="5_smehm"]
+[ext_resource type="Material" uid="uid://dat2e8q6cpmmp" path="res://materials/submarine.tres" id="6_smehm"]
 [ext_resource type="PackedScene" uid="uid://cv7cru1o8ec0" path="res://scenes/ak47.tscn" id="6_tuyoq"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7cn6r"]
@@ -35,9 +36,6 @@ volumetric_fog_albedo = Color(0.054902, 0.317647, 1, 1)
 volumetric_fog_ambient_inject = 0.08
 adjustment_color_correction = SubResource("GradientTexture1D_tuyoq")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qlg0r"]
-albedo_color = Color(0.444845, 0.212952, 0.366369, 1)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_qlg0r"]
 size = Vector3(1, 1.13977, 1)
 
@@ -63,9 +61,9 @@ transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0.155944, 0)
 visible = false
 
 [node name="SmFishSubmarine" type="MeshInstance3D" parent="Pivot"]
-transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0.000392032, -1.16415e-08, -3.18527e-05)
-mesh = ExtResource("4_tuyoq")
-surface_material_override/0 = SubResource("StandardMaterial3D_qlg0r")
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0.00037846, 0.000150717, -3.20524e-05)
+mesh = ExtResource("5_smehm")
+surface_material_override/0 = ExtResource("6_smehm")
 
 [node name="Hand" type="Node3D" parent="Pivot/SmFishSubmarine"]
 transform = Transform3D(4.96379, 0.600684, 0, -0.600684, 4.96379, 0, 0, 0, 5, 2.02766, -4.24867, 1.55206)
@@ -104,6 +102,9 @@ monitorable = false
 transform = Transform3D(7.99981, 0.0550123, 0, -0.0550123, 7.99981, 0, 0, 0, 8, 0.0548361, -1.6927, 0.0304167)
 shape = SubResource("BoxShape3D_qlg0r")
 debug_color = Color(0.864206, 0.357529, 1.92523e-07, 0.42)
+
+[node name="PopupSpawnPosition" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0282827, 0.666139, 0)
 
 [connection signal="section_changed" from="." to="Camera3D" method="change_section_environment"]
 [connection signal="timeout" from="HarpoonCD" to="." method="_on_timer_timeout"]

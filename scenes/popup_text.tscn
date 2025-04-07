@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbsnxit5lvmyu"]
+
+[ext_resource type="Script" uid="uid://cjpsiwduuvtl0" path="res://scripts/popup_text.gd" id="1_4m4vl"]
+
+[node name="PopupText" type="Label3D"]
+billboard = 1
+text = "Lorem Ipsum"
+font_size = 36
+script = ExtResource("1_4m4vl")

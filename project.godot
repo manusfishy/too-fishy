@@ -21,6 +21,7 @@ GameState="*res://scripts/game_state.gd"
 Strings="*res://scripts/strings.gd"
 FishesConfig="*res://scripts/fishes_config.gd"
 Boss="*res://scripts/boss.gd"
+PopupManager="*res://scripts/Popup_Manager.gd"
 
 [editor]
 

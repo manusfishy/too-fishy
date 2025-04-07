@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b3j6kki1bc2xs"]
+[gd_scene load_steps=10 format=3 uid="uid://b3j6kki1bc2xs"]
 
 [ext_resource type="PackedScene" uid="uid://xqds4eqa4fys" path="res://scenes/section.tscn" id="1_1j4rh"]
 [ext_resource type="Script" uid="uid://cmrhnhr7cedmp" path="res://scripts/friend.gd" id="2_b8wpq"]
@@ -7,9 +7,6 @@
 [ext_resource type="Material" uid="uid://bcrl1b5ffaqsx" path="res://materials/backgrounds/bg_lava_to_void.tres" id="3_jws3u"]
 [ext_resource type="ArrayMesh" uid="uid://dkew5403qhabh" path="res://meshes/gestein_v001.obj" id="3_vk6kq"]
 [ext_resource type="PackedScene" path="res://scenes/destroyable_barier.tscn" id="5_oi768"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b8wpq"]
-albedo_color = Color(0.0617123, 0.341111, 0.417972, 1)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_oi768"]
 radius = 3.62441
@@ -37,7 +34,6 @@ script = ExtResource("2_b8wpq")
 [node name="SmFishSubmarine" type="MeshInstance3D" parent="Friend"]
 transform = Transform3D(0.17, 0, 0, 0, 0.17, 0, 0, 0, 0.17, 0.328859, 1.72861, 0)
 mesh = ExtResource("2_vk6kq")
-surface_material_override/0 = SubResource("StandardMaterial3D_b8wpq")
 
 [node name="Area3D" type="Area3D" parent="Friend"]
 monitorable = false
