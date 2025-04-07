@@ -20,12 +20,6 @@ func _ready():
 	$PickaxeHitbox.collision_layer = 0
 	$PickaxeHitbox.collision_mask = 3
 	
-	# Signal verbinden
-	$PickaxeHitbox.body_entered.connect(_on_hitbox_body_entered)
-	
-	
-	print("Pickaxe mit Hitbox initialisiert")
-	
 	# Partikel einrichten
 	if not has_node("GPUParticles3D"):
 		var particle_node = GPUParticles3D.new()
@@ -42,20 +36,24 @@ func _process(delta):
 	if Input.is_action_just_pressed("swing_pickaxe") and not swing_active and not back_swing_active:
 		swing_active = true
 		swing_time = 0.0
-		print("Schwung begonnen")
 
 	if swing_active:
 		swing_time += delta
 		var progress = swing_time / swing_duration
 		var eased_progress = ease_in_out(progress)
 		rotate_z(-schwing_geschwindigkeit * eased_progress * delta)
+		
+		for body in $PickaxeHitbox.get_overlapping_bodies():
+			if body.has_method("take_damage"):
+				body.take_damage(1)
+				collision_detected = true
+			
 
 		if progress >= 1.0 or collision_detected:
 			swing_active = false
 			back_swing_active = true
 			collision_detected = false
 			swing_time = 0.0
-			print("Schwung beendet")
 
 	if back_swing_active:
 		swing_time += delta
@@ -69,17 +67,6 @@ func _process(delta):
 
 func ease_in_out(t):
 	return t * t * (3.0 - 2.0 * t)
-
-func _on_hitbox_body_entered(body):
-	if not swing_active:
-		return
-		
-	print("Pickaxe trifft:", body.name)
-	
-	if body.has_method("take_damage"):
-		print("Schaden wird angewendet!")
-		body.take_damage(1)
-		collision_detected = true
 
 func is_pickaxe() -> bool:
 	return true
