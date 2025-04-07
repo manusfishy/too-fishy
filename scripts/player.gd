@@ -103,7 +103,6 @@ func _input(event):
 		if can_shoot and !GameState.paused and !is_mouse_over_ui():
 			shoot_harpoon()
 
-
 func is_mouse_over_ui() -> bool:
 	return get_viewport().gui_get_focus_owner() != null
 	
@@ -159,6 +158,9 @@ func process_dock(delta):
 		if GameState.upgrades[GameState.Upgrade.AK47] == 1 \
 			and $Pivot/SmFishSubmarine/ak47_0406195124_texture.visible == false:
 			$Pivot/SmFishSubmarine/ak47_0406195124_texture.visible = true
+		if GameState.upgrades[GameState.Upgrade.DualAK47] == 1 \
+			and $Pivot/SmFishSubmarine/ak47_69420_texture2.visible == false:
+			$Pivot/SmFishSubmarine/ak47_69420_texture2.visible = true	
 		if not GameState.isDocked:
 			onDock()
 			GameState.isDocked = true

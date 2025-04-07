@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=34 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
@@ -16,10 +16,9 @@
 [ext_resource type="Script" uid="uid://cau06s0ctjwx8" path="res://scripts/upgrades.gd" id="10_6wevv"]
 [ext_resource type="Script" uid="uid://dhv52dohn5s4r" path="res://scripts/death_screen.gd" id="10_e1cbu"]
 [ext_resource type="PackedScene" uid="uid://d0ykw70micab6" path="res://scenes/boss.tscn" id="11_e1cbu"]
-[ext_resource type="PackedScene" uid="uid://bpsydxr855soh" path="res://meshes/dock2_texture.fbx" id="12_6p3nn"]
 [ext_resource type="Script" uid="uid://dx1hxd4wnymb1" path="res://scripts/boss_dialog_ui.gd" id="12_mngbo"]
 [ext_resource type="PackedScene" uid="uid://b87oo8x46lj3r" path="res://scenes/cheats.tscn" id="13_4w45t"]
-[ext_resource type="Script" path="res://scripts/fps_counter.gd" id="14_r6p65"]
+[ext_resource type="Script" uid="uid://bjp67tva3ov6n" path="res://scripts/fps_counter.gd" id="14_r6p65"]
 [ext_resource type="PackedScene" uid="uid://b35mxcc3d74di" path="res://scenes/WaterPlane.tscn" id="20_k6f3i"]
 [ext_resource type="ArrayMesh" uid="uid://gw7pdmvoe3yh" path="res://meshes/gestein_v003.obj" id="21_to7gp"]
 [ext_resource type="Script" uid="uid://d1aerdanr4q2e" path="res://scripts/soundplayer.gd" id="21_xdqt8"]
@@ -117,7 +116,17 @@ background_mat = ExtResource("9_bcnxi")
 [node name="dock2" type="Node3D" parent="Level"]
 transform = Transform3D(1.45251, -0.236328, 0.290471, 0.238387, 1.48088, 0.0127887, -0.288784, 0.0337793, 1.47155, -3, 0.581472, 0)
 
-[node name="Root Scene" parent="Level/dock2" instance=ExtResource("12_6p3nn")]
+[node name="Root Scene" parent="Level/dock2"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+script = null
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3

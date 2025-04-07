@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bpsydxr855soh"
-path="res://.godot/imported/dock2_texture.fbx-735a6591bcdf3bf6304c03722df82633.scn"
+valid=false
 
 [deps]
 
 source_file="res://meshes/dock2_texture.fbx"
-dest_files=["res://.godot/imported/dock2_texture.fbx-735a6591bcdf3bf6304c03722df82633.scn"]
 
 [params]
 
