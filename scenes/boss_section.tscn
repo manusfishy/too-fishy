@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b3j6kki1bc2xs"]
+[gd_scene load_steps=15 format=3 uid="uid://b3j6kki1bc2xs"]
 
 [ext_resource type="PackedScene" uid="uid://xqds4eqa4fys" path="res://scenes/section.tscn" id="1_1j4rh"]
 [ext_resource type="Script" uid="uid://cmrhnhr7cedmp" path="res://scripts/friend.gd" id="2_b8wpq"]
@@ -8,9 +8,18 @@
 [ext_resource type="ArrayMesh" uid="uid://dva5riw4x0j1l" path="res://meshes/SM_FishSubmarine_FINAL.obj" id="5_jws3u"]
 [ext_resource type="PackedScene" uid="uid://cnicgksdkot2f" path="res://scenes/destroyable_barier.tscn" id="5_oi768"]
 [ext_resource type="Material" uid="uid://dat2e8q6cpmmp" path="res://materials/submarine.tres" id="6_tq7wy"]
+[ext_resource type="Texture2D" uid="uid://dwvab1ggd2k72" path="res://textures/BASE_color_Stein_v001.png" id="7_8wxnn"]
+[ext_resource type="Texture2D" uid="uid://ba5hdxbc7djed" path="res://textures/NORMAL_Stein_v001.png" id="8_fddag"]
+[ext_resource type="Material" uid="uid://b7mb4qrani06f" path="res://materials/walls/walls_overlay.tres" id="9_c2oyf"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_oi768"]
 radius = 3.62441
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sh7jb"]
+albedo_texture = ExtResource("7_8wxnn")
+roughness = 0.24
+normal_enabled = true
+normal_texture = ExtResource("8_fddag")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vk6kq"]
 size = Vector3(6.53244, 9.52234, 16.658)
@@ -49,6 +58,8 @@ transform = Transform3D(-0.0290731, 0, -0.999577, -0.996283, -0.0811209, 0.02897
 
 [node name="GesteinV001" type="MeshInstance3D" parent="StaticBody3D"]
 transform = Transform3D(1, -7.45058e-09, -1.45519e-10, 0, 1, 2.32831e-10, 1.71713e-09, 0, 1, -0.018158, -0.00147867, 0.000528336)
+material_override = SubResource("StandardMaterial3D_sh7jb")
+material_overlay = ExtResource("9_c2oyf")
 mesh = ExtResource("3_vk6kq")
 skeleton = NodePath("../..")
 
@@ -60,6 +71,7 @@ shape = SubResource("BoxShape3D_vk6kq")
 transform = Transform3D(0.890488, 0.073508, -0.44903, -0.447723, -0.0343101, -0.893514, -0.0810867, 0.996704, 0.00235844, -15.6951, -38.3413, -2.98919)
 
 [node name="GesteinV001" type="MeshInstance3D" parent="StaticBody3D2"]
+material_override = ExtResource("9_c2oyf")
 mesh = ExtResource("3_vk6kq")
 skeleton = NodePath("../..")
 
