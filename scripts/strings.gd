@@ -18,7 +18,7 @@ var upgradeNames = {
 	GameState.Upgrade.HOR_SPEED: "Thrust",
 	GameState.Upgrade.LAMP_UNLOCKED: "Unlock Lamp",
 	GameState.Upgrade.AK47: "Unlock Gun",
-	GameState.Upgrade.DualAK47: "Unlock 2nd Gun",
+	GameState.Upgrade.DUALAK47: "Unlock 2nd Gun",
 	GameState.Upgrade.HARPOON: "Upgrade Harpoon",
 }
 

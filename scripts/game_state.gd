@@ -12,7 +12,7 @@ var depthStageMap = {
 	600: Stage.VOID
 }
 
-enum Upgrade {CARGO_SIZE, DEPTH_RESISTANCE, PICKAXE_UNLOCKED, VERT_SPEED, HOR_SPEED, LAMP_UNLOCKED, AK47, DualAK47, HARPOON}
+enum Upgrade {CARGO_SIZE, DEPTH_RESISTANCE, PICKAXE_UNLOCKED, VERT_SPEED, HOR_SPEED, LAMP_UNLOCKED, AK47, DUALAK47, HARPOON}
 var upgradeCosts = {
 	Upgrade.CARGO_SIZE: 25,
 	Upgrade.DEPTH_RESISTANCE: 50,
@@ -21,7 +21,7 @@ var upgradeCosts = {
 	Upgrade.HOR_SPEED: 25,
 	Upgrade.LAMP_UNLOCKED: 50,
 	Upgrade.AK47: 500,
-	Upgrade.DualAK47: 500,
+	Upgrade.DUALAK47: 500,
 	Upgrade.HARPOON: 100
 }
 
@@ -33,7 +33,7 @@ var maxUpgrades = {
 	Upgrade.HOR_SPEED: 3,
 	Upgrade.LAMP_UNLOCKED: 1,
 	Upgrade.AK47: 1,
-	Upgrade.DualAK47: 1,
+	Upgrade.DUALAK47: 1,
 	Upgrade.HARPOON: 1
 }
 
@@ -46,7 +46,7 @@ var upgrades = {
 	Upgrade.HOR_SPEED: 0,
 	Upgrade.LAMP_UNLOCKED: 0,
 	Upgrade.AK47: 0,
-	Upgrade.DualAK47: 0,
+	Upgrade.DUALAK47: 0,
 	Upgrade.HARPOON: 0
 }
 var depth = 0
