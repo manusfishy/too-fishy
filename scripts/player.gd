@@ -12,7 +12,7 @@ var target_velocity = Vector3.ZERO
 @onready var pickaxe_scene = preload("res://scenes/pickaxe.tscn")
 @export var inventory: Inv
 @export var traumaShakeMode = 1
-@onready var cooldown_timer = $HarpoonCD # Timer node, set to one-shot, 2s wait time
+@onready var cooldown_timer = $HarpoonCD # Timer node, set to one-shot, 2s wait time 
 
 var harpoon_scene = preload("res://scenes/harpoon.tscn") # Path to harpoon scene
 var bullet_scene = preload("res://scenes/bullet.tscn")
@@ -197,7 +197,7 @@ var time := 0.0
 @onready var initial_rotation := camera.rotation_degrees as Vector3
 
 
-
+# yes get traumatized <3 :3
 # 1. Random Jitter Version (commented out)
 func processTrauma(delta):
 	if traumaShakeMode == 1:
