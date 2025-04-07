@@ -25,7 +25,6 @@ func _ready():
 	print("player ready")
 	
 
-
 func collision():
 	var collision = move_and_slide()
 	
@@ -97,7 +96,6 @@ func _process(delta):
 	
 func _input(event):
 	if Input.is_action_just_pressed("throw") and can_shoot and !GameState.paused:
-		print("shoot harpoon")
 		shoot_harpoon()
 	
 func onDock():
@@ -141,6 +139,9 @@ func process_dock(delta):
 		if GameState.upgrades[GameState.Upgrade.LAMP_UNLOCKED] == 1 \
 				and $Pivot/SmFishSubmarine/UnlockableLamp.visible == false:
 			$Pivot/SmFishSubmarine/UnlockableLamp.visible = true
+		if GameState.upgrades[GameState.Upgrade.AK47] == 1 \
+			and $Pivot/SmFishSubmarine/ak47_0406195124_texture.visible == false:
+			$Pivot/SmFishSubmarine/ak47_0406195124_texture.visible = true
 		if not GameState.isDocked:
 			onDock()
 			GameState.isDocked = true
