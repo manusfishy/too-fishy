@@ -124,14 +124,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_18nlu")
 
-[node name="CheckButton" type="CheckButton" parent="UI"]
-layout_mode = 0
-offset_left = 215.0
-offset_top = 66.0
-offset_right = 285.0
-offset_bottom = 105.0
-text = "Mute music"
-
 [node name="inv_ui" parent="UI" instance=ExtResource("9_c1pb6")]
 layout_mode = 1
 anchors_preset = 1
@@ -252,6 +244,11 @@ text = "Pressure Headroom:"
 [node name="PressureHeadroomBar" type="ProgressBar" parent="UI/HUD/MarginContainer/HUDContainer"]
 layout_mode = 2
 
+[node name="MuteButton" type="CheckButton" parent="UI/HUD/MarginContainer/HUDContainer"]
+layout_mode = 2
+button_pressed = true
+text = "Mute"
+
 [node name="Cheats" parent="UI" instance=ExtResource("13_4w45t")]
 visible = false
 layout_mode = 0
@@ -309,4 +306,4 @@ transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, 0, 0, 1, 1.57438, -0.818055
 shape = SubResource("BoxShape3D_4bgka")
 
 [connection signal="section_changed" from="CharacterBody3D" to="Audiomanager" method="_on_character_body_3d_section_changed"]
-[connection signal="button_up" from="UI/CheckButton" to="Audiomanager" method="_on_check_button_button_up"]
+[connection signal="pressed" from="UI/HUD/MarginContainer/HUDContainer/MuteButton" to="Audiomanager" method="_on_mute_button_pressed"]

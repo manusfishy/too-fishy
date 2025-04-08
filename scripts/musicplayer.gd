@@ -1,23 +1,14 @@
 extends Node
 
-enum Stage {
-	SURFACE,
-	DEEP,
-	DEEPER,
-	SUPERDEEP,
-	HOT,
-	LAVA,
-	VOID
-}
-
 @onready var player1 = $AudioStreamPlayer # First audio player
 @onready var player2 = $AudioStreamPlayer2 # Second audio player
 var fade_duration = 2.0 # Duration of the crossfade in seconds
 var fade_timer = 0.0
 var is_crossfading = false
 var is_muted = false # Track mute state
-var pre_mute_volume1 = 0.0
-
+var pre_mute_volume1 = -15.0
+var pre_mute_volume2 = -15.0
+var mute_button = null
 var surface = preload("res://music/surface.mp3")
 var deep = preload("res://music/deep.mp3")
 var bossfight = preload("res://music/bossfight.mp3")
@@ -27,13 +18,17 @@ var current_track = null
 var next_track = null
 
 func _ready():
+	mute_button = get_node("/root/Node3D/UI/MuteButton")
+	print(mute_button)
+	if mute_button:
+		mute_button.pressed.connect(_on_mute_button_pressed)
 	# Start with surface music
 	player1.stream = surface
 	player2.stream = deep
 	
 	# Start playing the first track
-	player1.volume_db = -15.0 # Full volume
-	player2.volume_db = -80.0 # Muted
+	player1.volume_db = -15.0
+	player2.volume_db = -15.0
 	player1.play()
 	current_track = surface
 
@@ -85,6 +80,23 @@ func play_sound(sound_name: String):
 	player1.play()
 
 
+func _on_mute_button_pressed():
+	if !is_muted:
+		# Store current volumes and mute
+		pre_mute_volume1 = player1.volume_db
+		pre_mute_volume2 = player2.volume_db
+		player1.volume_db = -80.0
+		player2.volume_db = -80.0
+		if mute_button:
+			mute_button.text = "Unmute"
+	else:
+		# Restore previous volumes
+		player1.volume_db = -15 # pre_mute_volume1
+		player2.volume_db = -15 # pre_mute_volume2
+		if mute_button:
+			mute_button.text = "Mute"
+	is_muted = !is_muted # Toggle mute state
+
 #	0: Stage.SURFACE,
 #	100: Stage.DEEP,
 #	200: Stage.DEEPER,
@@ -109,11 +121,3 @@ func _on_character_body_3d_section_changed(sectionType):
 			track_to_play = bossfight
 	
 	start_crossfade(track_to_play)
-
-
-func _on_check_button_button_up():
-	if player1.volume_db != -80.0:
-		player1.volume_db = -80 # muted volume
-	if player2.volume_db != -80.0:
-		player2.volume_db = -80.0 # muted volume
-	pass # Replace with function body.
