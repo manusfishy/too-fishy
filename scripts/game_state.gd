@@ -70,7 +70,10 @@ func setDepth(d: int):
 	depth = d
 	if (maxDepthReached < d):
 		maxDepthReached = d
-	GameState.playerInStage = depthStageMap[snapped(d, 100)]
+	if snapped(d, 100) <= depthStageMap.keys()[len(depthStageMap.keys())-1]:
+		GameState.playerInStage = depthStageMap[snapped(d, 100)]
+	else:
+		GameState.playerInStage = Stage.VOID
 	
 func getUpgradeCost(mUpgrade: Upgrade) -> float:
 	return (upgrades[mUpgrade] + 1) * upgradeCosts[mUpgrade]

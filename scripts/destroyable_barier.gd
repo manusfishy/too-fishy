@@ -20,7 +20,6 @@ func take_damage(amount: int):
 		destroy()
 
 func destroy():
-	print("Barriere wird zerstört!")
 	create_destruction_particles()
 	await get_tree().create_timer(0.5).timeout
 	queue_free()
