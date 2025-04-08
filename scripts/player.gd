@@ -51,16 +51,37 @@ func hurtPlayer(damage: int):
 func reset_hurt_cooldown():
 	can_be_hurt = true
 
+#func movement(_delta: float):
+	#var direction = Vector3.ZERO
+	#if Input.is_action_pressed("move_right"):
+		#direction.x += 1
+		#if $Pivot.rotation[1] < 0:
+			#$Pivot.rotate_y(deg_to_rad(180))
+	#if Input.is_action_pressed("move_left"):
+		#direction.x -= 1
+		#if $Pivot.rotation[1] >= 0:
+			#$Pivot.rotate_y(deg_to_rad(180))
+var acceleration_x := 2.0
+var max_speed_x := 5.0
+var velocity_x := 0.0
 func movement(_delta: float):
 	var direction = Vector3.ZERO
+
 	if Input.is_action_pressed("move_right"):
-		direction.x += 1
+		velocity_x = min(velocity_x + acceleration_x * _delta, max_speed_x)
 		if $Pivot.rotation[1] < 0:
 			$Pivot.rotate_y(deg_to_rad(180))
-	if Input.is_action_pressed("move_left"):
-		direction.x -= 1
+	elif Input.is_action_pressed("move_left"):
+		velocity_x = max(velocity_x - acceleration_x * _delta, -max_speed_x)
 		if $Pivot.rotation[1] >= 0:
 			$Pivot.rotate_y(deg_to_rad(180))
+	else:
+		if velocity_x > 0:
+			velocity_x = max(velocity_x - acceleration_x * _delta, 0)
+		elif velocity_x < 0:
+			velocity_x = min(velocity_x + acceleration_x * _delta, 0)
+
+	direction.x = velocity_x
 	if Input.is_action_pressed("move_up"):
 		direction.y += 1
 		if position.y >= 0:
