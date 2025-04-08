@@ -246,7 +246,7 @@ layout_mode = 2
 
 [node name="MuteButton" type="CheckButton" parent="UI/HUD/MarginContainer/HUDContainer"]
 layout_mode = 2
-button_pressed = true
+focus_mode = 0
 text = "Mute"
 
 [node name="Cheats" parent="UI" instance=ExtResource("13_4w45t")]
