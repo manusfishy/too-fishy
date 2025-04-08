@@ -1,6 +1,6 @@
 # Too Fishy
 
-A 2.5D underwater exploration game where you dive deeper into the ocean to catch exotic fish and search for your lost friend.
+A 2.5D underwater exploration game where you dive deeper into the ocean to catch exotic fish and search for your lost friend. Our entry for Ludum Dare 57 https://ldjam.com/events/ludum-dare/57/too-fishy
 
 ## About
 
