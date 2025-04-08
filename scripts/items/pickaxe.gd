@@ -10,20 +10,13 @@ var swing_time = 5.0
 @onready var player = hand.get_parent()
 @onready var particles = null
 
-var can_show_pickaxe_popup = true
-var popup_cooldown = 1.0  # 1 second cooldown
-
 func _ready():
-    collision_layer = 0  
-    collision_mask = 0   
-    
-    # Initiale Sichtbarkeitsprüfung
-    if GameState.upgrades[GameState.Upgrade.PICKAXE_UNLOCKED] != 1:
-        visible = false
-        set_physics_process(false)
-    else:
-        activate_pickaxe()
-        
+	# Grundeinstellungen für die Pickaxe
+	collision_layer = 0  # Keine Kollision für den StaticBody
+	collision_mask = 0   # Keine Kollision mit anderen Objekten
+	
+	
+	# Hitbox konfigurieren
 	$PickaxeHitbox.collision_layer = 0
 	$PickaxeHitbox.collision_mask = 3
 	
@@ -39,24 +32,7 @@ func _ready():
 		particles.lifetime = 0.5
 		add_child(particles)
 
-func activate_pickaxe():
-    # Aktiviert die Pickaxe, wenn das Upgrade gekauft wurde
-    visible = true
-    set_physics_process(true)
-    print("Pickaxe activated!")
-
 func _process(delta):
-    if GameState.upgrades[GameState.Upgrade.PICKAXE_UNLOCKED] != 1:
-        if can_show_pickaxe_popup:
-            var pos = global_transform.origin
-            can_show_pickaxe_popup = false
-            await get_tree().create_timer(popup_cooldown).timeout
-            can_show_pickaxe_popup = true
-        return
-
-    if !visible:
-        activate_pickaxe()
-
 	if Input.is_action_just_pressed("swing_pickaxe") and not swing_active and not back_swing_active:
 		swing_active = true
 		swing_time = 0.0
