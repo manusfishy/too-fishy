@@ -147,7 +147,7 @@ func catch_fish(fish):
 		if GameState.inventory.add(fish_details):
 			var weight_str = "Weight added: " + str(fish_details.weight) + " kg"
 			var price_str = "\nValue: $" + str(fish_details.price)
-			PopupManager.show_popup(weight_str+price_str, $PopupSpawnPosition.global_position, Color.GREEN)
+			PopupManager.show_popup(weight_str + price_str, $PopupSpawnPosition.global_position, Color.GREEN)
 		else:
 			var inv_full_str = "Inventory full!"
 			PopupManager.show_popup(inv_full_str, $PopupSpawnPosition.global_position, Color.RED)
