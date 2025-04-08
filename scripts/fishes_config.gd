@@ -120,12 +120,13 @@ var fishSectionMap = {
 		}
 	},
 	GameState.Stage.VOID: {
-		max_fish_amount = 10,
+		max_fish_amount = 1,
 		shiny_rate = .08,
 		weight_multiplier = 1.2,
 		spawnRates = {
-			FishType.DUMMY_FISH: .2,
-			FishType.SPIKEY_FISH: .8
+			FishType.DUMMY_FISH: .1,
+			FishType.ANGLER_FISH: .1,
+			FishType.FISH_A: .8,
 		}
 	}
 }

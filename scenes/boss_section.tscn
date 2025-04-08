@@ -27,17 +27,23 @@ size = Vector3(6.53244, 9.52234, 16.658)
 [node name="BossSection" type="Node3D"]
 
 [node name="Section" parent="." instance=ExtResource("1_1j4rh")]
+sectionType = 6
+lastSectionType = 6
 background_mat = ExtResource("2_h44cy")
 
 [node name="Section2" parent="." instance=ExtResource("1_1j4rh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -25, 0)
+sectionType = 6
+lastSectionType = 6
 background_mat = ExtResource("2_h44cy")
 
 [node name="Section3" parent="." instance=ExtResource("1_1j4rh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 0)
+sectionType = 6
+lastSectionType = 6
 background_mat = ExtResource("3_jws3u")
 
-[node name="Friend" type="CharacterBody3D" parent="."]
+[node name="Friend" type="CharacterBody3D" parent="." groups=["friend"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.19162, -42.9264, -1.75951)
 script = ExtResource("2_b8wpq")
 
@@ -47,7 +53,6 @@ mesh = ExtResource("5_jws3u")
 surface_material_override/0 = ExtResource("6_tq7wy")
 
 [node name="Area3D" type="Area3D" parent="Friend"]
-monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Friend/Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.691881, 1.91581, 0)

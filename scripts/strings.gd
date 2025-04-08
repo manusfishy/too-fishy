@@ -38,4 +38,5 @@ var boss_dialog_lines = {
 	Boss.BossDialogSections.BOSS_INTRO: ["Hahaha, I got your friend, looser!", "His mind is under my control now!", "You better not do anything stupid or he dies!"],
 	Boss.BossDialogSections.BOSS_KILLS_FRIEND: ["Ohhhh, that was a mistake!", "*Splash*", "Your friend is dead now!"],
 	Boss.BossDialogSections.FRIEND_RESCUED: ["Oh my god thank you!", "That fucker is a mind controlling blobfish!", "You getting close has freed me from his spell!", "You need to stay close to me and escort me to the top!"],
+	Boss.BossDialogSections.WIN: ["You rescued your friend from the evil mind controlling blobfish!", "Congratulations, you beat our game.", "Feel free to keep fishing & upgrading or checkout some of the other games."]
 	}

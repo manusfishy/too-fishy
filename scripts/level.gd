@@ -47,7 +47,7 @@ func spawnBoss(mPosition: float):
 	spawned_boss.position.x = -5
 	spawned_boss.player = player
 	add_child(spawned_boss)
-	Boss.setBossSpawned()
+	Boss.setBossSpawned(spawned_boss)
 	
 	mPosition = lastSpawned - sectionHeight
 	var bossSection = boss_section.instantiate()
@@ -60,4 +60,3 @@ func spawnBoss(mPosition: float):
 	GameState.fishes_lower_boarder = lastSpawned - sectionHeight/2 - 1
 
 	add_child(bossSection)
-	
