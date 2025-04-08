@@ -131,9 +131,10 @@ func is_mouse_over_ui() -> bool:
 	
 var sold = 0
 func onDock():
-	sound_player.play_sound("coins")
+	
 	sold = GameState.inventory.sellItems()
-
+	if sold != 0:
+		sound_player.play_sound("coins")
 
 	#if sold != 0:
 		#var price_str = "Sold Items Value: $" + str(sold)
