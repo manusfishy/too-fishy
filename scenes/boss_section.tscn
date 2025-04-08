@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b3j6kki1bc2xs"]
+[gd_scene load_steps=17 format=3 uid="uid://b3j6kki1bc2xs"]
 
 [ext_resource type="PackedScene" uid="uid://xqds4eqa4fys" path="res://scenes/section.tscn" id="1_1j4rh"]
 [ext_resource type="Script" uid="uid://cmrhnhr7cedmp" path="res://scripts/friend.gd" id="2_b8wpq"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://dwvab1ggd2k72" path="res://textures/BASE_color_Stein_v001.png" id="7_8wxnn"]
 [ext_resource type="Texture2D" uid="uid://ba5hdxbc7djed" path="res://textures/NORMAL_Stein_v001.png" id="8_fddag"]
 [ext_resource type="Material" uid="uid://b7mb4qrani06f" path="res://materials/walls/walls_overlay.tres" id="9_c2oyf"]
+[ext_resource type="Material" uid="uid://bf8hfoo5qmcgc" path="res://materials/shaders/lava_shader_material.tres" id="12_fddag"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_oi768"]
 radius = 3.62441
@@ -23,6 +24,8 @@ normal_texture = ExtResource("8_fddag")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vk6kq"]
 size = Vector3(6.53244, 9.52234, 16.658)
+
+[sub_resource type="QuadMesh" id="QuadMesh_c2oyf"]
 
 [node name="BossSection" type="Node3D"]
 
@@ -93,6 +96,21 @@ current_health = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.7442, -54.631, -0.33)
 max_health = 1
 current_health = 1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(4.84606, 0, 0, 0, 2.25327, 0, 0, 0, 1.90589, -22.0165, -7.27025, -1.77842)
+mesh = SubResource("QuadMesh_c2oyf")
+surface_material_override/0 = ExtResource("12_fddag")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.02997, 0, 0, 0, 13.8471, 0, 0, 0, 1.90589, -6.61208, -14.7586, -1.77842)
+mesh = SubResource("QuadMesh_c2oyf")
+surface_material_override/0 = ExtResource("12_fddag")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(4.84606, 0, 0, 0, 2.25327, 0, 0, 0, 1.90589, -20.6599, -14.7586, -1.77841)
+mesh = SubResource("QuadMesh_c2oyf")
+surface_material_override/0 = ExtResource("12_fddag")
 
 [connection signal="body_entered" from="Friend/Area3D" to="Friend" method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Friend/Area3D" to="Friend" method="_on_area_3d_body_exited"]
