@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8yvw5kcm7ys"]
+
+[ext_resource type="Script" path="res://scripts/touch_simulator.gd" id="1_ywmkl"]
+
+[node name="TouchSimulator" type="Node"]
+script = ExtResource("1_ywmkl")

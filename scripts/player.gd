@@ -17,7 +17,10 @@ var target_velocity = Vector3.ZERO
 var harpoon_scene = preload("res://scenes/harpoon.tscn") # Path to harpoon scene
 var bullet_scene = preload("res://scenes/bullet.tscn")
 var ak_scene = preload("res://scenes/ak47.tscn")
+var touch_controls_scene = preload("res://scenes/ui/touch_controls.tscn")
 var can_shoot = true
+var touch_controls = null
+var touch_direction = Vector2.ZERO
 
 signal section_changed(sectionType)
 
@@ -25,6 +28,19 @@ func _ready():
 	GameState.player_node = self
 	print("player ready")
 	
+	# Initialize touch controls if on mobile
+	if OS.has_feature("mobile") or OS.has_feature("web"):
+		touch_controls = touch_controls_scene.instantiate()
+		get_tree().root.add_child(touch_controls)
+		touch_controls.joystick_input.connect(_on_joystick_input)
+		touch_controls.shoot_pressed.connect(_on_shoot_pressed)
+
+func _on_joystick_input(direction):
+	touch_direction = direction
+
+func _on_shoot_pressed():
+	if can_shoot and !GameState.paused and !is_mouse_over_ui():
+		shoot_harpoon()
 
 func collision():
 	var _collision = move_and_slide()
@@ -51,22 +67,13 @@ func hurtPlayer(damage: int):
 func reset_hurt_cooldown():
 	can_be_hurt = true
 
-#func movement(_delta: float):
-	#var direction = Vector3.ZERO
-	#if Input.is_action_pressed("move_right"):
-		#direction.x += 1
-		#if $Pivot.rotation[1] < 0:
-			#$Pivot.rotate_y(deg_to_rad(180))
-	#if Input.is_action_pressed("move_left"):
-		#direction.x -= 1
-		#if $Pivot.rotation[1] >= 0:
-			#$Pivot.rotate_y(deg_to_rad(180))
 var acceleration_x := 2.0
 var max_speed_x := 5.0
 var velocity_x := 0.0
 func movement(_delta: float):
 	var direction = Vector3.ZERO
 
+	# Handle keyboard input
 	if Input.is_action_pressed("move_right"):
 		velocity_x = min(velocity_x + acceleration_x * _delta, max_speed_x)
 		if $Pivot.rotation[1] < 0:
@@ -75,6 +82,13 @@ func movement(_delta: float):
 		velocity_x = max(velocity_x - acceleration_x * _delta, -max_speed_x)
 		if $Pivot.rotation[1] >= 0:
 			$Pivot.rotate_y(deg_to_rad(180))
+	# Handle touch input for horizontal movement
+	elif touch_direction.x != 0:
+		velocity_x = touch_direction.x * max_speed_x
+		if touch_direction.x > 0 and $Pivot.rotation[1] < 0:
+			$Pivot.rotate_y(deg_to_rad(180))
+		elif touch_direction.x < 0 and $Pivot.rotation[1] >= 0:
+			$Pivot.rotate_y(deg_to_rad(180))
 	else:
 		if velocity_x > 0:
 			velocity_x = max(velocity_x - acceleration_x * _delta, 0)
@@ -82,12 +96,19 @@ func movement(_delta: float):
 			velocity_x = min(velocity_x + acceleration_x * _delta, 0)
 
 	direction.x = velocity_x
+	
+	# Handle keyboard input for vertical movement
 	if Input.is_action_pressed("move_up"):
 		direction.y += 1
 		if position.y >= 0:
 			direction.y = 0
-	if Input.is_action_pressed("move_down"):
+	elif Input.is_action_pressed("move_down"):
 		direction.y -= 1
+	# Handle touch input for vertical movement
+	elif touch_direction.y != 0:
+		direction.y = touch_direction.y
+		if touch_direction.y > 0 and position.y >= 0:
+			direction.y = 0
 		
 	target_velocity.x = direction.x * (speed_horizontal + (GameState.upgrades[GameState.Upgrade.HOR_SPEED] * 1.5))
 	target_velocity.y = direction.y * (speed_vertical + (GameState.upgrades[GameState.Upgrade.VERT_SPEED] * 1.5))
