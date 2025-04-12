@@ -152,20 +152,13 @@ func _physics_process(delta: float) -> void:
 	movement(delta)
 	collision()
 	
-	# Apply a slow submarine-like rocking motion
+	# Add slight oscillating rotation when submarine is still
 	if abs(velocity.x) < 0.1 and abs(velocity.y) < 0.1:
-		# Apply a slow submarine-like rocking motion
-		var rocking_angle = sin(time * 0.5) * 1.3
-		var direction = 1
-		if $Pivot.rotation.z < deg_to_rad(30):
-			direction = -1
-		elif $Pivot.rotation.z < deg_to_rad(-30):
-			direction = 1
-		$Pivot.rotation.z = $Pivot.rotation.z + direction * deg_to_rad(rocking_angle) * delta
-		
-		# Add front-to-back rocking motion
-		#var front_rocking = sin(time * 0.1) * 2.0 # Rock between -2 and 2 degrees
-		#$Pivot.rotation.x = deg_to_rad(front_rocking) # Directly set rotation for more controlled motion
+		# Apply a slight oscillating rotation to the submarine model (less than 5%)
+		var max_angle = deg_to_rad(2.5) # Maximum 2.5 degrees (less than 5%)
+		var oscillation_speed = 1.0 # Speed of oscillation
+		var oscillation = sin(time * oscillation_speed) * max_angle * delta * 5
+		$Pivot.rotate_y(oscillation)
 	
 	var depthSnapped = snapped(GameState.depth, 100)
 	if depthSnapped >= GameState.depthStageMap.keys()[len(GameState.depthStageMap.keys()) - 1]:
@@ -450,40 +443,27 @@ func activate_selling_drone():
 	
 	# Modify the drone appearance
 	if drone.has_node("Pivot/Body"):
-		drone.get_node("Pivot/Body").modulate = Color(0.8, 0.8, 0.2) # Give it a golden color
+		drone.get_node("Pivot/Body").modulate = Color(0.7, 0.7, 0.7) # Grey color for drone
 	
-	# Create visual effect for the drone
-	var particles = CPUParticles3D.new()
-	particles.emitting = true
-	particles.one_shot = true
-	particles.explosiveness = 0.8
-	particles.amount = 20
-	particles.lifetime = 1.5
-	particles.mesh = SphereMesh.new()
-	particles.mesh.radius = 0.05
-	particles.mesh.height = 0.1
-	particles.direction = Vector3(0, 1, 0)
-	particles.spread = 30.0
-	particles.gravity = Vector3(0, 0, 0)
-	particles.initial_velocity_min = 1.0
-	particles.initial_velocity_max = 3.0
-	particles.color = Color(0.8, 0.8, 0.2, 0.7)
-	drone.add_child(particles)
-	
-	# Animate the drone swimming upward
-	var tween = get_tree().create_tween()
-	tween.tween_property(drone, "position", Vector3(position.x, 0, position.z), 2.0)
-	tween.tween_callback(func(): drone.queue_free())
+	# Create a path for the drone to follow (up to surface, then to dock)
+	var tween = create_tween()
+	tween.tween_property(drone, "position", Vector3(position.x, -1, position.z), 1.0) # Go up to surface
+	tween.tween_property(drone, "position", Vector3(0, -1, position.z), 2.0) # Go to dock
 	
 	# Play sound effect
-	sound_player.play_sound("coins")
+	sound_player.play_sound("bup")
 	
-	# Sell all items in inventory
-	var sold = GameState.inventory.sellItems()
-	
-	# Show popup with amount sold
-	var price_str = "Drone sold items for: $" + str(sold)
-	PopupManager.show_popup(price_str, $PopupSpawnPosition.global_position, Color.YELLOW)
+	# Sell items after drone reaches dock
+	tween.tween_callback(func():
+		var sold_amount = GameState.inventory.sellItems()
+		if sold_amount > 0:
+			var price_str = "Drone sold items: $" + str(sold_amount)
+			PopupManager.show_popup(price_str, $PopupSpawnPosition.global_position, Color.GREEN)
+			sound_player.play_sound("coins")
+		
+		# Remove drone after selling
+		drone.queue_free()
+	)
 	
 	# Add small cooldown to prevent spamming
 	can_shoot = false
