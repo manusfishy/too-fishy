@@ -107,6 +107,11 @@ func _physics_process(delta: float) -> void:
 	movement(delta)
 	collision()
 	
+	# Add slow rotation when submarine is still
+	if abs(velocity.x) < 0.1 and abs(velocity.y) < 0.1:
+		# Apply a slow rotation to the submarine model
+		$Pivot.rotate_y(deg_to_rad(5) * delta)
+	
 	var depthSnapped = snapped(GameState.depth, 100)
 	if depthSnapped >= GameState.depthStageMap.keys()[len(GameState.depthStageMap.keys())-1]:
 		depthSnapped = GameState.depthStageMap.keys()[len(GameState.depthStageMap.keys())-1]
