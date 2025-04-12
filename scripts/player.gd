@@ -45,6 +45,16 @@ func hurtPlayer(damage: int):
 	if can_be_hurt:
 		GameState.health -= damage
 		sound_player.play_sound("ughhh")
+		
+		# Show damage visual effects (screen crack and red flash)
+		if has_node("DamageEffects"):
+			$DamageEffects.show_damage_effects()
+		else:
+			# Create damage effects instance if it doesn't exist
+			var damage_effects = load("res://scenes/damage_effects.tscn").instantiate()
+			add_child(damage_effects)
+			damage_effects.show_damage_effects()
+		
 		can_be_hurt = false
 		get_tree().create_timer(1.0).timeout.connect(reset_hurt_cooldown)
 
