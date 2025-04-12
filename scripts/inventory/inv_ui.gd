@@ -38,6 +38,11 @@ func update_display():
 		child.queue_free()
 	
 	# Create text elements
+	# Money display moved from HUD to inventory
+	var money_text = Label.new()
+	money_text.text = "Money: %s" % GameState.money
+	grid.add_child(money_text)
+	
 	var fishes_text = Label.new()
 	fishes_text.text = "Stored fish: %d" % \
 			GameState.inventory.inventoryCumulatedValues[GameState.inventory.InventoryValues.FishesCaught]
