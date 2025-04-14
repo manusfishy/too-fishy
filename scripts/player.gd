@@ -212,9 +212,7 @@ func shoot_harpoon():
 	var dir = 1
 	if ($Pivot.rotation[1] >= 0):
 		dir = -1
-		# harpoon.rotation = global_transform.basis.z.normalized() # rotate only on the correct side
-		harpoon.rotate_z(deg_to_rad(180))
-
+	
 	harpoon.position = position + dir * global_transform.basis.x * -1 # move harpoon to correct side
 	
 	# If harpoon rotation upgrade is purchased, use mouse/touch position to determine direction
@@ -239,9 +237,24 @@ func shoot_harpoon():
 		
 		# Convert 2D direction to 3D (assuming Y is up in 3D space)
 		harpoon.direction = Vector3(direction_vector.x, direction_vector.y, 0).normalized()
+		
+		# Calculate rotation angle based on direction vector
+		var angle = atan2(direction_vector.y, direction_vector.x)
+		
+		# Apply rotation to the harpoon model
+		# Rotate 90 degrees first to align with the direction vector
+		harpoon.rotation = Vector3(0, 0, angle - PI/2)
+		
+		# Flip the harpoon if shooting to the left
+		if dir < 0:
+			harpoon.rotation.z += PI
 	else:
 		# Default behavior - shoot straight up/down
 		harpoon.direction = global_transform.basis.y.normalized()
+		
+		# Apply default rotation based on submarine direction
+		if dir < 0:
+			harpoon.rotate_z(deg_to_rad(180))
 	
 	# Pass submarine reference to harpoon for catching fish
 	harpoon.submarine = self
