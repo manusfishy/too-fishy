@@ -233,16 +233,17 @@ func shoot_harpoon():
 			# For desktop, use mouse position
 			aim_position = get_viewport().get_mouse_position()
 		
+		# For 2D gameplay in 3D world, we only want to rotate on the Z axis
+		# Calculate the angle between the center and aim position
 		var direction_vector = (aim_position - viewport_center).normalized()
 		
-		# Convert 2D direction to 3D (assuming Y is up in 3D space)
+		# Set direction for harpoon movement
 		harpoon.direction = Vector3(direction_vector.x, direction_vector.y, 0).normalized()
 		
-		# Calculate rotation angle based on direction vector
+		# Calculate rotation angle (only for Z axis)
 		var angle = atan2(direction_vector.y, direction_vector.x)
 		
-		# Apply rotation to the harpoon model
-		# Rotate 90 degrees first to align with the direction vector
+		# Apply rotation to the harpoon model (Z axis only)
 		harpoon.rotation = Vector3(0, 0, angle - PI/2)
 		
 		# Flip the harpoon if shooting to the left
@@ -399,6 +400,19 @@ func add_trauma(trauma_amount: float):
 	trauma = clamp(trauma + trauma_amount, 0.0, 1.0)
 
 func activate_selling_drone():
+	# Load the dummy fish model to use as a drone
+	var drone_scene = preload("res://scenes/mobs/dummy_fish.tscn")
+	var drone = drone_scene.instantiate()
+	
+	# Set up the drone
+	drone.position = position
+	drone.scale = Vector3(0.5, 0.5, 0.5)  # Make it a bit smaller than regular fish
+	get_parent().add_child(drone)
+	
+	# Modify the drone appearance
+	if drone.has_node("Pivot/Body"):
+		drone.get_node("Pivot/Body").modulate = Color(0.8, 0.8, 0.2)  # Give it a golden color
+	
 	# Create visual effect for the drone
 	var particles = CPUParticles3D.new()
 	particles.emitting = true
@@ -415,7 +429,12 @@ func activate_selling_drone():
 	particles.initial_velocity_min = 1.0
 	particles.initial_velocity_max = 3.0
 	particles.color = Color(0.8, 0.8, 0.2, 0.7)
-	add_child(particles)
+	drone.add_child(particles)
+	
+	# Animate the drone swimming upward
+	var tween = get_tree().create_tween()
+	tween.tween_property(drone, "position", Vector3(position.x, 0, position.z), 2.0)
+	tween.tween_callback(func(): drone.queue_free())
 	
 	# Play sound effect
 	sound_player.play_sound("coins")
