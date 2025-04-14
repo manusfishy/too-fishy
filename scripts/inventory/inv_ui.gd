@@ -81,11 +81,13 @@ func update_display():
 # Helper function to add upgrade info with status
 func add_upgrade_info(upgrade_type, description):
 	if GameState.upgrades[upgrade_type] > 0:
-		var upgrade_label = Label.new()
-		upgrade_label.text = "✓ " + description
-		grid.add_child(upgrade_label)
-	elif GameState.isDocked:
-		# Only show unpurchased upgrades when docked
-		var upgrade_label = Label.new()
-		upgrade_label.text = "□ " + description + " ($" + str(GameState.getUpgradeCost(upgrade_type)) + ")"
-		grid.add_child(upgrade_label)
+		# Extract just the name and key from the description
+		var parts = description.split(":")
+		if parts.size() >= 2:
+			var name = parts[0].strip_edges()
+			var key = parts[1].strip_edges()
+			
+			var upgrade_label = Label.new()
+			upgrade_label.text = name + ": " + key
+			grid.add_child(upgrade_label)
+	# Don't show anything for items the player doesn't have
