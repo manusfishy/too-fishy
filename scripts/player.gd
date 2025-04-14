@@ -152,8 +152,8 @@ func _input(_event):
 		if !GameState.isDocked and !GameState.paused:
 			activate_surface_buoy()
 			
-	# Drone selling functionality - sell inventory remotely when D key is pressed
-	if Input.is_action_just_pressed("cht_toggle") and GameState.upgrades[GameState.Upgrade.DRONE_SELLING] > 0:
+	# Drone selling functionality - sell inventory remotely when Q key is pressed
+	if Input.is_action_just_pressed("quit") and GameState.upgrades[GameState.Upgrade.DRONE_SELLING] > 0:
 		if !GameState.isDocked and !GameState.paused and GameState.inventory.items.size() > 0:
 			activate_selling_drone()
 

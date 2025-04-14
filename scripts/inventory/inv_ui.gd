@@ -76,7 +76,7 @@ func update_display():
 	add_upgrade_info(GameState.Upgrade.INVENTORY_SAVE, "Inventory Insurance: Keeps items after death")
 	
 	# Drone Selling upgrade
-	add_upgrade_info(GameState.Upgrade.DRONE_SELLING, "Remote Selling Drone: Press C to sell remotely")
+	add_upgrade_info(GameState.Upgrade.DRONE_SELLING, "Remote Selling Drone: Press Q to sell remotely")
 
 # Helper function to add upgrade info with status
 func add_upgrade_info(upgrade_type, description):
