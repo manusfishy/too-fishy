@@ -20,6 +20,11 @@ var upgradeNames = {
 	GameState.Upgrade.AK47: "Unlock Gun",
 	GameState.Upgrade.DUALAK47: "Unlock 2nd Gun",
 	GameState.Upgrade.HARPOON: "Upgrade Harpoon",
+	GameState.Upgrade.HARPOON_ROTATION: "Rotatable Harpoon",
+	GameState.Upgrade.INVENTORY_MANAGEMENT: "Smart Inventory",
+	GameState.Upgrade.SURFACE_BUOY: "Emergency Buoy",
+	GameState.Upgrade.INVENTORY_SAVE: "Inventory Insurance",
+	GameState.Upgrade.DRONE_SELLING: "Remote Selling Drone",
 }
 
 var boss_dialog_lines = {

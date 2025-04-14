@@ -12,7 +12,7 @@ var depthStageMap = {
 	600: Stage.VOID
 }
 
-enum Upgrade {CARGO_SIZE, DEPTH_RESISTANCE, PICKAXE_UNLOCKED, VERT_SPEED, HOR_SPEED, LAMP_UNLOCKED, AK47, DUALAK47, HARPOON}
+enum Upgrade {CARGO_SIZE, DEPTH_RESISTANCE, PICKAXE_UNLOCKED, VERT_SPEED, HOR_SPEED, LAMP_UNLOCKED, AK47, DUALAK47, HARPOON, HARPOON_ROTATION, INVENTORY_MANAGEMENT, SURFACE_BUOY, INVENTORY_SAVE, DRONE_SELLING}
 var upgradeCosts = {
 	Upgrade.CARGO_SIZE: 25,
 	Upgrade.DEPTH_RESISTANCE: 50,
@@ -22,7 +22,12 @@ var upgradeCosts = {
 	Upgrade.LAMP_UNLOCKED: 50,
 	Upgrade.AK47: 500,
 	Upgrade.DUALAK47: 500,
-	Upgrade.HARPOON: 100
+	Upgrade.HARPOON: 100,
+	Upgrade.HARPOON_ROTATION: 150,
+	Upgrade.INVENTORY_MANAGEMENT: 200,
+	Upgrade.SURFACE_BUOY: 100,
+	Upgrade.INVENTORY_SAVE: 250,
+	Upgrade.DRONE_SELLING: 300
 }
 
 var maxUpgrades = {
@@ -34,7 +39,12 @@ var maxUpgrades = {
 	Upgrade.LAMP_UNLOCKED: 1,
 	Upgrade.AK47: 1,
 	Upgrade.DUALAK47: 1,
-	Upgrade.HARPOON: 1
+	Upgrade.HARPOON: 1,
+	Upgrade.HARPOON_ROTATION: 1,
+	Upgrade.INVENTORY_MANAGEMENT: 1,
+	Upgrade.SURFACE_BUOY: 1,
+	Upgrade.INVENTORY_SAVE: 1,
+	Upgrade.DRONE_SELLING: 1
 }
 
 #STATE
@@ -47,7 +57,12 @@ var upgrades = {
 	Upgrade.LAMP_UNLOCKED: 0,
 	Upgrade.AK47: 0,
 	Upgrade.DUALAK47: 0,
-	Upgrade.HARPOON: 0
+	Upgrade.HARPOON: 0,
+	Upgrade.HARPOON_ROTATION: 0,
+	Upgrade.INVENTORY_MANAGEMENT: 0,
+	Upgrade.SURFACE_BUOY: 0,
+	Upgrade.INVENTORY_SAVE: 0,
+	Upgrade.DRONE_SELLING: 0
 }
 var depth = 0
 var maxDepthReached = 0

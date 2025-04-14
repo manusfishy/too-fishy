@@ -146,6 +146,47 @@ func _input(_event):
 	if Input.is_action_just_pressed("throw"):
 		if can_shoot and !GameState.paused and !is_mouse_over_ui():
 			shoot_harpoon()
+	
+	# Surface buoy functionality - quickly return to surface when ESC key is pressed
+	if Input.is_action_just_pressed("esc") and GameState.upgrades[GameState.Upgrade.SURFACE_BUOY] > 0:
+		if !GameState.isDocked and !GameState.paused:
+			activate_surface_buoy()
+			
+	# Drone selling functionality - sell inventory remotely when D key is pressed
+	if Input.is_action_just_pressed("inv_toggle") and GameState.upgrades[GameState.Upgrade.DRONE_SELLING] > 0:
+		if !GameState.isDocked and !GameState.paused and GameState.inventory.items.size() > 0:
+			activate_selling_drone()
+
+func activate_surface_buoy():
+	# Only works if player is below the surface
+	if position.y < -1:
+		# Create visual effect
+		var particles = CPUParticles3D.new()
+		particles.emitting = true
+		particles.one_shot = true
+		particles.explosiveness = 1.0
+		particles.amount = 30
+		particles.lifetime = 1.0
+		particles.mesh = SphereMesh.new()
+		particles.mesh.radius = 0.1
+		particles.mesh.height = 0.2
+		particles.direction = Vector3(0, 1, 0)
+		particles.spread = 45.0
+		particles.gravity = Vector3(0, 0, 0)
+		particles.initial_velocity_min = 2.0
+		particles.initial_velocity_max = 5.0
+		particles.color = Color(0.2, 0.7, 1.0, 0.8)
+		add_child(particles)
+		
+		# Play sound effect
+		sound_player.play_sound("bup")
+		
+		# Move player to surface
+		position.y = -1
+		
+		# Add small cooldown to prevent spamming
+		can_shoot = false
+		cooldown_timer.start()
 
 func is_mouse_over_ui() -> bool:
 	return get_viewport().gui_get_focus_owner() != null
@@ -175,7 +216,18 @@ func shoot_harpoon():
 		harpoon.rotate_z(deg_to_rad(180))
 
 	harpoon.position = position + dir * global_transform.basis.x * -1 # move harpoon to correct side
-	harpoon.direction = global_transform.basis.y.normalized() # set correct direction for the movement in harpoon
+	
+	# If harpoon rotation upgrade is purchased, use mouse position to determine direction
+	if GameState.upgrades[GameState.Upgrade.HARPOON_ROTATION] > 0:
+		var mouse_pos = get_viewport().get_mouse_position()
+		var viewport_center = get_viewport().get_visible_rect().size / 2
+		var direction_vector = (mouse_pos - viewport_center).normalized()
+		
+		# Convert 2D direction to 3D (assuming Y is up in 3D space)
+		harpoon.direction = Vector3(direction_vector.x, direction_vector.y, 0).normalized()
+	else:
+		# Default behavior - shoot straight up/down
+		harpoon.direction = global_transform.basis.y.normalized()
 	
 	# Pass submarine reference to harpoon for catching fish
 	harpoon.submarine = self
@@ -230,7 +282,14 @@ func process_death():
 	if GameState.health <= 0:
 		sound_player.play_sound("ughhh")
 		GameState.death_screen = true
-		GameState.inventory.clear()
+		
+		# If inventory save upgrade is purchased, keep inventory items
+		if GameState.upgrades[GameState.Upgrade.INVENTORY_SAVE] <= 0:
+			GameState.inventory.clear()
+		else:
+			# Visual feedback that inventory was saved
+			PopupManager.show_popup("Inventory saved by insurance!", $PopupSpawnPosition.global_position, Color.GREEN)
+		
 		GameState.paused = true
 		GameState.health = 100
 		position = Vector3(-8, 0, 0.33)
@@ -311,3 +370,36 @@ func pseudo_random(mSeed: float) -> float:
 
 func add_trauma(trauma_amount: float):
 	trauma = clamp(trauma + trauma_amount, 0.0, 1.0)
+
+func activate_selling_drone():
+	# Create visual effect for the drone
+	var particles = CPUParticles3D.new()
+	particles.emitting = true
+	particles.one_shot = true
+	particles.explosiveness = 0.8
+	particles.amount = 20
+	particles.lifetime = 1.5
+	particles.mesh = SphereMesh.new()
+	particles.mesh.radius = 0.05
+	particles.mesh.height = 0.1
+	particles.direction = Vector3(0, 1, 0)
+	particles.spread = 30.0
+	particles.gravity = Vector3(0, 0, 0)
+	particles.initial_velocity_min = 1.0
+	particles.initial_velocity_max = 3.0
+	particles.color = Color(0.8, 0.8, 0.2, 0.7)
+	add_child(particles)
+	
+	# Play sound effect
+	sound_player.play_sound("coins")
+	
+	# Sell all items in inventory
+	var sold = GameState.inventory.sellItems()
+	
+	# Show popup with amount sold
+	var price_str = "Drone sold items for: $" + str(sold)
+	PopupManager.show_popup(price_str, $PopupSpawnPosition.global_position, Color.YELLOW)
+	
+	# Add small cooldown to prevent spamming
+	can_shoot = false
+	cooldown_timer.start()

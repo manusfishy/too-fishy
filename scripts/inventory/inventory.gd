@@ -23,12 +23,46 @@ func add(item: InvItem):
 		if i.id == item.id:
 			print("Duplicate fish ID detected: ", item.id)
 			return false
+	
+	# Check if inventory is full
 	if item.weight + inventoryCumulatedValues[InventoryValues.TotalWeight] > get_max_weight():
+		# If inventory management upgrade is purchased, try to replace less valuable fish
+		if GameState.upgrades[GameState.Upgrade.INVENTORY_MANAGEMENT] > 0:
+			return try_replace_less_valuable_fish(item)
 		return false
 	else:
 		items.append(item)
 		updateTotal()
 		return true
+		
+# Function to replace less valuable fish with more expensive ones
+func try_replace_less_valuable_fish(new_fish: InvItem) -> bool:
+	# If inventory is empty, can't replace anything
+	if items.size() == 0:
+		return false
+		
+	# Find the least valuable fish in inventory
+	var least_valuable_index = 0
+	var least_valuable_price = items[0].price
+	
+	for i in range(items.size()):
+		if items[i].price < least_valuable_price:
+			least_valuable_index = i
+			least_valuable_price = items[i].price
+	
+	# Only replace if the new fish is more valuable
+	if new_fish.price > least_valuable_price:
+		# Check if removing the least valuable fish and adding the new one would fit
+		var new_weight = inventoryCumulatedValues[InventoryValues.TotalWeight] - items[least_valuable_index].weight + new_fish.weight
+		
+		if new_weight <= get_max_weight():
+			# Replace the fish
+			items.remove_at(least_valuable_index)
+			items.append(new_fish)
+			updateTotal()
+			return true
+	
+	return false
 	
 
 func sellItems():
