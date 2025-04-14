@@ -148,12 +148,12 @@ func _input(_event):
 			shoot_harpoon()
 	
 	# Surface buoy functionality - quickly return to surface when B key is pressed
-	if Input.is_action_just_pressed("swing_pickaxe") and GameState.upgrades[GameState.Upgrade.SURFACE_BUOY] > 0:
+	if Input.is_action_just_pressed("upgrade_surface_buoy") and GameState.upgrades[GameState.Upgrade.SURFACE_BUOY] > 0:
 		if !GameState.isDocked and !GameState.paused:
 			activate_surface_buoy()
 			
 	# Drone selling functionality - sell inventory remotely when Q key is pressed
-	if Input.is_action_just_pressed("quit") and GameState.upgrades[GameState.Upgrade.DRONE_SELLING] > 0:
+	if Input.is_action_just_pressed("upgrade_drone_selling") and GameState.upgrades[GameState.Upgrade.DRONE_SELLING] > 0:
 		if !GameState.isDocked and !GameState.paused and GameState.inventory.items.size() > 0:
 			activate_selling_drone()
 
