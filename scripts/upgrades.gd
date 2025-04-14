@@ -44,7 +44,7 @@ func create_description_panel():
 	
 	# Add a label for the description text
 	description_label = Label.new()
-	description_label.autowrap = true
+	description_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	description_label.size_flags_vertical = SIZE_EXPAND_FILL
 	margin.add_child(description_label)
 	
