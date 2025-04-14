@@ -64,19 +64,19 @@ func update_display():
 	grid.add_child(upgrades_title)
 	
 	# Harpoon Rotation upgrade
-	add_upgrade_info(GameState.Upgrade.HARPOON_ROTATION, "Rotatable Harpoon: Aim with mouse")
+	add_upgrade_info(GameState.Upgrade.HARPOON_ROTATION, "Rotatable Harpoon: Aim with mouse or touch")
 	
 	# Inventory Management upgrade
 	add_upgrade_info(GameState.Upgrade.INVENTORY_MANAGEMENT, "Smart Inventory: Replaces less valuable fish")
 	
 	# Surface Buoy upgrade
-	add_upgrade_info(GameState.Upgrade.SURFACE_BUOY, "Emergency Buoy: Press ESC to return to surface")
+	add_upgrade_info(GameState.Upgrade.SURFACE_BUOY, "Emergency Buoy: Press B to return to surface")
 	
 	# Inventory Save upgrade
 	add_upgrade_info(GameState.Upgrade.INVENTORY_SAVE, "Inventory Insurance: Keeps items after death")
 	
 	# Drone Selling upgrade
-	add_upgrade_info(GameState.Upgrade.DRONE_SELLING, "Remote Selling Drone: Press E to sell remotely")
+	add_upgrade_info(GameState.Upgrade.DRONE_SELLING, "Remote Selling Drone: Press C to sell remotely")
 
 # Helper function to add upgrade info with status
 func add_upgrade_info(upgrade_type, description):

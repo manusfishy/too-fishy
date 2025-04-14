@@ -147,13 +147,13 @@ func _input(_event):
 		if can_shoot and !GameState.paused and !is_mouse_over_ui():
 			shoot_harpoon()
 	
-	# Surface buoy functionality - quickly return to surface when ESC key is pressed
-	if Input.is_action_just_pressed("esc") and GameState.upgrades[GameState.Upgrade.SURFACE_BUOY] > 0:
+	# Surface buoy functionality - quickly return to surface when B key is pressed
+	if Input.is_action_just_pressed("swing_pickaxe") and GameState.upgrades[GameState.Upgrade.SURFACE_BUOY] > 0:
 		if !GameState.isDocked and !GameState.paused:
 			activate_surface_buoy()
 			
 	# Drone selling functionality - sell inventory remotely when D key is pressed
-	if Input.is_action_just_pressed("inv_toggle") and GameState.upgrades[GameState.Upgrade.DRONE_SELLING] > 0:
+	if Input.is_action_just_pressed("cht_toggle") and GameState.upgrades[GameState.Upgrade.DRONE_SELLING] > 0:
 		if !GameState.isDocked and !GameState.paused and GameState.inventory.items.size() > 0:
 			activate_selling_drone()
 
@@ -217,11 +217,25 @@ func shoot_harpoon():
 
 	harpoon.position = position + dir * global_transform.basis.x * -1 # move harpoon to correct side
 	
-	# If harpoon rotation upgrade is purchased, use mouse position to determine direction
+	# If harpoon rotation upgrade is purchased, use mouse/touch position to determine direction
 	if GameState.upgrades[GameState.Upgrade.HARPOON_ROTATION] > 0:
-		var mouse_pos = get_viewport().get_mouse_position()
+		var aim_position = Vector2.ZERO
 		var viewport_center = get_viewport().get_visible_rect().size / 2
-		var direction_vector = (mouse_pos - viewport_center).normalized()
+		
+		# Handle both mouse and touch input
+		if OS.has_feature("mobile") or OS.has_feature("web"):
+			# For mobile, use the last touch position or joystick direction
+			if touch_direction != Vector2.ZERO:
+				# Use joystick direction if active
+				aim_position = viewport_center + touch_direction * 100
+			else:
+				# Otherwise use center + offset to match default direction
+				aim_position = viewport_center + Vector2(0, 50)
+		else:
+			# For desktop, use mouse position
+			aim_position = get_viewport().get_mouse_position()
+		
+		var direction_vector = (aim_position - viewport_center).normalized()
 		
 		# Convert 2D direction to 3D (assuming Y is up in 3D space)
 		harpoon.direction = Vector3(direction_vector.x, direction_vector.y, 0).normalized()
@@ -284,7 +298,7 @@ func process_death():
 		GameState.death_screen = true
 		
 		# If inventory save upgrade is purchased, keep inventory items
-		if GameState.upgrades[GameState.Upgrade.INVENTORY_SAVE] <= 0:
+		if GameState.upgrades[GameState.Upgrade.INVENTORY_SAVE] == 0:
 			GameState.inventory.clear()
 		else:
 			# Visual feedback that inventory was saved
