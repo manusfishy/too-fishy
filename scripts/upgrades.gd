@@ -6,6 +6,9 @@ var description_label = null
 var upgrade_descriptions = null
 
 func _ready():
+	# Set a fixed size for the entire panel to prevent resizing
+	custom_minimum_size = Vector2(400, 400)
+	
 	# Load descriptions once at initialization
 	upgrade_descriptions = load("res://scripts/upgrade_descriptions.gd").new()
 	
@@ -30,9 +33,12 @@ func _ready():
 func create_description_panel():
 	# Create a panel to display upgrade descriptions
 	description_panel = PanelContainer.new()
-	description_panel.visible = false
 	description_panel.size_flags_horizontal = SIZE_EXPAND_FILL
-	description_panel.custom_minimum_size = Vector2(300, 100)
+	description_panel.custom_minimum_size = Vector2(300, 150)
+	
+	# Always reserve space for the description panel, even when hidden
+	description_panel.visible = true
+	description_panel.modulate = Color(1, 1, 1, 0)  # Transparent but still takes up space
 	
 	# Add a margin container for padding
 	var margin = MarginContainer.new()
@@ -55,15 +61,16 @@ func show_description(upgrade_key):
 	# Set the description text using the pre-loaded descriptions
 	if upgrade_descriptions and upgrade_descriptions.upgradeDescriptions.has(upgrade_key):
 		description_label.text = upgrade_descriptions.upgradeDescriptions[upgrade_key]
-		description_panel.visible = true
+		# Make panel visible by setting opacity to 1
+		description_panel.modulate = Color(1, 1, 1, 1)
 	else:
 		# Handle error case
 		description_label.text = "Description not available"
-		description_panel.visible = true
+		description_panel.modulate = Color(1, 1, 1, 1)
 
 func hide_description():
-	# Hide the description panel
-	description_panel.visible = false
+	# Hide the description panel by making it transparent
+	description_panel.modulate = Color(1, 1, 1, 0)
 
 func _process(_delta):
 	if GameState.isDocked:
