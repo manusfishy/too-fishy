@@ -3,8 +3,12 @@ extends PanelContainer
 var buttons = {}
 var description_panel = null
 var description_label = null
+var upgrade_descriptions = null
 
 func _ready():
+	# Load descriptions once at initialization
+	upgrade_descriptions = load("res://scripts/upgrade_descriptions.gd").new()
+	
 	# Create description panel
 	create_description_panel()
 	
@@ -15,6 +19,11 @@ func _ready():
 		upgradeButton.pressed.connect(func(): GameState.upgrade(key))
 		upgradeButton.mouse_entered.connect(func(): show_description(key))
 		upgradeButton.mouse_exited.connect(func(): hide_description())
+		
+		# For mobile support, also show description on focus
+		upgradeButton.focus_entered.connect(func(): show_description(key))
+		upgradeButton.focus_exited.connect(func(): hide_description())
+		
 		$VBoxContainer/GridContainer.add_child(upgradeButton)
 		buttons[key] = upgradeButton
 
@@ -43,14 +52,14 @@ func create_description_panel():
 	$VBoxContainer.add_child(description_panel)
 
 func show_description(upgrade_key):
-	# Load the descriptions from the upgrade_descriptions.gd script
-	var UpgradeDescriptions = load("res://scripts/upgrade_descriptions.gd").new()
-	
-	# Set the description text
-	description_label.text = UpgradeDescriptions.upgradeDescriptions[upgrade_key]
-	
-	# Show the description panel
-	description_panel.visible = true
+	# Set the description text using the pre-loaded descriptions
+	if upgrade_descriptions and upgrade_descriptions.upgradeDescriptions.has(upgrade_key):
+		description_label.text = upgrade_descriptions.upgradeDescriptions[upgrade_key]
+		description_panel.visible = true
+	else:
+		# Handle error case
+		description_label.text = "Description not available"
+		description_panel.visible = true
 
 func hide_description():
 	# Hide the description panel
