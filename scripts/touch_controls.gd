@@ -1,4 +1,4 @@
-extends CanvasLayer
+extends Control
 
 # Virtual joystick variables
 var joystick_active = false
@@ -18,7 +18,7 @@ signal shoot_pressed()
 func _ready():
 	# Position the shoot button in the bottom right corner
 	var screen_size = get_viewport().get_visible_rect().size
-	shoot_button_rect.position = Vector2(screen_size.x - shoot_button_rect.size.x - 20, 
+	shoot_button_rect.position = Vector2(screen_size.x - shoot_button_rect.size.x - 20,
 										screen_size.y - shoot_button_rect.size.y - 20)
 
 func _input(event):
@@ -70,10 +70,10 @@ func _draw():
 		if shoot_button_pressed:
 			button_color = Color(1.0, 0.5, 0.5, 0.8)
 		
-		draw_circle(shoot_button_rect.position + shoot_button_rect.size/2, shoot_button_rect.size.x/2, button_color)
+		draw_circle(shoot_button_rect.position + shoot_button_rect.size / 2, shoot_button_rect.size.x / 2, button_color)
 		
 		# Draw shoot icon (simple crosshair)
-		var center = shoot_button_rect.position + shoot_button_rect.size/2
+		var center = shoot_button_rect.position + shoot_button_rect.size / 2
 		var line_length = 30
 		draw_line(center - Vector2(line_length, 0), center + Vector2(line_length, 0), Color.WHITE, 5)
 		draw_line(center - Vector2(0, line_length), center + Vector2(0, line_length), Color.WHITE, 5)
