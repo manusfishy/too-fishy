@@ -250,7 +250,6 @@ focus_mode = 0
 text = "Mute"
 
 [node name="Cheats" parent="UI" instance=ExtResource("13_4w45t")]
-visible = false
 layout_mode = 0
 offset_left = 434.0
 offset_top = 82.0

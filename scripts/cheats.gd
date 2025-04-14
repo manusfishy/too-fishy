@@ -1,7 +1,7 @@
 extends PanelContainer
 
 @onready var grid = $VBoxContainer/GridContainer
-@export var is_open = false
+@export var is_open = true
 
 func addButton(text, mCall):
 	var upgradeButton: Button = Button.new()
@@ -22,8 +22,8 @@ func _ready():
 	addButton("trauma 2", func(): GameState.player_node.traumaShakeMode = 2 )
 	addButton("trauma 3", func(): GameState.player_node.traumaShakeMode = 3 )
 	
-	
-	close()
+	# Comment out the close() call to keep the menu open by default
+	# close()
 
 
 func upgrade_all():
