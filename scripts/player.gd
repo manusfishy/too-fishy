@@ -62,6 +62,19 @@ func hurtPlayer(damage: int):
 	if can_be_hurt:
 		GameState.health -= damage
 		sound_player.play_sound("ughhh")
+		
+		# Show damage visual effects (screen crack and red flash)
+		# Find the UI node to add the effects to
+		var ui_node = get_node("/root/MainScene/UI")
+		if ui_node:
+			if ui_node.has_node("DamageEffects"):
+				ui_node.get_node("DamageEffects").show_damage_effects()
+			else:
+				# Create damage effects instance if it doesn't exist
+				var damage_effects = load("res://scenes/damage_effects.tscn").instantiate()
+				ui_node.add_child(damage_effects)
+				damage_effects.show_damage_effects()
+		
 		can_be_hurt = false
 		get_tree().create_timer(1.0).timeout.connect(reset_hurt_cooldown)
 
@@ -128,6 +141,11 @@ func movement(_delta: float):
 func _physics_process(delta: float) -> void:
 	movement(delta)
 	collision()
+	
+	# Add slow rotation when submarine is still
+	if abs(velocity.x) < 0.1 and abs(velocity.y) < 0.1:
+		# Apply a slow rotation to the submarine model
+		$Pivot.rotate_y(deg_to_rad(5) * delta)
 	
 	var depthSnapped = snapped(GameState.depth, 100)
 	if depthSnapped >= GameState.depthStageMap.keys()[len(GameState.depthStageMap.keys()) - 1]:
