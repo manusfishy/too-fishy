@@ -19,19 +19,19 @@ var next_track = null
 
 func _ready():
 	mute_button = get_node("/root/Node3D/UI/MuteButton")
-	print(mute_button)
 	if mute_button:
 		mute_button.pressed.connect(_on_mute_button_pressed)
 	# Start with surface music
 	player1.stream = surface
+	player1.stream.loop = true
 	player2.stream = deep
+	player2.stream.loop = true
 	
 	# Start playing the first track
 	player1.volume_db = -15.0
 	player2.volume_db = -15.0
-	player1.play()
+	#player1.play()
 	current_track = surface
-
 func _process(delta):
 	if is_crossfading:
 		fade_timer += delta
@@ -82,6 +82,7 @@ func play_sound(sound_name: String):
 
 func _on_mute_button_pressed():
 	if !is_muted:
+		player1.stop() # for now stop if unmute, without crossfade
 		# Store current volumes and mute
 		pre_mute_volume1 = player1.volume_db
 		pre_mute_volume2 = player2.volume_db
@@ -91,6 +92,7 @@ func _on_mute_button_pressed():
 			mute_button.text = "Unmute"
 	else:
 		# Restore previous volumes
+		player1.play() # for now play if unmute, without crossfade
 		player1.volume_db = -15 # pre_mute_volume1
 		player2.volume_db = -15 # pre_mute_volume2
 		if mute_button:

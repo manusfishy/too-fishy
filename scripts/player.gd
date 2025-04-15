@@ -22,7 +22,9 @@ var can_shoot = true
 var touch_controls = null
 var touch_direction = Vector2.ZERO
 @onready var aim_arrow = $Pivot/AimArrow
-
+# for calm rocking up and down
+var rocking_angle = 0
+var rocking_angle2 = 0
 signal section_changed(sectionType)
 
 func _ready():
@@ -142,10 +144,20 @@ func _physics_process(delta: float) -> void:
 	movement(delta)
 	collision()
 	
-	# Add slow rotation when submarine is still
+	# Apply a slow submarine-like rocking motion
 	if abs(velocity.x) < 0.1 and abs(velocity.y) < 0.1:
-		# Apply a slow rotation to the submarine model
-		$Pivot.rotate_y(deg_to_rad(5) * delta)
+		# Apply a slow submarine-like rocking motion
+		var rocking_angle = sin(time * 0.5) * 1.3
+		var direction = 1
+		if $Pivot.rotation.z < deg_to_rad(30):
+			direction = -1
+		elif $Pivot.rotation.z < deg_to_rad(-30):
+			direction = 1
+		$Pivot.rotation.z = $Pivot.rotation.z + direction * deg_to_rad(rocking_angle) * delta
+		
+		# Add front-to-back rocking motion
+		#var front_rocking = sin(time * 0.1) * 2.0 # Rock between -2 and 2 degrees
+		#$Pivot.rotation.x = deg_to_rad(front_rocking) # Directly set rotation for more controlled motion
 	
 	var depthSnapped = snapped(GameState.depth, 100)
 	if depthSnapped >= GameState.depthStageMap.keys()[len(GameState.depthStageMap.keys()) - 1]:

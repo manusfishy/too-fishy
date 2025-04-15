@@ -58,7 +58,7 @@ environment = SubResource("Environment_fjrip")
 script = ExtResource("3_qlg0r")
 
 [node name="Pivot" type="Node3D" parent="."]
-transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0.155944, 0)
+transform = Transform3D(20, 0.00383925, 0, -0.00383925, 20, 0, 0, 0, 20, 0, 0.155944, 0)
 
 [node name="submarine" parent="Pivot" instance=ExtResource("2_qhqgy")]
 visible = false
@@ -119,7 +119,6 @@ mesh = SubResource("CapsuleMesh_ur7pv")
 transform = Transform3D(0.0432183, -0.999066, 0, 0.999066, 0.0432183, 0, 0, 0, 1, 0.84911, 0.396061, 0)
 
 [node name="HarpoonCD" type="Timer" parent="."]
-wait_time = 1.0
 one_shot = true
 
 [node name="ScatterArea" type="Area3D" parent="."]
