@@ -24,6 +24,20 @@ func _ready():
 	# Create description panel
 	create_description_panel()
 	
+	# Create a CenterContainer to center the GridContainer
+	var center_container = CenterContainer.new()
+	center_container.size_flags_horizontal = SIZE_EXPAND_FILL
+	
+	# Create a new GridContainer
+	var grid_container = GridContainer.new()
+	grid_container.columns = 1
+	
+	# Add the GridContainer to the CenterContainer
+	center_container.add_child(grid_container)
+	
+	# Add the CenterContainer to the VBoxContainer
+	$VBoxContainer.add_child(center_container)
+	
 	# Create upgrade buttons with tooltips
 	for key in GameState.upgrades:
 		# Skip the 5 new upgrades if they haven't been purchased yet
@@ -43,7 +57,7 @@ func _ready():
 		upgradeButton.focus_entered.connect(func(): show_description(key))
 		upgradeButton.focus_exited.connect(func(): hide_description())
 		
-		$VBoxContainer/GridContainer.add_child(upgradeButton)
+		grid_container.add_child(upgradeButton)
 		buttons[key] = upgradeButton
 
 func create_description_panel():
@@ -113,7 +127,10 @@ func _process(_delta):
 				upgradeButton.focus_entered.connect(func(): show_description(key))
 				upgradeButton.focus_exited.connect(func(): hide_description())
 				
-				$VBoxContainer/GridContainer.add_child(upgradeButton)
+				# Find the GridContainer inside the CenterContainer
+				var center_container = $VBoxContainer.get_children().filter(func(node): return node is CenterContainer)[0]
+				var grid_container = center_container.get_children().filter(func(node): return node is GridContainer)[0]
+				grid_container.add_child(upgradeButton)
 				buttons[key] = upgradeButton
 	else:
 		visible = false
