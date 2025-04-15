@@ -21,6 +21,7 @@ var touch_controls_scene = preload("res://scenes/ui/touch_controls.tscn")
 var can_shoot = true
 var touch_controls = null
 var touch_direction = Vector2.ZERO
+@onready var aim_arrow = $Pivot/AimArrow
 
 signal section_changed(sectionType)
 
@@ -129,8 +130,8 @@ func _physics_process(delta: float) -> void:
 	collision()
 	
 	var depthSnapped = snapped(GameState.depth, 100)
-	if depthSnapped >= GameState.depthStageMap.keys()[len(GameState.depthStageMap.keys())-1]:
-		depthSnapped = GameState.depthStageMap.keys()[len(GameState.depthStageMap.keys())-1]
+	if depthSnapped >= GameState.depthStageMap.keys()[len(GameState.depthStageMap.keys()) - 1]:
+		depthSnapped = GameState.depthStageMap.keys()[len(GameState.depthStageMap.keys()) - 1]
 	var sectionType = GameState.depthStageMap[depthSnapped]
 	section_changed.emit(sectionType)
 	
@@ -193,7 +194,6 @@ func is_mouse_over_ui() -> bool:
 	
 var sold = 0
 func onDock():
-	
 	sold = GameState.inventory.sellItems()
 	if sold != 0:
 		sound_player.play_sound("coins")
@@ -244,13 +244,15 @@ func shoot_harpoon():
 		var angle = atan2(direction_vector.y, direction_vector.x)
 		
 		# Apply rotation to the harpoon model (Z axis only)
-		harpoon.rotation = Vector3(0, 0, angle - PI/2)
+		#harpoon.rotate = get_local_mouse_position().angle() # Vector3(0, 0, angle - PI / 2)
+		#aim_arrow.rotation = Vector3(0, 0, angle - PI / 2)
+		harpoon.rotate_z(deg_to_rad(angle - PI / 2))
 		
 		# Flip the harpoon if shooting to the left
 		if dir < 0:
 			harpoon.rotation.z += PI
 	else:
-		# Default behavior - shoot straight up/down
+		# Default behavior - shoot straight left right
 		harpoon.direction = global_transform.basis.y.normalized()
 		
 		# Apply default rotation based on submarine direction
@@ -406,12 +408,12 @@ func activate_selling_drone():
 	
 	# Set up the drone
 	drone.position = position
-	drone.scale = Vector3(0.5, 0.5, 0.5)  # Make it a bit smaller than regular fish
+	drone.scale = Vector3(0.5, 0.5, 0.5) # Make it a bit smaller than regular fish
 	get_parent().add_child(drone)
 	
 	# Modify the drone appearance
 	if drone.has_node("Pivot/Body"):
-		drone.get_node("Pivot/Body").modulate = Color(0.8, 0.8, 0.2)  # Give it a golden color
+		drone.get_node("Pivot/Body").modulate = Color(0.8, 0.8, 0.2) # Give it a golden color
 	
 	# Create visual effect for the drone
 	var particles = CPUParticles3D.new()
