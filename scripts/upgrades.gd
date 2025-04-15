@@ -5,14 +5,6 @@ var description_panel = null
 var description_label = null
 var upgrade_descriptions = null
 
-# List of the 5 new upgrades that should be hidden until purchased
-var new_upgrades = [
-	GameState.Upgrade.HARPOON_ROTATION,
-	GameState.Upgrade.INVENTORY_MANAGEMENT,
-	GameState.Upgrade.SURFACE_BUOY,
-	GameState.Upgrade.INVENTORY_SAVE,
-	GameState.Upgrade.DRONE_SELLING
-]
 
 func _ready():
 	# Set a fixed size for the entire panel to prevent resizing
@@ -40,10 +32,6 @@ func _ready():
 	
 	# Create upgrade buttons with tooltips
 	for key in GameState.upgrades:
-		# Skip the 5 new upgrades if they haven't been purchased yet
-		if key in new_upgrades and GameState.upgrades[key] == 0:
-			continue
-			
 		var upgradeButton: Button = Button.new()
 		upgradeButton.text = Strings.upgradeNames[key] + " %s" % (GameState.upgrades[key] + 1) + " (Cost: %s)" % GameState.getUpgradeCost(key)
 		upgradeButton.pressed.connect(func(): GameState.upgrade(key))
@@ -68,7 +56,7 @@ func create_description_panel():
 	
 	# Always reserve space for the description panel, even when hidden
 	description_panel.visible = true
-	description_panel.modulate = Color(1, 1, 1, 0)  # Transparent but still takes up space
+	description_panel.modulate = Color(1, 1, 1, 0) # Transparent but still takes up space
 	
 	# Add a margin container for padding
 	var margin = MarginContainer.new()
@@ -111,27 +99,6 @@ func _process(_delta):
 	if GameState.isDocked:
 		visible = true
 		
-		# Check if any new upgrades were purchased and need to be added
-		for key in new_upgrades:
-			if GameState.upgrades[key] > 0 and not buttons.has(key):
-				var upgradeButton: Button = Button.new()
-				upgradeButton.text = Strings.upgradeNames[key] + " %s" % (GameState.upgrades[key] + 1) + " (Cost: %s)" % GameState.getUpgradeCost(key)
-				upgradeButton.pressed.connect(func(): GameState.upgrade(key))
-				upgradeButton.mouse_entered.connect(func(): show_description(key))
-				upgradeButton.mouse_exited.connect(func(): hide_description())
-				
-				# Center the text in the button
-				upgradeButton.alignment = HORIZONTAL_ALIGNMENT_CENTER
-				
-				# For mobile support, also show description on focus
-				upgradeButton.focus_entered.connect(func(): show_description(key))
-				upgradeButton.focus_exited.connect(func(): hide_description())
-				
-				# Find the GridContainer inside the CenterContainer
-				var center_container = $VBoxContainer.get_children().filter(func(node): return node is CenterContainer)[0]
-				var grid_container = center_container.get_children().filter(func(node): return node is GridContainer)[0]
-				grid_container.add_child(upgradeButton)
-				buttons[key] = upgradeButton
 	else:
 		visible = false
 		

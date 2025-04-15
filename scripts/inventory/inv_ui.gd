@@ -58,42 +58,8 @@ func update_display():
 	var separator = HSeparator.new()
 	grid.add_child(separator)
 	
-	# Add information about new upgrades if any are purchased
 	var has_purchased_upgrades = false
-	var new_upgrades = [
-		GameState.Upgrade.HARPOON_ROTATION,
-		GameState.Upgrade.INVENTORY_MANAGEMENT,
-		GameState.Upgrade.SURFACE_BUOY,
-		GameState.Upgrade.INVENTORY_SAVE,
-		GameState.Upgrade.DRONE_SELLING
-	]
-	
-	# Check if any new upgrades have been purchased
-	for upgrade in new_upgrades:
-		if GameState.upgrades[upgrade] > 0:
-			has_purchased_upgrades = true
-			break
-	
-	# Only show the upgrades section if at least one upgrade has been purchased
-	if has_purchased_upgrades:
-		var upgrades_title = Label.new()
-		upgrades_title.text = "Purchased Upgrades:"
-		grid.add_child(upgrades_title)
-		
-		# Harpoon Rotation upgrade
-		add_upgrade_info(GameState.Upgrade.HARPOON_ROTATION, "Rotatable Harpoon: Aim with mouse or touch")
-		
-		# Inventory Management upgrade
-		add_upgrade_info(GameState.Upgrade.INVENTORY_MANAGEMENT, "Smart Inventory: Replaces less valuable fish")
-		
-		# Surface Buoy upgrade
-		add_upgrade_info(GameState.Upgrade.SURFACE_BUOY, "Emergency Buoy: Press B to return to surface")
-		
-		# Inventory Save upgrade
-		add_upgrade_info(GameState.Upgrade.INVENTORY_SAVE, "Inventory Insurance: Keeps items after death")
-		
-		# Drone Selling upgrade
-		add_upgrade_info(GameState.Upgrade.DRONE_SELLING, "Remote Selling Drone: Press Q to sell remotely")
+
 
 # Helper function to add upgrade info with status
 func add_upgrade_info(upgrade_type, description):
