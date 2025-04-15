@@ -37,7 +37,7 @@ func _ready():
 		upgradeButton.mouse_exited.connect(func(): hide_description())
 		
 		# Center the text in the button
-		upgradeButton.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		upgradeButton.alignment = HORIZONTAL_ALIGNMENT_CENTER
 		
 		# For mobile support, also show description on focus
 		upgradeButton.focus_entered.connect(func(): show_description(key))
@@ -70,6 +70,7 @@ func create_description_panel():
 	description_label.size_flags_vertical = SIZE_EXPAND_FILL
 	
 	# Center the description text
+	# Label objects use horizontal_alignment, not alignment
 	description_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	
 	margin.add_child(description_label)
@@ -106,7 +107,7 @@ func _process(_delta):
 				upgradeButton.mouse_exited.connect(func(): hide_description())
 				
 				# Center the text in the button
-				upgradeButton.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+				upgradeButton.alignment = HORIZONTAL_ALIGNMENT_CENTER
 				
 				# For mobile support, also show description on focus
 				upgradeButton.focus_entered.connect(func(): show_description(key))
