@@ -11,15 +11,17 @@ func _ready():
 	queue_free()
 
 func _physics_process(delta):
-	# Move harpoon in the direction set by the submarine
-	translate(direction * speed * delta)
+	# Move harpoon in the direction set by the submarine, but only in x-y plane
+	var movement = direction * speed * delta
+	movement.z = 0 # Force z movement to 0
+	translate(movement)
 	
 	# Check for collisions with fish
 	for body in $Area3D.get_overlapping_bodies():
 		if body.is_in_group("fishes"):
 			if submarine:
 				submarine.catch_fish(body) # Call catch_fish on submarine
-			if GameState.upgrades[GameState.Upgrade.HARPOON]<1:
+			if GameState.upgrades[GameState.Upgrade.HARPOON] < 1:
 				queue_free() # Remove harpoon after hit
 				break # Only catch one fish per harpoon
 		if body.is_in_group("boss"):

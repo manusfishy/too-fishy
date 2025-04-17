@@ -100,6 +100,9 @@ transform = Transform3D(-2.5, 0, 2.18557e-07, 0, 2.5, 0, -2.18557e-07, 0, -2.5, 
 visible = false
 script = ExtResource("9_ur7pv")
 
+[node name="harpoon cabinet" type="Node3D" parent="Pivot/SmFishSubmarine"]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 1.84217, -0.25404, 2.1823)
+
 [node name="AimArrow" type="Node3D" parent="Pivot"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.0336725, 0.0233054, 0.00891925)
 

@@ -27,6 +27,16 @@ var rocking_angle = 0
 var rocking_angle2 = 0
 signal section_changed(sectionType)
 
+var float_state = {
+	"amplitude": 0.5,
+	"frequency": 0.5,
+	"phase": 0.0,
+	"height": 0.1,
+	"speed": 1.0
+}
+var is_floating = false
+var original_transform: Transform3D
+
 func _ready():
 	GameState.player_node = self
 	print("player ready")
@@ -37,6 +47,7 @@ func _ready():
 		get_tree().root.add_child(touch_controls)
 		touch_controls.joystick_input.connect(_on_joystick_input)
 		touch_controls.shoot_pressed.connect(_on_shoot_pressed)
+	original_transform = transform
 
 func _on_joystick_input(direction):
 	touch_direction = direction
@@ -146,18 +157,10 @@ func _physics_process(delta: float) -> void:
 	
 	# Apply a slow submarine-like rocking motion
 	if abs(velocity.x) < 0.1 and abs(velocity.y) < 0.1:
-		# Apply a slow submarine-like rocking motion
-		var rocking_angle = sin(time * 0.5) * 1.3
-		var direction = 1
-		if $Pivot.rotation.z < deg_to_rad(30):
-			direction = -1
-		elif $Pivot.rotation.z < deg_to_rad(-30):
-			direction = 1
-		$Pivot.rotation.z = $Pivot.rotation.z + direction * deg_to_rad(rocking_angle) * delta
-		
-		# Add front-to-back rocking motion
-		#var front_rocking = sin(time * 0.1) * 2.0 # Rock between -2 and 2 degrees
-		#$Pivot.rotation.x = deg_to_rad(front_rocking) # Directly set rotation for more controlled motion
+		var time_factor = time * float_state.frequency
+		# Synchronize the rocking with the floating motion but with increased amplitude
+		var rocking_angle = sin(time_factor) * (float_state.amplitude * 3.0) # Increased amplitude
+		$Pivot.rotation.z = deg_to_rad(rocking_angle)
 	
 	var depthSnapped = snapped(GameState.depth, 100)
 	if depthSnapped >= GameState.depthStageMap.keys()[len(GameState.depthStageMap.keys()) - 1]:
@@ -171,22 +174,24 @@ func _process(delta):
 	process_dock(delta)
 	process_depth_effects(delta)
 	processTrauma(delta)
+	processFloating(delta)
 
 
 func _input(_event):
-	if Input.is_action_just_pressed("throw"):
-		if can_shoot and !GameState.paused and !is_mouse_over_ui():
-			shoot_harpoon()
-	
-	# Surface buoy functionality - quickly return to surface when B key is pressed
-	if Input.is_action_just_pressed("upgrade_surface_buoy") and GameState.upgrades[GameState.Upgrade.SURFACE_BUOY] > 0:
-		if !GameState.isDocked and !GameState.paused:
-			activate_surface_buoy()
-			
-	# Drone selling functionality - sell inventory remotely when Q key is pressed
-	if Input.is_action_just_pressed("upgrade_drone_selling") and GameState.upgrades[GameState.Upgrade.DRONE_SELLING] > 0:
-		if !GameState.isDocked and !GameState.paused and GameState.inventory.items.size() > 0:
-			activate_selling_drone()
+	if !GameState.paused:
+		if Input.is_action_just_pressed("throw"):
+			if can_shoot and !is_mouse_over_ui():
+				shoot_harpoon()
+		
+		# Surface buoy functionality - quickly return to surface when B key is pressed
+		if Input.is_action_just_pressed("upgrade_surface_buoy") and GameState.upgrades[GameState.Upgrade.SURFACE_BUOY] > 0:
+			if !GameState.isDocked and !GameState.paused:
+				activate_surface_buoy()
+				
+		# Drone selling functionality - sell inventory remotely when Q key is pressed
+		if Input.is_action_just_pressed("upgrade_drone_selling") and GameState.upgrades[GameState.Upgrade.DRONE_SELLING] > 0:
+			if !GameState.isDocked and !GameState.paused and GameState.inventory.items.size() > 0:
+				activate_selling_drone()
 
 func activate_surface_buoy():
 	# Only works if player is below the surface
@@ -243,12 +248,12 @@ func shoot_harpoon():
 	if ($Pivot.rotation[1] >= 0):
 		dir = -1
 	
-	harpoon.position = position + dir * global_transform.basis.x * -1 # move harpoon to correct side
 	
 	# If harpoon rotation upgrade is purchased, use mouse/touch position to determine direction
 	if GameState.upgrades[GameState.Upgrade.HARPOON_ROTATION] > 0:
+		harpoon.global_position = position # move harpoon to correct side
 		var aim_position = Vector2.ZERO
-		var viewport_center = get_viewport().get_visible_rect().size / 2
+		var viewport_center = get_viewport().get_visible_rect().get_center()
 		
 		# Handle both mouse and touch input
 		if OS.has_feature("mobile") or OS.has_feature("web"):
@@ -263,31 +268,38 @@ func shoot_harpoon():
 			# For desktop, use mouse position
 			aim_position = get_viewport().get_mouse_position()
 		
-		# For 2D gameplay in 3D world, we only want to rotate on the Z axis
-		# Calculate the angle between the center and aim position
-		var direction_vector = (aim_position - viewport_center).normalized()
+		# Calculate the direction vector from the submarine to the aim position
+		var camera = $Camera3D
+		var from = camera.project_ray_origin(aim_position)
+		var to = from + camera.project_ray_normal(aim_position) * 1000
+		var space_state = get_world_3d().direct_space_state
+		var query = PhysicsRayQueryParameters3D.create(from, to)
+		var result = space_state.intersect_ray(query)
 		
-		# Set direction for harpoon movement
-		harpoon.direction = Vector3(direction_vector.x, direction_vector.y, 0).normalized()
+		if result:
+			to = result.position
 		
-		# Calculate rotation angle (only for Z axis)
-		var angle = atan2(direction_vector.y, direction_vector.x)
+		# Calculate direction vector from submarine to target
+		var direction = (to - position).normalized()
 		
-		# Apply rotation to the harpoon model (Z axis only)
-		#harpoon.rotate = get_local_mouse_position().angle() # Vector3(0, 0, angle - PI / 2)
-		#aim_arrow.rotation = Vector3(0, 0, angle - PI / 2)
-		harpoon.rotate_z(deg_to_rad(angle - PI / 2))
+		# Calculate rotation angle based on movement direction
+		var angle = atan2(direction.y, direction.x)
+		#harpoon.rotation.z = angle # Point in movement direction
 		
-		# Flip the harpoon if shooting to the left
-		if dir < 0:
-			harpoon.rotation.z += PI
+		# Convert angle back to direction vector
+		direction = Vector3(cos(angle), -sin(angle), 0)
+		
+		
+		harpoon.direction = direction
+		
 	else:
-		# Default behavior - shoot straight left right
-		harpoon.direction = global_transform.basis.y.normalized()
-		
-		# Apply default rotation based on submarine direction
+		# Default behavior - shoot straight left/right
 		if dir < 0:
-			harpoon.rotate_z(deg_to_rad(180))
+			harpoon.direction = - global_transform.basis.y.normalized()
+			harpoon.rotation.z = PI # Point left
+		else:
+			harpoon.direction = global_transform.basis.y.normalized()
+			harpoon.rotation.z = 0 # Point right
 	
 	# Pass submarine reference to harpoon for catching fish
 	harpoon.submarine = self
@@ -354,6 +366,31 @@ func process_death():
 		GameState.health = 100
 		position = Vector3(-8, 0, 0.33)
 
+
+func processFloating(delta):
+	if abs(velocity.x) < 0.1 and abs(velocity.y) < 0.1:
+		if !is_floating:
+			is_floating = true
+			original_transform = transform
+		
+		# Calculate floating offsets
+		var time_factor = time * float_state.frequency
+		var roll = sin(time_factor) * float_state.amplitude
+		var pitch = sin(time_factor + float_state.phase) * float_state.amplitude
+		var height = sin(time * float_state.speed) * float_state.height
+		
+		# Smoothly interpolate to floating state
+		transform = transform.interpolate_with(
+			original_transform.translated(Vector3(0, height, 0))
+				.rotated(Vector3.RIGHT, deg_to_rad(roll))
+				.rotated(Vector3.UP, deg_to_rad(pitch)),
+			delta * 2
+		)
+	else:
+		if is_floating:
+			is_floating = false
+			# Smoothly return to original position
+			transform = transform.interpolate_with(original_transform, delta * 2)
 
 func scatter_area_entered(body: Node3D) -> void:
 	if body.is_in_group("fishes"):
@@ -437,7 +474,7 @@ func activate_selling_drone():
 	var drone = drone_scene.instantiate()
 	
 	# Set up the drone
-	drone.position = position
+	drone.position = $Pivot.position
 	drone.scale = Vector3(0.5, 0.5, 0.5) # Make it a bit smaller than regular fish
 	get_parent().add_child(drone)
 	
