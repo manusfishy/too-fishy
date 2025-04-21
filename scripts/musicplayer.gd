@@ -18,9 +18,7 @@ var current_track = null
 var next_track = null
 
 func _ready():
-	mute_button = get_node("/root/Node3D/UI/MuteButton")
-	if mute_button:
-		mute_button.pressed.connect(_on_mute_button_pressed)
+	mute_button = get_node("/root/Node3D/UI/HUD/MarginContainer/HUDContainer/MuteButton")
 	# Start with surface music
 	player1.stream = surface
 	player1.stream.loop = true

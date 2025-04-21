@@ -60,6 +60,9 @@ script = ExtResource("3_qlg0r")
 [node name="Pivot" type="Node3D" parent="."]
 transform = Transform3D(20, 0.00383925, 0, -0.00383925, 20, 0, 0, 0, 20, 0, 0.155944, 0)
 
+[node name="HarpoonLaunchPoint" type="Node3D" parent="Pivot"]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0.00037846, 0.000150716, -3.20524e-05)
+
 [node name="submarine" parent="Pivot" instance=ExtResource("2_qhqgy")]
 visible = false
 
@@ -101,7 +104,7 @@ visible = false
 script = ExtResource("9_ur7pv")
 
 [node name="AimArrow" type="Node3D" parent="Pivot"]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.0336725, 0.0233054, 0.00891925)
+transform = Transform3D(0.459568, 0.196971, 0, -0.196971, 0.459568, 0, 0, 0, 0.5, 0.0336725, 0.0233054, 0.00891925)
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Pivot/AimArrow"]
 transform = Transform3D(0.000536196, 0.0133584, -0.00362766, 0.00109056, -0.00682294, -0.00710071, -0.0149507, -1.86005e-05, -0.000648056, 0.00988837, 0.00493818, 0.0203952)

@@ -8,6 +8,14 @@ var throw_strength = 15.0 # Adjust for distance
 var is_holding_hook = true
 var target_velocity = Vector3.ZERO
 
+# Harpoon rotation variables
+var harpoon_rotation_active = false
+var harpoon_rotation_speed = 120.0 # Degrees per second
+var harpoon_max_rotation = 90.0 # Maximum rotation in degrees
+var harpoon_rotation_direction = 1 # 1 = clockwise, -1 = counterclockwise
+
+@onready var harpoon_launch_point_node = $Pivot/HarpoonLaunchPoint # Adjust path if needed
+
 @onready var sound_player = $SoundPlayer
 @onready var pickaxe_scene = preload("res://scenes/pickaxe.tscn")
 @export var inventory: Inv
@@ -171,7 +179,27 @@ func _process(delta):
 	process_dock(delta)
 	process_depth_effects(delta)
 	processTrauma(delta)
-
+	
+	# Handle harpoon rotation when upgrade is active
+	if GameState.upgrades[GameState.Upgrade.HARPOON_ROTATION] > 0:
+		# Start/stop rotation based on input
+		if Input.is_action_pressed("throw") and !GameState.paused:
+			harpoon_rotation_active = true
+		else:
+			harpoon_rotation_active = false
+		
+		# Apply rotation when active
+		if harpoon_rotation_active:
+			# Get current rotation in degrees
+			var current_rotation = rad_to_deg(aim_arrow.rotation.z)
+			
+			# Change direction if we hit limits
+			if abs(current_rotation) >= harpoon_max_rotation:
+				harpoon_rotation_direction *= -1
+			
+			# Apply rotation
+			var rotation_amount = harpoon_rotation_speed * delta * harpoon_rotation_direction
+			aim_arrow.rotate_z(deg_to_rad(rotation_amount))
 
 func _input(_event):
 	if Input.is_action_just_pressed("throw"):
@@ -235,61 +263,40 @@ func onDock():
 	
 
 func shoot_harpoon():
+	var dir = 1
+	if ($Pivot.rotation[1] >= 0): #check submarine rotation
+		dir = -1
+	if not harpoon_launch_point_node or not harpoon_scene: return # Add camera check if needed
 	# Instance the harpoon
 	var harpoon = harpoon_scene.instantiate()
-	get_parent().add_child(harpoon)
+	get_parent().add_child(harpoon) # Or add to specific container
 	sound_player.play_sound("harp")
-	var dir = 1
-	if ($Pivot.rotation[1] >= 0):
-		dir = -1
-	
-	harpoon.position = position + dir * global_transform.basis.x * -1 # move harpoon to correct side
-	
-	# If harpoon rotation upgrade is purchased, use mouse/touch position to determine direction
+
+	var launch_position = harpoon_launch_point_node.global_position
+	harpoon.global_position = launch_position # Set global position correctly
+
+	var final_shoot_direction = Vector3.ZERO
+	var final_angle_radians = 0.0
+
+	# --- Upgraded Aiming ---
 	if GameState.upgrades[GameState.Upgrade.HARPOON_ROTATION] > 0:
-		var aim_position = Vector2.ZERO
-		var viewport_center = get_viewport().get_visible_rect().size / 2
-		
-		# Handle both mouse and touch input
-		if OS.has_feature("mobile") or OS.has_feature("web"):
-			# For mobile, use the last touch position or joystick direction
-			if touch_direction != Vector2.ZERO:
-				# Use joystick direction if active
-				aim_position = viewport_center + touch_direction * 100
-			else:
-				# Otherwise use center + offset to match default direction
-				aim_position = viewport_center + Vector2(0, 50)
+		var cursor_pos = get_viewport().get_mouse_position()
+		var launch_screen_pos = camera.unproject_position(launch_position)
+		var screen_direction = cursor_pos - launch_screen_pos
+
+		if screen_direction.length_squared() > 0.1:
+			final_angle_radians = screen_direction.angle()
 		else:
-			# For desktop, use mouse position
-			aim_position = get_viewport().get_mouse_position()
-		
-		# For 2D gameplay in 3D world, we only want to rotate on the Z axis
-		# Calculate the angle between the center and aim position
-		var direction_vector = (aim_position - viewport_center).normalized()
-		
-		# Set direction for harpoon movement
-		harpoon.direction = Vector3(direction_vector.x, direction_vector.y, 0).normalized()
-		
-		# Calculate rotation angle (only for Z axis)
-		var angle = atan2(direction_vector.y, direction_vector.x)
-		
-		# Apply rotation to the harpoon model (Z axis only)
-		#harpoon.rotate = get_local_mouse_position().angle() # Vector3(0, 0, angle - PI / 2)
-		#aim_arrow.rotation = Vector3(0, 0, angle - PI / 2)
-		harpoon.rotate_z(deg_to_rad(angle - PI / 2))
-		
-		# Flip the harpoon if shooting to the left
-		if dir < 0:
-			harpoon.rotation.z += PI
+			final_angle_radians = 0.0 # Default right if cursor on launch point
+
+		harpoon.global_rotation.z = -final_angle_radians
+	# --- Default Aiming ---
 	else:
-		# Default behavior - shoot straight left right
-		harpoon.direction = global_transform.basis.y.normalized()
-		
-		# Apply default rotation based on submarine direction
-		if dir < 0:
-			harpoon.rotate_z(deg_to_rad(180))
-	
-	# Pass submarine reference to harpoon for catching fish
+		harpoon.rotate_z(deg_to_rad(180))
+
+		harpoon.position = position + dir * global_transform.basis.x * -1 # move harpoon to correct side
+		harpoon.direction = global_transform.basis.y.normalized() # set correct direction for the movement in harpoon
+
 	harpoon.submarine = self
 	can_shoot = false
 	cooldown_timer.start()

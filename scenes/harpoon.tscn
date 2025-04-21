@@ -7,7 +7,6 @@
 height = 2.20068
 
 [node name="Harpoon" type="Node3D"]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("1_psboj")
 
 [node name="Area3D" type="Area3D" parent="."]
@@ -17,4 +16,4 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, -0.33)
 shape = SubResource("CylinderShape3D_psboj")
 
 [node name="Lanceharpoon" parent="." instance=ExtResource("2_wbtou")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+transform = Transform3D(-2.18557e-08, 0.5, 0, -0.5, -2.18557e-08, 0, 0, 0, 0.5, 0, 0, 0)

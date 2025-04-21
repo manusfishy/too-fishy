@@ -244,6 +244,11 @@ text = "Pressure Headroom:"
 [node name="PressureHeadroomBar" type="ProgressBar" parent="UI/HUD/MarginContainer/HUDContainer"]
 layout_mode = 2
 
+[node name="MuteButton2" type="CheckButton" parent="UI/HUD/MarginContainer/HUDContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Particles"
+
 [node name="MuteButton" type="CheckButton" parent="UI/HUD/MarginContainer/HUDContainer"]
 layout_mode = 2
 focus_mode = 0
@@ -304,4 +309,5 @@ surface_material_override/0 = ExtResource("24_k67gn")
 transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, 0, 0, 1, 1.57438, -0.818055, 0.261556)
 shape = SubResource("BoxShape3D_4bgka")
 
+[connection signal="pressed" from="UI/HUD/MarginContainer/HUDContainer/MuteButton2" to="Audiomanager" method="_on_mute_button_pressed"]
 [connection signal="pressed" from="UI/HUD/MarginContainer/HUDContainer/MuteButton" to="Audiomanager" method="_on_mute_button_pressed"]
