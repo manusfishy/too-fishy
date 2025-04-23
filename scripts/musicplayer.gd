@@ -16,20 +16,23 @@ var hotzone = preload("res://music/hotzone.mp3")
 
 var current_track = null
 var next_track = null
+var default_volume = -15.0
 
 func _ready():
-	mute_button = get_node("/root/Node3D/UI/MuteButton")
-	print(mute_button)
+	# Fix: Updated path to find mute button in the correct location
+	mute_button = get_node("/root/Node3D/UI/HUD/MarginContainer/HUDContainer/MuteButton")
 	if mute_button:
 		mute_button.pressed.connect(_on_mute_button_pressed)
 	# Start with surface music
 	player1.stream = surface
+	player1.stream.loop = true
 	player2.stream = deep
+	player2.stream.loop = true
 	
 	# Start playing the first track
-	player1.volume_db = -15.0
-	player2.volume_db = -15.0
-	player1.play()
+	player1.volume_db = default_volume
+	player2.volume_db = -80.0  # Start second player muted
+	player1.play()  # Ensure music starts automatically
 	current_track = surface
 
 func _process(delta):
@@ -38,8 +41,8 @@ func _process(delta):
 		var t = fade_timer / fade_duration
 		
 		# Interpolate volumes (linear decibels)
-		player1.volume_db = lerp(-15.0, -80.0, t) # Fade out
-		player2.volume_db = lerp(-80.0, -15.0, t) # Fade in
+		player1.volume_db = lerp(default_volume, -80.0, t) # Fade out
+		player2.volume_db = lerp(-80.0, default_volume, t) # Fade in
 		
 		if fade_timer >= fade_duration:
 			is_crossfading = false
@@ -75,9 +78,8 @@ func play_sound(sound_name: String):
 			print("Unknown sound: ", sound_name)
 			return
 	
-	# Assign the sound and play it
-	player1.stream = sound_to_play
-	player1.play()
+	# Use crossfade instead of direct play to avoid interrupting current music
+	start_crossfade(sound_to_play)
 
 
 func _on_mute_button_pressed():
@@ -90,9 +92,9 @@ func _on_mute_button_pressed():
 		if mute_button:
 			mute_button.text = "Unmute"
 	else:
-		# Restore previous volumes
-		player1.volume_db = -15 # pre_mute_volume1
-		player2.volume_db = -15 # pre_mute_volume2
+		# Restore previous volumes properly
+		player1.volume_db = pre_mute_volume1
+		player2.volume_db = pre_mute_volume2
 		if mute_button:
 			mute_button.text = "Mute"
 	is_muted = !is_muted # Toggle mute state
