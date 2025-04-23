@@ -1,20 +1,32 @@
-[gd_scene load_steps=3 format=3 uid="uid://dxs8yvtl2p4qr"]
+[gd_scene load_steps=4 format=3 uid="uid://dxcbhyg8j4p7v"]
 
-[ext_resource type="Script" path="res://scripts/damage_effects.gd" id="1_jkl4m"]
-[ext_resource type="Texture2D" path="res://textures/effects/screen_crack.png" id="2_nopqr"]
+[ext_resource type="Script" path="res://scripts/damage_effects.gd" id="1_qnr3d"]
+[ext_resource type="Texture2D" path="res://textures/effects/screen_crack.png" id="2_bnvxr"]
 
-[node name="DamageEffects" type="Node2D"]
-script = ExtResource("1_jkl4m")
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_j7k2d"]
+blend_mode = 1
 
-[node name="CrackSprite" type="Sprite2D" parent="."]
-texture = ExtResource("2_nopqr")
-centered = false
+[node name="DamageEffects" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_qnr3d")
 
-[node name="RedFlash" type="ColorRect" parent="."]
+[node name="ScreenCrack" type="TextureRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(1, 0, 0, 0)
+texture = ExtResource("2_bnvxr")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RedFlash" type="ColorRect" parent="."]
+material = SubResource("CanvasItemMaterial_j7k2d")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0, 0, 0.5)

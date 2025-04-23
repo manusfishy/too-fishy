@@ -1,28 +1,34 @@
-extends Node2D
+extends CanvasLayer
 
 # Damage visual effects controller
 # Handles screen crack and red flash effects when player takes damage
 
-@onready var crack_texture = preload("res://textures/effects/screen_crack.png")
-@onready var crack_sprite = $CrackSprite
+@onready var screen_crack = $ScreenCrack
 @onready var red_flash = $RedFlash
 
-var flash_duration = 0.3  # Duration of red flash in seconds
+# Tween for animations
+var tween
+var flash_duration = 0.5  # Duration of red flash in seconds
 var crack_fade_time = 2.0  # Time for crack to fade out
 
 func _ready():
 	# Initialize with invisible effects
-	crack_sprite.modulate.a = 0
+	screen_crack.modulate.a = 0
 	red_flash.modulate.a = 0
 
-# Called when player takes damage
+# Show damage effects when player takes damage
 func show_damage_effects():
-	# Show red flash
-	red_flash.modulate.a = 0.5  # Semi-transparent red
-	var flash_tween = create_tween()
-	flash_tween.tween_property(red_flash, "modulate:a", 0, flash_duration)
+	# Cancel any existing tween
+	if tween:
+		tween.kill()
 	
-	# Show crack effect
-	crack_sprite.modulate.a = 1.0  # Fully visible
-	var crack_tween = create_tween()
-	crack_tween.tween_property(crack_sprite, "modulate:a", 0, crack_fade_time)
+	# Create new tween
+	tween = create_tween()
+	
+	# Red flash effect - quick flash that fades out
+	red_flash.modulate.a = 0.7  # Start with high opacity
+	tween.parallel().tween_property(red_flash, "modulate:a", 0.0, flash_duration)  # Fade out quickly
+	
+	# Screen crack effect - appears and slowly fades out
+	screen_crack.modulate.a = 0.9  # Start with high opacity
+	tween.parallel().tween_property(screen_crack, "modulate:a", 0.0, crack_fade_time)  # Fade out slowly
