@@ -102,6 +102,8 @@ script = ExtResource("9_ur7pv")
 transform = Transform3D(0.0432183, -0.999066, 0, 0.999066, 0.0432183, 0, 0, 0, 1, 0.84911, 0.396061, 0)
 
 [node name="HarpoonCD" type="Timer" parent="."]
+wait_time = 1.0
+one_shot = true
 
 [node name="ScatterArea" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.20848, 0)
