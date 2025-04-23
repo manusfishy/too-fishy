@@ -107,6 +107,19 @@ func _physics_process(delta: float) -> void:
 	movement(delta)
 	collision()
 	
+	# Apply a slow submarine-like rocking motion when still
+	if abs(velocity.x) < 0.1 and abs(velocity.y) < 0.1:
+		# Use time variable for consistent oscillation
+		time += delta
+		
+		# Calculate rocking angle using sine wave for smooth oscillation
+		# Maximum rotation of 2.5 degrees in each direction
+		var max_rock_angle = 2.5
+		var rock_angle = sin(time * 0.5) * deg_to_rad(max_rock_angle)
+		
+		# Set absolute rotation value instead of adding to prevent accumulation
+		$Pivot.rotation.z = rock_angle
+	
 	var depthSnapped = snapped(GameState.depth, 100)
 	if depthSnapped >= GameState.depthStageMap.keys()[len(GameState.depthStageMap.keys())-1]:
 		depthSnapped = GameState.depthStageMap.keys()[len(GameState.depthStageMap.keys())-1]
