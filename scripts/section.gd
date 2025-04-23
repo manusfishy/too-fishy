@@ -70,9 +70,13 @@ func spawn_fish(spawn_all: bool = false):
 			break
 
 func _ready() -> void:
-	if not particles_enabled:
-		$Debris.visible = false
-		$Bubbles.visible = false
+	# Add this section to the "sections" group for easy access
+	add_to_group("sections")
+	
+	# Use global setting for particles
+	particles_enabled = GameState.particles_enabled
+	update_particles_visibility(particles_enabled)
+	
 	spawn_fish(true)
 	
 	var shouldBeTransition = false
@@ -97,6 +101,14 @@ func _ready() -> void:
 	if sectionType == GameState.Stage.LAVA:
 		$LeftWall/Node3D2/Veins.set_surface_override_material(0, lava_vine_mat)
 		$LeftWall2/Node3D2/Veins.set_surface_override_material(0, lava_vine_mat)
+
+# Method to update particle visibility based on global setting
+func update_particles_visibility(enabled: bool) -> void:
+	particles_enabled = enabled
+	if has_node("Debris"):
+		$Debris.visible = enabled
+	if has_node("Bubbles"):
+		$Bubbles.visible = enabled
 	
 func screen_entered() -> void:
 	is_on_screen = true

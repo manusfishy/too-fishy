@@ -61,6 +61,7 @@ var health = 100.0
 var headroom = 0
 var death_screen = false
 var paused = true
+var particles_enabled = true # Global flag for particle effects
 
 var inventory: Inv = Inv.new()
 
@@ -86,3 +87,11 @@ func upgrade(mUpgrade: Upgrade) -> bool:
 		return true
 	else:
 		return false
+
+# Toggle particle effects visibility
+func toggle_particles() -> void:
+	particles_enabled = !particles_enabled
+	# Update all existing sections
+	for section in get_tree().get_nodes_in_group("sections"):
+		if section.has_method("update_particles_visibility"):
+			section.update_particles_visibility(particles_enabled)
