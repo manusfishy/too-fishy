@@ -106,8 +106,14 @@ func _ready() -> void:
 func update_particles_visibility(enabled: bool) -> void:
 	particles_enabled = enabled
 	if has_node("Debris"):
+		# Toggle emitting instead of visibility for better performance
+		$Debris.emitting = enabled
+		# Keep visibility in sync for consistency
 		$Debris.visible = enabled
 	if has_node("Bubbles"):
+		# Toggle emitting instead of visibility for better performance
+		$Bubbles.emitting = enabled
+		# Keep visibility in sync for consistency
 		$Bubbles.visible = enabled
 	
 func screen_entered() -> void:
