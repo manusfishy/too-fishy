@@ -129,10 +129,10 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -227.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 156.0
+offset_left = -300.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 220.0
 grow_horizontal = 0
 
 [node name="CenterContainer" type="CenterContainer" parent="UI"]
@@ -156,8 +156,7 @@ text = "Blobfish:"
 
 [node name="MessageLabel" type="Label" parent="UI/CenterContainer/BossDialog/VBoxContainer"]
 layout_mode = 2
-text = "Oh nooo, you died!
-Anyways... Lets keep going - we don't have all day!"
+text = "Oh nooo, you died!\nAnyways... Lets keep going - we don't have all day!"
 
 [node name="ContinueButton" type="Button" parent="UI/CenterContainer/BossDialog/VBoxContainer"]
 layout_mode = 2
@@ -188,28 +187,36 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="UI/CenterContainer/DeathScreen/VBoxContainer"]
 layout_mode = 2
-text = "Oh nooo, you died!
-Anyways... Lets keep going - we don't have all day!"
+text = "Oh nooo, you died!\nAnyways... Lets keep going - we don't have all day!"
 
 [node name="Button" type="Button" parent="UI/CenterContainer/DeathScreen/VBoxContainer"]
 layout_mode = 2
-text = "Respawn
-"
+text = "Respawn\n"
 
 [node name="HUD" type="PanelContainer" parent="UI"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+# Use anchors for top-left positioning
+layout_mode = 1
+anchors_preset = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 300.0 # Define width
+offset_bottom = 250.0 # Define height
 theme_override_styles/panel = SubResource("StyleBoxEmpty_01n6w")
 script = ExtResource("7_c16ls")
 
 [node name="TextureRect" type="TextureRect" parent="UI/HUD"]
 layout_mode = 2
+# Add size flags to fill parent
+size_flags_horizontal = 3
+size_flags_vertical = 3
 texture = ExtResource("10_01n6w")
 expand_mode = 4
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/HUD"]
 layout_mode = 2
+# Add size flags to fill parent
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/margin_left = 25
 theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 25
@@ -255,18 +262,29 @@ focus_mode = 0
 text = "Mute"
 
 [node name="Cheats" parent="UI" instance=ExtResource("13_4w45t")]
-layout_mode = 0
-offset_left = 434.0
-offset_top = 82.0
-offset_right = 748.0
-offset_bottom = 258.0
+# Use anchors for top-right positioning below inventory
+layout_mode = 1
+anchor_left = 1.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 0.0
+offset_left = -300.0
+offset_top = 240.0
+offset_right = -20.0
+offset_bottom = 420.0
+grow_horizontal = 0
 
 [node name="FPS Counter" type="Label" parent="UI"]
-layout_mode = 2
-offset_left = 220.0
-offset_top = 10.0
-offset_right = 409.0
-offset_bottom = 33.0
+# Use anchors for top-center positioning
+layout_mode = 1
+anchors_preset = 5 # Top-wide, but we'll center it
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 20.0
+offset_right = 100.0
+offset_bottom = 50.0
+grow_horizontal = 2 # Center
 text = "FPS"
 script = ExtResource("14_r6p65")
 
@@ -311,3 +329,4 @@ shape = SubResource("BoxShape3D_4bgka")
 
 [connection signal="pressed" from="UI/HUD/MarginContainer/HUDContainer/MuteButton2" to="Audiomanager" method="_on_mute_button_pressed"]
 [connection signal="pressed" from="UI/HUD/MarginContainer/HUDContainer/MuteButton" to="Audiomanager" method="_on_mute_button_pressed"]
+

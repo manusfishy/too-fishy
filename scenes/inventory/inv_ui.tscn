@@ -3,14 +3,22 @@
 [ext_resource type="Script" uid="uid://dalq72khoy8sk" path="res://scripts/inventory/inv_ui.gd" id="1_wefod"]
 
 [node name="inv_ui" type="PanelContainer"]
-offset_left = 279.0
-offset_top = 131.0
-offset_right = 558.0
-offset_bottom = 296.0
+# Anchored to top-right corner, with some margin
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0 # Negative offset from right anchor
+offset_top = 20.0     # Positive offset from top anchor
+offset_right = -20.0  # Negative offset from right anchor (margin)
+offset_bottom = 220.0 # Positive offset from top anchor (defines height)
+grow_horizontal = 0 # Don't grow horizontally beyond margins
 script = ExtResource("1_wefod")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
+# Add size flags to make container fill the PanelContainer
+size_flags_horizontal = 3 # Fill, Expand
+size_flags_vertical = 3   # Fill, Expand
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
@@ -20,3 +28,5 @@ vertical_alignment = 1
 
 [node name="GridContainer" type="GridContainer" parent="VBoxContainer"]
 layout_mode = 2
+# Add size flags to make grid expand vertically
+size_flags_vertical = 3 # Fill, Expand
