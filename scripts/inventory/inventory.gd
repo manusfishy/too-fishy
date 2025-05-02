@@ -16,7 +16,7 @@ func get_max_weight() -> int:
 	if cargo_level <= 4:
 		return 25 * cargo_level;
 	else:
-		return 100 + 50 * (cargo_level-4)
+		return 100 + 50 * (cargo_level - 4)
 
 func add(item: InvItem):
 	for i in GameState.inventory.items:

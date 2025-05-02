@@ -29,10 +29,6 @@ var touch_controls_scene = preload("res://scenes/ui/touch_controls.tscn")
 var can_shoot = true
 var touch_controls = null
 var touch_direction = Vector2.ZERO
-@onready var aim_arrow = $Pivot/AimArrow
-# for calm rocking up and down
-var rocking_angle = 0
-var rocking_angle2 = 0
 signal section_changed(sectionType)
 
 func _ready():
@@ -216,17 +212,14 @@ func activate_surface_buoy():
 func is_mouse_over_ui() -> bool:
 	return get_viewport().gui_get_focus_owner() != null
 	
-var sold = 0
+
 func onDock():
-	sold = GameState.inventory.sellItems()
+	var sold = GameState.inventory.sellItems()
 	if sold != 0:
 		sound_player.play_sound("coins")
-
-	#if sold != 0:
-		#var price_str = "Sold Items Value: $" + str(sold)
-		#PopupManager.show_popup(price_str, $PopupSpawnPosition.global_position, Color.GREEN)
-		#print("docked")
-	
+	# Show popup with amount sold
+	var price_str = "Drone sold items for: $" + str(sold)
+	PopupManager.show_popup(price_str, $PopupSpawnPosition.global_position, Color.YELLOW)
 
 func shoot_harpoon():
 	var dir = 1
@@ -422,46 +415,24 @@ func activate_selling_drone():
 	
 	# Set up the drone
 	drone.position = position
+	drone.position.y += 0.6 # above the submarine
 	drone.scale = Vector3(0.5, 0.5, 0.5) # Make it a bit smaller than regular fish
 	get_parent().add_child(drone)
 	
-	# Modify the drone appearance
-	if drone.has_node("Pivot/Body"):
-		drone.get_node("Pivot/Body").modulate = Color(0.8, 0.8, 0.2) # Give it a golden color
-	
+
 	# Create visual effect for the drone
-	var particles = CPUParticles3D.new()
-	particles.emitting = true
-	particles.one_shot = true
-	particles.explosiveness = 0.8
-	particles.amount = 20
-	particles.lifetime = 1.5
-	particles.mesh = SphereMesh.new()
-	particles.mesh.radius = 0.05
-	particles.mesh.height = 0.1
-	particles.direction = Vector3(0, 1, 0)
-	particles.spread = 30.0
-	particles.gravity = Vector3(0, 0, 0)
-	particles.initial_velocity_min = 1.0
-	particles.initial_velocity_max = 3.0
-	particles.color = Color(0.8, 0.8, 0.2, 0.7)
-	drone.add_child(particles)
+	var particles = $dronefart
+	particles.color = Color(0.8, 0.8, 0.2) # Give it a golden color
+
+	#drone.add_child(particles)
 	
 	# Animate the drone swimming upward
 	var tween = get_tree().create_tween()
 	tween.tween_property(drone, "position", Vector3(position.x, 0, position.z), 2.0)
-	tween.tween_callback(func(): drone.queue_free())
 	
-	# Play sound effect
-	sound_player.play_sound("coins")
 	
-	# Sell all items in inventory
-	var sold = GameState.inventory.sellItems()
-	
-	# Show popup with amount sold
-	var price_str = "Drone sold items for: $" + str(sold)
-	PopupManager.show_popup(price_str, $PopupSpawnPosition.global_position, Color.YELLOW)
-	
+	onDock() # sell items
+
 	# Add small cooldown to prevent spamming
 	can_shoot = false
 	cooldown_timer.start()
