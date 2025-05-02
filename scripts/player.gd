@@ -124,8 +124,8 @@ func movement(_delta: float):
 	# Handle keyboard input for vertical movement
 	if Input.is_action_pressed("move_up"):
 		direction.y += 1
-		if position.y >= 0:
-			direction.y = 0
+		if position.y >= -0.15:
+			direction.y = -0.15
 	elif Input.is_action_pressed("move_down"):
 		direction.y -= 1
 	# Handle touch input for vertical movement
@@ -151,21 +151,7 @@ func movement(_delta: float):
 func _physics_process(delta: float) -> void:
 	movement(delta)
 	collision()
-	
-	# Apply a slow submarine-like rocking motion
-	if abs(velocity.x) < 0.1 and abs(velocity.y) < 0.1:
-		# Apply a slow submarine-like rocking motion
-		var rocking_angle = sin(time * 0.5) * 1.3
-		var direction = 1
-		if $Pivot.rotation.z < deg_to_rad(30):
-			direction = -1
-		elif $Pivot.rotation.z < deg_to_rad(-30):
-			direction = 1
-		$Pivot.rotation.z = $Pivot.rotation.z + direction * deg_to_rad(rocking_angle) * delta
-		
-		# Add front-to-back rocking motion
-		#var front_rocking = sin(time * 0.1) * 2.0 # Rock between -2 and 2 degrees
-		#$Pivot.rotation.x = deg_to_rad(front_rocking) # Directly set rotation for more controlled motion
+	rockingMotion(delta)
 	
 	var depthSnapped = snapped(GameState.depth, 100)
 	if depthSnapped >= GameState.depthStageMap.keys()[len(GameState.depthStageMap.keys()) - 1]:
@@ -180,26 +166,6 @@ func _process(delta):
 	process_depth_effects(delta)
 	processTrauma(delta)
 	
-	# Handle harpoon rotation when upgrade is active
-	if GameState.upgrades[GameState.Upgrade.HARPOON_ROTATION] > 0:
-		# Start/stop rotation based on input
-		if Input.is_action_pressed("throw") and !GameState.paused:
-			harpoon_rotation_active = true
-		else:
-			harpoon_rotation_active = false
-		
-		# Apply rotation when active
-		if harpoon_rotation_active:
-			# Get current rotation in degrees
-			var current_rotation = rad_to_deg(aim_arrow.rotation.z)
-			
-			# Change direction if we hit limits
-			if abs(current_rotation) >= harpoon_max_rotation:
-				harpoon_rotation_direction *= -1
-			
-			# Apply rotation
-			var rotation_amount = harpoon_rotation_speed * delta * harpoon_rotation_direction
-			aim_arrow.rotate_z(deg_to_rad(rotation_amount))
 
 func _input(_event):
 	if Input.is_action_just_pressed("throw"):
@@ -264,7 +230,7 @@ func onDock():
 
 func shoot_harpoon():
 	var dir = 1
-	if ($Pivot.rotation[1] >= 0): #check submarine rotation
+	if ($Pivot.rotation[1] >= 0): # check submarine rotation
 		dir = -1
 	if not harpoon_launch_point_node or not harpoon_scene: return # Add camera check if needed
 	# Instance the harpoon
@@ -289,11 +255,11 @@ func shoot_harpoon():
 		else:
 			final_angle_radians = 0.0 # Default right if cursor on launch point
 
-		harpoon.global_rotation.z = -final_angle_radians
+		harpoon.global_rotation.z = - final_angle_radians
 	# --- Default Aiming ---
 	else:
-		harpoon.rotate_z(deg_to_rad(180))
-
+		if ($Pivot.rotation[1] < 0):
+			harpoon.rotate_z(deg_to_rad(180))
 		harpoon.position = position + dir * global_transform.basis.x * -1 # move harpoon to correct side
 		harpoon.direction = global_transform.basis.y.normalized() # set correct direction for the movement in harpoon
 
@@ -366,6 +332,17 @@ func scatter_area_entered(body: Node3D) -> void:
 	if body.is_in_group("fishes"):
 		body.scatter(self)
 
+
+func rockingMotion(delta): # Apply a slow submarine-like rocking motion
+	if abs(velocity.x) < 0.1 and abs(velocity.y) < 0.1:
+		# Apply a slow submarine-like rocking motion
+		var rocking_angle = sin(time * 0.5) * 1.3
+		var direction = 1
+		if $Pivot.rotation.z < deg_to_rad(30):
+			direction = -1
+		elif $Pivot.rotation.z < deg_to_rad(-30):
+			direction = 1
+		$Pivot.rotation.z = $Pivot.rotation.z + direction * deg_to_rad(rocking_angle) * delta
 
 @export var trauma_reduction_rate := 1.0
 
