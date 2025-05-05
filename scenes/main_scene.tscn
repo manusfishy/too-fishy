@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=37 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
@@ -56,6 +56,8 @@ albedo_color = Color(0.0627451, 0.243137, 0.368627, 0.862745)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4bgka"]
 size = Vector3(4.19824, 19.4489, 13.8901)
+
+[sub_resource type="QuadMesh" id="QuadMesh_k67gn"]
 
 [node name="Node3D" type="Node3D"]
 
@@ -308,6 +310,13 @@ surface_material_override/0 = ExtResource("24_k67gn")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LeftWall"]
 transform = Transform3D(1, 0, -5.96046e-08, 0, 1, 0, 0, 0, 1, 1.57438, -0.818055, 0.261556)
 shape = SubResource("BoxShape3D_4bgka")
+
+[node name="preload_4kmaterial" type="MeshInstance3D" parent="."]
+transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 1, -55.3639, 9.50894, -3.007)
+visible = false
+mesh = SubResource("QuadMesh_k67gn")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("9_7nt27")
 
 [connection signal="pressed" from="UI/HUD/MarginContainer/HUDContainer/MuteButton2" to="Audiomanager" method="_on_mute_button_pressed"]
 [connection signal="pressed" from="UI/HUD/MarginContainer/HUDContainer/MuteButton" to="Audiomanager" method="_on_mute_button_pressed"]

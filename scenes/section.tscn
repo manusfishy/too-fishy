@@ -1,7 +1,8 @@
-[gd_scene load_steps=20 format=3 uid="uid://xqds4eqa4fys"]
+[gd_scene load_steps=21 format=3 uid="uid://xqds4eqa4fys"]
 
 [ext_resource type="Script" uid="uid://bkpen13pay85m" path="res://scripts/section.gd" id="1_fivou"]
 [ext_resource type="PackedScene" uid="uid://bekjel2ayhsva" path="res://scenes/level_barrier.tscn" id="2_fivou"]
+[ext_resource type="Material" uid="uid://dw536siyh8hrk" path="res://materials/backgrounds/bg_loop.tres" id="2_ms04e"]
 [ext_resource type="ArrayMesh" uid="uid://gw7pdmvoe3yh" path="res://meshes/gestein_v003.obj" id="5_ti0g3"]
 [ext_resource type="Material" uid="uid://dv7qrtiq87nj0" path="res://materials/walls/walls.tres" id="6_ms04e"]
 [ext_resource type="ArrayMesh" uid="uid://c54e8dk8jsryd" path="res://meshes/vains_v003.obj" id="7_58ehv"]
@@ -88,6 +89,7 @@ spawn_marker_b = NodePath("SpawnerB")
 transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 1, -15.293, 0, -3.007)
 mesh = SubResource("QuadMesh_o3jxj")
 skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("2_ms04e")
 
 [node name="RightBarrier" parent="." instance=ExtResource("2_fivou")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0240569, 0, -0.819179)
@@ -156,6 +158,7 @@ autostart = true
 
 [node name="Bubbles" type="GPUParticles3D" parent="."]
 transform = Transform3D(2.655, 0, 0, 0, 3.31466, 0, 0, 0, 1.308, -11.9884, -1.03899, 3.67558)
+emitting = false
 amount = 400
 lifetime = 3.0
 randomness = 0.23
@@ -164,6 +167,7 @@ draw_pass_1 = SubResource("SphereMesh_ms04e")
 
 [node name="Debris" type="GPUParticles3D" parent="."]
 transform = Transform3D(2.655, 0, 0, 0, 3.31466, 0, 0, 0, 1.308, -11.9884, -1.03899, 3.67558)
+emitting = false
 amount = 5000
 lifetime = 3.0
 randomness = 0.23

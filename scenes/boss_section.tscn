@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b3j6kki1bc2xs"]
+[gd_scene load_steps=18 format=3 uid="uid://b3j6kki1bc2xs"]
 
 [ext_resource type="PackedScene" uid="uid://xqds4eqa4fys" path="res://scenes/section.tscn" id="1_1j4rh"]
 [ext_resource type="Script" uid="uid://cmrhnhr7cedmp" path="res://scripts/friend.gd" id="2_b8wpq"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://dwvab1ggd2k72" path="res://textures/BASE_color_Stein_v001.png" id="7_8wxnn"]
 [ext_resource type="Texture2D" uid="uid://ba5hdxbc7djed" path="res://textures/NORMAL_Stein_v001.png" id="8_fddag"]
 [ext_resource type="Material" uid="uid://b7mb4qrani06f" path="res://materials/walls/walls_overlay.tres" id="9_c2oyf"]
+[ext_resource type="ArrayMesh" uid="uid://gw7pdmvoe3yh" path="res://meshes/gestein_v003.obj" id="11_c2oyf"]
 [ext_resource type="Material" uid="uid://bf8hfoo5qmcgc" path="res://materials/shaders/lava_shader_material.tres" id="12_fddag"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_oi768"]
@@ -80,7 +81,13 @@ transform = Transform3D(0.890488, 0.073508, -0.44903, -0.447723, -0.0343101, -0.
 
 [node name="GesteinV001" type="MeshInstance3D" parent="StaticBody3D2"]
 material_override = ExtResource("9_c2oyf")
-mesh = ExtResource("3_vk6kq")
+mesh = ExtResource("11_c2oyf")
+skeleton = NodePath("../..")
+
+[node name="GesteinV002" type="MeshInstance3D" parent="StaticBody3D2"]
+transform = Transform3D(-0.986472, -0.161673, 0.0270993, -0.161543, 0.986841, 0.00693622, -0.0278641, 0.00246467, -0.999609, 4.14006, 0.675316, 1.17944)
+material_override = ExtResource("9_c2oyf")
+mesh = ExtResource("11_c2oyf")
 skeleton = NodePath("../..")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
