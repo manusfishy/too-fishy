@@ -1,0 +1,306 @@
+[gd_scene load_steps=3 format=3 uid="uid://c13eirhopjftr"]
+
+[ext_resource type="Script" path="res://scripts/settings_menu.gd" id="1_4k0w4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.05, 0.2, 0.3, 0.95)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.2, 0.4, 0.7, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="SettingsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4k0w4")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -200.0
+offset_right = 250.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="TitleSection" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TitleContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/TitleSection"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="Panel/MarginContainer/VBoxContainer/TitleSection/TitleContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 28
+text = "SETTINGS"
+
+[node name="Subtitle" type="Label" parent="Panel/MarginContainer/VBoxContainer/TitleSection/TitleContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 16
+text = "Customize your game experience"
+
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SettingsContainer" type="TabContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+tab_alignment = 1
+
+[node name="Audio" type="ScrollContainer" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Audio"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+
+[node name="MasterVolumeSection" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Audio/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Audio/VBoxContainer/MasterVolumeSection"]
+layout_mode = 2
+text = "Master Volume"
+
+[node name="MasterVolumeSlider" type="HSlider" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Audio/VBoxContainer/MasterVolumeSection"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="MusicVolumeSection" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Audio/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Audio/VBoxContainer/MusicVolumeSection"]
+layout_mode = 2
+text = "Music Volume"
+
+[node name="MusicVolumeSlider" type="HSlider" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Audio/VBoxContainer/MusicVolumeSection"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="SFXVolumeSection" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Audio/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Audio/VBoxContainer/SFXVolumeSection"]
+layout_mode = 2
+text = "SFX Volume"
+
+[node name="SFXVolumeSlider" type="HSlider" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Audio/VBoxContainer/SFXVolumeSection"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="MuteToggleSection" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Audio/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Audio/VBoxContainer/MuteToggleSection"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Mute Audio"
+
+[node name="MuteToggle" type="CheckButton" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Audio/VBoxContainer/MuteToggleSection"]
+layout_mode = 2
+
+[node name="Display" type="ScrollContainer" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer"]
+visible = false
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Display"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+
+[node name="ParticlesSection" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Display/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Display/VBoxContainer/ParticlesSection"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Show Particles"
+
+[node name="ParticlesToggle" type="CheckButton" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Display/VBoxContainer/ParticlesSection"]
+layout_mode = 2
+button_pressed = true
+
+[node name="FPSSection" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Display/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Display/VBoxContainer/FPSSection"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Show FPS Counter"
+
+[node name="FPSToggle" type="CheckButton" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Display/VBoxContainer/FPSSection"]
+layout_mode = 2
+button_pressed = true
+
+[node name="Controls" type="ScrollContainer" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer"]
+visible = false
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+
+[node name="ControlsInfoLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Controls/VBoxContainer"]
+layout_mode = 2
+text = "Game Controls:"
+horizontal_alignment = 1
+
+[node name="ControlsGrid" type="GridContainer" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Controls/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="MoveLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Controls/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Movement"
+
+[node name="MoveValue" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Controls/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "WASD / Arrow Keys"
+
+[node name="ThrowLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Controls/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Throw Harpoon"
+
+[node name="ThrowValue" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Controls/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Left Mouse Button"
+
+[node name="SwingLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Controls/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Swing Pickaxe"
+
+[node name="SwingValue" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Controls/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Space"
+
+[node name="InventoryLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Controls/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Toggle Inventory"
+
+[node name="InventoryValue" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Controls/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "E / Tab"
+
+[node name="PauseLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Controls/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Pause Game"
+
+[node name="PauseValue" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Controls/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Escape"
+
+[node name="BuoyLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Controls/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Surface Buoy"
+
+[node name="BuoyValue" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Controls/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "B"
+
+[node name="DroneLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Controls/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Sell with Drone"
+
+[node name="DroneValue" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Controls/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Q"
+
+[node name="SaveLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Controls/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Quick Save"
+
+[node name="SaveValue" type="Label" parent="Panel/MarginContainer/VBoxContainer/SettingsContainer/Controls/VBoxContainer/ControlsGrid"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "V"
+
+[node name="BackButton" type="Button" parent="Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Back"
+
+[node name="StatusLabel" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -103.0
+offset_right = 150.0
+offset_bottom = -77.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.8, 0.9, 0.5, 1)
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+
+[connection signal="value_changed" from="Panel/MarginContainer/VBoxContainer/SettingsContainer/Audio/VBoxContainer/MasterVolumeSection/MasterVolumeSlider" to="." method="_on_master_volume_changed"]
+[connection signal="value_changed" from="Panel/MarginContainer/VBoxContainer/SettingsContainer/Audio/VBoxContainer/MusicVolumeSection/MusicVolumeSlider" to="." method="_on_music_volume_changed"]
+[connection signal="value_changed" from="Panel/MarginContainer/VBoxContainer/SettingsContainer/Audio/VBoxContainer/SFXVolumeSection/SFXVolumeSlider" to="." method="_on_sfx_volume_changed"]
+[connection signal="toggled" from="Panel/MarginContainer/VBoxContainer/SettingsContainer/Audio/VBoxContainer/MuteToggleSection/MuteToggle" to="." method="_on_mute_toggled"]
+[connection signal="toggled" from="Panel/MarginContainer/VBoxContainer/SettingsContainer/Display/VBoxContainer/ParticlesSection/ParticlesToggle" to="." method="_on_particles_toggled"]
+[connection signal="toggled" from="Panel/MarginContainer/VBoxContainer/SettingsContainer/Display/VBoxContainer/FPSSection/FPSToggle" to="." method="_on_fps_toggled"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"] 

@@ -32,7 +32,9 @@ shape = SubResource("CapsuleShape3D_b0grq")
 
 [node name="ShinyParticles" type="GPUParticles3D" parent="."]
 emitting = false
-amount = 500
-randomness = 1.0
+amount = 200
+lifetime = 1.5
+randomness = 0.6
+fixed_fps = 30
 process_material = ExtResource("3_qfexs")
 draw_pass_1 = ExtResource("4_1issg")

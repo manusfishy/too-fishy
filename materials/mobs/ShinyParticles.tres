@@ -9,8 +9,8 @@ curve = SubResource("Curve_f8yle")
 
 [resource]
 resource_local_to_scene = true
-lifetime_randomness = 1.0
-emission_shape_scale = Vector3(0.6, 0.4, 0.4)
+lifetime_randomness = 0.5
+emission_shape_scale = Vector3(0.5, 0.3, 0.3)
 emission_shape = 1
 emission_sphere_radius = 1.0
 velocity_pivot = Vector3(0.5, 0, 0)

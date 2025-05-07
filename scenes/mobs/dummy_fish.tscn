@@ -62,7 +62,9 @@ debug_color = Color(0.846447, 0.000979365, 0.908351, 0.42)
 
 [node name="ShinyParticles" type="GPUParticles3D" parent="."]
 emitting = false
-amount = 500
-randomness = 1.0
+amount = 200
+lifetime = 1.5
+randomness = 0.6
+fixed_fps = 30
 process_material = ExtResource("2_dox8b")
 draw_pass_1 = ExtResource("3_o1r2o")
