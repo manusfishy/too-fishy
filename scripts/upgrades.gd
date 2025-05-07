@@ -1,111 +1,514 @@
 extends PanelContainer
 
 var buttons = {}
-var description_panel = null
-var description_label = null
 var upgrade_descriptions = null
 
+# Category definitions
+var categories = {
+	"EQUIPMENT": [
+		GameState.Upgrade.PICKAXE_UNLOCKED,
+		GameState.Upgrade.LAMP_UNLOCKED,
+		GameState.Upgrade.AK47,
+		GameState.Upgrade.DUALAK47,
+		GameState.Upgrade.HARPOON,
+		GameState.Upgrade.HARPOON_ROTATION
+	],
+	"PERFORMANCE": [
+		GameState.Upgrade.CARGO_SIZE,
+		GameState.Upgrade.DEPTH_RESISTANCE,
+		GameState.Upgrade.VERT_SPEED,
+		GameState.Upgrade.HOR_SPEED
+	],
+	"UTILITY": [
+		GameState.Upgrade.INVENTORY_MANAGEMENT,
+		GameState.Upgrade.SURFACE_BUOY,
+		GameState.Upgrade.INVENTORY_SAVE,
+		GameState.Upgrade.DRONE_SELLING
+	]
+}
 
 func _ready():
-	# Set a fixed size for the entire panel to prevent resizing
-	custom_minimum_size = Vector2(400, 400)
+	# Make the panel significantly bigger to display all upgrades without scrolling
+	custom_minimum_size = Vector2(900, 570)
 	
 	# Load descriptions once at initialization
 	upgrade_descriptions = load("res://scripts/upgrade_descriptions.gd").new()
 	
-	# Create description panel
-	create_description_panel()
+	# Apply a style to the panel itself instead of adding a background image
+	var panel_style = StyleBoxFlat.new()
+	panel_style.bg_color = Color(0.05, 0.2, 0.3, 0.95) # Deep blue with high opacity
+	panel_style.set_border_width_all(3)
+	panel_style.border_color = Color(0.2, 0.4, 0.7)
+	panel_style.set_corner_radius_all(12)
+	add_theme_stylebox_override("panel", panel_style)
 	
-	# Create a CenterContainer to center the GridContainer
-	var center_container = CenterContainer.new()
-	center_container.size_flags_horizontal = SIZE_EXPAND_FILL
+	# Create main container
+	var main_container = VBoxContainer.new()
+	main_container.size_flags_horizontal = SIZE_EXPAND_FILL
+	main_container.size_flags_vertical = SIZE_EXPAND_FILL
 	
-	# Create a new GridContainer
-	var grid_container = GridContainer.new()
-	grid_container.columns = 1
-	
-	# Add the GridContainer to the CenterContainer
-	center_container.add_child(grid_container)
-	
-	# Add the CenterContainer to the VBoxContainer
-	$VBoxContainer.add_child(center_container)
-	
-	# Create upgrade buttons with tooltips
-	for key in GameState.upgrades:
-		var upgradeButton: Button = Button.new()
-		upgradeButton.text = Strings.upgradeNames[key] + " %s" % (GameState.upgrades[key] + 1) + " (Cost: %s)" % GameState.getUpgradeCost(key)
-		upgradeButton.pressed.connect(func(): GameState.upgrade(key))
-		upgradeButton.mouse_entered.connect(func(): show_description(key))
-		upgradeButton.mouse_exited.connect(func(): hide_description())
-		
-		# Center the text in the button
-		upgradeButton.alignment = HORIZONTAL_ALIGNMENT_CENTER
-		
-		# For mobile support, also show description on focus
-		upgradeButton.focus_entered.connect(func(): show_description(key))
-		upgradeButton.focus_exited.connect(func(): hide_description())
-		
-		grid_container.add_child(upgradeButton)
-		buttons[key] = upgradeButton
-
-func create_description_panel():
-	# Create a panel to display upgrade descriptions
-	description_panel = PanelContainer.new()
-	description_panel.size_flags_horizontal = SIZE_EXPAND_FILL
-	description_panel.custom_minimum_size = Vector2(300, 150)
-	
-	# Always reserve space for the description panel, even when hidden
-	description_panel.visible = true
-	description_panel.modulate = Color(1, 1, 1, 0) # Transparent but still takes up space
-	
-	# Add a margin container for padding
+	# Add margin to the container for better padding
 	var margin = MarginContainer.new()
-	margin.add_theme_constant_override("margin_left", 10)
-	margin.add_theme_constant_override("margin_right", 10)
-	margin.add_theme_constant_override("margin_top", 10)
-	margin.add_theme_constant_override("margin_bottom", 10)
-	description_panel.add_child(margin)
+	margin.add_theme_constant_override("margin_left", 30)
+	margin.add_theme_constant_override("margin_right", 30)
+	margin.add_theme_constant_override("margin_top", 30)
+	margin.add_theme_constant_override("margin_bottom", 30)
+	margin.size_flags_horizontal = SIZE_EXPAND_FILL
+	margin.size_flags_vertical = SIZE_EXPAND_FILL
+	margin.add_child(main_container)
+	add_child(margin)
 	
-	# Add a label for the description text
-	description_label = Label.new()
-	description_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	description_label.size_flags_vertical = SIZE_EXPAND_FILL
+	# Header section with title and money
+	var header_section = HBoxContainer.new()
+	header_section.size_flags_horizontal = SIZE_EXPAND_FILL
+	main_container.add_child(header_section)
 	
-	# Center the description text
-	# Label objects use horizontal_alignment, not alignment
-	description_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	# Create left side of the header
+	var left_header = VBoxContainer.new()
+	left_header.size_flags_horizontal = SIZE_EXPAND_FILL
+	header_section.add_child(left_header)
 	
-	margin.add_child(description_label)
+	# Add title
+	var title = Label.new()
+	title.text = "SUBMARINE UPGRADES"
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	title.add_theme_font_size_override("font_size", 28)
+	title.add_theme_color_override("font_color", Color(1, 1, 1)) # White
+	left_header.add_child(title)
 	
-	# Add the panel to the UI
-	$VBoxContainer.add_child(description_panel)
+	# Add subtitle
+	var subtitle = Label.new()
+	subtitle.text = "Select upgrades to enhance your submarine"
+	subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	subtitle.add_theme_font_size_override("font_size", 16)
+	subtitle.add_theme_color_override("font_color", Color(0.8, 0.8, 0.9)) # Light blue-white
+	left_header.add_child(subtitle)
+	
+	# Create right side of the header for money display
+	var right_header = VBoxContainer.new()
+	right_header.size_flags_horizontal = SIZE_SHRINK_END
+	right_header.size_flags_vertical = SIZE_SHRINK_CENTER
+	header_section.add_child(right_header)
+	
+	# Create a stylish money display panel
+	var money_panel = PanelContainer.new()
+	var money_style = StyleBoxFlat.new()
+	money_style.bg_color = Color(0.05, 0.15, 0.3, 0.7) # Darker blue
+	money_style.set_border_width_all(2)
+	money_style.border_color = Color(0.7, 0.7, 0.2)  # Gold border
+	money_style.set_corner_radius_all(8)
+	money_panel.add_theme_stylebox_override("panel", money_style)
+	money_panel.size_flags_horizontal = SIZE_SHRINK_END
+	right_header.add_child(money_panel)
+	
+	var money_margin = MarginContainer.new()
+	money_margin.add_theme_constant_override("margin_left", 15)
+	money_margin.add_theme_constant_override("margin_right", 15)
+	money_margin.add_theme_constant_override("margin_top", 8)
+	money_margin.add_theme_constant_override("margin_bottom", 8)
+	money_panel.add_child(money_margin)
+	
+	var money_display = Label.new()
+	money_display.text = "Available: $" + str(GameState.money)
+	money_display.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	money_display.name = "MoneyDisplay"
+	money_display.add_theme_font_size_override("font_size", 20)
+	money_display.add_theme_color_override("font_color", Color(1, 1, 0.7)) # Light yellow
+	money_margin.add_child(money_display)
+	
+	# Add some spacing after header
+	var spacer = Control.new()
+	spacer.custom_minimum_size = Vector2(0, 20)
+	main_container.add_child(spacer)
+	
+	# Create the main grid layout for all categories side by side
+	var main_grid = HBoxContainer.new()
+	main_grid.size_flags_horizontal = SIZE_EXPAND_FILL
+	main_grid.size_flags_vertical = SIZE_EXPAND_FILL
+	main_grid.add_theme_constant_override("separation", 20)  # More space between columns
+	main_container.add_child(main_grid)
+	
+	# Create columns for each category
+	for category_name in categories:
+		var category_column = create_category_column(category_name, categories[category_name])
+		main_grid.add_child(category_column)
 
-func show_description(upgrade_key):
-	# Set the description text using the pre-loaded descriptions
-	if upgrade_descriptions and upgrade_descriptions.upgradeDescriptions.has(upgrade_key):
-		description_label.text = upgrade_descriptions.upgradeDescriptions[upgrade_key]
-		# Make panel visible by setting opacity to 1
-		description_panel.modulate = Color(1, 1, 1, 1)
+func create_category_column(category_name, upgrade_keys):
+	# Create a container for this category
+	var category_container = VBoxContainer.new()
+	category_container.size_flags_horizontal = SIZE_EXPAND_FILL
+	category_container.size_flags_vertical = SIZE_EXPAND_FILL
+	
+	# Add category header panel with style
+	var header_panel = PanelContainer.new()
+	var header_style = StyleBoxFlat.new()
+	header_style.bg_color = Color(0.15, 0.3, 0.5, 0.8) # Blue
+	header_style.set_border_width_all(2)
+	header_style.border_color = Color(0.3, 0.5, 0.7)
+	header_style.set_corner_radius_all(8)
+	header_panel.add_theme_stylebox_override("panel", header_style)
+	category_container.add_child(header_panel)
+	
+	# Add margin to header panel
+	var header_margin = MarginContainer.new()
+	header_margin.add_theme_constant_override("margin_left", 10)
+	header_margin.add_theme_constant_override("margin_right", 10)
+	header_margin.add_theme_constant_override("margin_top", 8)
+	header_margin.add_theme_constant_override("margin_bottom", 8)
+	header_panel.add_child(header_margin)
+	
+	# Add category header
+	var header = Label.new()
+	header.text = category_name
+	header.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	header.add_theme_color_override("font_color", Color(0.9, 0.9, 0.5)) # Yellow-ish
+	header.add_theme_font_size_override("font_size", 20)
+	header_margin.add_child(header)
+	
+	# Add spacing after header
+	var spacer = Control.new()
+	spacer.custom_minimum_size = Vector2(0, 10)
+	category_container.add_child(spacer)
+	
+	# Create a container for the upgrade buttons
+	var upgrade_list = VBoxContainer.new()
+	upgrade_list.size_flags_horizontal = SIZE_EXPAND_FILL
+	upgrade_list.size_flags_vertical = SIZE_EXPAND_FILL
+	upgrade_list.add_theme_constant_override("separation", 10)
+	category_container.add_child(upgrade_list)
+	
+	# Add upgrade buttons to the grid
+	for key in upgrade_keys:
+		var button_container = create_upgrade_button(key)
+		upgrade_list.add_child(button_container)
+	
+	return category_container
+
+func create_upgrade_button(key):
+	# Get upgrade data
+	var current_level = GameState.upgrades[key]
+	var max_level = GameState.maxUpgrades[key]
+	var is_max_level = current_level >= max_level
+	var upgrade_cost = GameState.getUpgradeCost(key)
+	var can_afford = GameState.money >= upgrade_cost
+	
+	# Container for the button with fixed size
+	var container = PanelContainer.new()
+	container.size_flags_horizontal = SIZE_EXPAND_FILL
+	container.custom_minimum_size = Vector2(0, 90) # Slightly taller for level indicators
+	
+	# Add a theme style to make it look better with conditional coloring
+	var style = StyleBoxFlat.new()
+	
+	if is_max_level:
+		# Gold/green style for max level
+		style.bg_color = Color(0.2, 0.35, 0.2, 0.7) # Slightly green
+		style.set_border_width_all(2)
+		style.border_color = Color(0.5, 0.8, 0.3) # Green border
+	elif can_afford:
+		# Standard blue style for affordable upgrades
+		style.bg_color = Color(0.1, 0.25, 0.4, 0.7) # Standard blue
+		style.set_border_width_all(2)
+		style.border_color = Color(0.3, 0.5, 0.7) # Blue border
 	else:
-		# Handle error case
-		description_label.text = "Description not available"
-		description_panel.modulate = Color(1, 1, 1, 1)
+		# Slightly darker/red style for unaffordable upgrades
+		style.bg_color = Color(0.25, 0.15, 0.15, 0.7) # Darker red tint
+		style.set_border_width_all(2)
+		style.border_color = Color(0.5, 0.3, 0.3) # Red-ish border
+	
+	style.set_corner_radius_all(8)
+	container.add_theme_stylebox_override("panel", style)
+	
+	# Set tooltip for the entire container
+	if upgrade_descriptions and upgrade_descriptions.upgradeDescriptions.has(key):
+		container.tooltip_text = upgrade_descriptions.upgradeDescriptions[key]
+	
+	# Add margin to container
+	var margin = MarginContainer.new()
+	margin.add_theme_constant_override("margin_left", 12)
+	margin.add_theme_constant_override("margin_right", 12)
+	margin.add_theme_constant_override("margin_top", 8)
+	margin.add_theme_constant_override("margin_bottom", 8)
+	margin.size_flags_horizontal = SIZE_EXPAND_FILL
+	margin.size_flags_vertical = SIZE_EXPAND_FILL
+	container.add_child(margin)
+	
+	# Main content container
+	var content = VBoxContainer.new()
+	content.size_flags_horizontal = SIZE_EXPAND_FILL
+	content.size_flags_vertical = SIZE_EXPAND_FILL
+	margin.add_child(content)
+	
+	# Top row with name and hover indicator
+	var top_row = HBoxContainer.new()
+	top_row.size_flags_horizontal = SIZE_EXPAND_FILL
+	content.add_child(top_row)
+	
+	# Upgrade name
+	var name_label = Label.new()
+	name_label.text = Strings.upgradeNames[key]
+	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	name_label.size_flags_horizontal = SIZE_EXPAND_FILL
+	name_label.add_theme_font_size_override("font_size", 16)
+	name_label.add_theme_color_override("font_color", Color(1, 1, 1)) # White
+	top_row.add_child(name_label)
+	
+	# Info icon for tooltip
+	var hint_icon = Label.new()
+	hint_icon.text = "ⓘ"  # Info symbol
+	hint_icon.tooltip_text = "Hover for details"
+	hint_icon.add_theme_font_size_override("font_size", 14)
+	hint_icon.add_theme_color_override("font_color", Color(0.6, 0.8, 1.0)) # Light blue
+	top_row.add_child(hint_icon)
+	
+	# Middle row for level indicators
+	var level_row = HBoxContainer.new()
+	level_row.size_flags_horizontal = SIZE_EXPAND_FILL
+	content.add_child(level_row)
+	
+	# Create visual level indicators
+	for i in range(max_level):
+		var level_indicator = PanelContainer.new()
+		level_indicator.custom_minimum_size = Vector2(25, 8)
+		level_indicator.size_flags_horizontal = SIZE_SHRINK_CENTER
+		
+		var indicator_style = StyleBoxFlat.new()
+		if i < current_level:
+			# Filled level
+			indicator_style.bg_color = Color(0.3, 0.7, 1.0) # Bright blue for achieved levels
+		else:
+			# Empty level
+			indicator_style.bg_color = Color(0.2, 0.2, 0.25, 0.5) # Dark gray for unachieved levels
+		
+		indicator_style.set_corner_radius_all(3)
+		level_indicator.add_theme_stylebox_override("panel", indicator_style)
+		
+		level_row.add_child(level_indicator)
+		
+		# Add spacer between indicators
+		if i < max_level - 1:
+			var indicator_spacer = Control.new()
+			indicator_spacer.custom_minimum_size = Vector2(5, 0)
+			level_row.add_child(indicator_spacer)
+	
+	# Bottom row with level/cost info and upgrade button
+	var bottom_row = HBoxContainer.new()
+	bottom_row.size_flags_horizontal = SIZE_EXPAND_FILL
+	bottom_row.size_flags_vertical = SIZE_EXPAND_FILL
+	content.add_child(bottom_row)
+	
+	# Level and cost info with appropriate coloring
+	var info_label = Label.new()
+	if is_max_level:
+		info_label.text = "MAXIMUM LEVEL"
+		info_label.add_theme_color_override("font_color", Color(0.5, 0.9, 0.5)) # Green
+	else:
+		# Show cost with appropriate color
+		info_label.text = "Cost: $" + str(upgrade_cost)
+		if can_afford:
+			info_label.add_theme_color_override("font_color", Color(0.9, 0.9, 0.5)) # Yellow - can afford
+		else:
+			info_label.add_theme_color_override("font_color", Color(0.9, 0.5, 0.5)) # Red - can't afford
+	
+	info_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	info_label.size_flags_horizontal = SIZE_EXPAND_FILL
+	info_label.size_flags_vertical = SIZE_SHRINK_CENTER
+	bottom_row.add_child(info_label)
+	
+	# Create the upgrade button with conditional styling
+	var upgradeButton = Button.new()
+	upgradeButton.text = "Upgrade"
+	upgradeButton.size_flags_horizontal = SIZE_SHRINK_END
+	upgradeButton.size_flags_vertical = SIZE_SHRINK_CENTER
+	upgradeButton.custom_minimum_size = Vector2(100, 30)
+	
+	# Style the button based on affordability
+	if !is_max_level:
+		if can_afford:
+			# Affordable - highlight the button
+			var button_style = StyleBoxFlat.new()
+			button_style.bg_color = Color(0.2, 0.4, 0.7)
+			button_style.set_border_width_all(1)
+			button_style.border_color = Color(0.4, 0.6, 0.9)
+			button_style.set_corner_radius_all(5)
+			upgradeButton.add_theme_stylebox_override("normal", button_style)
+			upgradeButton.add_theme_color_override("font_color", Color(1, 1, 1))
+		else:
+			# Can't afford - dim the button
+			var button_style = StyleBoxFlat.new()
+			button_style.bg_color = Color(0.3, 0.3, 0.35)
+			button_style.set_border_width_all(1)
+			button_style.border_color = Color(0.4, 0.4, 0.45)
+			button_style.set_corner_radius_all(5)
+			upgradeButton.add_theme_stylebox_override("normal", button_style)
+			upgradeButton.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
+	
+	# Connect signals
+	upgradeButton.pressed.connect(func(): on_upgrade_pressed(key, info_label))
+	
+	# Set same tooltip on the button
+	if upgrade_descriptions and upgrade_descriptions.upgradeDescriptions.has(key):
+		upgradeButton.tooltip_text = upgrade_descriptions.upgradeDescriptions[key]
+	
+	# Hide button if max level reached
+	if is_max_level:
+		upgradeButton.visible = false
+	
+	# Add the upgrade button
+	bottom_row.add_child(upgradeButton)
+	
+	# Store references for later updates
+	buttons[key] = {
+		"button": upgradeButton,
+		"container": container,
+		"info_label": info_label,
+		"level_indicators": []
+	}
+	
+	# Store the level indicators for updates
+	for i in range(level_row.get_child_count()):
+		var child = level_row.get_child(i)
+		if child is PanelContainer:
+			buttons[key].level_indicators.append(child)
+	
+	return container
 
-func hide_description():
-	# Hide the description panel by making it transparent
-	description_panel.modulate = Color(1, 1, 1, 0)
+func on_upgrade_pressed(key, info_label):
+	var success = GameState.upgrade(key)
+	
+	if success:
+		# Update the button display
+		update_button_state(key)
+		
+		# Update money display
+		var money_display = find_child("MoneyDisplay")
+		if money_display:
+			money_display.text = "Available: $" + str(GameState.money)
+		
+		# Update affordability of all buttons since money has changed
+		for upgrade_key in buttons:
+			update_button_affordability(upgrade_key)
+
+func update_button_state(key):
+	if not buttons.has(key):
+		return
+	
+	var button_data = buttons[key]
+	var upgradeButton = button_data.button
+	var info_label = button_data.info_label
+	var level_indicators = button_data.level_indicators
+	
+	var current_level = GameState.upgrades[key]
+	var max_level = GameState.maxUpgrades[key]
+	var is_max_level = current_level >= max_level
+	var upgrade_cost = GameState.getUpgradeCost(key)
+	var can_afford = GameState.money >= upgrade_cost
+	
+	# Update container style
+	var container = button_data.container
+	var style = container.get_theme_stylebox("panel")
+	
+	if is_max_level:
+		# Gold/green style for max level
+		style.bg_color = Color(0.2, 0.35, 0.2, 0.7) # Slightly green
+		style.border_color = Color(0.5, 0.8, 0.3) # Green border
+	elif can_afford:
+		# Standard blue style for affordable upgrades
+		style.bg_color = Color(0.1, 0.25, 0.4, 0.7) # Standard blue
+		style.border_color = Color(0.3, 0.5, 0.7) # Blue border
+	else:
+		# Slightly darker/red style for unaffordable upgrades
+		style.bg_color = Color(0.25, 0.15, 0.15, 0.7) # Darker red tint
+		style.border_color = Color(0.5, 0.3, 0.3) # Red-ish border
+	
+	# Update level indicators
+	for i in range(level_indicators.size()):
+		var indicator = level_indicators[i]
+		var indicator_style = indicator.get_theme_stylebox("panel")
+		
+		if i < current_level:
+			# Filled level
+			indicator_style.bg_color = Color(0.3, 0.7, 1.0)
+		else:
+			# Empty level
+			indicator_style.bg_color = Color(0.2, 0.2, 0.25, 0.5)
+	
+	# Update cost/level info
+	if is_max_level:
+		info_label.text = "MAXIMUM LEVEL"
+		info_label.add_theme_color_override("font_color", Color(0.5, 0.9, 0.5))
+		upgradeButton.visible = false
+	else:
+		info_label.text = "Cost: $" + str(upgrade_cost)
+		if can_afford:
+			info_label.add_theme_color_override("font_color", Color(0.9, 0.9, 0.5)) # Yellow - can afford
+		else:
+			info_label.add_theme_color_override("font_color", Color(0.9, 0.5, 0.5)) # Red - can't afford
+
+func update_button_affordability(key):
+	if not buttons.has(key):
+		return
+	
+	var button_data = buttons[key]
+	var upgradeButton = button_data.button
+	var info_label = button_data.info_label
+	
+	var current_level = GameState.upgrades[key]
+	var max_level = GameState.maxUpgrades[key]
+	var is_max_level = current_level >= max_level
+	
+	if is_max_level:
+		return
+	
+	var upgrade_cost = GameState.getUpgradeCost(key)
+	var can_afford = GameState.money >= upgrade_cost
+	
+	# Update cost color
+	if can_afford:
+		info_label.add_theme_color_override("font_color", Color(0.9, 0.9, 0.5)) # Yellow - can afford
+	else:
+		info_label.add_theme_color_override("font_color", Color(0.9, 0.5, 0.5)) # Red - can't afford
+	
+	# Update container style
+	var container = button_data.container
+	var style = container.get_theme_stylebox("panel")
+	
+	if can_afford:
+		style.bg_color = Color(0.1, 0.25, 0.4, 0.7) # Standard blue
+		style.border_color = Color(0.3, 0.5, 0.7) # Blue border
+		
+		# Update button style
+		var button_style = StyleBoxFlat.new()
+		button_style.bg_color = Color(0.2, 0.4, 0.7)
+		button_style.set_border_width_all(1)
+		button_style.border_color = Color(0.4, 0.6, 0.9)
+		button_style.set_corner_radius_all(5)
+		upgradeButton.add_theme_stylebox_override("normal", button_style)
+		upgradeButton.add_theme_color_override("font_color", Color(1, 1, 1))
+	else:
+		style.bg_color = Color(0.25, 0.15, 0.15, 0.7) # Darker red tint
+		style.border_color = Color(0.5, 0.3, 0.3) # Red-ish border
+		
+		# Update button style
+		var button_style = StyleBoxFlat.new()
+		button_style.bg_color = Color(0.3, 0.3, 0.35)
+		button_style.set_border_width_all(1)
+		button_style.border_color = Color(0.4, 0.4, 0.45)
+		button_style.set_corner_radius_all(5)
+		upgradeButton.add_theme_stylebox_override("normal", button_style)
+		upgradeButton.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
 
 func _process(_delta):
 	if GameState.isDocked:
 		visible = true
-		
 	else:
 		visible = false
-		
+	
+	# Update money display
+	var money_display = find_child("MoneyDisplay")
+	if money_display:
+		money_display.text = "Available: $" + str(GameState.money)
+	
+	# Update all buttons (in case money changes from elsewhere)
 	for key in buttons:
-		var upgradeButton = buttons[key]
-		
-		if GameState.upgrades[key] == GameState.maxUpgrades[key]:
-			upgradeButton.text = Strings.upgradeNames[key] + "[MAX]"
-		else:
-			upgradeButton.text = Strings.upgradeNames[key] + " %s" % (GameState.upgrades[key] + 1) + " (Cost: %s)" % GameState.getUpgradeCost(key)
+		update_button_state(key)
