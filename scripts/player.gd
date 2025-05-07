@@ -87,59 +87,86 @@ func hurtPlayer(damage: int):
 func reset_hurt_cooldown():
 	can_be_hurt = true
 
-var acceleration_x := 2.0
-var max_speed_x := 5.0
+var acceleration_x := 2.5  # Adjusted to feel less spongy but not too fast
+var deceleration_x := 3.8  # For responsive stopping without being too quick
+var max_speed_x := 5.0     # Keep original max speed
 var velocity_x := 0.0
+var velocity_y := 0.0
+var acceleration_y := 2.2  # Slower vertical acceleration
+var deceleration_y := 3.0  # Slower vertical deceleration
+var max_speed_y := 4.0     # Reduced vertical speed
+
 func movement(_delta: float):
 	var direction = Vector3.ZERO
+	var input_x = 0.0
+	var input_y = 0.0
 
-	# Handle keyboard input
+	# Get horizontal input
 	if Input.is_action_pressed("move_right"):
-		velocity_x = min(velocity_x + acceleration_x * _delta, max_speed_x)
+		input_x = 1.0
 		if $Pivot.rotation[1] < 0:
 			$Pivot.rotate_y(deg_to_rad(180))
 	elif Input.is_action_pressed("move_left"):
-		velocity_x = max(velocity_x - acceleration_x * _delta, -max_speed_x)
+		input_x = -1.0
 		if $Pivot.rotation[1] >= 0:
 			$Pivot.rotate_y(deg_to_rad(180))
 	# Handle touch input for horizontal movement
 	elif touch_direction.x != 0:
-		velocity_x = touch_direction.x * max_speed_x
+		input_x = touch_direction.x
 		if touch_direction.x > 0 and $Pivot.rotation[1] < 0:
 			$Pivot.rotate_y(deg_to_rad(180))
 		elif touch_direction.x < 0 and $Pivot.rotation[1] >= 0:
 			$Pivot.rotate_y(deg_to_rad(180))
+	
+	# Apply horizontal acceleration/deceleration
+	if input_x != 0:
+		# Accelerate faster
+		velocity_x = move_toward(velocity_x, input_x * max_speed_x, acceleration_x * _delta)
 	else:
-		if velocity_x > 0:
-			velocity_x = max(velocity_x - acceleration_x * _delta, 0)
-		elif velocity_x < 0:
-			velocity_x = min(velocity_x + acceleration_x * _delta, 0)
+		# Decelerate faster when no input for less floaty feel
+		velocity_x = move_toward(velocity_x, 0, deceleration_x * _delta)
 
 	direction.x = velocity_x
 	
-	# Handle keyboard input for vertical movement
+	# Get vertical input
 	if Input.is_action_pressed("move_up"):
-		direction.y += 1
-		if position.y >= -0.15:
-			direction.y = -0.15
+		input_y = 1.0
+		if position.y >= -0.15: # Surface limit
+			input_y = -0.15
 	elif Input.is_action_pressed("move_down"):
-		direction.y -= 1
+		input_y = -1.0
 	# Handle touch input for vertical movement
 	elif touch_direction.y != 0:
-		direction.y = touch_direction.y
+		input_y = touch_direction.y
 		if touch_direction.y > 0 and position.y >= 0:
-			direction.y = 0
-		
-	target_velocity.x = direction.x * (speed_horizontal + (GameState.upgrades[GameState.Upgrade.HOR_SPEED] * 1.5))
-	target_velocity.y = direction.y * (speed_vertical + (GameState.upgrades[GameState.Upgrade.VERT_SPEED] * 1.5))
+			input_y = 0
 	
-	if direction.y >= 1:
-		target_velocity.y = target_velocity.y * 2
+	# Apply vertical acceleration/deceleration like horizontal
+	if input_y != 0:
+		velocity_y = move_toward(velocity_y, input_y * max_speed_y, acceleration_y * _delta)
+	else:
+		velocity_y = move_toward(velocity_y, 0, deceleration_y * _delta)
+		
+	direction.y = velocity_y
+	
+	# Apply upgrades to speed (reduced multiplier for upgrades)
+	var hor_speed_bonus = speed_horizontal + (GameState.upgrades[GameState.Upgrade.HOR_SPEED] * 1.4) 
+	var vert_speed_bonus = speed_vertical + (GameState.upgrades[GameState.Upgrade.VERT_SPEED] * 1.3)
+	
+	target_velocity.x = direction.x * hor_speed_bonus
+	target_velocity.y = direction.y * vert_speed_bonus
+	
+	# Boost upward movement slightly for better control
+	if direction.y > 0:
+		target_velocity.y = target_velocity.y * 1.2
 	
 	target_velocity.z = 0
-	velocity = target_velocity
+	
+	# Set velocity directly without the lerp for more responsive control
 	if GameState.paused:
-		velocity = Vector3.ZERO
+		target_velocity = Vector3.ZERO
+	
+	velocity = target_velocity
 	move_and_slide()
 	position.z = 0.33
 
@@ -326,16 +353,18 @@ func scatter_area_entered(body: Node3D) -> void:
 		body.scatter(self)
 
 
-func rockingMotion(delta): # Apply a slow submarine-like rocking motion
+func rockingMotion(delta): # Apply a submarine-like rocking motion
 	if abs(velocity.x) < 0.1 and abs(velocity.y) < 0.1:
-		# Apply a slow submarine-like rocking motion
+		# Apply a slow submarine-like rocking motion when stationary
 		var rocking_angle = sin(time * 0.5) * 1.3
-		var direction = 1
-		if $Pivot.rotation.z < deg_to_rad(30):
-			direction = -1
-		elif $Pivot.rotation.z < deg_to_rad(-30):
-			direction = 1
-		$Pivot.rotation.z = $Pivot.rotation.z + direction * deg_to_rad(rocking_angle) * delta
+		$Pivot.rotation.z = lerp($Pivot.rotation.z, deg_to_rad(rocking_angle), delta * 0.8)
+	else:
+		# Make the submarine tilt slightly based on movement
+		var tilt = -velocity.x * 0.01  # Small tilt for movement
+		$Pivot.rotation.z = lerp($Pivot.rotation.z, tilt, delta * 2.0)
+	
+	# Clamp rotation to prevent extreme angles
+	$Pivot.rotation.z = clamp($Pivot.rotation.z, deg_to_rad(-8), deg_to_rad(8))
 
 @export var trauma_reduction_rate := 1.0
 
