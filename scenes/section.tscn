@@ -158,7 +158,6 @@ autostart = true
 
 [node name="Bubbles" type="GPUParticles3D" parent="."]
 transform = Transform3D(2.655, 0, 0, 0, 3.31466, 0, 0, 0, 1.308, -11.9884, -1.03899, 3.67558)
-emitting = false
 amount = 400
 lifetime = 3.0
 randomness = 0.23
@@ -167,7 +166,6 @@ draw_pass_1 = SubResource("SphereMesh_ms04e")
 
 [node name="Debris" type="GPUParticles3D" parent="."]
 transform = Transform3D(2.655, 0, 0, 0, 3.31466, 0, 0, 0, 1.308, -11.9884, -1.03899, 3.67558)
-emitting = false
 amount = 5000
 lifetime = 3.0
 randomness = 0.23

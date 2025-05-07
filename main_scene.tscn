@@ -1,7 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dh5isxij1ptvi"]
+[gd_scene load_steps=38 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Material" uid="uid://cln8yo172nfsg" path="res://materials/barrier_material_3d.tres" id="1_2c62f"]
-[ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_gyfs4"]
+[ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
+[ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
+[ext_resource type="PackedScene" uid="uid://bxmdavkwqpqar" path="res://scenes/ui/pause_menu.tscn" id="25_x01n6"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_o3jxj"]
 
@@ -27,7 +29,7 @@ mesh = SubResource("BoxMesh_o3jxj")
 
 [node name="Base" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0491874, 2.59377, -2.72396)
-material_override = ExtResource("2_gyfs4")
+material_override = ExtResource("2_pu3yx")
 mesh = SubResource("TorusMesh_o3jxj")
 
 [node name="Camera3D" type="Camera3D" parent="."]
@@ -48,3 +50,40 @@ mesh = SubResource("CapsuleMesh_d5x1h")
 transform = Transform3D(-28.5457, 0, -0.0432478, 0, 39.7189, 0, 0.370194, 0, -3.33484, -15.0989, -20.05, -1.77885)
 mesh = SubResource("BoxMesh_gyfs4")
 skeleton = NodePath("../Camera3D")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_18nlu")
+
+[node name="inv_ui" parent="UI" instance=ExtResource("9_c1pb6")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -227.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 156.0
+grow_horizontal = 0
+
+[node name="CenterContainer" type="CenterContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BossDialog" type="PanelContainer" parent="UI/CenterContainer"]
+layout_mode = 2
+script = ExtResource("12_mngbo")
+
+[node name="PauseMenu" parent="UI" instance=ExtResource("25_x01n6")]
+process_mode = 3
+visible = false
+layout_mode = 1

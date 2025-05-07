@@ -7,6 +7,7 @@ var ughhh = preload("res://sounds/ughhh.wav")
 var ouugh = preload("res://sounds/Ouugh.wav")
 var bup = preload("res://sounds/bup.wav")
 var coins = preload("res://sounds/coins.wav")
+var save = preload("res://sounds/harp2.wav") # Using harp2 as save sound
 
 var harp = preload("res://sounds/harp.wav")
 var harp2 = preload("res://sounds/harp2.wav")
@@ -36,6 +37,8 @@ func play_sound(sound_name: String):
 			sound_to_play = harp3
 		"coins":
 			sound_to_play = coins
+		"save":
+			sound_to_play = save
 		_:
 			print("Unknown sound: ", sound_name)
 			return

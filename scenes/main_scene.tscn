@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=38 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
@@ -19,6 +19,7 @@
 [ext_resource type="Script" uid="uid://dx1hxd4wnymb1" path="res://scripts/boss_dialog_ui.gd" id="12_mngbo"]
 [ext_resource type="PackedScene" uid="uid://b87oo8x46lj3r" path="res://scenes/cheats.tscn" id="13_4w45t"]
 [ext_resource type="Script" uid="uid://bjp67tva3ov6n" path="res://scripts/fps_counter.gd" id="14_r6p65"]
+[ext_resource type="PackedScene" uid="uid://ct6stnjvli7ll" path="res://scenes/ui/pause_menu.tscn" id="17_k3g67"]
 [ext_resource type="PackedScene" uid="uid://b35mxcc3d74di" path="res://scenes/WaterPlane.tscn" id="20_k6f3i"]
 [ext_resource type="ArrayMesh" uid="uid://gw7pdmvoe3yh" path="res://meshes/gestein_v003.obj" id="21_to7gp"]
 [ext_resource type="Script" uid="uid://d1aerdanr4q2e" path="res://scripts/soundplayer.gd" id="21_xdqt8"]
@@ -66,8 +67,8 @@ transform = Transform3D(0.94702, 0.320556, -0.0199305, -0.0267635, 0.140602, 0.9
 
 [node name="CharacterBody3D" parent="." instance=ExtResource("4_pu3yx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, -0.177934, -0.33)
-speed_vertical = 1.5
-speed_horizontal = 1.5
+speed_vertical = 0.5
+speed_horizontal = 0.5
 
 [node name="SoundPlayer" type="AudioStreamPlayer3D" parent="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.258023, 0, 0.33)
@@ -197,6 +198,9 @@ Anyways... Lets keep going - we don't have all day!"
 layout_mode = 2
 text = "Respawn
 "
+
+[node name="PauseMenu" parent="UI/CenterContainer" instance=ExtResource("17_k3g67")]
+layout_mode = 2
 
 [node name="HUD" type="PanelContainer" parent="UI"]
 layout_mode = 0

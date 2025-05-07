@@ -19,6 +19,14 @@ var next_track = null
 
 func _ready():
 	mute_button = get_node("/root/Node3D/UI/HUD/MarginContainer/HUDContainer/MuteButton")
+	
+	# Configure players to use the Music bus
+	player1.bus = "Music"
+	player2.bus = "Music"
+	
+	# Apply current settings
+	is_muted = SettingsManager.is_muted
+	
 	# Start with surface music
 	player1.stream = surface
 	player1.stream.loop = true
@@ -26,18 +34,21 @@ func _ready():
 	player2.stream.loop = true
 	
 	# Start playing the first track
-	player1.volume_db = -15.0
-	player2.volume_db = -15.0
+	var base_volume = -15.0
+	player1.volume_db = base_volume
+	player2.volume_db = base_volume
 	#player1.play()
 	current_track = surface
+
 func _process(delta):
 	if is_crossfading:
 		fade_timer += delta
 		var t = fade_timer / fade_duration
 		
 		# Interpolate volumes (linear decibels)
-		player1.volume_db = lerp(-15.0, -80.0, t) # Fade out
-		player2.volume_db = lerp(-80.0, -15.0, t) # Fade in
+		var base_volume = -15.0
+		player1.volume_db = lerp(base_volume, -80.0, t) # Fade out
+		player2.volume_db = lerp(-80.0, base_volume, t) # Fade in
 		
 		if fade_timer >= fade_duration:
 			is_crossfading = false
@@ -88,6 +99,7 @@ func _on_mute_button_pressed():
 		player2.volume_db = -80.0
 		if mute_button:
 			mute_button.text = "Unmute"
+		SettingsManager.set_mute(true)
 	else:
 		# Restore previous volumes
 		player1.play() # for now play if unmute, without crossfade
@@ -95,6 +107,7 @@ func _on_mute_button_pressed():
 		player2.volume_db = -15 # pre_mute_volume2
 		if mute_button:
 			mute_button.text = "Mute"
+		SettingsManager.set_mute(false)
 	is_muted = !is_muted # Toggle mute state
 
 #	0: Stage.SURFACE,

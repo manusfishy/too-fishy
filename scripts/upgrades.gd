@@ -29,6 +29,9 @@ var categories = {
 }
 
 func _ready():
+	# Add to group for easier reference
+	add_to_group("upgrades_menu")
+	
 	# Make the panel significantly bigger to display all upgrades without scrolling
 	custom_minimum_size = Vector2(900, 570)
 	
@@ -521,15 +524,29 @@ func update_money_display():
 		var current_money = int(GameState.money)
 		money_label.text = "Available: $" + str(current_money)
 
+func refresh_all_upgrades():
+	# Update all buttons to reflect current upgrade states
+	for key in buttons:
+		update_button_state(key)
+	
+	# Then update affordability of all buttons
+	for key in buttons:
+		update_button_affordability(key)
+
 func _process(_delta):
 	if GameState.isDocked:
 		visible = true
 		
+		# If just became visible, do a full refresh
+		if not was_visible:
+			refresh_all_upgrades()
+			was_visible = true
+		
 		# Update money display every frame when visible
 		update_money_display()
-		
-		# Update all buttons (in case money changes from elsewhere)
-		for key in buttons:
-			update_button_affordability(key)
 	else:
 		visible = false
+		was_visible = false
+
+# Add variable to track visibility changes
+var was_visible = false

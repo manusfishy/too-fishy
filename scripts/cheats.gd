@@ -50,8 +50,6 @@ func _process(_delta):
 			close()
 		else:
 			open()
-	if Input.is_action_just_pressed("esc"):
-		close()
 
 
 func open():
