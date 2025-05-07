@@ -66,7 +66,7 @@ var upgrades = {
 }
 var depth = 0
 var maxDepthReached = 0
-var money = 25
+var money: int = 25
 var isDocked = false
 var fishes_lower_boarder = -15 - 12
 
@@ -90,13 +90,15 @@ func setDepth(d: int):
 	else:
 		GameState.playerInStage = Stage.VOID
 	
-func getUpgradeCost(mUpgrade: Upgrade) -> float:
-	return (upgrades[mUpgrade] + 1) * upgradeCosts[mUpgrade]
+func getUpgradeCost(mUpgrade: Upgrade) -> int:
+	return int((upgrades[mUpgrade] + 1) * upgradeCosts[mUpgrade])
 
 func upgrade(mUpgrade: Upgrade) -> bool:
 	var cost = getUpgradeCost(mUpgrade)
 	if money >= cost && upgrades[mUpgrade] < maxUpgrades[mUpgrade]:
 		money -= cost
+		# Ensure money stays as integer
+		money = int(money)
 		upgrades[mUpgrade] += 1
 		return true
 	else:

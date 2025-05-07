@@ -2,6 +2,7 @@ extends PanelContainer
 
 var buttons = {}
 var upgrade_descriptions = null
+var money_label = null # Direct reference to money display label
 
 # Category definitions
 var categories = {
@@ -108,13 +109,13 @@ func _ready():
 	money_margin.add_theme_constant_override("margin_bottom", 8)
 	money_panel.add_child(money_margin)
 	
-	var money_display = Label.new()
-	money_display.text = "Available: $" + str(GameState.money)
-	money_display.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	money_display.name = "MoneyDisplay"
-	money_display.add_theme_font_size_override("font_size", 20)
-	money_display.add_theme_color_override("font_color", Color(1, 1, 0.7)) # Light yellow
-	money_margin.add_child(money_display)
+	money_label = Label.new()
+	money_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	money_label.add_theme_font_size_override("font_size", 20)
+	money_label.add_theme_color_override("font_color", Color(1, 1, 0.7)) # Light yellow
+	# Set initial text (function defined below)
+	money_margin.add_child(money_label)
+	update_money_display()
 	
 	# Add some spacing after header
 	var spacer = Control.new()
@@ -377,17 +378,16 @@ func on_upgrade_pressed(key, info_label):
 	var success = GameState.upgrade(key)
 	
 	if success:
-		# Update the button display
+		# Update money display immediately
+		update_money_display()
+		
+		# First update this button's state
 		update_button_state(key)
 		
-		# Update money display
-		var money_display = find_child("MoneyDisplay")
-		if money_display:
-			money_display.text = "Available: $" + str(GameState.money)
-		
-		# Update affordability of all buttons since money has changed
+		# Then update affordability of all other buttons since money has changed
 		for upgrade_key in buttons:
-			update_button_affordability(upgrade_key)
+			if upgrade_key != key:  # Skip the one we just updated
+				update_button_affordability(upgrade_key)
 
 func update_button_state(key):
 	if not buttons.has(key):
@@ -442,8 +442,26 @@ func update_button_state(key):
 		info_label.text = "Cost: $" + str(upgrade_cost)
 		if can_afford:
 			info_label.add_theme_color_override("font_color", Color(0.9, 0.9, 0.5)) # Yellow - can afford
+			
+			# Update button style for affordable upgrades
+			var button_style = StyleBoxFlat.new()
+			button_style.bg_color = Color(0.2, 0.4, 0.7)
+			button_style.set_border_width_all(1)
+			button_style.border_color = Color(0.4, 0.6, 0.9)
+			button_style.set_corner_radius_all(5)
+			upgradeButton.add_theme_stylebox_override("normal", button_style)
+			upgradeButton.add_theme_color_override("font_color", Color(1, 1, 1))
 		else:
 			info_label.add_theme_color_override("font_color", Color(0.9, 0.5, 0.5)) # Red - can't afford
+			
+			# Update button style for unaffordable upgrades
+			var button_style = StyleBoxFlat.new()
+			button_style.bg_color = Color(0.3, 0.3, 0.35)
+			button_style.set_border_width_all(1)
+			button_style.border_color = Color(0.4, 0.4, 0.45)
+			button_style.set_corner_radius_all(5)
+			upgradeButton.add_theme_stylebox_override("normal", button_style)
+			upgradeButton.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
 
 func update_button_affordability(key):
 	if not buttons.has(key):
@@ -498,17 +516,20 @@ func update_button_affordability(key):
 		upgradeButton.add_theme_stylebox_override("normal", button_style)
 		upgradeButton.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
 
+func update_money_display():
+	if money_label:
+		var current_money = int(GameState.money)
+		money_label.text = "Available: $" + str(current_money)
+
 func _process(_delta):
 	if GameState.isDocked:
 		visible = true
+		
+		# Update money display every frame when visible
+		update_money_display()
+		
+		# Update all buttons (in case money changes from elsewhere)
+		for key in buttons:
+			update_button_affordability(key)
 	else:
 		visible = false
-	
-	# Update money display
-	var money_display = find_child("MoneyDisplay")
-	if money_display:
-		money_display.text = "Available: $" + str(GameState.money)
-	
-	# Update all buttons (in case money changes from elsewhere)
-	for key in buttons:
-		update_button_state(key)
