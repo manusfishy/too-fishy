@@ -2,6 +2,16 @@ extends Camera3D
 
 @export var directional_light: DirectionalLight3D
 
+# Reference resolution (optimized for 1920x1080)
+const REFERENCE_WIDTH = 1920
+const REFERENCE_HEIGHT = 1080
+const REFERENCE_ASPECT = float(REFERENCE_WIDTH) / float(REFERENCE_HEIGHT)
+
+# Camera parameters
+var base_fov = 75.0
+var min_fov = 65.0
+var max_fov = 85.0
+
 var environment_color_map = {
 	GameState.Stage.SURFACE: Color.from_rgba8(30, 110, 163, 255),
 	GameState.Stage.DEEP: Color.from_rgba8(30, 110, 163, 255),
@@ -25,6 +35,33 @@ var environment_light_map = {
 func _ready():
 	environment.fog_light_color = environment_color_map[0]
 	directional_light = get_node("/root/Node3D/DirectionalLight3D")
+	
+	# Connect to window resize signal to adjust camera parameters
+	get_viewport().size_changed.connect(_adjust_camera_for_aspect_ratio)
+	
+	# Initial adjustment
+	_adjust_camera_for_aspect_ratio()
+
+func _adjust_camera_for_aspect_ratio():
+	var window_size = DisplayServer.window_get_size()
+	var current_aspect = float(window_size.x) / float(window_size.y)
+	
+	# Adjust FOV based on aspect ratio difference
+	if current_aspect > REFERENCE_ASPECT:
+		# Wider screen - increase FOV to see more horizontally
+		var aspect_difference = current_aspect / REFERENCE_ASPECT
+		var new_fov = base_fov * min(1.2, aspect_difference)
+		fov = clamp(new_fov, min_fov, max_fov)
+	elif current_aspect < REFERENCE_ASPECT:
+		# Taller screen - might need to adjust FOV differently
+		var aspect_difference = REFERENCE_ASPECT / current_aspect
+		var new_fov = base_fov * max(0.9, 2.0 - aspect_difference)
+		fov = clamp(new_fov, min_fov, max_fov)
+	else:
+		# Same aspect ratio as reference
+		fov = base_fov
+	
+	print("Window size: ", window_size, " - Aspect ratio: ", current_aspect, " - FOV: ", fov)
 
 func change_section_environment(sectionType):
 	var tween = self.create_tween()

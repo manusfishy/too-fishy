@@ -22,6 +22,8 @@ Strings="*res://scripts/strings.gd"
 FishesConfig="*res://scripts/fishes_config.gd"
 Boss="*res://scripts/boss.gd"
 PopupManager="*res://scripts/Popup_Manager.gd"
+UIScaler="*res://scripts/ui_scaler.gd"
+UILayoutManager="*res://scripts/ui_layout_manager.gd"
 
 [editor]
 
@@ -107,3 +109,12 @@ upgrade_drone_selling={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
