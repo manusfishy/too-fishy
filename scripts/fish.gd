@@ -31,7 +31,6 @@ func removeFish():
 	return my_fish
 	
 
-
 func _physics_process(delta: float) -> void:
 	if rotation_cooldown_left > 0:
 		rotation_cooldown_left -= delta
@@ -61,13 +60,13 @@ func _physics_process(delta: float) -> void:
 		
 	move_and_slide()
 	
-func initialize(mStart_position, mHome, mMin_speed, mMax_speed, 
+func initialize(mStart_position, mHome, mMin_speed, mMax_speed,
 mDifficulty, mMin_weight, mMax_weight, price_weight_multiplier, mType, weight_multiplier, mIs_shiny = false):
 	self.home = mHome
 	self.min_speed = mMin_speed
 	self.max_speed = mMax_speed
 	self.difficulty = mDifficulty
-	self.weight = clamp(randf_range(mMin_weight, mMax_weight) * weight_multiplier, 
+	self.weight = clamp(randf_range(mMin_weight, mMax_weight) * weight_multiplier,
 							mMin_weight, mMax_weight)
 	self.price = round(weight * price_weight_multiplier)
 	self.type = mType
@@ -84,6 +83,17 @@ mDifficulty, mMin_weight, mMax_weight, price_weight_multiplier, mType, weight_mu
 	set_z_rotation_and_velocity(randf_range(min_angle, max_angle))
 	
 	if self.shiny_particles != null:
+		# Create a new material instance to prevent shared material modifications
+		var particles_material = self.shiny_particles.process_material.duplicate()
+		self.shiny_particles.process_material = particles_material
+		
+		# Set color based on shiny status
+		if self.is_shiny:
+			particles_material.color = Color(1.0, 0.9, 0.2) # Gold color
+		else:
+			particles_material.color = Color(0.2, 0.7, 1.0) # Blue color
+			
+		# Enable particles if shiny
 		shiny_particles.emitting = self.is_shiny
 	
 func set_z_rotation_and_velocity(deg: float) -> void:
@@ -107,7 +117,7 @@ func is_looking_up() -> bool:
 	return rotation[2] > 0
 	
 func scatter(body: Node3D) -> void:
-	if (body.global_position.x < global_position.x && is_facing_left() or 
+	if (body.global_position.x < global_position.x && is_facing_left() or
 		body.global_position.x > global_position.x && !is_facing_left()):
 		rotate_y(deg_to_rad(180))
 	if (body.global_position.y < global_position.y):
@@ -120,9 +130,8 @@ func scatter(body: Node3D) -> void:
 
 func get_scale_for_weight(max_weight, min_weight, mWeight) -> Vector3:
 	var weight_range = (max_weight - min_weight)
-	var normal_weight = weight_range/2
+	var normal_weight = weight_range / 2
 	var weight_sanitized = mWeight - min_weight
 	var weight_factor = weight_sanitized / normal_weight
-	var scale_factor = 1+weight_factor*.3
-	return Vector3(scale_factor,scale_factor,1)
-	
+	var scale_factor = 1 + weight_factor * .3
+	return Vector3(scale_factor, scale_factor, 1)
