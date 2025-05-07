@@ -41,6 +41,7 @@ func setDialogStage(section: BossDialogSections):
 	boss_dialog_index = 0
 	boss_dialog_displayed = true
 	GameState.paused = true
+	get_tree().paused = true
 	
 func process_dialog_depth():
 	for section in dialog_depth_map.keys():

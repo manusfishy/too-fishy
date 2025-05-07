@@ -37,6 +37,7 @@ func skip_dialog() -> void:
 	Boss.boss_dialog_displayed = false
 	Boss.boss_dialog_index = 0
 	GameState.paused = false
+	get_tree().paused = false
 
 func _process(_delta):
 	if GameState.god_mode:

@@ -147,6 +147,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="BossDialog" type="PanelContainer" parent="UI/CenterContainer"]
+process_mode = 3
 layout_mode = 2
 script = ExtResource("12_mngbo")
 

@@ -10,6 +10,7 @@ func _ready() -> void:
 			Boss.boss_dialog_displayed = false
 			Boss.boss_dialog_index = 0
 			GameState.paused = false
+			get_tree().paused = false
 			
 		)
 
