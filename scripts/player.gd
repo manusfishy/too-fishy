@@ -25,10 +25,12 @@ var harpoon_rotation_direction = 1 # 1 = clockwise, -1 = counterclockwise
 var harpoon_scene = preload("res://scenes/harpoon.tscn") # Path to harpoon scene
 var bullet_scene = preload("res://scenes/bullet.tscn")
 var ak_scene = preload("res://scenes/ak47.tscn")
-var touch_controls_scene = preload("res://scenes/ui/touch_controls.tscn")
+@onready var touch_controls_scene = preload("res://scenes/ui/touch_controls.tscn")
+@onready var pause_menu_scene = preload("res://scenes/ui/pause_menu.tscn")
 var can_shoot = true
 var touch_controls = null
 var touch_direction = Vector2.ZERO
+var pause_menu = null
 signal section_changed(sectionType)
 
 func _ready():
@@ -41,6 +43,11 @@ func _ready():
 		get_tree().root.add_child(touch_controls)
 		touch_controls.joystick_input.connect(_on_joystick_input)
 		touch_controls.shoot_pressed.connect(_on_shoot_pressed)
+	
+	# Get reference to pause menu from UI
+	var ui_node = get_node("/root/Node3D/UI")
+	if ui_node and ui_node.has_node("PauseMenu"):
+		pause_menu = ui_node.get_node("PauseMenu")
 
 func _on_joystick_input(direction):
 	touch_direction = direction
@@ -150,8 +157,8 @@ func movement(_delta: float):
 	direction.y = velocity_y
 	
 	# Apply upgrades to speed (reduced multiplier for upgrades)
-	var hor_speed_bonus = speed_horizontal + (GameState.upgrades[GameState.Upgrade.HOR_SPEED] * 1.4) 
-	var vert_speed_bonus = speed_vertical + (GameState.upgrades[GameState.Upgrade.VERT_SPEED] * 1.3)
+	var hor_speed_bonus = speed_horizontal + (GameState.upgrades[GameState.Upgrade.HOR_SPEED] * 0.5) 
+	var vert_speed_bonus = speed_vertical + (GameState.upgrades[GameState.Upgrade.VERT_SPEED] * 0.3)
 	
 	target_velocity.x = direction.x * hor_speed_bonus
 	target_velocity.y = direction.y * vert_speed_bonus
@@ -199,7 +206,17 @@ func _input(_event):
 	if Input.is_action_just_pressed("upgrade_surface_buoy") and GameState.upgrades[GameState.Upgrade.SURFACE_BUOY] > 0:
 		if !GameState.isDocked and !GameState.paused:
 			activate_surface_buoy()
-			
+	
+	# Quick save functionality when enabled by upgrade
+	if Input.is_action_just_pressed("inventory_save") and GameState.upgrades[GameState.Upgrade.INVENTORY_SAVE] > 0:
+		if !GameState.isDocked and !GameState.paused:
+			# Quick save without menu
+			SaveSystem.save_game()
+			# Add visual/audio feedback
+			sound_player.play_sound("save")
+			var popup_text = "Game Saved"
+			PopupManager.show_popup(popup_text, $PopupSpawnPosition.global_position, Color.GREEN)
+	
 	# Drone selling functionality - sell inventory remotely when Q key is pressed
 	if Input.is_action_just_pressed("upgrade_drone_selling") and GameState.upgrades[GameState.Upgrade.DRONE_SELLING] > 0:
 		if !GameState.isDocked and !GameState.paused and GameState.inventory.items.size() > 0:
@@ -290,8 +307,32 @@ func shoot_harpoon():
 func catch_fish(fish):
 	print("Caught fish: ", fish.name) # Replace with inventory logic
 	if fish.has_method("removeFish"):
-		sound_player.play_sound("bup")
+		# Store fish properties before removing it
+		var is_shiny = "is_shiny" in fish and fish.is_shiny
+		var fish_weight = fish.weight if "weight" in fish else 1
+		var fish_position = fish.global_position
+		
+		# Get the fish details and remove it from the scene
 		var fish_details = fish.removeFish()
+		
+		# Spawn the catch effect at the fish's position
+		var catch_effect_scene = load("res://scenes/catch_effect.tscn")
+		var catch_effect = catch_effect_scene.instantiate()
+		get_parent().add_child(catch_effect)
+		catch_effect.global_position = fish_position
+		
+		# Set effect properties based on stored fish properties
+		if is_shiny:
+			catch_effect.set_shiny(true)
+		
+		# Add camera shake proportional to fish's weight or value
+		var trauma_amount = clamp(fish_weight / 50.0, 0.2, 0.6)
+		# Increase shake for shiny fish
+		if is_shiny:
+			trauma_amount *= 1.5
+		
+		add_trauma(trauma_amount)
+		
 		if GameState.inventory.add(fish_details):
 			var weight_str = "Weight added: " + str(fish_details.weight) + " kg"
 			var price_str = "\nValue: $" + str(fish_details.price)
