@@ -1,0 +1,65 @@
+[gd_scene load_steps=7 format=3 uid="uid://bauwdhg5qmnsr"]
+
+[ext_resource type="Script" uid="uid://btk8hhsbcx84d" path="res://scripts/catch_effect.gd" id="1_cmk3h"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cqrvx"]
+emission_shape = 1
+emission_sphere_radius = 0.2
+direction = Vector3(0, 1, 0)
+spread = 30.0
+initial_velocity_min = 1.0
+initial_velocity_max = 3.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.3
+scale_max = 0.7
+color = Color(0.2, 0.7, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ejmgx"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.2, 0.7, 1, 0.7)
+
+[sub_resource type="SphereMesh" id="SphereMesh_lqwpj"]
+material = SubResource("StandardMaterial3D_ejmgx")
+radius = 0.1
+height = 0.2
+radial_segments = 8
+rings = 8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wndqv"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 1, 1, 0.3)
+
+[sub_resource type="SphereMesh" id="SphereMesh_n6vr7"]
+material = SubResource("StandardMaterial3D_wndqv")
+radial_segments = 16
+rings = 8
+
+[node name="CatchEffect" type="Node3D"]
+script = ExtResource("1_cmk3h")
+
+[node name="Bubbles" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 20
+one_shot = true
+explosiveness = 0.9
+process_material = SubResource("ParticleProcessMaterial_cqrvx")
+draw_pass_1 = SubResource("SphereMesh_lqwpj")
+
+[node name="Flash" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("SphereMesh_n6vr7")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(0.2, 0.7, 1, 1)
+light_energy = 2.0
+omni_range = 3.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
