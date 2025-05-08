@@ -2,7 +2,7 @@ name: WIP Export Godot Web Game
 
 on:
   push:
-    branches: [ main ]  # or change to your deployment branch
+    branches: [ master ]  # or change to your deployment branch
   workflow_dispatch:
 
 jobs:
