@@ -17,8 +17,8 @@ func _ready():
 	# Style buttons
 	_style_buttons()
 	
-	# Connect signals
-	back_button.pressed.connect(_on_back_button_pressed)
+	# Connect signals - only if they're not already connected in the scene
+	# Skip back_button since it's already connected in the editor
 	
 	# Update UI with current settings
 	update_ui_from_settings()
@@ -89,4 +89,4 @@ func show_status(message: String, duration: float = 2.0):
 	
 	# Hide the status message after duration seconds
 	var timer = get_tree().create_timer(duration)
-	timer.timeout.connect(func(): status_label.hide()) 
+	timer.timeout.connect(func(): status_label.hide())
