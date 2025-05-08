@@ -11,11 +11,11 @@ const MEDIUM_SCREEN_WIDTH = 1280
 const MEDIUM_SCREEN_HEIGHT = 720
 
 # Aspect ratio thresholds
-const WIDE_ASPECT_RATIO = 1.8  # For ultrawide monitors (e.g., 21:9)
-const NARROW_ASPECT_RATIO = 1.5  # For tablets or vertical orientations
+const WIDE_ASPECT_RATIO = 1.8 # For ultrawide monitors (e.g., 21:9)
+const NARROW_ASPECT_RATIO = 1.5 # For tablets or vertical orientations
 
 # Layout types
-enum LayoutType { SMALL, MEDIUM, LARGE, WIDE, NARROW }
+enum LayoutType {SMALL, MEDIUM, LARGE, WIDE, NARROW}
 
 # Current layout type
 var current_layout = LayoutType.LARGE
@@ -43,6 +43,9 @@ func _ready():
 	
 	# Apply initial layout
 	_update_layout()
+	
+	# Set global tooltip settings
+	_set_global_tooltip_settings()
 	
 	initialized = true
 
@@ -178,4 +181,29 @@ func _apply_narrow_layout():
 	if inventory:
 		# For narrow screens: adjust inventory placement
 		inventory.scale = Vector2(0.9, 0.9)
-		inventory.offset_left = -200 
+		inventory.offset_left = -200
+
+# Sets tooltip settings globally for all controls
+func _set_global_tooltip_settings():
+	# Set global tooltip delay to 0 (immediate) through project settings
+	ProjectSettings.set_setting("gui/timers/tooltip_delay_sec", 0)
+	
+	# Create a theme for font size
+	var theme = Theme.new()
+	theme.set_font_size("font_size", "TooltipLabel", 18)
+	
+	# Set as default theme for this scene
+	get_tree().root.theme = theme
+	
+	# Apply the tooltip font size to all controls recursively
+	_apply_tooltip_font_size(get_tree().root)
+
+# Recursively apply tooltip font size to all controls
+func _apply_tooltip_font_size(node):
+	if node is Control:
+		# Apply theme override for tooltip font size
+		node.add_theme_font_size_override("tooltip_font_size", 18)
+	
+	# Process children recursively
+	for child in node.get_children():
+		_apply_tooltip_font_size(child)

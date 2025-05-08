@@ -99,7 +99,7 @@ func _ready():
 	var money_style = StyleBoxFlat.new()
 	money_style.bg_color = Color(0.05, 0.15, 0.3, 0.7) # Darker blue
 	money_style.set_border_width_all(2)
-	money_style.border_color = Color(0.7, 0.7, 0.2)  # Gold border
+	money_style.border_color = Color(0.7, 0.7, 0.2) # Gold border
 	money_style.set_corner_radius_all(8)
 	money_panel.add_theme_stylebox_override("panel", money_style)
 	money_panel.size_flags_horizontal = SIZE_SHRINK_END
@@ -129,7 +129,7 @@ func _ready():
 	var main_grid = HBoxContainer.new()
 	main_grid.size_flags_horizontal = SIZE_EXPAND_FILL
 	main_grid.size_flags_vertical = SIZE_EXPAND_FILL
-	main_grid.add_theme_constant_override("separation", 20)  # More space between columns
+	main_grid.add_theme_constant_override("separation", 20) # More space between columns
 	main_container.add_child(main_grid)
 	
 	# Create columns for each category
@@ -226,6 +226,12 @@ func create_upgrade_button(key):
 	# Set tooltip for the entire container
 	if upgrade_descriptions and upgrade_descriptions.upgradeDescriptions.has(key):
 		container.tooltip_text = upgrade_descriptions.upgradeDescriptions[key]
+		# Set tooltip to appear immediately (set here explicitly for this container)
+		container.mouse_filter = Control.MOUSE_FILTER_STOP
+		container.focus_mode = Control.FOCUS_ALL
+		container.mouse_default_cursor_shape = Control.CURSOR_HELP
+		# Add theme override to increase tooltip text size
+		container.add_theme_font_size_override("tooltip_font_size", 18)
 	
 	# Add margin to container
 	var margin = MarginContainer.new()
@@ -259,10 +265,16 @@ func create_upgrade_button(key):
 	
 	# Info icon for tooltip
 	var hint_icon = Label.new()
-	hint_icon.text = "ⓘ"  # Info symbol
+	hint_icon.text = "ⓘ" # Info symbol
 	hint_icon.tooltip_text = "Hover for details"
 	hint_icon.add_theme_font_size_override("font_size", 14)
 	hint_icon.add_theme_color_override("font_color", Color(0.6, 0.8, 1.0)) # Light blue
+	# Set tooltip to appear immediately
+	hint_icon.mouse_filter = Control.MOUSE_FILTER_STOP
+	hint_icon.focus_mode = Control.FOCUS_ALL
+	hint_icon.mouse_default_cursor_shape = Control.CURSOR_HELP
+	# Add theme override to increase tooltip text size
+	hint_icon.add_theme_font_size_override("tooltip_font_size", 18)
 	top_row.add_child(hint_icon)
 	
 	# Middle row for level indicators
@@ -353,6 +365,11 @@ func create_upgrade_button(key):
 	# Set same tooltip on the button
 	if upgrade_descriptions and upgrade_descriptions.upgradeDescriptions.has(key):
 		upgradeButton.tooltip_text = upgrade_descriptions.upgradeDescriptions[key]
+		# Apply tooltip settings to the button
+		upgradeButton.mouse_filter = Control.MOUSE_FILTER_STOP
+		upgradeButton.focus_mode = Control.FOCUS_ALL
+		upgradeButton.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+		upgradeButton.add_theme_font_size_override("tooltip_font_size", 18)
 	
 	# Hide button if max level reached
 	if is_max_level:
@@ -389,7 +406,7 @@ func on_upgrade_pressed(key, info_label):
 		
 		# Then update affordability of all other buttons since money has changed
 		for upgrade_key in buttons:
-			if upgrade_key != key:  # Skip the one we just updated
+			if upgrade_key != key: # Skip the one we just updated
 				update_button_affordability(upgrade_key)
 
 func update_button_state(key):

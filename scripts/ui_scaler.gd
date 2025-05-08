@@ -10,9 +10,9 @@ var font_scale_factor = 1.0
 
 # Base font sizes for different UI elements
 var base_font_sizes = {
-	"normal": 16,
-	"title": 24,
-	"small": 14
+	"normal": 20,
+	"title": 30,
+	"small": 18
 }
 
 func _ready():
@@ -103,4 +103,4 @@ func _scale_fonts(control):
 			elif control is Button:
 				base_size = base_font_sizes["normal"]
 			
-			control.add_theme_font_size_override("font_size", int(base_size * font_scale_factor)) 
+			control.add_theme_font_size_override("font_size", int(base_size * font_scale_factor))

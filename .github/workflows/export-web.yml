@@ -1,0 +1,39 @@
+name: WIP Export Godot Web Game
+
+on:
+  push:
+    branches: [ main ]  # or change to your deployment branch
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      GODOT_VERSION: 4.2.1
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v3
+
+      - name: Download Godot Headless
+        run: |
+          wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_linux.x86_64.headless.zip
+          unzip Godot_v${GODOT_VERSION}-stable_linux.x86_64.headless.zip
+          mv Godot_v${GODOT_VERSION}-stable_linux.x86_64.headless godot
+          chmod +x godot
+
+      - name: Download HTML5 Export Templates
+        run: |
+          wget https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
+          mkdir -p ~/.local/share/godot/templates/${GODOT_VERSION}.stable/
+          unzip Godot_v${GODOT_VERSION}-stable_export_templates.tpz -d ~/.local/share/godot/templates/${GODOT_VERSION}.stable/
+
+      - name: Export HTML5 Build
+        run: |
+          mkdir -p build/web
+          ./godot --headless --export-release "HTML5" build/web/index.html
+
+      - name: Upload Web Build Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: web-export
+          path: build/web/

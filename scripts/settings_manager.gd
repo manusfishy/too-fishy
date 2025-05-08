@@ -15,7 +15,15 @@ var config = ConfigFile.new()
 var save_path = "user://settings.cfg"
 
 func _ready():
+	# Set global tooltip delay to 0 (show immediately)
+	ProjectSettings.set_setting("gui/timers/tooltip_delay_sec", 0)
+	
+	# Load saved settings
 	load_settings()
+	
+	# Apply loaded settings
+	apply_audio_settings()
+	apply_display_settings()
 
 func load_settings():
 	var err = config.load(save_path)
@@ -122,4 +130,4 @@ func toggle_mute():
 	is_muted = !is_muted
 	apply_audio_settings()
 	save_settings()
-	return is_muted 
+	return is_muted
