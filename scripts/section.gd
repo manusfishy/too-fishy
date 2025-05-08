@@ -9,6 +9,7 @@ extends Node3D
 @export var background_mat: StandardMaterial3D
 @export var lava_vine_mat: StandardMaterial3D = preload("res://materials/walls/veins_lava.tres")
 @export var particles_enabled: bool = true
+@export var add_destructible_barriers: bool = true  # Add option to toggle barrier generation
 
 var sectionBackgroundMap: Dictionary = {
 	GameState.Stage.SURFACE: preload("res://materials/backgrounds/bg_loop.tres"),
@@ -25,8 +26,18 @@ var sectionTransitions: Dictionary = {
 	GameState.Stage.LAVA: preload("res://materials/backgrounds/bg_lava_to_void.tres"),
 }
 
+# Dictionary defining which stage transitions should have destructible barriers
+var stageTransitionsWithBarriers: Dictionary = {
+	GameState.Stage.DEEP: GameState.Stage.DEEPER,
+	GameState.Stage.DEEPER: GameState.Stage.SUPERDEEP,
+	GameState.Stage.SUPERDEEP: GameState.Stage.HOT,
+	GameState.Stage.HOT: GameState.Stage.LAVA,
+	GameState.Stage.LAVA: GameState.Stage.VOID
+}
+
 var depth: int = 0
 var is_on_screen: bool = false
+var destroyable_barrier_scene = preload("res://scenes/destroyable_barier.tscn")
 
 func setDepth(d: int):
 	depth = d
@@ -69,11 +80,71 @@ func spawn_fish(spawn_all: bool = false):
 		if !spawn_all:
 			break
 
+# Function to add destructible barriers at section borders
+func add_barrier_boxes():
+	# Check if this is a transition that should have barriers
+	var should_add_barriers = false
+	var barrier_health = 1
+	
+	for from_stage in stageTransitionsWithBarriers:
+		if lastSectionType == from_stage and sectionType == stageTransitionsWithBarriers[from_stage]:
+			should_add_barriers = true
+			
+			# Increase barrier health as the player goes deeper
+			match sectionType:
+				GameState.Stage.DEEPER:
+					barrier_health = 2
+				GameState.Stage.SUPERDEEP:
+					barrier_health = 3  
+				GameState.Stage.HOT:
+					barrier_health = 4
+				GameState.Stage.LAVA:
+					barrier_health = 5
+				GameState.Stage.VOID:
+					barrier_health = 6
+			
+			break
+			
+	if should_add_barriers:
+		# Calculate the barrier line position - place at the top of the section
+		# This creates a horizontal barrier at the section boundary
+		var barrier_y_position = position.y + 10
+		
+		# Create a horizontal line of barriers blocking the downward path
+		# Width calculation based on section width from left to right barrier
+		var left_barrier_x = $LeftBarrier.position.x
+		var right_barrier_x = $RightBarrier.position.x
+		var section_width = abs(right_barrier_x - left_barrier_x)
+		var num_barriers = 9  # Number of barriers to place in a row
+		var spacing = section_width / (num_barriers - 1)  # Even spacing
+		
+		# Place barriers in a horizontal line
+		for i in range(num_barriers):
+			var barrier = destroyable_barrier_scene.instantiate()
+			barrier.max_health = barrier_health
+			barrier.current_health = barrier_health
+			
+			# Calculate x position with even spacing
+			var x_pos = left_barrier_x + (spacing * i)
+			
+			# Position the barriers in a horizontal line at the section boundary
+			barrier.position = Vector3(x_pos, barrier_y_position, 0)
+			
+			# Use default rotation so the "NO LOOT" text faces forward
+			# Adjust z position slightly to ensure proper visibility
+			barrier.position.z = -0.5
+			
+			add_child(barrier)
+
 func _ready() -> void:
 	if not particles_enabled:
 		$Debris.visible = false
 		$Bubbles.visible = false
 	spawn_fish(true)
+	
+	# Add destructible barriers if enabled
+	if add_destructible_barriers:
+		add_barrier_boxes()
 	
 	var shouldBeTransition = false
 	var shouldTransitionTo: GameState.Stage = GameState.Stage.SURFACE
