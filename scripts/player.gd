@@ -25,6 +25,7 @@ var harpoon_rotation_direction = 1 # 1 = clockwise, -1 = counterclockwise
 var harpoon_scene = preload("res://scenes/harpoon.tscn") # Path to harpoon scene
 var bullet_scene = preload("res://scenes/bullet.tscn")
 var ak_scene = preload("res://scenes/ak47.tscn")
+var catch_effect_scene = preload("res://scenes/catch_effect.tscn") # Preload catch effect
 @onready var touch_controls_scene = preload("res://scenes/ui/touch_controls.tscn")
 @onready var pause_menu_scene = preload("res://scenes/ui/pause_menu.tscn")
 var can_shoot = true
@@ -94,14 +95,14 @@ func hurtPlayer(damage: int):
 func reset_hurt_cooldown():
 	can_be_hurt = true
 
-var acceleration_x := 2.5  # Adjusted to feel less spongy but not too fast
-var deceleration_x := 3.8  # For responsive stopping without being too quick
-var max_speed_x := 5.0     # Keep original max speed
+var acceleration_x := 2.5 # Adjusted to feel less spongy but not too fast
+var deceleration_x := 3.8 # For responsive stopping without being too quick
+var max_speed_x := 5.0 # Keep original max speed
 var velocity_x := 0.0
 var velocity_y := 0.0
-var acceleration_y := 2.2  # Slower vertical acceleration
-var deceleration_y := 3.0  # Slower vertical deceleration
-var max_speed_y := 4.0     # Reduced vertical speed
+var acceleration_y := 2.2 # Slower vertical acceleration
+var deceleration_y := 3.0 # Slower vertical deceleration
+var max_speed_y := 4.0 # Reduced vertical speed
 
 func movement(_delta: float):
 	var direction = Vector3.ZERO
@@ -157,7 +158,7 @@ func movement(_delta: float):
 	direction.y = velocity_y
 	
 	# Apply upgrades to speed (reduced multiplier for upgrades)
-	var hor_speed_bonus = speed_horizontal + (GameState.upgrades[GameState.Upgrade.HOR_SPEED] * 0.5) 
+	var hor_speed_bonus = speed_horizontal + (GameState.upgrades[GameState.Upgrade.HOR_SPEED] * 0.5)
 	var vert_speed_bonus = speed_vertical + (GameState.upgrades[GameState.Upgrade.VERT_SPEED] * 0.3)
 	
 	target_velocity.x = direction.x * hor_speed_bonus
@@ -315,8 +316,7 @@ func catch_fish(fish):
 		# Get the fish details and remove it from the scene
 		var fish_details = fish.removeFish()
 		
-		# Spawn the catch effect at the fish's position
-		var catch_effect_scene = load("res://scenes/catch_effect.tscn")
+		# Spawn the catch effect at the fish's position using preloaded scene
 		var catch_effect = catch_effect_scene.instantiate()
 		get_parent().add_child(catch_effect)
 		catch_effect.global_position = fish_position
@@ -401,7 +401,7 @@ func rockingMotion(delta): # Apply a submarine-like rocking motion
 		$Pivot.rotation.z = lerp($Pivot.rotation.z, deg_to_rad(rocking_angle), delta * 0.8)
 	else:
 		# Make the submarine tilt slightly based on movement
-		var tilt = -velocity.x * 0.01  # Small tilt for movement
+		var tilt = - velocity.x * 0.01 # Small tilt for movement
 		$Pivot.rotation.z = lerp($Pivot.rotation.z, tilt, delta * 2.0)
 	
 	# Clamp rotation to prevent extreme angles

@@ -15,11 +15,11 @@ func _ready():
 	# Load sound effect based on if it's a shiny fish
 	if is_shiny:
 		audio_player.stream = load("res://sounds/harp3.wav")
-		audio_player.pitch_scale = 0.8  # Deeper sound for shiny fish
-		audio_player.volume_db = 2.0  # Louder for shiny fish
+		audio_player.pitch_scale = 0.8 # Deeper sound for shiny fish
+		audio_player.volume_db = 2.0 # Louder for shiny fish
 	else:
 		audio_player.stream = load("res://sounds/bup.wav")
-		audio_player.pitch_scale = randf_range(0.9, 1.1)  # Slight randomization
+		audio_player.pitch_scale = randf_range(0.9, 1.1) # Slight randomization
 	
 	audio_player.play()
 	
@@ -36,16 +36,21 @@ func _ready():
 
 func set_shiny(shiny_value):
 	is_shiny = shiny_value
+	
+	# Create a unique material instance to prevent shared material modifications
+	var bubbles_material = $Bubbles.process_material.duplicate()
+	$Bubbles.process_material = bubbles_material
+	
 	if is_shiny:
 		# Gold color for shiny fish
-		$Bubbles.process_material.color = Color(1.0, 0.9, 0.2)
+		bubbles_material.color = Color(1.0, 0.9, 0.2)
 		$OmniLight3D.light_color = Color(1.0, 0.9, 0.2)
-		$OmniLight3D.light_energy = 3.0  # Brighter light for shiny fish
+		$OmniLight3D.light_energy = 3.0 # Brighter light for shiny fish
 	else:
 		# Blue color for regular fish
-		$Bubbles.process_material.color = Color(0.2, 0.7, 1.0)
+		bubbles_material.color = Color(0.2, 0.7, 1.0)
 		$OmniLight3D.light_color = Color(0.2, 0.7, 1.0)
 
 func _on_timer_timeout():
 	# Remove the effect after it completes
-	queue_free() 
+	queue_free()

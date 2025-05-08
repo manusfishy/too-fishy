@@ -1,0 +1,125 @@
+[gd_scene load_steps=5 format=3 uid="uid://ct6stnjvli7ll"]
+
+[ext_resource type="Script" uid="uid://cthmw8332pgtc" path="res://scripts/pause_menu.gd" id="1_2rcfx"]
+[ext_resource type="PackedScene" uid="uid://c3r2h7a47y6m8" path="res://scenes/ui/save_menu.tscn" id="2_i6vla"]
+[ext_resource type="PackedScene" path="res://scenes/ui/settings_menu.tscn" id="3_m6j3v"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.05, 0.2, 0.3, 0.95)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.2, 0.4, 0.7, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="PauseMenu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2rcfx")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -200.0
+offset_right = 200.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="TitleSection" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Panel/MarginContainer/VBoxContainer/TitleSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 32
+text = "PAUSED"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Panel/MarginContainer/VBoxContainer/TitleSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 16
+text = "Game is currently paused"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="ResumeButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/ButtonsContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Resume Game"
+
+[node name="SaveButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/ButtonsContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Save / Load Game"
+
+[node name="SettingsButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/ButtonsContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Settings"
+
+[node name="QuitButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/ButtonsContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Quit Game"
+
+[node name="SaveMenu" parent="." instance=ExtResource("2_i6vla")]
+visible = false
+layout_mode = 1
+
+[node name="SettingsMenu" parent="." instance=ExtResource("3_m6j3v")]
+visible = false
+layout_mode = 1
+
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/ButtonsContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/ButtonsContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/ButtonsContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/ButtonsContainer/QuitButton" to="." method="_on_quit_button_pressed"]

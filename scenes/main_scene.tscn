@@ -19,7 +19,7 @@
 [ext_resource type="Script" uid="uid://dx1hxd4wnymb1" path="res://scripts/boss_dialog_ui.gd" id="12_mngbo"]
 [ext_resource type="PackedScene" uid="uid://b87oo8x46lj3r" path="res://scenes/cheats.tscn" id="13_4w45t"]
 [ext_resource type="Script" uid="uid://bjp67tva3ov6n" path="res://scripts/fps_counter.gd" id="14_r6p65"]
-[ext_resource type="PackedScene" uid="uid://ct6stnjvli7ll" path="res://scenes/ui/pause_menu.tscn" id="17_k3g67"]
+[ext_resource type="PackedScene" path="res://scenes/ui/pause_menu.tscn" id="17_k3g67"]
 [ext_resource type="PackedScene" uid="uid://b35mxcc3d74di" path="res://scenes/WaterPlane.tscn" id="20_k6f3i"]
 [ext_resource type="ArrayMesh" uid="uid://gw7pdmvoe3yh" path="res://meshes/gestein_v003.obj" id="21_to7gp"]
 [ext_resource type="Script" uid="uid://d1aerdanr4q2e" path="res://scripts/soundplayer.gd" id="21_xdqt8"]
