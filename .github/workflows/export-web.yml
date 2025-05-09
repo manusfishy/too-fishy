@@ -33,7 +33,7 @@ jobs:
           ./godot --headless --export-release "HTML5" build/web/index.html
 
       - name: Upload Web Build Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: web-export
           path: build/web/
