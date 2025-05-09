@@ -10,6 +10,16 @@ var hint_cooldown = 3.0 # Cooldown between showing hints
 var pickaxe_icon_material = null
 var cracks_texture = null
 
+# Reward configuration
+var min_money_reward = 5
+var max_money_reward = 40
+var reward_chances = {
+	"money": 0.65,        # 65% chance for money
+	"health": 0.15,       # 15% chance for health
+	"super_reward": 0.15, # 15% chance for super reward
+	"special": 0.05       # 5% chance for special reward
+}
+
 func _ready():
 	# Diese Einstellungen aus der TSCN-Datei verwenden
 	collision_layer = 3 # Schon in der TSCN gesetzt
@@ -38,6 +48,120 @@ func _ready():
 	
 	# Add visual indicator for pickaxe breakability
 	add_pickaxe_indicator()
+
+# Give player a random reward when box is destroyed
+func give_random_reward():
+	var rand = randf()
+	var cumulative_chance = 0.0
+	
+	# Get the depth level to scale rewards
+	var depth_multiplier = max(1.0, GameState.depth / 100.0)
+	
+	for reward_type in reward_chances:
+		cumulative_chance += reward_chances[reward_type]
+		if rand <= cumulative_chance:
+			match reward_type:
+				"money":
+					# Give money scaled by depth
+					var money_amount = int(randi_range(min_money_reward, max_money_reward) * depth_multiplier)
+					GameState.money += money_amount
+					show_reward_popup("+ " + str(money_amount) + " Money!", Color(1, 0.8, 0))
+					return
+				"health":
+					# Give health boost
+					var health_amount = randi_range(5, 15)
+					GameState.health = min(100, GameState.health + health_amount)
+					show_reward_popup("+ " + str(health_amount) + " Health!", Color(0, 1, 0.3))
+					return
+				"super_reward":
+					# Higher reward based on depth
+					var super_amount = int(randi_range(50, 100) * depth_multiplier)
+					GameState.money += super_amount
+					show_reward_popup("SUPER REWARD: + " + str(super_amount) + " Money!", Color(1, 0.5, 0))
+					return
+				"special":
+					# Special rewards that are more rare
+					give_special_reward()
+					return
+			break
+
+func show_reward_popup(message, color):
+	var popup_manager = get_node_or_null("/root/PopupManager")
+	if popup_manager:
+		popup_manager.show_popup(
+			message,
+			global_position + Vector3(0, 1.5, 0),
+			color
+		)
+	
+	# Create particle effect for reward visual feedback
+	create_reward_particles(color)
+
+# Create particles with color matching the reward type
+func create_reward_particles(color):
+	var particles = GPUParticles3D.new()
+
+	# Configure particle material
+	var material = ParticleProcessMaterial.new()
+	material.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_SPHERE
+	material.emission_sphere_radius = 0.4
+	material.gravity = Vector3(0, 2, 0)  # Particles float upward
+	material.initial_velocity_min = 1.0
+	material.initial_velocity_max = 3.0
+	
+	# Add color to the particles
+	material.color = color
+	
+	# Add sparkle/flashing effect for special rewards
+	if color.r > 0.9 and color.g < 0.5:  # Check if it's a special reward color
+		material.scale_min = 0.05
+		material.scale_max = 0.2
+		material.color_ramp = create_color_gradient(color)
+	else:
+		material.scale_min = 0.05
+		material.scale_max = 0.1
+	
+	particles.process_material = material
+
+	# Set the particle mesh
+	var mesh = SphereMesh.new()
+	mesh.radius = 0.05
+	mesh.height = 0.1
+	particles.draw_pass_1 = mesh
+
+	# Configure particle emission
+	particles.one_shot = true
+	particles.emitting = true
+	particles.amount = 30
+	particles.lifetime = 1.5
+	particles.explosiveness = 0.8
+
+	# Add to scene and position
+	get_parent().add_child(particles)
+	particles.global_position = global_position + Vector3(0, 0.5, 0)
+
+	# Clean up after particles are done
+	await get_tree().create_timer(2.0).timeout
+	if is_instance_valid(particles):
+		particles.queue_free()
+
+# Helper function to create a color gradient for particles
+func create_color_gradient(base_color):
+	var gradient = Gradient.new()
+	var bright_color = Color(
+		min(base_color.r + 0.3, 1.0),
+		min(base_color.g + 0.3, 1.0),
+		min(base_color.b + 0.3, 1.0),
+		1.0
+	)
+	gradient.add_point(0, base_color)
+	gradient.add_point(0.5, bright_color)
+	gradient.add_point(1, base_color)
+	
+	var gradient_texture = GradientTexture1D.new()
+	gradient_texture.gradient = gradient
+	
+	return gradient_texture
 
 func add_pickaxe_indicator():
 	# Create a small pickaxe icon or cracks indicator on the crate
@@ -144,6 +268,7 @@ func take_damage(amount: int):
 	update_crack_appearance()
 	
 	if current_health <= 0:
+		give_random_reward()  # Give reward when box is destroyed
 		destroy()
 
 func update_crack_appearance():
@@ -222,3 +347,48 @@ func create_destruction_particles():
 	await get_tree().create_timer(2.0).timeout
 	if is_instance_valid(particles):
 		particles.queue_free()
+
+# Handle special rewards that are more unique
+func give_special_reward():
+	# Scale chance based on depth - deeper means better chance of rare rewards
+	var depth_level = GameState.depth / 100
+	
+	# Different special rewards based on current gameplay state
+	
+	# If player doesn't have pickaxe and is deep enough (at least level 1 depth)
+	if GameState.upgrades[GameState.Upgrade.PICKAXE_UNLOCKED] == 0 and depth_level >= 1:
+		# 20% chance to get free pickaxe
+		if randf() < 0.2:
+			GameState.upgrades[GameState.Upgrade.PICKAXE_UNLOCKED] = 1
+			show_reward_popup("AMAZING! You found a pickaxe!", Color(1, 0.2, 1))
+			
+			# Try to enable the pickaxe on the player
+			var player = GameState.player_node
+			if player and player.has_node("Pivot/SmFishSubmarine/Hand/pickaxe"):
+				var pickaxe = player.get_node("Pivot/SmFishSubmarine/Hand/pickaxe")
+				if pickaxe.has_method("activate_pickaxe"):
+					pickaxe.activate_pickaxe()
+			return
+	
+	# Temp speed boost (more common)
+	if randf() < 0.5:
+		# Get player and boost speed temporarily
+		var player = GameState.player_node
+		if player:
+			# Apply speed boost for 15 seconds
+			player.speed_horizontal += 1.0
+			player.speed_vertical += 0.5
+			
+			show_reward_popup("SPEED BOOST for 15 seconds!", Color(0, 0.8, 1))
+			
+			# Reset after duration
+			await get_tree().create_timer(15.0).timeout
+			if is_instance_valid(player):
+				player.speed_horizontal -= 1.0
+				player.speed_vertical -= 0.5
+		return
+	
+	# Otherwise give a big money reward
+	var huge_amount = int(randi_range(100, 200) * max(1.0, depth_level))
+	GameState.money += huge_amount
+	show_reward_popup("JACKPOT: + " + str(huge_amount) + " Money!", Color(1, 0.3, 0.7))
