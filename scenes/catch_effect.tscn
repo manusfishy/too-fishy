@@ -45,7 +45,6 @@ emitting = false
 amount = 12
 one_shot = true
 explosiveness = 0.9
-fixed_fps = 30
 process_material = SubResource("ParticleProcessMaterial_cqrvx")
 draw_pass_1 = SubResource("SphereMesh_lqwpj")
 
