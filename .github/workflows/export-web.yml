@@ -5,43 +5,122 @@ on:
     branches: [ master ]  # or change to your deployment branch
   workflow_dispatch:
 
+env:
+  GODOT_VERSION: 4.3
+  EXPORT_NAME: too-fishy
+  PROJECT_PATH: ./
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    env:
-      GODOT_VERSION: 4.2.1
+  export-windows:
+    name: Windows Export
+    runs-on: ubuntu-22.04  # Use 22.04 with godot 4
+    container:
+      image: barichello/godot-ci:4.3
     steps:
-      - name: Checkout project
-        uses: actions/checkout@v3
-
-      - name: Download Godot Headless
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Setup
         run: |
-          wget https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
-          unzip Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
-          mv Godot_v${GODOT_VERSION}-stable_linux.x86_64 godot
-          chmod +x godot
-
-      - name: Download HTML5 Export Templates
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mkdir -v -p ~/.config/
+          mv /root/.config/godot ~/.config/godot
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+      - name: Windows Build
         run: |
-          wget https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
-          mkdir -p ~/.local/share/godot/templates/${GODOT_VERSION}.stable/
-          unzip Godot_v${GODOT_VERSION}-stable_export_templates.tpz -d ~/.local/share/godot/templates/${GODOT_VERSION}.stable/
-      
-      - name: Import Resources
-        run: |
-          # Create a minimal editor settings file to avoid warnings
-          mkdir -p ~/.config/godot/
-          echo '[gd_resource type="EditorSettings" format=3]' > ~/.config/godot/editor_settings-4.tres
-          # Import project resources
-          ./godot --headless --editor --quit
-
-      - name: Export HTML5 Build
-        run: |
-          mkdir -p build/web
-          ./godot --headless --export-release "HTML5" build/web/index.html
-
-      - name: Upload Web Build Artifact
+          mkdir -v -p build/windows
+          EXPORT_DIR="$(readlink -f build)"
+          cd $PROJECT_PATH
+          godot --headless --verbose --export-release "Windows Desktop" "$EXPORT_DIR/windows/$EXPORT_NAME.exe"
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: web-export
-          path: build/web/
+          name: windows
+          path: build/windows
+
+  export-linux:
+    name: Linux Export
+    runs-on: ubuntu-22.04  # Use 22.04 with godot 4
+    container:
+      image: barichello/godot-ci:4.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+      - name: Linux Build
+        run: |
+          mkdir -v -p build/linux
+          EXPORT_DIR="$(readlink -f build)"
+          cd $PROJECT_PATH
+          godot --headless --verbose --export-release "Linux/X11" "$EXPORT_DIR/linux/$EXPORT_NAME.x86_64"
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux
+          path: build/linux
+
+  export-web:
+    name: Web Export
+    runs-on: ubuntu-22.04  # Use 22.04 with godot 4
+    container:
+      image: barichello/godot-ci:4.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+      - name: Web Build
+        run: |
+          mkdir -v -p build/web
+          EXPORT_DIR="$(readlink -f build)"
+          cd $PROJECT_PATH
+          godot --headless --verbose --export-release "Web" "$EXPORT_DIR/web/index.html"
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web
+          path: build/web
+      - name: Install rsync 📚
+        run: |
+          apt-get update && apt-get install -y rsync
+      - name: Deploy to GitHub Pages 🚀
+        uses: JamesIves/github-pages-deploy-action@releases/v4
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: build/web # The folder the action should deploy.
+
+  export-mac:
+    name: Mac Export
+    runs-on: ubuntu-22.04  # Use 22.04 with godot 4
+    container:
+      image: barichello/godot-ci:4.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+      - name: Mac Build
+        run: |
+          mkdir -v -p build/mac
+          EXPORT_DIR="$(readlink -f build)"
+          cd $PROJECT_PATH
+          godot --headless --verbose --export-release "macOS" "$EXPORT_DIR/mac/$EXPORT_NAME.zip"
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mac
+          path: build/mac
