@@ -79,7 +79,7 @@ func hurtPlayer(damage: int):
 		
 		# Show damage visual effects (screen crack and red flash)
 		# Find the UI node to add the effects to
-		var ui_node = get_node("/root/MainScene/UI")
+		var ui_node = get_node("/root/Node3D/UI")
 		if ui_node:
 			if ui_node.has_node("DamageEffects"):
 				ui_node.get_node("DamageEffects").show_damage_effects()
