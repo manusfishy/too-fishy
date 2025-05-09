@@ -26,6 +26,14 @@ jobs:
           wget https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
           mkdir -p ~/.local/share/godot/templates/${GODOT_VERSION}.stable/
           unzip Godot_v${GODOT_VERSION}-stable_export_templates.tpz -d ~/.local/share/godot/templates/${GODOT_VERSION}.stable/
+      
+      - name: Import Resources
+        run: |
+          # Create a minimal editor settings file to avoid warnings
+          mkdir -p ~/.config/godot/
+          echo '[gd_resource type="EditorSettings" format=3]' > ~/.config/godot/editor_settings-4.tres
+          # Import project resources
+          ./godot --headless --editor --quit
 
       - name: Export HTML5 Build
         run: |
