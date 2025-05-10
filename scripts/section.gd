@@ -9,7 +9,7 @@ extends Node3D
 @export var background_mat: StandardMaterial3D
 @export var lava_vine_mat: StandardMaterial3D = preload("res://materials/walls/veins_lava.tres")
 @export var particles_enabled: bool = true
-@export var add_destructible_barriers: bool = true  # Add option to toggle barrier generation
+@export var add_destructible_barriers: bool = true # Add option to toggle barrier generation
 
 var sectionBackgroundMap: Dictionary = {
 	GameState.Stage.SURFACE: preload("res://materials/backgrounds/bg_loop.tres"),
@@ -49,7 +49,7 @@ func spawn_fish(spawn_all: bool = false):
 	var amount = len(get_tree().get_nodes_in_group("fishes").filter(func(x): return x.home == self.get_instance_id()))
 	while amount < FishesConfig.fishSectionMap[sectionType].max_fish_amount:
 		var r = randf()
-		var spawn_pos = Vector3(randf_range(spawn_marker_a.position.x, spawn_marker_b.position.x), 
+		var spawn_pos = Vector3(randf_range(spawn_marker_a.position.x, spawn_marker_b.position.x),
 							randf_range(spawn_marker_a.position.y, spawn_marker_b.position.y), 1)
 		spawn_pos.z = -0.3
 		var commulative_spawn_rate = 0
@@ -66,10 +66,10 @@ func spawn_fish(spawn_all: bool = false):
 		var shiny = randf() < FishesConfig.fishSectionMap[sectionType].shiny_rate
 		var weight_multiplier = FishesConfig.fishSectionMap[sectionType].weight_multiplier
 	
-		fish.initialize(spawn_pos, self.get_instance_id(), 
-			spawn_fish_config.speed_min, spawn_fish_config.speed_max, 
-			spawn_fish_config.difficulty, 
-			spawn_fish_config.weight_min, spawn_fish_config.weight_max, 
+		fish.initialize(spawn_pos, self.get_instance_id(),
+			spawn_fish_config.speed_min, spawn_fish_config.speed_max,
+			spawn_fish_config.difficulty,
+			spawn_fish_config.weight_min, spawn_fish_config.weight_max,
 			spawn_fish_config.price_weight_multiplier,
 			fishType,
 			weight_multiplier,
@@ -95,7 +95,7 @@ func add_barrier_boxes():
 				GameState.Stage.DEEPER:
 					barrier_health = 2
 				GameState.Stage.SUPERDEEP:
-					barrier_health = 3  
+					barrier_health = 3
 				GameState.Stage.HOT:
 					barrier_health = 4
 				GameState.Stage.LAVA:
@@ -115,8 +115,8 @@ func add_barrier_boxes():
 		var left_barrier_x = $LeftBarrier.position.x
 		var right_barrier_x = $RightBarrier.position.x
 		var section_width = abs(right_barrier_x - left_barrier_x)
-		var num_barriers = 9  # Number of barriers to place in a row
-		var spacing = section_width / (num_barriers - 1)  # Even spacing
+		var num_barriers = 9 # Number of barriers to place in a row
+		var spacing = section_width / (num_barriers - 1) # Even spacing
 		
 		# Place barriers in a horizontal line
 		for i in range(num_barriers):
@@ -138,8 +138,7 @@ func add_barrier_boxes():
 
 func _ready() -> void:
 	if not particles_enabled:
-		$Debris.visible = false
-		$Bubbles.visible = false
+		disableParticles()
 	spawn_fish(true)
 	
 	# Add destructible barriers if enabled
@@ -174,6 +173,15 @@ func screen_entered() -> void:
 
 func screen_exited() -> void:
 	is_on_screen = false
+
+func _on_particles_button_pressed() -> void:
+	disableParticles()
+
+func disableParticles() -> void:
+		$Debris.visible = false
+		$Bubbles.visible = false
+		$Debris.emitting = false
+		$Bubbles.emitting = false
 
 func respawn_timer_expired() -> void:
 	if !is_on_screen:

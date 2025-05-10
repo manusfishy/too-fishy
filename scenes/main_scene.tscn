@@ -251,7 +251,7 @@ text = "Pressure Headroom:"
 [node name="PressureHeadroomBar" type="ProgressBar" parent="UI/HUD/MarginContainer/HUDContainer"]
 layout_mode = 2
 
-[node name="MuteButton2" type="CheckButton" parent="UI/HUD/MarginContainer/HUDContainer"]
+[node name="ParticlesButton" type="CheckButton" parent="UI/HUD/MarginContainer/HUDContainer"]
 layout_mode = 2
 focus_mode = 0
 text = "Particles"
@@ -323,5 +323,5 @@ mesh = SubResource("QuadMesh_k67gn")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("9_7nt27")
 
-[connection signal="pressed" from="UI/HUD/MarginContainer/HUDContainer/MuteButton2" to="Audiomanager" method="_on_mute_button_pressed"]
+[connection signal="pressed" from="UI/HUD/MarginContainer/HUDContainer/ParticlesButton" to="Level/SecondSection" method="_on_particles_button_pressed"]
 [connection signal="pressed" from="UI/HUD/MarginContainer/HUDContainer/MuteButton" to="Audiomanager" method="_on_mute_button_pressed"]
