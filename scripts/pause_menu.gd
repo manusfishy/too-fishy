@@ -92,4 +92,4 @@ func _on_quit_button_pressed():
 	# Quit game
 	get_tree().quit()
 
-	pass 
+	pass

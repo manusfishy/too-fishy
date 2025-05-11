@@ -14,7 +14,7 @@ var upgradeNames = {
 	GameState.Upgrade.CARGO_SIZE: "Increased Cargo Space",
 	GameState.Upgrade.DEPTH_RESISTANCE: "Depth Resistance",
 	GameState.Upgrade.PICKAXE_UNLOCKED: "Unlock Pickaxe",
-	GameState.Upgrade.VERT_SPEED: "Agillity",
+	GameState.Upgrade.VERT_SPEED: "Agility",
 	GameState.Upgrade.HOR_SPEED: "Thrust",
 	GameState.Upgrade.LAMP_UNLOCKED: "Unlock Lamp",
 	GameState.Upgrade.AK47: "Unlock Gun",
@@ -29,21 +29,14 @@ var upgradeNames = {
 
 var boss_dialog_lines = {
 	Boss.BossDialogSections.TUTORIAL1: [
-	"Hey man! Is your sub ready yet?
-		Yes? Awesome! Go shoot some fish with that spear of yours!
-
-		You can move your submarine by using W A S D, or the Arrow Keys
-		To catch the fish, throw a spear with a 'Left-CLICK'
-		
-		Watch your !pressure! and Health levels and return to the surface when needed!
-		Remember, you can swim near the dock to upgrade your sub and sell fish."
-		],
-	Boss.BossDialogSections.TUTORIAL2: ["There are some crazy fish down here!I was able to sell some of them for a lot of money!"],
-	Boss.BossDialogSections.TUTORIAL3: ["I found that the pickaxe is actually very useful", "You can break the barriers with them", "Press 'SPACE' to use it!"],
-	Boss.BossDialogSections.TUTORIAL4: ["Its awesome down here, you gotta check it out!", "The blobfish is looking at me kinda wierd...", "You should be careful!"],
-	Boss.BossDialogSections.RESCUE_CALL: ["Uhhhh- I did an oopsie", "I think you need to come and get me :S"],
-	Boss.BossDialogSections.BOSS_INTRO: ["Hahaha, I got your friend, looser!", "His mind is under my control now!", "You better not do anything stupid or he dies!"],
-	Boss.BossDialogSections.BOSS_KILLS_FRIEND: ["Ohhhh, that was a mistake!", "*Splash*", "Your friend is dead now!"],
-	Boss.BossDialogSections.FRIEND_RESCUED: ["Oh my god thank you!", "That fucker is a mind controlling blobfish!", "You getting close has freed me from his spell!", "You need to stay close to me and escort me to the top!"],
-	Boss.BossDialogSections.WIN: ["You rescued your friend from the evil mind controlling blobfish!", "Congratulations, you beat our game.", "Feel free to keep fishing & upgrading or checkout some of the other games."]
+	"[color=#E0E0E0]Hey man! Is your sub ready yet?\nYes? Awesome! Go shoot some fish with that spear of yours!\n\nYou can move your submarine by using[/color] [color=#2C3E50]W A S D[/color][color=#E0E0E0], or the [/color][color=#2C3E50]Arrow Keys[/color][color=#E0E0E0]\nTo catch the fish, throw a spear with a [/color][color=#2C3E50]'Left-CLICK'[/color][color=#E0E0E0]\n\nWatch your [/color][color=#f21820ae]pressure[/color][color=#E0E0E0] or else you get damage and [/color][color=#1B5E20]Health[/color][color=#E0E0E0] levels and return to the surface when needed!\nRemember, you can swim near the dock to [/color][color=#1B5E20]upgrade your sub[/color][color=#E0E0E0] and [/color][color=#1B5E20]sell fish[/color][color=#E0E0E0].[/color]"
+	],
+	Boss.BossDialogSections.TUTORIAL2: ["[color=#E0E0E0]There are some crazy fish down here! I was able to sell some of them for a lot of [/color][color=#1B5E20]money[/color][color=#E0E0E0]![/color]"],
+	Boss.BossDialogSections.TUTORIAL3: ["[color=#E0E0E0]I found that the [/color][color=#2C3E50]pickaxe[/color][color=#E0E0E0] is actually very useful!\nYou can break the barriers with them.\nIf you have it Press [/color][color=#2C3E50]'SPACE'[/color][color=#E0E0E0] to use it![/color]"],
+	Boss.BossDialogSections.TUTORIAL4: ["[color=#E0E0E0]Its awesome down here, you gotta check it out!\nThe [/color][color=#f21820ae]blobfish[/color][color=#E0E0E0] is looking at me kinda wierd... You should be careful![/color]"],
+	Boss.BossDialogSections.RESCUE_CALL: ["[color=#E0E0E0]Uhhhh- I did an oopsie, I think you need to come and get me :S[/color]"],
+	Boss.BossDialogSections.BOSS_INTRO: ["[color=#E0E0E0]Hahaha, I got your friend, looser!\nHis mind is under my control now!\nYou better not do anything stupid or he dies![/color]"],
+	Boss.BossDialogSections.BOSS_KILLS_FRIEND: ["[color=#E0E0E0]Ohhhh, that was a mistake![/color]", "[color=#E0E0E0]*Splash*[/color]", "[color=#E0E0E0]Your friend is dead now![/color]"],
+	Boss.BossDialogSections.FRIEND_RESCUED: ["[color=#E0E0E0]Oh my god thank you! That [/color][color=#f21820ae]mind controlling blobfish[/color][color=#E0E0E0]!\nYou getting close has freed me from his spell!\nYou need to stay close to me and [/color][color=#D35400]escort me to the top[/color][color=#E0E0E0]![/color]"],
+	Boss.BossDialogSections.WIN: ["[color=#E0E0E0]You rescued your friend from the evil mind controlling blobfish![/color]", "[color=#E0E0E0]Congratulations, you beat our game. Feel free to keep fishing, the first game idea was created in Ludum dare 57.[/color]"]
 	}

@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=39 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
@@ -49,6 +49,9 @@ PanelContainer/styles/panel = ExtResource("9_6u1mn")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_6u1mn")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_01n6w"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k3g67"]
+bg_color = Color(0.917647, 0.52549, 0.211765, 0.819608)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k3g67"]
 render_priority = 1
@@ -149,19 +152,29 @@ grow_vertical = 2
 [node name="BossDialog" type="PanelContainer" parent="UI/CenterContainer"]
 process_mode = 3
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 script = ExtResource("12_mngbo")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/CenterContainer/BossDialog"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 10
 
 [node name="NameLabel" type="Label" parent="UI/CenterContainer/BossDialog/VBoxContainer"]
 layout_mode = 2
 text = "Blobfish:"
 
-[node name="MessageLabel" type="Label" parent="UI/CenterContainer/BossDialog/VBoxContainer"]
+[node name="MessageLabel" type="RichTextLabel" parent="UI/CenterContainer/BossDialog/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+bbcode_enabled = true
 text = "Oh nooo, you died!
 Anyways... Lets keep going - we don't have all day!"
+fit_content = true
+scroll_following = true
 
 [node name="ContinueButton" type="Button" parent="UI/CenterContainer/BossDialog/VBoxContainer"]
 layout_mode = 2
@@ -238,18 +251,22 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="HealthBarLabel" type="Label" parent="UI/HUD/MarginContainer/HUDContainer"]
+modulate = Color(0.286275, 1.65882, 0, 1)
 layout_mode = 2
-text = "Health:"
+text = "Health"
 
 [node name="HealthBar" type="ProgressBar" parent="UI/HUD/MarginContainer/HUDContainer"]
 layout_mode = 2
 
 [node name="PressureHeadroomLabel" type="Label" parent="UI/HUD/MarginContainer/HUDContainer"]
+modulate = Color(0.94902, 0.0941176, 0.12549, 0.682353)
 layout_mode = 2
-text = "Pressure Headroom:"
+text = "Pressure Headroom"
 
 [node name="PressureHeadroomBar" type="ProgressBar" parent="UI/HUD/MarginContainer/HUDContainer"]
 layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_k3g67")
+value = 10.0
 
 [node name="ParticlesButton" type="CheckButton" parent="UI/HUD/MarginContainer/HUDContainer"]
 layout_mode = 2
@@ -263,10 +280,10 @@ text = "Mute"
 
 [node name="Cheats" parent="UI" instance=ExtResource("13_4w45t")]
 layout_mode = 0
-offset_left = 434.0
-offset_top = 82.0
-offset_right = 748.0
-offset_bottom = 258.0
+offset_left = 310.0
+offset_top = 40.0
+offset_right = 624.0
+offset_bottom = 216.0
 
 [node name="FPS Counter" type="Label" parent="UI"]
 layout_mode = 2
