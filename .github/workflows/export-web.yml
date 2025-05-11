@@ -8,7 +8,7 @@ on:
 env:
   GODOT_VERSION: 4.4.1
   EXPORT_NAME: too-fishy
-  PROJECT_PATH: ./
+  PROJECT_PATH: .
 
 jobs:
   export-windows:
