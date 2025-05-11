@@ -191,7 +191,6 @@ layout_mode = 2
 text = "Continue"
 
 [node name="Upgrades" type="PanelContainer" parent="UI/CenterContainer"]
-visible = false
 layout_mode = 2
 script = ExtResource("10_6wevv")
 
@@ -208,7 +207,6 @@ vertical_alignment = 1
 layout_mode = 2
 
 [node name="DeathScreen" type="PanelContainer" parent="UI/CenterContainer"]
-visible = false
 layout_mode = 2
 script = ExtResource("10_e1cbu")
 
@@ -226,11 +224,9 @@ text = "Respawn
 "
 
 [node name="PauseMenu" parent="UI/CenterContainer" instance=ExtResource("17_k3g67")]
-visible = false
 layout_mode = 2
 
 [node name="HUD" type="PanelContainer" parent="UI"]
-visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0

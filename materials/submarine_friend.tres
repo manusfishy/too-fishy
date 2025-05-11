@@ -1,0 +1,18 @@
+[gd_resource type="StandardMaterial3D" load_steps=6 format=3 uid="uid://ld2vryl4m0ve"]
+
+[ext_resource type="Texture2D" uid="uid://crpee0rimi7q3" path="res://textures/sub/SM_FishSubmarine_initialShadingGroup_BaseColor.png" id="1_b1f8a"]
+[ext_resource type="Texture2D" uid="uid://dv4lvpdoor1bp" path="res://textures/sub/SM_FishSubmarine_initialShadingGroup_Height.png" id="2_jupfg"]
+[ext_resource type="Texture2D" uid="uid://b2k0f4hoeb3xa" path="res://textures/sub/SM_FishSubmarine_initialShadingGroup_Metallic.png" id="3_u2wqn"]
+[ext_resource type="Texture2D" uid="uid://dftjv217nkd1s" path="res://textures/sub/SM_FishSubmarine_initialShadingGroup_Normal.png" id="4_u5kqd"]
+[ext_resource type="Texture2D" uid="uid://4eml8a4bksxs" path="res://textures/sub/SM_FishSubmarine_initialShadingGroup_Roughness.png" id="5_fcv3a"]
+
+[resource]
+albedo_texture = ExtResource("1_b1f8a")
+metallic = 1.0
+metallic_texture = ExtResource("3_u2wqn")
+roughness_texture = ExtResource("5_fcv3a")
+normal_enabled = true
+normal_texture = ExtResource("4_u5kqd")
+heightmap_enabled = true
+heightmap_scale = 1.0
+heightmap_texture = ExtResource("2_jupfg")
