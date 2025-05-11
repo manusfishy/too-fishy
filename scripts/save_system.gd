@@ -5,7 +5,7 @@ const SAVE_FILE_PATH = "user://savegame.save"
 # Save all game data
 func save_game() -> bool:
 	var save_dict = {
-		"version": 1,  # Save version for future compatibility
+		"version": 1, # Save version for future compatibility
 		"timestamp": Time.get_unix_time_from_system(),
 		
 		# Game state data
@@ -144,14 +144,14 @@ func delete_save() -> bool:
 	if not FileAccess.file_exists(SAVE_FILE_PATH):
 		print("No save file to delete")
 		return false
-	
+	var error
 	var dir = DirAccess.open("user://")
 	if dir == null:
-		var error = DirAccess.get_open_error()
+		error = DirAccess.get_open_error()
 		print("Error opening directory: ", error)
 		return false
 	
-	var error = dir.remove(SAVE_FILE_PATH)
+	error = dir.remove(SAVE_FILE_PATH)
 	if error != OK:
 		print("Error deleting save file: ", error)
 		return false
@@ -189,4 +189,4 @@ func get_save_info() -> Dictionary:
 		"money": save_dict.get("money", 0)
 	}
 	
-	return save_info 
+	return save_info

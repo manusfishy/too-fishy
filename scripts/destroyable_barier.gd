@@ -14,10 +14,10 @@ var cracks_texture = null
 var min_money_reward = 5
 var max_money_reward = 40
 var reward_chances = {
-	"money": 0.65,        # 65% chance for money
-	"health": 0.15,       # 15% chance for health
+	"money": 0.65, # 65% chance for money
+	"health": 0.15, # 15% chance for health
 	"super_reward": 0.15, # 15% chance for super reward
-	"special": 0.05       # 5% chance for special reward
+	"special": 0.05 # 5% chance for special reward
 }
 
 func _ready():
@@ -105,7 +105,7 @@ func create_reward_particles(color):
 	var material = ParticleProcessMaterial.new()
 	material.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_SPHERE
 	material.emission_sphere_radius = 0.4
-	material.gravity = Vector3(0, 2, 0)  # Particles float upward
+	material.gravity = Vector3(0, 2, 0) # Particles float upward
 	material.initial_velocity_min = 1.0
 	material.initial_velocity_max = 3.0
 	
@@ -113,7 +113,7 @@ func create_reward_particles(color):
 	material.color = color
 	
 	# Add sparkle/flashing effect for special rewards
-	if color.r > 0.9 and color.g < 0.5:  # Check if it's a special reward color
+	if color.r > 0.9 and color.g < 0.5: # Check if it's a special reward color
 		material.scale_min = 0.05
 		material.scale_max = 0.2
 		material.color_ramp = create_color_gradient(color)
@@ -268,7 +268,7 @@ func take_damage(amount: int):
 	update_crack_appearance()
 	
 	if current_health <= 0:
-		give_random_reward()  # Give reward when box is destroyed
+		give_random_reward() # Give reward when box is destroyed
 		destroy()
 
 func update_crack_appearance():
@@ -351,7 +351,7 @@ func create_destruction_particles():
 # Handle special rewards that are more unique
 func give_special_reward():
 	# Scale chance based on depth - deeper means better chance of rare rewards
-	var depth_level = GameState.depth / 100
+	var depth_level = GameState.depth / 100.0
 	
 	# Different special rewards based on current gameplay state
 	

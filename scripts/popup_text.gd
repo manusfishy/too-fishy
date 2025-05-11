@@ -13,8 +13,8 @@ func start_animation(text_to_show: String, color: Color, start_position: Vector3
 
 	modulate = initial_modulate
 	
-	var offset = Vector3(randf_range(-horizontal_drift, horizontal_drift), 0, 0)
-	var final_start_position = start_position + offset
+	var offset_pop = Vector3(randf_range(-horizontal_drift, horizontal_drift), 0, 0)
+	var final_start_position = start_position + offset_pop
 	
 	text = text_to_show
 	

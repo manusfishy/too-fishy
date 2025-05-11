@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cv7cru1o8ec0"]
 
-[ext_resource type="PackedScene" uid="uid://fs8tke7i5p2e" path="res://meshes/ak47_0406195124_texture.fbx" id="1_jfj41"]
+[ext_resource type="PackedScene" path="res://meshes/ak47_0406195124_texture.fbx" id="1_jfj41"]
 [ext_resource type="Script" uid="uid://berm86ra14l2m" path="res://scripts/items/ak47.gd" id="2_e25y1"]
 
 [node name="ak47" instance=ExtResource("1_jfj41")]

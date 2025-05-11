@@ -187,6 +187,7 @@ func _physics_process(delta: float) -> void:
 	var depthSnapped = snapped(GameState.depth, 100)
 	if depthSnapped >= GameState.depthStageMap.keys()[len(GameState.depthStageMap.keys()) - 1]:
 		depthSnapped = GameState.depthStageMap.keys()[len(GameState.depthStageMap.keys()) - 1]
+		emit_signal("section_changed", depthSnapped)
 	var sectionType = GameState.depthStageMap[depthSnapped]
 	
 	process_death()
