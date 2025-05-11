@@ -72,7 +72,7 @@ transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0.00037846, 0.000150
 [node name="submarine" parent="Pivot" instance=ExtResource("2_qhqgy")]
 visible = false
 
-[node name="SmFishSubmarine" type="MeshInstance3D" parent="Pivot"]
+[node name="SmFishSubmarine" type="MeshInstance3D" parent="Pivot" groups=["player"]]
 transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0.00037846, 0.000150717, -3.20524e-05)
 mesh = ExtResource("5_smehm")
 surface_material_override/0 = ExtResource("6_smehm")

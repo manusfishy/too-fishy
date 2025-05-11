@@ -21,11 +21,11 @@ var upgradeCosts = {
 	Upgrade.HOR_SPEED: 25,
 	Upgrade.LAMP_UNLOCKED: 50,
 	Upgrade.AK47: 500,
-	Upgrade.DUALAK47: 500,
+	Upgrade.DUALAK47: 5000,
 	Upgrade.HARPOON: 100,
 	Upgrade.HARPOON_ROTATION: 150,
-	Upgrade.INVENTORY_MANAGEMENT: 200,
-	Upgrade.SURFACE_BUOY: 100,
+	Upgrade.INVENTORY_MANAGEMENT: 400,
+	Upgrade.SURFACE_BUOY: 1000,
 	Upgrade.INVENTORY_SAVE: 250,
 	Upgrade.DRONE_SELLING: 300
 }
@@ -85,7 +85,7 @@ func setDepth(d: int):
 	depth = d
 	if (maxDepthReached < d):
 		maxDepthReached = d
-	if snapped(d, 100) <= depthStageMap.keys()[len(depthStageMap.keys())-1]:
+	if snapped(d, 100) <= depthStageMap.keys()[len(depthStageMap.keys()) - 1]:
 		GameState.playerInStage = depthStageMap[snapped(d, 100)]
 	else:
 		GameState.playerInStage = Stage.VOID
