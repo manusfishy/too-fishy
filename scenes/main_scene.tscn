@@ -162,7 +162,17 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 10
 
-[node name="NameLabel" type="Label" parent="UI/CenterContainer/BossDialog/VBoxContainer"]
+[node name="HeaderContainer" type="HBoxContainer" parent="UI/CenterContainer/BossDialog/VBoxContainer"]
+layout_mode = 2
+
+[node name="ProfilePicture" type="TextureRect" parent="UI/CenterContainer/BossDialog/VBoxContainer/HeaderContainer"]
+custom_minimum_size = Vector2(150, 200)
+layout_mode = 2
+size_flags_vertical = 4
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NameLabel" type="Label" parent="UI/CenterContainer/BossDialog/VBoxContainer/HeaderContainer"]
 layout_mode = 2
 text = "Blobfish:"
 
@@ -181,6 +191,7 @@ layout_mode = 2
 text = "Continue"
 
 [node name="Upgrades" type="PanelContainer" parent="UI/CenterContainer"]
+visible = false
 layout_mode = 2
 script = ExtResource("10_6wevv")
 
@@ -197,6 +208,7 @@ vertical_alignment = 1
 layout_mode = 2
 
 [node name="DeathScreen" type="PanelContainer" parent="UI/CenterContainer"]
+visible = false
 layout_mode = 2
 script = ExtResource("10_e1cbu")
 
@@ -214,9 +226,11 @@ text = "Respawn
 "
 
 [node name="PauseMenu" parent="UI/CenterContainer" instance=ExtResource("17_k3g67")]
+visible = false
 layout_mode = 2
 
 [node name="HUD" type="PanelContainer" parent="UI"]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
