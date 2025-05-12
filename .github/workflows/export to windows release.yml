@@ -1,0 +1,107 @@
+name: Export Godot to windows release
+
+on:
+  push:
+    tags:
+      - 'v*' # Trigger workflow on tags like v1.0, v1.2.3, v2.0-beta, etc.
+  workflow_dispatch:
+
+env:
+  GODOT_VERSION: 4.4.1
+  EXPORT_NAME: too-fishy
+  PROJECT_PATH: .
+
+jobs:
+  export-windows: # This is the job name from your script
+    name: Windows Export and Release # More descriptive name for the job
+    runs-on: ubuntu-22.04
+    container:
+      image: barichello/godot-ci:4.4.1 # Using the Godot version from your script
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true # As in your script
+
+      - name: Setup # Based on your script
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mkdir -v -p ~/.config/ # Ensures the parent directory for ~/.config/godot exists
+
+          # Handle Godot editor configuration
+          if [ -d "/root/.config/godot" ]; then
+            # If ~/.config/godot already exists, remove it to prevent mv from creating ~/.config/godot/godot
+            if [ -d "$HOME/.config/godot" ]; then # Use $HOME for clarity
+              echo "Removing existing $HOME/.config/godot to avoid nesting."
+              rm -rf "$HOME/.config/godot"
+            fi
+            mv /root/.config/godot "$HOME/.config/godot" # Moves /root/.config/godot to $HOME/.config/godot
+            echo "Godot editor configuration moved to $HOME/.config/godot."
+          else
+            echo "Warning: Source Godot config directory /root/.config/godot not found in container."
+          fi
+
+          # Handle Godot export templates
+          # Dynamically determine template name based on GODOT_VERSION (e.g., "4.4.1.stable")
+          TEMPLATE_NAME="${GODOT_VERSION}.stable"
+          SOURCE_TEMPLATE_PATH="/root/.local/share/godot/export_templates/${TEMPLATE_NAME}"
+          TARGET_TEMPLATE_DIR="$HOME/.local/share/godot/export_templates/" # Target directory
+
+          if [ -e "${SOURCE_TEMPLATE_PATH}" ]; then # Check if source file or directory exists
+            echo "Moving Godot export template ${TEMPLATE_NAME} from ${SOURCE_TEMPLATE_PATH} to ${TARGET_TEMPLATE_DIR}"
+            mv "${SOURCE_TEMPLATE_PATH}" "${TARGET_TEMPLATE_DIR}" # Moves the template pack to the target directory
+          else
+            echo "Warning: Export template ${TEMPLATE_NAME} not found at ${SOURCE_TEMPLATE_PATH}."
+            echo "The barichello/godot-ci image might already provide templates in the correct location or use a different naming convention."
+          fi
+
+      - name: Windows Build # Based on your script
+        run: |
+          mkdir -v -p build/windows
+          # EXPORT_DIR in your script was "$(readlink -f build)". This means it's an absolute path.
+          # We'll use a similar concept for clarity in the godot export command.
+          ABS_EXPORT_PATH="$(pwd)/build/windows/${EXPORT_NAME}.exe"
+
+          echo "Changing directory to project path: $PROJECT_PATH"
+          cd "$PROJECT_PATH"
+          
+          echo "Starting Windows Desktop build for $EXPORT_NAME..."
+          echo "Outputting to: $ABS_EXPORT_PATH"
+          godot --headless --verbose --export-release "Windows Desktop" "$ABS_EXPORT_PATH"
+          
+          echo "Build finished. Checking output files in $(dirname "$ABS_EXPORT_PATH"):"
+          ls -l "$(dirname "$ABS_EXPORT_PATH")"
+
+      - name: Upload Artifact # Your original artifact upload step, kept for temporary storage
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-build-${{ env.EXPORT_NAME }}-${{ github.ref_name }} # Using a more descriptive artifact name
+          path: | # Paths are relative to the workspace root
+            build/windows/${{ env.EXPORT_NAME }}.exe
+            build/windows/${{ env.EXPORT_NAME }}.pck 
+            # Godot should create the .pck file with the same base name as the .exe
+
+      - name: Create GitHub Release # This new step creates the actual GitHub Release
+        if: success() && startsWith(github.ref, 'refs/tags/') # Only run on successful build and if it's a tag event
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is automatically provided by GitHub
+        with:
+          tag_name: ${{ github.ref_name }} # Uses the tag that triggered the workflow (e.g., "v1.0.0")
+          name: Release ${{ github.ref_name }} - ${{ env.EXPORT_NAME }} # Title of the Release
+          body: | # Description/notes for the Release
+            Automated release of ${{ env.EXPORT_NAME }} for ${{ github.ref_name }}.
+            Windows build.
+            
+            Files included:
+            - ${{ env.EXPORT_NAME }}.exe
+            - ${{ env.EXPORT_NAME }}.pck
+          draft: false # Set to true if you want to create a draft release first
+          prerelease: ${{ contains(github.ref_name, '-beta') || contains(github.ref_name, '-alpha') || contains(github.ref_name, '-rc') }} # Example: mark as pre-release if tag contains -beta, -alpha, or -rc
+          files: | # Specify the files to attach to the release (paths relative to workspace root)
+            build/windows/${{ env.EXPORT_NAME }}.exe
+            build/windows/${{ env.EXPORT_NAME }}.pck 
+            # IMPORTANT: Ensure Godot generates the .pck file (containing your game data, like the large index.pck content)
+            # with the same base name as your EXPORT_NAME.exe in the 'build/windows/' directory.
