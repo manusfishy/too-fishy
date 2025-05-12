@@ -328,6 +328,7 @@ func create_destruction_particles():
 	material.gravity = Vector3(0, -2, 0)
 	material.initial_velocity_min = 2.0
 	material.initial_velocity_max = 5.0
+	material.color = Color(0.259, 0.196, 0.129)
 	particles.process_material = material
 
 	# Partikelform
