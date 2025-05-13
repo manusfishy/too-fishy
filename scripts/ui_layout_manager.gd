@@ -69,6 +69,12 @@ func _find_ui_elements():
 func _on_window_size_changed():
 	if initialized:
 		_update_layout()
+		
+		# Also update HUD width immediately to match window width
+		if hud:
+			var window_width = DisplayServer.window_get_size().x
+			hud.custom_minimum_size.x = window_width
+			hud.size.x = window_width
 
 func _update_layout():
 	if !ui_root:
@@ -118,11 +124,26 @@ func _apply_layout(layout_type):
 			_apply_narrow_layout()
 
 func _reset_ui_positions():
-	# Reset HUD
+	# Reset HUD - simpler approach to ensure it always spans the full width
 	if hud:
-		hud.anchors_preset = Control.PRESET_TOP_LEFT
+		# Force HUD to bottom of screen with proper anchoring
+		hud.anchor_top = 1.0
+		hud.anchor_right = 1.0
+		hud.anchor_bottom = 1.0
+		hud.anchor_left = 0.0
+		
+		# Set position relative to anchors
+		hud.offset_left = 0
 		hud.offset_right = 0
 		hud.offset_bottom = 0
+		hud.offset_top = -120
+		
+		# Ensure grow directions are correct
+		hud.grow_horizontal = Control.GROW_DIRECTION_BOTH
+		hud.grow_vertical = Control.GROW_DIRECTION_BEGIN
+		
+		# No custom minimum size - let it use the full width
+		hud.custom_minimum_size = Vector2(0, 120)
 	
 	# Reset inventory
 	if inventory:
@@ -135,8 +156,9 @@ func _reset_ui_positions():
 # Different layout implementations
 func _apply_small_layout():
 	if hud:
-		# Make HUD smaller and compact
-		hud.custom_minimum_size.x = max(200, DisplayServer.window_get_size().x * 0.15)
+		# For small screens, make HUD slightly smaller in height
+		hud.offset_top = -90
+		hud.custom_minimum_size.y = 90
 	
 	if inventory:
 		# Shrink inventory
@@ -145,8 +167,9 @@ func _apply_small_layout():
 
 func _apply_medium_layout():
 	if hud:
-		# Standard HUD size for medium screens
-		hud.custom_minimum_size.x = max(220, DisplayServer.window_get_size().x * 0.18)
+		# Medium height for medium screens
+		hud.offset_top = -110
+		hud.custom_minimum_size.y = 110
 	
 	if inventory:
 		# Adjust inventory
@@ -155,8 +178,9 @@ func _apply_medium_layout():
 
 func _apply_large_layout():
 	if hud:
-		# Full size HUD
-		hud.custom_minimum_size.x = max(250, DisplayServer.window_get_size().x * 0.2)
+		# Standard height for large screens
+		hud.offset_top = -120
+		hud.custom_minimum_size.y = 120
 	
 	if inventory:
 		# Default inventory size
@@ -165,8 +189,9 @@ func _apply_large_layout():
 
 func _apply_wide_layout():
 	if hud:
-		# For ultrawide: potentially move HUD more to the side
-		hud.custom_minimum_size.x = max(250, DisplayServer.window_get_size().x * 0.15)
+		# Same as large layout for wide screens
+		hud.offset_top = -120
+		hud.custom_minimum_size.y = 120
 	
 	if inventory:
 		# For ultrawide: give inventory more space
@@ -175,8 +200,9 @@ func _apply_wide_layout():
 
 func _apply_narrow_layout():
 	if hud:
-		# For narrow screens: make HUD narrower
-		hud.custom_minimum_size.x = max(200, DisplayServer.window_get_size().x * 0.25)
+		# Slightly taller for narrow screens
+		hud.offset_top = -130
+		hud.custom_minimum_size.y = 130
 	
 	if inventory:
 		# For narrow screens: adjust inventory placement

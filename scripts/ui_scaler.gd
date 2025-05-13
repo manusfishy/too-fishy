@@ -58,6 +58,17 @@ func _apply_scaling():
 func _scale_ui_elements(node):
 	# Recursively apply scaling to all UI elements
 	if node is Control:
+		# Special handling for HUD
+		if node.name == "HUD" and node is PanelContainer:
+			# For HUD, just scale fonts and internal components, not position or size
+			_scale_fonts(node)
+			
+			# Let the UI layout manager handle the positioning
+			# Just make sure the child controls are scaled properly
+			for child in node.get_children():
+				_scale_ui_elements(child)
+			return
+		
 		# For containers that should maintain their relative size
 		if node is MarginContainer:
 			var current_margins = {

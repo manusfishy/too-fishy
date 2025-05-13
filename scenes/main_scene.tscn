@@ -12,7 +12,6 @@
 [ext_resource type="Material" uid="uid://bq68gffx25aw4" path="res://materials/backgrounds/bg_first.tres" id="9_7nt27"]
 [ext_resource type="Material" uid="uid://dohoucrjnnkwp" path="res://materials/backgrounds/bg_afterfirst.tres" id="9_bcnxi"]
 [ext_resource type="PackedScene" uid="uid://bip40vv31g12d" path="res://scenes/inventory/inv_ui.tscn" id="9_c1pb6"]
-[ext_resource type="Texture2D" uid="uid://criy5nis30pph" path="res://textures/UI_element_background.png" id="10_01n6w"]
 [ext_resource type="Script" uid="uid://cau06s0ctjwx8" path="res://scripts/upgrades.gd" id="10_6wevv"]
 [ext_resource type="Script" uid="uid://dhv52dohn5s4r" path="res://scripts/death_screen.gd" id="10_e1cbu"]
 [ext_resource type="PackedScene" uid="uid://d0ykw70micab6" path="res://scenes/boss.tscn" id="11_e1cbu"]
@@ -49,10 +48,38 @@ Button/styles/normal = null
 PanelContainer/styles/panel = ExtResource("9_6u1mn")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_6u1mn")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_01n6w"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_subway"]
+bg_color = Color(0.05, 0.2, 0.3, 0.85)
+border_width_top = 3
+border_color = Color(0.105882, 0.85098, 0.917647, 0.8)
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 4
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k3g67"]
-bg_color = Color(0.917647, 0.52549, 0.211765, 0.819608)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_digital"]
+bg_color = Color(0.066, 0.132, 0.2, 0.85)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.105882, 0.85098, 0.917647, 0.4)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_color = Color(0, 0, 0, 0.15)
+shadow_size = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_bg"]
+bg_color = Color(0.05, 0.05, 0.05, 0.7)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.105882, 0.85098, 0.917647, 0.3)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k3g67"]
 render_priority = 1
@@ -231,66 +258,153 @@ text = "Respawn
 layout_mode = 2
 
 [node name="HUD" type="PanelContainer" parent="UI"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_01n6w")
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -120.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_subway")
 script = ExtResource("7_c16ls")
-
-[node name="TextureRect" type="TextureRect" parent="UI/HUD"]
-layout_mode = 2
-texture = ExtResource("10_01n6w")
-expand_mode = 4
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/HUD"]
 layout_mode = 2
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 25
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
 
-[node name="HUDContainer" type="VBoxContainer" parent="UI/HUD/MarginContainer"]
+[node name="HUDContainer" type="HBoxContainer" parent="UI/HUD/MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
 
-[node name="CurrentStageLabel" type="Label" parent="UI/HUD/MarginContainer/HUDContainer"]
+[node name="HealthInfo" type="PanelContainer" parent="UI/HUD/MarginContainer/HUDContainer"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_digital")
 
-[node name="DepthLabel" type="Label" parent="UI/HUD/MarginContainer/HUDContainer"]
+[node name="HealthBar" type="ProgressBar" parent="UI/HUD/MarginContainer/HUDContainer/HealthInfo"]
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
+value = 100.0
+show_percentage = false
 
-[node name="MaxDepthLabel" type="Label" parent="UI/HUD/MarginContainer/HUDContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/HUD/MarginContainer/HUDContainer/HealthInfo"]
 layout_mode = 2
+theme_override_constants/separation = 5
 
-[node name="MoneyLabel" type="Label" parent="UI/HUD/MarginContainer/HUDContainer"]
+[node name="HealthLabel" type="Label" parent="UI/HUD/MarginContainer/HUDContainer/HealthInfo/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.780392, 0.780392, 1)
+theme_override_font_sizes/font_size = 14
+text = "SUBMARINE INTEGRITY"
+horizontal_alignment = 1
 
-[node name="HealthBarLabel" type="Label" parent="UI/HUD/MarginContainer/HUDContainer"]
-modulate = Color(0.286275, 1.65882, 0, 1)
+[node name="StageInfo" type="PanelContainer" parent="UI/HUD/MarginContainer/HUDContainer"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "Health"
+theme_override_styles/panel = SubResource("StyleBoxFlat_digital")
 
-[node name="HealthBar" type="ProgressBar" parent="UI/HUD/MarginContainer/HUDContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/HUD/MarginContainer/HUDContainer/StageInfo"]
 layout_mode = 2
+theme_override_constants/separation = 5
+alignment = 1
 
-[node name="PressureHeadroomLabel" type="Label" parent="UI/HUD/MarginContainer/HUDContainer"]
-modulate = Color(0.94902, 0.0941176, 0.12549, 0.682353)
+[node name="StageLabel" type="Label" parent="UI/HUD/MarginContainer/HUDContainer/StageInfo/VBoxContainer"]
 layout_mode = 2
-text = "Pressure Headroom"
+theme_override_colors/font_color = Color(0.780392, 0.780392, 0.780392, 1)
+theme_override_font_sizes/font_size = 14
+text = "CURRENT ZONE"
+horizontal_alignment = 1
 
-[node name="PressureHeadroomBar" type="ProgressBar" parent="UI/HUD/MarginContainer/HUDContainer"]
+[node name="StageValue" type="Label" parent="UI/HUD/MarginContainer/HUDContainer/StageInfo/VBoxContainer"]
 layout_mode = 2
-theme_override_styles/fill = SubResource("StyleBoxFlat_k3g67")
-value = 10.0
+theme_override_colors/font_color = Color(0.105882, 0.85098, 0.917647, 1)
+theme_override_font_sizes/font_size = 24
+text = "OCEAN"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="ParticlesButton" type="CheckButton" parent="UI/HUD/MarginContainer/HUDContainer"]
+[node name="DepthInfo" type="PanelContainer" parent="UI/HUD/MarginContainer/HUDContainer"]
+custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
-focus_mode = 0
-text = "Particles"
+theme_override_styles/panel = SubResource("StyleBoxFlat_digital")
 
-[node name="MuteButton" type="CheckButton" parent="UI/HUD/MarginContainer/HUDContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/HUD/MarginContainer/HUDContainer/DepthInfo"]
 layout_mode = 2
-focus_mode = 0
-text = "Mute"
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="DepthLabel" type="Label" parent="UI/HUD/MarginContainer/HUDContainer/DepthInfo/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.780392, 0.780392, 1)
+theme_override_font_sizes/font_size = 14
+text = "DEPTH"
+horizontal_alignment = 1
+
+[node name="DepthValue" type="Label" parent="UI/HUD/MarginContainer/HUDContainer/DepthInfo/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.105882, 0.85098, 0.917647, 1)
+theme_override_font_sizes/font_size = 24
+text = "0m"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MaxDepthInfo" type="PanelContainer" parent="UI/HUD/MarginContainer/HUDContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_digital")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/HUD/MarginContainer/HUDContainer/MaxDepthInfo"]
+layout_mode = 2
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="MaxDepthLabel" type="Label" parent="UI/HUD/MarginContainer/HUDContainer/MaxDepthInfo/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.780392, 0.780392, 1)
+theme_override_font_sizes/font_size = 14
+text = "MAX DEPTH"
+horizontal_alignment = 1
+
+[node name="MaxDepthValue" type="Label" parent="UI/HUD/MarginContainer/HUDContainer/MaxDepthInfo/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.105882, 0.85098, 0.917647, 1)
+theme_override_font_sizes/font_size = 24
+text = "0m"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PressureInfo" type="PanelContainer" parent="UI/HUD/MarginContainer/HUDContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_digital")
+
+[node name="PressureBar" type="ProgressBar" parent="UI/HUD/MarginContainer/HUDContainer/PressureInfo"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
+value = 100.0
+show_percentage = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/HUD/MarginContainer/HUDContainer/PressureInfo"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="PressureLabel" type="Label" parent="UI/HUD/MarginContainer/HUDContainer/PressureInfo/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.780392, 0.780392, 1)
+theme_override_font_sizes/font_size = 14
+text = "PRESSURE SYSTEM"
+horizontal_alignment = 1
 
 [node name="Cheats" parent="UI" instance=ExtResource("13_4w45t")]
 layout_mode = 0
@@ -353,6 +467,3 @@ visible = false
 mesh = SubResource("QuadMesh_k67gn")
 skeleton = NodePath("../..")
 surface_material_override/0 = ExtResource("9_7nt27")
-
-[connection signal="pressed" from="UI/HUD/MarginContainer/HUDContainer/ParticlesButton" to="Level/SecondSection" method="_on_particles_button_pressed"]
-[connection signal="pressed" from="UI/HUD/MarginContainer/HUDContainer/MuteButton" to="Audiomanager" method="_on_mute_button_pressed"]
