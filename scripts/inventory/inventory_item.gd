@@ -6,3 +6,4 @@ class_name InvItem
 @export var weight: int
 @export var price: int
 @export var id: int
+@export var shiny: bool = false

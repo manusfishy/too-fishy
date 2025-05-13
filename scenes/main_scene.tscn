@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=40 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://d0ykw70micab6" path="res://scenes/boss.tscn" id="11_e1cbu"]
 [ext_resource type="Script" uid="uid://dx1hxd4wnymb1" path="res://scripts/boss_dialog_ui.gd" id="12_mngbo"]
 [ext_resource type="PackedScene" uid="uid://b87oo8x46lj3r" path="res://scenes/cheats.tscn" id="13_4w45t"]
+[ext_resource type="PackedScene" uid="uid://dyotcvyxjphy2" path="res://scenes/ui/inventory_menu.tscn" id="14_4bgka"]
 [ext_resource type="Script" uid="uid://bjp67tva3ov6n" path="res://scripts/fps_counter.gd" id="14_r6p65"]
 [ext_resource type="PackedScene" uid="uid://ct6stnjvli7ll" path="res://scenes/ui/pause_menu.tscn" id="17_k3g67"]
 [ext_resource type="PackedScene" uid="uid://b35mxcc3d74di" path="res://scenes/WaterPlane.tscn" id="20_k6f3i"]
@@ -148,6 +149,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="InventoryMenu" parent="UI/CenterContainer" instance=ExtResource("14_4bgka")]
+layout_mode = 2
 
 [node name="BossDialog" type="PanelContainer" parent="UI/CenterContainer"]
 process_mode = 3

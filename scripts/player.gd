@@ -34,6 +34,24 @@ var touch_direction = Vector2.ZERO
 var pause_menu = null
 signal section_changed(sectionType)
 
+# New inventory menu reference
+var inventory_menu = null
+
+var pickup_range := 1.5
+var can_swing = true
+var rotation_target = 0
+var trauma = 0.0
+var health = 100.0
+var isDocked = false
+var docked_timer = 0.0
+var dock_countdown = 2.0
+
+# Camera shake properties
+var trauma_reduction_rate = 1.7  # How quickly trauma reduces over time
+var shake_power = 2.0            # Exponent for screen shake based on trauma
+var max_shake_offset = 1.0       # Maximum movement from origin
+var max_shake_roll = 0.0         # Maximum rotation in radians (0 = disabled)
+
 func _ready():
 	GameState.player_node = self
 	print("player ready")
@@ -222,6 +240,11 @@ func _input(_event):
 	if Input.is_action_just_pressed("upgrade_drone_selling") and GameState.upgrades[GameState.Upgrade.DRONE_SELLING] > 0:
 		if !GameState.isDocked and !GameState.paused and GameState.inventory.items.size() > 0:
 			activate_selling_drone()
+	
+	# Toggle inventory menu
+	if Input.is_action_just_pressed("inv_toggle"):
+		if !GameState.paused:
+			toggle_inventory_menu()
 
 func activate_surface_buoy():
 	# Only works if player is below the surface
@@ -407,7 +430,6 @@ func rockingMotion(delta): # Apply a submarine-like rocking motion
 	# Clamp rotation to prevent extreme angles
 	$Pivot.rotation.z = clamp($Pivot.rotation.z, deg_to_rad(-8), deg_to_rad(8))
 
-@export var trauma_reduction_rate := 1.0
 
 @export var max_x := 10.0
 @export var max_y := 10.0
@@ -415,7 +437,6 @@ func rockingMotion(delta): # Apply a submarine-like rocking motion
 
 @export var noise_speed := 50.0
 
-var trauma := 0.0
 
 var time := 0.0
 
@@ -506,3 +527,18 @@ func activate_selling_drone():
 	# Add small cooldown to prevent spamming
 	can_shoot = false
 	cooldown_timer.start()
+
+func toggle_inventory_menu():
+	# Get the inventory menu
+	if inventory_menu == null:
+		# Find the menu in the scene
+		var ui_parent = get_tree().get_root().find_child("UI", true, false)
+		if ui_parent and ui_parent.has_node("CenterContainer/InventoryMenu"):
+			inventory_menu = ui_parent.get_node("CenterContainer/InventoryMenu")
+	
+	# Toggle the menu
+	if inventory_menu:
+		if inventory_menu.visible:
+			inventory_menu.close()
+		else:
+			inventory_menu.open()

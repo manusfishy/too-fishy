@@ -1,5 +1,7 @@
 extends Node
 
+signal inventory_updated
+
 #DEFINITIONS
 enum Stage {SURFACE, DEEP, DEEPER, SUPERDEEP, HOT, LAVA, VOID}
 var depthStageMap = {
@@ -81,6 +83,10 @@ var inventory: Inv = Inv.new()
 
 var playerInStage: Stage = Stage.SURFACE
 
+func _ready():
+	# Connect to inventory's methods to emit the inventory_updated signal
+	inventory.connect_signals_to_gamestate(self)
+
 func setDepth(d: int):
 	depth = d
 	if (maxDepthReached < d):
@@ -103,3 +109,6 @@ func upgrade(mUpgrade: Upgrade) -> bool:
 		return true
 	else:
 		return false
+
+func notify_inventory_updated():
+	emit_signal("inventory_updated")
