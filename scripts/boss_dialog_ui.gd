@@ -23,11 +23,18 @@ func _ready() -> void:
 
 func _update_size() -> void:
 	var viewport_size = get_viewport().get_visible_rect().size
-	var target_width = min(viewport_size.x * 0.7, 700) # 70% of viewport width, max 1200
-	var target_height = min(viewport_size.y * 0.4, 80) # 40% of viewport height, max 400
+	var target_width = min(viewport_size.x * 0.7, 700) # 70% of viewport width, max 700
+	var target_height = min(viewport_size.y * 0.4, 80) # 40% of viewport height, max 80
 	
 	custom_minimum_size = Vector2(target_width, target_height)
 	$VBoxContainer/MessageLabel.custom_minimum_size = Vector2(target_width * 0.9, target_height * 0.7)
+	
+	# Set a fixed, appropriate size for the profile picture
+	var profile_size = min(target_height * 0.5, 40)  # Limit profile picture size
+	var profile_picture = $VBoxContainer/HeaderContainer/ProfilePicture
+	profile_picture.custom_minimum_size = Vector2(profile_size, profile_size)
+	profile_picture.expand = true
+	profile_picture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 
 func _process(_delta: float) -> void:
 	if Boss.boss_dialog_displayed:
