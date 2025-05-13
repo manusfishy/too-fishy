@@ -1,7 +1,7 @@
 extends PanelContainer
 
 @onready var grid = $VBoxContainer/GridContainer
-@export var is_open = true
+@export var is_open = false
 
 func addButton(text, mCall):
 	var upgradeButton: Button = Button.new()

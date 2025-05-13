@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=42 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
@@ -80,6 +80,12 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k3g67"]
+content_margin_top = 10.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4bgka"]
+content_margin_top = 10.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k3g67"]
 render_priority = 1
@@ -258,6 +264,7 @@ text = "Respawn
 layout_mode = 2
 
 [node name="HUD" type="PanelContainer" parent="UI"]
+z_index = -1
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -303,11 +310,12 @@ theme_override_constants/separation = 5
 layout_mode = 2
 theme_override_colors/font_color = Color(0.780392, 0.780392, 0.780392, 1)
 theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxEmpty_k3g67")
 text = "SUBMARINE INTEGRITY"
 horizontal_alignment = 1
 
 [node name="StageInfo" type="PanelContainer" parent="UI/HUD/MarginContainer/HUDContainer"]
-custom_minimum_size = Vector2(200, 0)
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_digital")
 
@@ -403,10 +411,12 @@ theme_override_constants/separation = 5
 layout_mode = 2
 theme_override_colors/font_color = Color(0.780392, 0.780392, 0.780392, 1)
 theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxEmpty_4bgka")
 text = "PRESSURE SYSTEM"
 horizontal_alignment = 1
 
 [node name="Cheats" parent="UI" instance=ExtResource("13_4w45t")]
+visible = false
 layout_mode = 0
 offset_left = 310.0
 offset_top = 40.0
