@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cx8ycl8uqbw4j"]
+
+[ext_resource type="PackedScene" uid="uid://bf21p2j1vpc7f" path="res://meshes/spikey.fbx" id="1_gxlia"]
+[ext_resource type="Script" uid="uid://d4hh642cl3tb4" path="res://scripts/achievements/MeshToIcon.gd" id="2_14c3g"]
+
+[node name="Node3D" type="SubViewport"]
+render_target_update_mode = 4
+
+[node name="spikey" parent="." instance=ExtResource("1_gxlia")]
+script = ExtResource("2_14c3g")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.0942474, 0, 0.995549, 0, 1, 0, -0.995549, 0, -0.0942474, 1.24928, 0, 0.0964491)
+current = true
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(0.998274, -0.0531405, 0.0250094, 0.0587314, 0.903243, -0.425092, -9.70036e-10, 0.425827, 0.904805, 0, 0, -1.93445)

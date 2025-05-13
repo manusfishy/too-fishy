@@ -15,8 +15,16 @@ var rotation_cooldown_left = 0
 var speed = 0
 var home: int
 var type: int
+var caught_in_air = false
+
+@onready var achievement_manager = $"/root/AchievementManager"
 
 func removeFish():
+	if global_position.y >= -0.5:
+		caught_in_air = true
+	
+	achievement_manager.record_fish_catch(type, is_shiny, caught_in_air)
+	
 	var fish_data = {
 		"price": price,
 		"weight": weight,

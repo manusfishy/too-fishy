@@ -1,0 +1,72 @@
+[gd_scene load_steps=6 format=3 uid="uid://b6x8y0q5n3j4v"]
+
+[ext_resource type="Script" path="res://scripts/achievements/achievement_slot.gd" id="1_2k3m4"]
+[ext_resource type="Texture2D" uid="uid://c8j6y7n4q5l9m" path="res://textures/question_mark.png" id="2_3l4n5"]
+[ext_resource type="Texture2D" uid="uid://d1r2s3t4u5v6w" path="res://textures/star.png" id="3_4m5n6"]
+[ext_resource type="Texture2D" uid="uid://e7f8g9h0i1j2k" path="res://textures/bubble.png" id="4_5o6p7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.2, 0.2, 0.2, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="AchievementSlot" type="Panel"]
+custom_minimum_size = Vector2(100, 100)
+offset_right = 100.0
+offset_bottom = 100.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+script = ExtResource("1_2k3m4")
+
+[node name="Icon" type="TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="QuestionMark" type="TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_3l4n5")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ShinyIndicator" type="TextureRect"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -32.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = 32.0
+grow_horizontal = 0
+texture = ExtResource("3_4m5n6")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AirIndicator" type="TextureRect"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -32.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("4_5o6p7")
+expand_mode = 1
+stretch_mode = 5 
