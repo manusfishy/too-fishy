@@ -1,9 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbsnxit5lvmyu"]
+[gd_scene load_steps=3 format=3 uid="uid://cbsnxit5lvmyu"]
 
 [ext_resource type="Script" uid="uid://cjpsiwduuvtl0" path="res://scripts/popup_text.gd" id="1_4m4vl"]
 
+[sub_resource type="SystemFont" id="SystemFont_tmlj2"]
+font_names = PackedStringArray("Sans-Serif")
+font_weight = 600
+subpixel_positioning = 0
+
 [node name="PopupText" type="Label3D"]
 billboard = 1
+no_depth_test = true
+texture_filter = 5
+render_priority = 1
+outline_render_priority = 0
 text = "Lorem Ipsum"
-font_size = 36
+font = SubResource("SystemFont_tmlj2")
+font_size = 42
+outline_size = 6
 script = ExtResource("1_4m4vl")
