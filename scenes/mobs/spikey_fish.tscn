@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cu8ytffujlk0f"]
 
 [ext_resource type="Script" uid="uid://ckbs05slsrxf2" path="res://scripts/fish.gd" id="1_i55c0"]
-[ext_resource type="PackedScene" uid="uid://bf21p2j1vpc7f" path="res://meshes/spikey.fbx" id="2_deppa"]
+[ext_resource type="PackedScene" uid="uid://girqu28onjg5" path="res://meshes/Spiky_remesh.fbx" id="2_bh6jc"]
 [ext_resource type="Material" uid="uid://ntxihwik5ww0" path="res://materials/mobs/ShinyParticles.tres" id="3_bh6jc"]
 [ext_resource type="PrismMesh" uid="uid://dkttjpdmphyxv" path="res://materials/mobs/ShinyParticlesMesh.tres" id="4_aeq15"]
 
@@ -21,8 +21,8 @@ shiny_particles = NodePath("ShinyParticles")
 [node name="Pivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.118526, 0, 0)
 
-[node name="spikey" parent="Pivot" instance=ExtResource("2_deppa")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.118526, 0, 0)
+[node name="Spiky_remesh" parent="Pivot" instance=ExtResource("2_bh6jc")]
+transform = Transform3D(-0.00335101, 0, 0.999994, 0, 1, 0, -0.999994, 0, -0.00335101, -0.118526, 0, 0)
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.809324, 0, 0)
@@ -43,6 +43,5 @@ emitting = false
 amount = 200
 lifetime = 1.5
 randomness = 0.6
-fixed_fps = 30
 process_material = ExtResource("3_bh6jc")
 draw_pass_1 = ExtResource("4_aeq15")
