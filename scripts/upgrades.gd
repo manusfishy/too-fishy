@@ -224,8 +224,8 @@ func create_upgrade_button(key):
 	container.add_theme_stylebox_override("panel", style)
 	
 	# Set tooltip for the entire container
-	if upgrade_descriptions and upgrade_descriptions.upgradeDescriptions.has(key):
-		container.tooltip_text = upgrade_descriptions.upgradeDescriptions[key]
+	if upgrade_descriptions and Strings.upgradeDescriptions.has(key):
+		container.tooltip_text = Strings.upgradeDescriptions[key]
 		# Set tooltip to appear immediately (set here explicitly for this container)
 		container.mouse_filter = Control.MOUSE_FILTER_STOP
 		container.focus_mode = Control.FOCUS_ALL
@@ -363,8 +363,8 @@ func create_upgrade_button(key):
 	upgradeButton.pressed.connect(func(): on_upgrade_pressed(key, info_label))
 	
 	# Set same tooltip on the button
-	if upgrade_descriptions and upgrade_descriptions.upgradeDescriptions.has(key):
-		upgradeButton.tooltip_text = upgrade_descriptions.upgradeDescriptions[key]
+	if upgrade_descriptions and Strings.upgradeDescriptions.has(key):
+		upgradeButton.tooltip_text = Strings.upgradeDescriptions[key]
 		# Apply tooltip settings to the button
 		upgradeButton.mouse_filter = Control.MOUSE_FILTER_STOP
 		upgradeButton.focus_mode = Control.FOCUS_ALL

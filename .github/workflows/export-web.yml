@@ -93,11 +93,30 @@ jobs:
       - name: Install rsync 📚
         run: |
           apt-get update && apt-get install -y rsync
-#      - name: Deploy to GitHub Pages 🚀
-#        uses: JamesIves/github-pages-deploy-action@releases/v4
-#        with:
-#          branch: gh-pages # The branch the action should deploy to.
-#          folder: build/web # The folder the action should deploy.
+  deploy-to-server:
+    name: Deploy to Web Server
+    needs: [export-web]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Web Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: web
+          path: web-build
+  
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: 'unnecessary'
+          if_key_exists: replace
+  
+      - name: Adding Known Hosts
+        run: ssh-keyscan -H -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+  
+      - name: Deploy to server
+        run: |
+          rsync -avz -e "ssh -p ${{ secrets.SSH_PORT }}" web-build/ ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/home/jbettaque/too-fishy/webgame
 
  # export-mac:
  #   name: Mac Export
