@@ -14,7 +14,10 @@ env:
 
 jobs:
   Export-And-Deploy:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-22.04    
+    container:
+      image: barichello/godot-ci:4.4.1
+      
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,11 +29,17 @@ jobs:
         with:
           version: 4.4.1
           use-dotnet: false
-
+          
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates/
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
       - name: Web Build
         run: |
-          mkdir -v -p dist
-          godot --headless --verbose --export-release "Web" "./dist/index.html"
+          mkdir -v -p dist/web
+          EXPORT_DIR="$(readlink -f build)"
+          cd $PROJECT_PATH
+          godot --headless --verbose --export-release "Web" "$EXPORT_DIR/web/index.html"
 
       - name: Install Node.js
         uses: actions/setup-node@v3
