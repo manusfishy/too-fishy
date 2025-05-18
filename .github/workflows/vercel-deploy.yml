@@ -24,27 +24,30 @@ jobs:
         with:
           lfs: true
 
-      - name: Setup Godot
-        uses: chickensoft-games/setup-godot@v1
-        with:
-          version: 4.4.1
-          use-dotnet: false
-
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+
       - name: Web Build
         run: |
-          mkdir -v -p build/web
-          EXPORT_DIR="$(readlink -f build)"
+          mkdir -v -p build
           cd $PROJECT_PATH
-          godot --headless --verbose --export-release "Web" "$EXPORT_DIR/index.html"
+          godot --headless --verbose --export-release "Web" "./build/index.html"
+
+      - name: List build contents
+        run: |
+          echo "Build directory contents:"
+          ls -la build/
 
       - name: Copy build files to dist
         run: |
-          mkdir -p dist/
           cp -r build/* dist/
+
+      - name: List dist contents
+        run: |
+          echo "Dist directory contents:"
+          ls -la dist/
 
       - name: Install Node.js
         uses: actions/setup-node@v3
