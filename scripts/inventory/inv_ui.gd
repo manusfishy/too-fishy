@@ -65,8 +65,8 @@ func close():
 
 func update_display():
 	# Update static UI elements with current data
-	money_label.text = "Money: %s" % GameState.money
-	fish_label.text = "Fish: %d" % \
+	money_label.text = "Bank Account: %s$" % GameState.money
+	fish_label.text = " Fish: %d" % \
 		GameState.inventory.inventoryCumulatedValues[GameState.inventory.InventoryValues.FishesCaught]
 	value_label.text = "$%.2f" % \
 		GameState.inventory.inventoryCumulatedValues[GameState.inventory.InventoryValues.TotalValue]

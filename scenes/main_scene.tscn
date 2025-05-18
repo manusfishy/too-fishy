@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=53 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
@@ -84,8 +84,20 @@ corner_radius_bottom_left = 4
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k3g67"]
 content_margin_top = 10.0
 
+[sub_resource type="LabelSettings" id="LabelSettings_k3g67"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4bgka"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_02d50"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_pgk25"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4bgka"]
 content_margin_top = 10.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_kkokr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_lhwp2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_fill"]
 bg_color = Color(0, 0.36, 0.83, 0.8)
@@ -93,6 +105,14 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
+
+[sub_resource type="LabelSettings" id="LabelSettings_l40q6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_iav3h"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_womr8"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_onjth"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k3g67"]
 render_priority = 1
@@ -320,6 +340,7 @@ theme_override_colors/font_color = Color(0.780392, 0.780392, 0.780392, 1)
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxEmpty_k3g67")
 text = "SUBMARINE INTEGRITY"
+label_settings = SubResource("LabelSettings_k3g67")
 horizontal_alignment = 1
 
 [node name="StageInfo" type="PanelContainer" parent="UI/HUD/MarginContainer/HUDContainer"]
@@ -337,6 +358,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.780392, 0.780392, 0.780392, 1)
 theme_override_font_sizes/font_size = 14
 text = "CURRENT ZONE"
+label_settings = SubResource("LabelSettings_4bgka")
 horizontal_alignment = 1
 
 [node name="StageValue" type="Label" parent="UI/HUD/MarginContainer/HUDContainer/StageInfo/VBoxContainer"]
@@ -362,6 +384,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.780392, 0.780392, 0.780392, 1)
 theme_override_font_sizes/font_size = 14
 text = "DEPTH"
+label_settings = SubResource("LabelSettings_02d50")
 horizontal_alignment = 1
 
 [node name="DepthValue" type="Label" parent="UI/HUD/MarginContainer/HUDContainer/DepthInfo/VBoxContainer"]
@@ -387,6 +410,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.780392, 0.780392, 0.780392, 1)
 theme_override_font_sizes/font_size = 14
 text = "MAX DEPTH"
+label_settings = SubResource("LabelSettings_pgk25")
 horizontal_alignment = 1
 
 [node name="MaxDepthValue" type="Label" parent="UI/HUD/MarginContainer/HUDContainer/MaxDepthInfo/VBoxContainer"]
@@ -421,6 +445,7 @@ theme_override_colors/font_color = Color(0.780392, 0.780392, 0.780392, 1)
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxEmpty_4bgka")
 text = "PRESSURE SYSTEM"
+label_settings = SubResource("LabelSettings_kkokr")
 horizontal_alignment = 1
 
 [node name="CooldownInfo" type="PanelContainer" parent="UI/HUD/MarginContainer/HUDContainer"]
@@ -439,6 +464,7 @@ theme_override_colors/font_color = Color(0.780392, 0.780392, 0.780392, 1)
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxEmpty_4bgka")
 text = "COOLDOWNS"
+label_settings = SubResource("LabelSettings_lhwp2")
 horizontal_alignment = 1
 
 [node name="HarpoonCD" type="ProgressBar" parent="UI/HUD/MarginContainer/HUDContainer/CooldownInfo/VBoxContainer"]
@@ -460,6 +486,7 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(0.780392, 0.780392, 0.780392, 1)
 theme_override_font_sizes/font_size = 14
 text = "Harpoon"
+label_settings = SubResource("LabelSettings_l40q6")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -482,6 +509,7 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(0.780392, 0.780392, 0.780392, 1)
 theme_override_font_sizes/font_size = 14
 text = "Surface Buoy"
+label_settings = SubResource("LabelSettings_iav3h")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -504,6 +532,7 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(0.780392, 0.780392, 0.780392, 1)
 theme_override_font_sizes/font_size = 14
 text = "Selling Drone"
+label_settings = SubResource("LabelSettings_womr8")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -526,6 +555,7 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(0.780392, 0.780392, 0.780392, 1)
 theme_override_font_sizes/font_size = 14
 text = "AK47 (30/30)"
+label_settings = SubResource("LabelSettings_onjth")
 horizontal_alignment = 1
 vertical_alignment = 1
 
