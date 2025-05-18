@@ -14,10 +14,10 @@ env:
 
 jobs:
   Export-And-Deploy:
-    runs-on: ubuntu-22.04    
+    runs-on: ubuntu-22.04
     container:
       image: barichello/godot-ci:4.4.1
-      
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,7 +29,7 @@ jobs:
         with:
           version: 4.4.1
           use-dotnet: false
-          
+
       - name: Setup
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates/
@@ -40,12 +40,12 @@ jobs:
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
           godot --headless --verbose --export-release "Web" "$EXPORT_DIR/web/index.html"
-          
+
       - name: Copy build files to dist
         run: |
           mkdir -p dist/web
           cp -r build/web/* dist/web/
-          
+
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
@@ -54,8 +54,8 @@ jobs:
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
-      - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-
       - name: Deploy to Vercel
-        run: vercel deploy dist --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          vercel deploy ./dist --token $VERCEL_TOKEN --yes --prod
