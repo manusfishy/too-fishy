@@ -36,11 +36,16 @@ jobs:
           mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
       - name: Web Build
         run: |
-          mkdir -v -p dist/web
+          mkdir -v -p build/web
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
           godot --headless --verbose --export-release "Web" "$EXPORT_DIR/web/index.html"
-
+          
+      - name: Copy build files to dist
+        run: |
+          mkdir -p dist/web
+          cp -r build/web/* dist/web/
+          
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
