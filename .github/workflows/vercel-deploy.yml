@@ -39,12 +39,12 @@ jobs:
           mkdir -v -p build/web
           EXPORT_DIR="$(readlink -f build)"
           cd $PROJECT_PATH
-          godot --headless --verbose --export-release "Web" "$EXPORT_DIR/web/index.html"
+          godot --headless --verbose --export-release "Web" "$EXPORT_DIR/index.html"
 
       - name: Copy build files to dist
         run: |
-          mkdir -p dist/web
-          cp -r build/web/* dist/web/
+          mkdir -p dist/
+          cp -r build/* dist/
 
       - name: Install Node.js
         uses: actions/setup-node@v3
