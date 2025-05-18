@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=43 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
@@ -87,6 +87,13 @@ content_margin_top = 10.0
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4bgka"]
 content_margin_top = 10.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_fill"]
+bg_color = Color(0, 0.36, 0.83, 0.8)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k3g67"]
 render_priority = 1
 transparency = 1
@@ -147,7 +154,7 @@ transform = Transform3D(0.538622, 0, 0, 0, 4.32167, 0, 0, 0, 1, -19.2295, 0.1801
 transform = Transform3D(2.45308, 0, 0, 0, 1.62324, 0, 0, 0, 1, -20.4469, -3.0248, -2.69743)
 
 [node name="FirstSection" parent="Level" instance=ExtResource("4_gubc5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10.5, 0)
 background_mat = ExtResource("9_7nt27")
 particles_enabled = false
 
@@ -271,6 +278,7 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -120.0
+offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_subway")
@@ -315,7 +323,7 @@ text = "SUBMARINE INTEGRITY"
 horizontal_alignment = 1
 
 [node name="StageInfo" type="PanelContainer" parent="UI/HUD/MarginContainer/HUDContainer"]
-custom_minimum_size = Vector2(250, 0)
+custom_minimum_size = Vector2(290, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_digital")
 
@@ -340,7 +348,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="DepthInfo" type="PanelContainer" parent="UI/HUD/MarginContainer/HUDContainer"]
-custom_minimum_size = Vector2(150, 0)
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_digital")
 
@@ -365,7 +373,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MaxDepthInfo" type="PanelContainer" parent="UI/HUD/MarginContainer/HUDContainer"]
-custom_minimum_size = Vector2(150, 0)
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_digital")
 
@@ -415,8 +423,113 @@ theme_override_styles/normal = SubResource("StyleBoxEmpty_4bgka")
 text = "PRESSURE SYSTEM"
 horizontal_alignment = 1
 
+[node name="CooldownInfo" type="PanelContainer" parent="UI/HUD/MarginContainer/HUDContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_digital")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/HUD/MarginContainer/HUDContainer/CooldownInfo"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="CooldownLabel" type="Label" parent="UI/HUD/MarginContainer/HUDContainer/CooldownInfo/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.780392, 0.780392, 0.780392, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxEmpty_4bgka")
+text = "COOLDOWNS"
+horizontal_alignment = 1
+
+[node name="HarpoonCD" type="ProgressBar" parent="UI/HUD/MarginContainer/HUDContainer/CooldownInfo/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bar_fill")
+max_value = 1.0
+value = 1.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="UI/HUD/MarginContainer/HUDContainer/CooldownInfo/VBoxContainer/HarpoonCD"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.780392, 0.780392, 0.780392, 1)
+theme_override_font_sizes/font_size = 14
+text = "Harpoon"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BuoyCD" type="ProgressBar" parent="UI/HUD/MarginContainer/HUDContainer/CooldownInfo/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bar_fill")
+max_value = 3.0
+value = 3.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="UI/HUD/MarginContainer/HUDContainer/CooldownInfo/VBoxContainer/BuoyCD"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.780392, 0.780392, 0.780392, 1)
+theme_override_font_sizes/font_size = 14
+text = "Surface Buoy"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DroneCD" type="ProgressBar" parent="UI/HUD/MarginContainer/HUDContainer/CooldownInfo/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bar_fill")
+max_value = 5.0
+value = 5.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="UI/HUD/MarginContainer/HUDContainer/CooldownInfo/VBoxContainer/DroneCD"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.780392, 0.780392, 0.780392, 1)
+theme_override_font_sizes/font_size = 14
+text = "Selling Drone"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AK47CD" type="ProgressBar" parent="UI/HUD/MarginContainer/HUDContainer/CooldownInfo/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bar_fill")
+max_value = 1.0
+value = 1.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="UI/HUD/MarginContainer/HUDContainer/CooldownInfo/VBoxContainer/AK47CD"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.780392, 0.780392, 0.780392, 1)
+theme_override_font_sizes/font_size = 14
+text = "AK47 (30/30)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Cheats" parent="UI" instance=ExtResource("13_4w45t")]
-visible = false
 layout_mode = 0
 offset_left = 310.0
 offset_top = 40.0

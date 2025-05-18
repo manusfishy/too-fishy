@@ -1,6 +1,6 @@
 extends PanelContainer
 
-var john_texture = preload("res://textures/characters/john_insub.png")
+var john_texture = preload("res://textures/characters/john.png")
 
 func _ready() -> void:
 	# Set initial size based on viewport
@@ -24,13 +24,13 @@ func _ready() -> void:
 func _update_size() -> void:
 	var viewport_size = get_viewport().get_visible_rect().size
 	var target_width = min(viewport_size.x * 0.7, 700) # 70% of viewport width, max 700
-	var target_height = min(viewport_size.y * 0.4, 80) # 40% of viewport height, max 80
+	var target_height = min(viewport_size.y * 0.4, 200) # 40% of viewport height, max 80
 	
 	custom_minimum_size = Vector2(target_width, target_height)
 	$VBoxContainer/MessageLabel.custom_minimum_size = Vector2(target_width * 0.9, target_height * 0.7)
 	
 	# Set a fixed, appropriate size for the profile picture
-	var profile_size = min(target_height * 0.5, 40) # Limit profile picture size
+	var profile_size = min(target_height * 0.55, 200) # Limit profile picture size
 	var profile_picture = $VBoxContainer/HeaderContainer/ProfilePicture
 	profile_picture.custom_minimum_size = Vector2(profile_size, profile_size)
 	profile_picture.expand = true

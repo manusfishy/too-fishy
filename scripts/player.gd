@@ -20,7 +20,15 @@ var harpoon_rotation_direction = 1 # 1 = clockwise, -1 = counterclockwise
 @onready var pickaxe_scene = preload("res://scenes/pickaxe.tscn")
 @export var inventory: Inv
 @export var traumaShakeMode = 1
-@onready var cooldown_timer = $HarpoonCD # Timer node, set to one-shot, 2s wait time
+
+# Cooldown configurations
+const COOLDOWN_HARPOON = 1.0 # Reduced from 2.0
+const COOLDOWN_SURFACE_BUOY = 3.0
+const COOLDOWN_SELLING_DRONE = 5.0
+
+@onready var cooldown_timer_harpoon = $HarpoonCD # Timer node for harpoon
+@onready var cooldown_timer_buoy = $BuoyCD # Timer node for surface buoy
+@onready var cooldown_timer_drone = $DroneCD # Timer node for selling drone
 
 var harpoon_scene = preload("res://scenes/harpoon.tscn") # Path to harpoon scene
 var bullet_scene = preload("res://scenes/bullet.tscn")
@@ -47,14 +55,19 @@ var docked_timer = 0.0
 var dock_countdown = 2.0
 
 # Camera shake properties
-var trauma_reduction_rate = 1.7  # How quickly trauma reduces over time
-var shake_power = 2.0            # Exponent for screen shake based on trauma
-var max_shake_offset = 1.0       # Maximum movement from origin
-var max_shake_roll = 0.0         # Maximum rotation in radians (0 = disabled)
+var trauma_reduction_rate = 1.7 # How quickly trauma reduces over time
+var shake_power = 2.0 # Exponent for screen shake based on trauma
+var max_shake_offset = 1.0 # Maximum movement from origin
+var max_shake_roll = 0.0 # Maximum rotation in radians (0 = disabled)
 
 func _ready():
 	GameState.player_node = self
 	print("player ready")
+	
+	# Initialize cooldown timers
+	setup_cooldown_timer("HarpoonCD", COOLDOWN_HARPOON)
+	setup_cooldown_timer("BuoyCD", COOLDOWN_SURFACE_BUOY)
+	setup_cooldown_timer("DroneCD", COOLDOWN_SELLING_DRONE)
 	
 	# Initialize touch controls if on mobile
 	if OS.has_feature("mobile") or OS.has_feature("web"):
@@ -223,7 +236,7 @@ func _input(_event):
 	
 	# Surface buoy functionality - quickly return to surface when B key is pressed
 	if Input.is_action_just_pressed("upgrade_surface_buoy") and GameState.upgrades[GameState.Upgrade.SURFACE_BUOY] > 0:
-		if !GameState.isDocked and !GameState.paused:
+		if !GameState.isDocked and !GameState.paused and cooldown_timer_buoy.time_left == 0:
 			activate_surface_buoy()
 	
 	# Quick save functionality when enabled by upgrade
@@ -238,13 +251,23 @@ func _input(_event):
 	
 	# Drone selling functionality - sell inventory remotely when Q key is pressed
 	if Input.is_action_just_pressed("upgrade_drone_selling") and GameState.upgrades[GameState.Upgrade.DRONE_SELLING] > 0:
-		if !GameState.isDocked and !GameState.paused and GameState.inventory.items.size() > 0:
+		if !GameState.isDocked and !GameState.paused and GameState.inventory.items.size() > 0 and cooldown_timer_drone.time_left == 0:
 			activate_selling_drone()
 	
 	# Toggle inventory menu
 	if Input.is_action_just_pressed("inv_toggle"):
 		if !GameState.paused:
 			toggle_inventory_menu()
+
+func setup_cooldown_timer(timer_name: String, wait_time: float) -> void:
+	if !has_node(timer_name):
+		var timer = Timer.new()
+		timer.name = timer_name
+		timer.one_shot = true
+		timer.wait_time = wait_time
+		add_child(timer)
+	else:
+		get_node(timer_name).wait_time = wait_time
 
 func activate_surface_buoy():
 	# Only works if player is below the surface
@@ -273,9 +296,8 @@ func activate_surface_buoy():
 		# Move player to surface
 		position.y = -1
 		
-		# Add small cooldown to prevent spamming
-		can_shoot = false
-		cooldown_timer.start()
+		# Start cooldown
+		cooldown_timer_buoy.start()
 
 func is_mouse_over_ui() -> bool:
 	return get_viewport().gui_get_focus_owner() != null
@@ -290,6 +312,9 @@ func onDock():
 	PopupManager.show_popup(price_str, $PopupSpawnPosition.global_position, Color.YELLOW)
 
 func shoot_harpoon():
+	if cooldown_timer_harpoon.time_left > 0:
+		return
+		
 	var dir = 1
 	if ($Pivot.rotation[1] >= 0): # check submarine rotation
 		dir = -1
@@ -325,8 +350,7 @@ func shoot_harpoon():
 		harpoon.direction = global_transform.basis.y.normalized() # set correct direction for the movement in harpoon
 
 	harpoon.submarine = self
-	can_shoot = false
-	cooldown_timer.start()
+	cooldown_timer_harpoon.start()
 
 func catch_fish(fish):
 	print("Caught fish: ", fish.name) # Replace with inventory logic
@@ -515,18 +539,18 @@ func activate_selling_drone():
 	var particles = $dronefart
 	particles.color = Color(0.8, 0.8, 0.2) # Give it a golden color
 
-	#drone.add_child(particles)
+	drone.add_child(particles)
+	var duration = drone.position.y * 0.3 * -1
 	
 	# Animate the drone swimming upward
 	var tween = get_tree().create_tween()
-	tween.tween_property(drone, "position", Vector3(position.x, 0, position.z), 2.0)
+	tween.tween_property(drone, "position", Vector3(position.x, 0, position.z), duration)
 	
 	
 	onDock() # sell items
 
-	# Add small cooldown to prevent spamming
-	can_shoot = false
-	cooldown_timer.start()
+	# Start cooldown
+	cooldown_timer_drone.start()
 
 func toggle_inventory_menu():
 	# Get the inventory menu
