@@ -203,12 +203,12 @@ offset_right = 0.0
 offset_bottom = 156.0
 grow_horizontal = 0
 
-[node name="AchievementPanel" parent="UI" instance=ExtResource("24_qr5t3")]
+[node name="AchievementUI" parent="UI" instance=ExtResource("24_qr5t3")]
 layout_mode = 1
 offset_left = -234.0
 offset_top = 218.0
 offset_right = -8.0
-offset_bottom = 689.0
+offset_bottom = 903.0
 
 [node name="CenterContainer" type="CenterContainer" parent="UI"]
 layout_mode = 1

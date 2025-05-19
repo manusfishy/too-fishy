@@ -56,6 +56,10 @@ func _apply_scaling():
 	# You may want to adjust camera properties for 3D viewport scaling here if needed
 
 func _scale_ui_elements(node):
+	# Skip nodes that should not be scaled
+	if node.is_in_group("no_scale_ui"):
+		return
+		
 	# Recursively apply scaling to all UI elements
 	if node is Control:
 		# Special handling for HUD

@@ -68,3 +68,13 @@ horizontal_scroll_mode = 0
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
+
+[node name="badgesContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/ScrollContainer/AchievementContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/ScrollContainer/AchievementContainer"]
+layout_mode = 2
+text = "test"
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer/ScrollContainer/AchievementContainer"]
+layout_mode = 2
