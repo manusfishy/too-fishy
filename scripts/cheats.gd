@@ -6,7 +6,7 @@ extends PanelContainer
 func addButton(text, mCall):
 	var upgradeButton: Button = Button.new()
 	upgradeButton.text = text
-	upgradeButton.pressed.connect(mCall) 
+	upgradeButton.pressed.connect(mCall)
 	grid.add_child(upgradeButton)
 
 func _ready():
@@ -18,9 +18,9 @@ func _ready():
 	addButton("Heal", func(): GameState.health = 100)
 	addButton("Kill", func(): GameState.health = 0)
 	addButton("Skip Dialog", func(): skip_dialog())
-	addButton("trauma 1", func(): GameState.player_node.traumaShakeMode = 1 )
-	addButton("trauma 2", func(): GameState.player_node.traumaShakeMode = 2 )
-	addButton("trauma 3", func(): GameState.player_node.traumaShakeMode = 3 )
+	addButton("trauma 1", func(): GameState.player_node.traumaShakeMode = 1)
+	addButton("trauma 2", func(): GameState.player_node.traumaShakeMode = 2)
+	addButton("trauma 3", func(): GameState.player_node.traumaShakeMode = 3)
 	
 	# Comment out the close() call to keep the menu open by default
 	# close()
@@ -44,14 +44,15 @@ func _process(_delta):
 		GameState.health = 100
 	if GameState.isDocked:
 		close()
-	if Input.is_action_just_pressed("cht_toggle"):
+
+func _input(event):
+	if event.is_action_pressed("cht_toggle"):
 		if GameState.isDocked:
 			return
 		if is_open:
 			close()
 		else:
 			open()
-
 
 func open():
 	visible = true

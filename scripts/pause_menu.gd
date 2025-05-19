@@ -45,8 +45,8 @@ func _style_buttons():
 		pressed_style.set_corner_radius_all(8)
 		button.add_theme_stylebox_override("pressed", pressed_style)
 
-func _process(_delta):
-	# Toggle pause menu with ESC key
+
+func _input(event):
 	if Input.is_action_just_pressed("esc"):
 		if is_paused:
 			resume_game()

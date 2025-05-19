@@ -34,17 +34,6 @@ func _ready():
 	was_dual_ak_enabled = GameState.upgrades[GameState.Upgrade.DUALAK47]
 
 func _process(_delta):
-	# Check if dual AK47 was just enabled
-	var is_dual_ak_enabled = GameState.upgrades[GameState.Upgrade.DUALAK47]
-	if is_dual_ak_enabled != was_dual_ak_enabled:
-		was_dual_ak_enabled = is_dual_ak_enabled
-		if is_dual_ak_enabled:
-			# Immediately update ammo to new capacity
-			shared_ammo = DUAL_MAX_AMMO
-			# Show upgrade message
-			var pos = $PopupSpawnPosition.global_position
-			PopupManager.show_popup("Dual AK47s Active - Ammo Capacity Increased!", pos, Color.GREEN)
-	
 	# Handle shooting
 	if Input.is_action_pressed("shoot") and can_shoot_ak and !shared_is_reloading:
 		if GameState.upgrades[GameState.Upgrade.AK47]:

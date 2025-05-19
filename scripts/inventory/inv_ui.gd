@@ -46,13 +46,15 @@ func _adjust_ui_scale():
 	base_font_size = int(16 * font_scale)
 
 func _process(_delta):
+	if is_open:
+		update_display()
+
+func _input(event):
 	if Input.is_action_just_pressed("inv_toggle"):
 		if is_open:
 			close()
 		else:
 			open()
-	if is_open:
-		update_display()
 
 func open():
 	visible = true
@@ -65,7 +67,7 @@ func close():
 
 func update_display():
 	# Update static UI elements with current data
-	money_label.text = "Bank Account: %s$ " % GameState.money
+	money_label.text = "Bank Account: $%s " % GameState.money
 	fish_label.text = " Fish: %d " % \
 		GameState.inventory.inventoryCumulatedValues[GameState.inventory.InventoryValues.FishesCaught]
 	value_label.text = "$%.2f " % \

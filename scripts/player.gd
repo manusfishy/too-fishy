@@ -412,7 +412,8 @@ func process_dock(delta):
 			$Pivot/SmFishSubmarine/ak47_0406195124_texture.visible = true
 		if GameState.upgrades[GameState.Upgrade.DUALAK47] == 1 \
 			and $Pivot/SmFishSubmarine/ak47_69420_texture2.visible == false:
-			$Pivot/SmFishSubmarine/ak47_69420_texture2.visible = true
+				$Pivot/SmFishSubmarine/ak47_69420_texture2.visible = true # Check if dual AK47 was just enabled
+				$Pivot/SmFishSubmarine/ak47_0406195124_texture.shared_ammo = $Pivot/SmFishSubmarine/ak47_0406195124_texture.get_max_ammo();
 		if not GameState.isDocked:
 			onDock()
 			GameState.isDocked = true
