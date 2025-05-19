@@ -1,5 +1,5 @@
 [gd_scene load_steps=2 format=3 uid="uid://cu74jh81r7l20"]
 
-[ext_resource type="PackedScene" uid="uid://b16d5g8hcu5t6" path="res://meshes/dock3_remesh.fbx" id="1_7jgoh"]
+[ext_resource type="PackedScene" path="res://meshes/dock3_remesh.fbx" id="1_7jgoh"]
 
 [node name="dock3_remesh" instance=ExtResource("1_7jgoh")]

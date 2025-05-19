@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/achievement/achievement_item.gd" id="1_cxj3s"]
+[ext_resource type="Texture2D" path="res://textures/icons/questionmark.png" id="2_y3rpt"]
+
+[node name="AchievementItem" type="HBoxContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+mouse_filter = 2
+script = ExtResource("1_cxj3s")
+
+[node name="IconContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="IconTexture" type="TextureRect" parent="IconContainer"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("2_y3rpt")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="FishNameLabel" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+text = "???"
+vertical_alignment = 1
+
+[node name="BadgesContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4 

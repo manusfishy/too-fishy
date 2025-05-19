@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cb3p3ua8fuhk3"]
-
-[ext_resource type="PackedScene" uid="uid://dnqru17ouu7u0" path="res://meshes/dock3.fbx" id="1_d58g6"]
-
-[node name="dock3" instance=ExtResource("1_d58g6")]

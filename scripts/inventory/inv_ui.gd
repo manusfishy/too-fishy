@@ -65,16 +65,16 @@ func close():
 
 func update_display():
 	# Update static UI elements with current data
-	money_label.text = "Bank Account: %s$" % GameState.money
-	fish_label.text = " Fish: %d" % \
+	money_label.text = "Bank Account: %s$ " % GameState.money
+	fish_label.text = " Fish: %d " % \
 		GameState.inventory.inventoryCumulatedValues[GameState.inventory.InventoryValues.FishesCaught]
-	value_label.text = "$%.2f" % \
+	value_label.text = "$%.2f " % \
 		GameState.inventory.inventoryCumulatedValues[GameState.inventory.InventoryValues.TotalValue]
 	
 	# Update weight display with both text and progress bar
 	var current_weight = GameState.inventory.inventoryCumulatedValues[GameState.inventory.InventoryValues.TotalWeight]
 	var max_weight = GameState.inventory.get_max_weight()
-	weight_label.text = "%.1f / %.1f" % [current_weight, max_weight]
+	weight_label.text = "%.1f / %.1f " % [current_weight, max_weight]
 	
 	# Update progress bar
 	weight_bar.max_value = max_weight
@@ -135,15 +135,15 @@ func add_upgrade_info(upgrade_type, description):
 			name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			
 			# Create label with upgrade value
-			var value_label = Label.new()
-			value_label.text = key
-			value_label.add_theme_font_size_override("font_size", base_font_size)
-			value_label.add_theme_color_override("font_color", Color(0.105882, 0.85098, 0.917647, 1))
-			value_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+			var value_up_label = Label.new()
+			value_up_label.text = key
+			value_up_label.add_theme_font_size_override("font_size", base_font_size)
+			value_up_label.add_theme_color_override("font_color", Color(0.105882, 0.85098, 0.917647, 1))
+			value_up_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			value_up_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 			
 			# Add to layout
 			h_box.add_child(name_label)
-			h_box.add_child(value_label)
+			h_box.add_child(value_up_label)
 			upgrade_panel.add_child(h_box)
 			vbox_container.add_child(upgrade_panel)

@@ -19,7 +19,10 @@ func save_game() -> bool:
 		"upgrades": {},
 		
 		# Inventory
-		"inventory_items": []
+		"inventory_items": [],
+		
+		# Achievements
+		"achievements": {}
 	}
 	
 	# Save all upgrades
@@ -43,6 +46,11 @@ func save_game() -> bool:
 		"total_weight": GameState.inventory.inventoryCumulatedValues[GameState.inventory.InventoryValues.TotalWeight],
 		"total_value": GameState.inventory.inventoryCumulatedValues[GameState.inventory.InventoryValues.TotalValue]
 	}
+	
+	# Save achievements
+	var achievement_system = get_node_or_null("/root/AchievementSystemNode")
+	if achievement_system:
+		save_dict["achievements"] = achievement_system.save_data()
 	
 	# Create save file
 	var save_file = FileAccess.open(SAVE_FILE_PATH, FileAccess.WRITE)
@@ -135,6 +143,12 @@ func load_game() -> bool:
 			GameState.inventory.inventoryCumulatedValues[GameState.inventory.InventoryValues.TotalValue] = inv_values["total_value"]
 	
 	GameState.inventory.updateTotal()
+	
+	# Load achievements
+	if save_dict.has("achievements"):
+		var achievement_system = get_node_or_null("/root/AchievementSystemNode")
+		if achievement_system:
+			achievement_system.load_data(save_dict["achievements"])
 	
 	print("Game loaded successfully")
 	return true

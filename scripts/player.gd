@@ -60,6 +60,9 @@ var shake_power = 2.0 # Exponent for screen shake based on trauma
 var max_shake_offset = 1.0 # Maximum movement from origin
 var max_shake_roll = 0.0 # Maximum rotation in radians (0 = disabled)
 
+# Achievement system reference
+var achievement_system = null
+
 func _ready():
 	GameState.player_node = self
 	print("player ready")
@@ -359,9 +362,13 @@ func catch_fish(fish):
 		var is_shiny = "is_shiny" in fish and fish.is_shiny
 		var fish_weight = fish.weight if "weight" in fish else 1
 		var fish_position = fish.global_position
+		var fish_type = fish.type if "type" in fish else 0 # Make sure to get the fish type
 		
 		# Get the fish details and remove it from the scene
 		var fish_details = fish.removeFish()
+		
+		# Print fish details for debugging
+		print("Fish details - Type: ", fish_details.type, " Shiny: ", fish_details.shiny)
 		
 		# Spawn the catch effect at the fish's position using preloaded scene
 		var catch_effect = catch_effect_scene.instantiate()
@@ -566,3 +573,7 @@ func toggle_inventory_menu():
 			inventory_menu.close()
 		else:
 			inventory_menu.open()
+
+func connect_achievement_system(system):
+	achievement_system = system
+	print("Achievement system connected to player")

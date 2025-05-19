@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=54 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
@@ -26,8 +26,9 @@
 [ext_resource type="Script" uid="uid://q0tu1in7y6pf" path="res://scripts/musicplayer.gd" id="22_k67gn"]
 [ext_resource type="Material" uid="uid://dv7qrtiq87nj0" path="res://materials/walls/walls.tres" id="22_u0fll"]
 [ext_resource type="ArrayMesh" uid="uid://c54e8dk8jsryd" path="res://meshes/vains_v003.obj" id="23_6p3nn"]
-[ext_resource type="PackedScene" uid="uid://cu74jh81r7l20" path="res://meshes/dock_3_remesh.tscn" id="23_k3g67"]
+[ext_resource type="PackedScene" uid="uid://cu74jh81r7l20" path="res://scenes/dock_3_remesh.tscn" id="23_k3g67"]
 [ext_resource type="Material" uid="uid://bupgrlcbs4i6k" path="res://materials/walls/veins.tres" id="24_k67gn"]
+[ext_resource type="PackedScene" uid="uid://bsf55srwo6j47" path="res://scenes/ui/achievement_panel.tscn" id="24_qr5t3"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_c16ls"]
 
@@ -202,6 +203,13 @@ offset_right = 0.0
 offset_bottom = 156.0
 grow_horizontal = 0
 
+[node name="AchievementPanel" parent="UI" instance=ExtResource("24_qr5t3")]
+layout_mode = 1
+offset_left = -234.0
+offset_top = 218.0
+offset_right = -8.0
+offset_bottom = 689.0
+
 [node name="CenterContainer" type="CenterContainer" parent="UI"]
 layout_mode = 1
 anchors_preset = 15
@@ -297,8 +305,8 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -120.0
-offset_bottom = -24.0
+offset_top = -175.0
+offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_subway")
@@ -582,13 +590,6 @@ script = ExtResource("22_k67gn")
 
 [node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="Audiomanager"]
 
-[node name="dock3_remesh" parent="." instance=ExtResource("23_k3g67")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.04975, 0.560926, 0.184795)
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="dock3_remesh"]
-transform = Transform3D(-0.8744, 0.469662, -0.121833, 0.246398, 0.213504, -0.945359, -0.417987, -0.856641, -0.302412, -1.63728, -2.92948, 1.48882)
-light_energy = 0.09
-
 [node name="LeftWall" type="StaticBody3D" parent="."]
 transform = Transform3D(-0.00814527, 1.2191, 0.00407302, -0.672664, -0.00789123, 1.01674, 1.01673, 0.0045457, 0.672698, -13.6118, -4.41036, -8.67722)
 
@@ -620,3 +621,10 @@ surface_material_override/0 = ExtResource("9_7nt27")
 
 [node name="Water" parent="." instance=ExtResource("20_k6f3i")]
 transform = Transform3D(-43.6006, 0, 0, 0, 1, 0, 0, 0, 15.708, -14.3034, 0.00877783, 0.808204)
+
+[node name="dock3_remesh" parent="." instance=ExtResource("23_k3g67")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.04975, 0.560926, 0.184795)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="dock3_remesh"]
+transform = Transform3D(-0.8744, 0.469662, -0.121833, 0.246398, 0.213504, -0.945359, -0.417987, -0.856641, -0.302412, -1.63728, -2.92948, 1.48882)
+light_energy = 0.09

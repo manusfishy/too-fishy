@@ -17,7 +17,8 @@ var fishConfigMap = {
 		speed_min = 1,
 		speed_max = 2.5,
 		difficulty = 1,
-		scene = preload("res://scenes/mobs/BasicFishA.tscn")
+		scene = preload("res://scenes/mobs/BasicFishA.tscn"),
+		icon = preload("res://textures/icons/fish_a.png")
 	},
 	FishType.FISH_B: {
 		weight_min = 1,
@@ -26,7 +27,8 @@ var fishConfigMap = {
 		speed_min = 2,
 		speed_max = 5,
 		difficulty = 1,
-		scene = preload("res://scenes/mobs/BasicFishB.tscn")
+		scene = preload("res://scenes/mobs/BasicFishB.tscn"),
+		icon = preload("res://textures/icons/fish_b.png")
 	},
 	FishType.ANGLER_FISH: {
 		weight_min = 5,
@@ -35,7 +37,8 @@ var fishConfigMap = {
 		speed_min = 0.1,
 		speed_max = 1,
 		difficulty = 5,
-		scene = preload("res://scenes/mobs/AnglerFish.tscn")
+		scene = preload("res://scenes/mobs/AnglerFish.tscn"),
+		icon = preload("res://textures/icons/angler_fish.png")
 	},
 	FishType.DUMMY_FISH: {
 		weight_min = 5,
@@ -44,7 +47,8 @@ var fishConfigMap = {
 		speed_min = 3,
 		speed_max = 7,
 		difficulty = 10,
-		scene = preload("res://scenes/mobs/dummy_fish.tscn")
+		scene = preload("res://scenes/mobs/dummy_fish.tscn"),
+		icon = preload("res://textures/icons/dummy_fish.png")
 	},
 	FishType.SPIKEY_FISH: {
 		weight_min = 5,
@@ -53,7 +57,8 @@ var fishConfigMap = {
 		speed_min = 0.5,
 		speed_max = 1.5,
 		difficulty = 5,
-		scene = preload("res://scenes/mobs/spikey_fish.tscn")
+		scene = preload("res://scenes/mobs/spikey_fish.tscn"),
+		icon = preload("res://textures/icons/spikey_fish.png")
 	}
 }
 

@@ -23,10 +23,11 @@ func removeFish():
 		"id": get_instance_id()
 	}
 	var my_fish = InvItem.new()
-	my_fish.type = "fish"
+	my_fish.type = str(self.type) # Convert the numeric type to a string
 	my_fish.weight = fish_data.weight
 	my_fish.price = fish_data.price
 	my_fish.id = fish_data.id
+	my_fish.shiny = self.is_shiny # Also make sure to copy the shiny property
 	queue_free()
 	return my_fish
 	
@@ -44,6 +45,8 @@ func _physics_process(delta: float) -> void:
 		set_z_rotation_and_velocity(deg)
 	
 	if global_position.y >= -0.5:
+		# Record this fish type as having reached the surface before deleting
+		record_surface_achievement()
 		queue_free()
 		return
 	elif global_position.y >= -0.75:
@@ -135,3 +138,15 @@ func get_scale_for_weight(max_weight, min_weight, mWeight) -> Vector3:
 	var weight_factor = weight_sanitized / normal_weight
 	var scale_factor = 1 + weight_factor * .3
 	return Vector3(scale_factor, scale_factor, 1)
+
+# Record that this fish type has reached the surface for achievements
+func record_surface_achievement():
+	# Only record if we can find the achievement system
+	var achievement_manager = get_node_or_null("/root/AchievementManager")
+	if achievement_manager and achievement_manager.has_method("get_achievement_system"):
+		var achievement_system = achievement_manager.get_achievement_system()
+		if achievement_system:
+			print("Fish reached surface! Recording achievement for type: ", self.type)
+			achievement_system.record_fish_surface(self.type)
+	else:
+		print("Could not record surface achievement - achievement system not found")

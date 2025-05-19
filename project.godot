@@ -26,6 +26,7 @@ UIScaler="*res://scripts/ui_scaler.gd"
 UILayoutManager="*res://scripts/ui_layout_manager.gd"
 SaveSystem="*res://scripts/save_system.gd"
 SettingsManager="*res://scripts/settings_manager.gd"
+AchievementManager="*res://scripts/achievement/achievement_autoload.gd"
 
 [debug]
 

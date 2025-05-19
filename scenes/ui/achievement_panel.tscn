@@ -1,0 +1,70 @@
+[gd_scene load_steps=3 format=3 uid="uid://bsf55srwo6j47"]
+
+[ext_resource type="Script" uid="uid://dtbxgac8rh3yg" path="res://scripts/achievement/achievement_ui.gd" id="1_nkt0o"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v87di"]
+bg_color = Color(0.05, 0.1, 0.15, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.105882, 0.85098, 0.917647, 0.3)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.15)
+shadow_size = 2
+
+[node name="AchievementPanel" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_top = 50.0
+offset_right = -10.0
+offset_bottom = 300.0
+grow_horizontal = 0
+mouse_filter = 2
+script = ExtResource("1_nkt0o")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_v87di")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HeaderPanel" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Header" type="HBoxContainer" parent="PanelContainer/VBoxContainer/HeaderPanel"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TitleLabel" type="Label" parent="PanelContainer/VBoxContainer/HeaderPanel/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Fish Collection"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+horizontal_scroll_mode = 0
+
+[node name="AchievementContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
