@@ -352,6 +352,7 @@ func shoot_harpoon():
 		harpoon.position = position + dir * global_transform.basis.x * -1 # move harpoon to correct side
 		harpoon.direction = global_transform.basis.y.normalized() # set correct direction for the movement in harpoon
 
+	# Set the submarine reference before any physics processing occurs
 	harpoon.submarine = self
 	cooldown_timer_harpoon.start()
 

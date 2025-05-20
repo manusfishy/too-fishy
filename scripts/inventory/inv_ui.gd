@@ -1,6 +1,7 @@
 extends PanelContainer
 
 var is_open = false
+var initial_height = 0  # Store the initial height
 
 # Onready vars for UI elements
 @onready var money_label = $MarginContainer/VBoxContainer/MoneyPanel/MoneyLabel
@@ -10,44 +11,27 @@ var is_open = false
 @onready var weight_bar = $MarginContainer/VBoxContainer/WeightPanel/WeightBar
 @onready var vbox_container = $MarginContainer/VBoxContainer
 
-# Base sizes
-var base_panel_width = 220
-var base_panel_height = 125
-var base_font_size = 16
+@onready var money_panel = $MarginContainer/VBoxContainer/MoneyPanel
+@onready var info_panel = $MarginContainer/VBoxContainer/InfoPanel
+@onready var weight_panel = $MarginContainer/VBoxContainer/WeightPanel
 
 func _ready():
+	# Store the initial height set in the editor
+	initial_height = size.y
+	
+	# Set size flags to prevent automatic vertical expansion
+	size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	
 	update_display()
 	open()
-	
-	# Connect to window resize signal
-	get_viewport().size_changed.connect(_adjust_ui_scale)
-	
-	# Initial scale adjustment
-	_adjust_ui_scale()
-
-func _adjust_ui_scale():
-	var window_size = DisplayServer.window_get_size()
-	
-	# Calculate scale factor based on screen size
-	var scale_factor = min(window_size.x / 1920.0, window_size.y / 1080.0)
-	scale_factor = max(0.75, scale_factor) # don't go below 75%
-	
-	# Scale font sizes
-	var font_scale = lerp(0.8, 1.0, scale_factor)
-	money_label.add_theme_font_size_override("font_size", int(16 * font_scale))
-	fish_label.add_theme_font_size_override("font_size", int(16 * font_scale))
-	value_label.add_theme_font_size_override("font_size", int(16 * font_scale))
-	weight_label.add_theme_font_size_override("font_size", int(14 * font_scale))
-	
-	# Adjust panel size based on content and screen size
-	custom_minimum_size = Vector2(base_panel_width * scale_factor, 0) # Let height adjust automatically
-	
-	# Update base font size for dynamically created elements
-	base_font_size = int(16 * font_scale)
 
 func _process(_delta):
 	if is_open:
 		update_display()
+		
+		# Maintain the initial height
+		if size.y != initial_height and initial_height > 0:
+			size.y = initial_height
 
 func _input(event):
 	if Input.is_action_just_pressed("inv_toggle"):
@@ -106,6 +90,10 @@ func update_display():
 		if GameState.upgrades[upgrade] > 0:
 			has_purchased_upgrades = true
 			add_upgrade_info(upgrade, Strings.upgradeDescriptions[upgrade])
+			
+	# Make sure the height stays consistent after adding upgrades
+	if initial_height > 0:
+		size.y = initial_height
 
 # Helper function to add upgrade info with status
 func add_upgrade_info(upgrade_type, description):
@@ -132,14 +120,14 @@ func add_upgrade_info(upgrade_type, description):
 			# Create label with upgrade name
 			var name_label = Label.new()
 			name_label.text = desc_name + ":"
-			name_label.add_theme_font_size_override("font_size", base_font_size)
+			name_label.add_theme_font_size_override("font_size", 16)
 			name_label.add_theme_color_override("font_color", Color(0.780392, 0.780392, 0.780392, 1))
 			name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			
 			# Create label with upgrade value
 			var value_up_label = Label.new()
 			value_up_label.text = key
-			value_up_label.add_theme_font_size_override("font_size", base_font_size)
+			value_up_label.add_theme_font_size_override("font_size", 16)
 			value_up_label.add_theme_color_override("font_color", Color(0.105882, 0.85098, 0.917647, 1))
 			value_up_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			value_up_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT

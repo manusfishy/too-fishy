@@ -13,7 +13,7 @@ var air_bubble = preload("res://textures/icons/air_bubble.png")
 var achievement_item_scene = preload("res://scenes/ui/achievement_item.tscn")
 
 func _ready():
-	achievement_container = $PanelContainer/VBoxContainer/ScrollContainer/AchievementContainer
+	achievement_container = $PanelContainer/MarginContainer/VBoxContainer/ScrollContainer/AchievementContainer
 	
 	# Make sure all UI elements ignore mouse input
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -57,8 +57,12 @@ func _populate_achievements():
 	print("Achievement UI: Populating achievements panel")
 	
 	# Clear existing achievements
-	for child in achievement_container.get_children():
-		child.queue_free()
+	if achievement_container:
+		for child in achievement_container.get_children():
+			child.queue_free()
+	else:
+		print("Achievement UI: Error - achievement_container is null")
+		return
 	
 	# Make sure achievement system is available
 	if achievement_system == null:

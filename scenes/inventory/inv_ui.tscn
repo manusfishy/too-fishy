@@ -8,16 +8,21 @@ border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.105882, 0.85098, 0.917647, 0.8)
-corner_radius_top_left = 6
-corner_radius_top_right = 6
-corner_radius_bottom_right = 6
-corner_radius_bottom_left = 6
+border_color = Color(0.2, 0.4, 0.7, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 shadow_color = Color(0, 0, 0, 0.25)
 shadow_size = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header"]
 bg_color = Color(0.066, 0.132, 0.2, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.2, 0.4, 0.7, 1)
 corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
@@ -47,11 +52,13 @@ offset_left = 279.0
 offset_top = 131.0
 offset_right = 558.0
 offset_bottom = 229.0
+size_flags_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_inv_bg")
 script = ExtResource("1_wefod")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
+size_flags_vertical = 0
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
@@ -59,6 +66,7 @@ theme_override_constants/margin_bottom = 8
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+size_flags_vertical = 0
 theme_override_constants/separation = 6
 
 [node name="MoneyPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
@@ -67,7 +75,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_header")
 
 [node name="MoneyLabel" type="Label" parent="MarginContainer/VBoxContainer/MoneyPanel"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.105882, 0.85098, 0.917647, 1)
+theme_override_colors/font_color = Color(0.2, 0.4, 0.7, 1)
 theme_override_font_sizes/font_size = 16
 text = "Bank Account: $25"
 label_settings = SubResource("LabelSettings_celo0")

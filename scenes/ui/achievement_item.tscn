@@ -1,40 +1,60 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3 uid="uid://cetei0avqywl4"]
 
-[ext_resource type="Script" path="res://scripts/achievement/achievement_item.gd" id="1_cxj3s"]
-[ext_resource type="Texture2D" path="res://textures/icons/questionmark.png" id="2_y3rpt"]
+[ext_resource type="Script" uid="uid://c4543op6fywyy" path="res://scripts/achievement/achievement_item.gd" id="1_cxj3s"]
+[ext_resource type="Texture2D" uid="uid://dca50f1fsdrw5" path="res://textures/icons/questionmark.png" id="2_y3rpt"]
 
-[node name="AchievementItem" type="HBoxContainer"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_icon_bg"]
+bg_color = Color(0.066, 0.132, 0.2, 0.75)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.4, 0.7, 0.5)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="AchievementItem" type="PanelContainer"]
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 40.0
+offset_bottom = 32.0
 grow_horizontal = 2
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_icon_bg")
 script = ExtResource("1_cxj3s")
 
-[node name="IconContainer" type="PanelContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+
+[node name="IconTexture" type="TextureRect" parent="MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-size_flags_vertical = 4
-mouse_filter = 2
-
-[node name="IconTexture" type="TextureRect" parent="IconContainer"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
 texture = ExtResource("2_y3rpt")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="FishNameLabel" type="Label" parent="."]
+[node name="FishNameLabel" type="Label" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-mouse_filter = 2
+theme_override_colors/font_color = Color(0.780392, 0.780392, 0.780392, 1)
+theme_override_font_sizes/font_size = 12
 text = "???"
 vertical_alignment = 1
 
-[node name="BadgesContainer" type="HBoxContainer" parent="."]
+[node name="BadgesContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/separation = 4 
+theme_override_constants/separation = 4

@@ -1,4 +1,4 @@
-extends HBoxContainer
+extends PanelContainer
 
 # References to UI elements
 var fish_name_label: Label
@@ -6,9 +6,9 @@ var icon_texture: TextureRect
 var badges_container: HBoxContainer
 
 func _ready():
-	fish_name_label = $FishNameLabel
-	icon_texture = $IconContainer/IconTexture
-	badges_container = $BadgesContainer
+	fish_name_label = $MarginContainer/HBoxContainer/FishNameLabel
+	icon_texture = $MarginContainer/HBoxContainer/IconTexture
+	badges_container = $MarginContainer/HBoxContainer/BadgesContainer
 	
 	# Set fixed size for icon that won't be affected by UI scaling
 	icon_texture.custom_minimum_size = Vector2(32, 32)
@@ -30,7 +30,7 @@ func set_icon(texture):
 func add_badge(badge_texture):
 	var badge = TextureRect.new()
 	badge.texture = badge_texture
-	badge.expand = true
+	badge.expand_mode = TextureRect.EXPAND_FIT_HEIGHT
 	badge.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	badge.custom_minimum_size = Vector2(24, 24)
 	badge.add_to_group("no_scale_ui") # Add badge to no-scale group too

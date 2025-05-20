@@ -26,6 +26,8 @@ var hud: Control
 var inventory: Control
 var dialog_container: Control
 var upgrades_container: Control
+var achievement_ui: Control
+var depth_indicator: Control
 
 # Track if initialized
 var initialized = false
@@ -38,11 +40,8 @@ func _ready():
 	# Get UI references
 	_find_ui_elements()
 	
-	# Connect window resize signal
-	get_viewport().size_changed.connect(_on_window_size_changed)
-	
 	# Apply initial layout
-	_update_layout()
+	_apply_initial_layout()
 	
 	# Set global tooltip settings
 	_set_global_tooltip_settings()
@@ -60,50 +59,23 @@ func _find_ui_elements():
 		# Find key UI components
 		hud = ui_root.find_child("HUD", true, false)
 		inventory = ui_root.find_child("inv_ui", true, false)
+		achievement_ui = ui_root.find_child("AchievementUI", true, false)
+		
+		# Find depth indicator
+		if hud:
+			depth_indicator = hud.find_child("DepthIndicator", true, false)
 		
 		var center_container = ui_root.find_child("CenterContainer", true, false)
 		if center_container:
 			dialog_container = center_container.find_child("BossDialog", true, false)
 			upgrades_container = center_container.find_child("Upgrades", true, false)
 
-func _on_window_size_changed():
-	if initialized:
-		_update_layout()
-		
-		# Also update HUD width immediately to match window width
-		if hud:
-			var window_width = DisplayServer.window_get_size().x
-			hud.custom_minimum_size.x = window_width
-			hud.size.x = window_width
-
-func _update_layout():
+func _apply_initial_layout():
 	if !ui_root:
 		return
-		
-	var window_size = DisplayServer.window_get_size()
-	var width = window_size.x
-	var height = window_size.y
-	var aspect_ratio = float(width) / float(height)
 	
-	# Determine layout type based on screen dimensions and aspect ratio
-	var new_layout
-	
-	if width <= SMALL_SCREEN_WIDTH || height <= SMALL_SCREEN_HEIGHT:
-		new_layout = LayoutType.SMALL
-	elif width <= MEDIUM_SCREEN_WIDTH || height <= MEDIUM_SCREEN_HEIGHT:
-		new_layout = LayoutType.MEDIUM
-	else:
-		if aspect_ratio >= WIDE_ASPECT_RATIO:
-			new_layout = LayoutType.WIDE
-		elif aspect_ratio <= NARROW_ASPECT_RATIO:
-			new_layout = LayoutType.NARROW
-		else:
-			new_layout = LayoutType.LARGE
-	
-	# Only update if layout changed
-	if new_layout != current_layout:
-		current_layout = new_layout
-		_apply_layout(current_layout)
+	# Using LARGE as the default layout, adjust if a different default is needed.
+	_apply_layout(LayoutType.LARGE)
 
 func _apply_layout(layout_type):
 	print("Applying layout: ", layout_type)
@@ -126,21 +98,21 @@ func _apply_layout(layout_type):
 func _reset_ui_positions():
 	# Reset HUD - simpler approach to ensure it always spans the full width
 	if hud:
-		# Force HUD to bottom of screen with proper anchoring
-		hud.anchor_top = 1.0
+		# Force HUD to top of screen with proper anchoring
+		hud.anchor_top = 0.0
 		hud.anchor_right = 1.0
-		hud.anchor_bottom = 1.0
+		hud.anchor_bottom = 0.0
 		hud.anchor_left = 0.0
 		
 		# Set position relative to anchors
 		hud.offset_left = 0
 		hud.offset_right = 0
-		hud.offset_bottom = 0
-		hud.offset_top = -120
+		hud.offset_top = 0
+		hud.offset_bottom = 120
 		
 		# Ensure grow directions are correct
 		hud.grow_horizontal = Control.GROW_DIRECTION_BOTH
-		hud.grow_vertical = Control.GROW_DIRECTION_BEGIN
+		hud.grow_vertical = Control.GROW_DIRECTION_END
 		
 		# No custom minimum size - let it use the full width
 		hud.custom_minimum_size = Vector2(0, 120)
@@ -150,64 +122,109 @@ func _reset_ui_positions():
 		inventory.anchors_preset = Control.PRESET_TOP_RIGHT
 		inventory.offset_left = -227
 		inventory.offset_right = 0
-		inventory.offset_top = 0
-		inventory.offset_bottom = 156
+		inventory.offset_top = 120
+		inventory.offset_bottom = 276
+		
+	# Reset achievement UI
+	if achievement_ui:
+		achievement_ui.anchors_preset = Control.PRESET_TOP_RIGHT
+		achievement_ui.offset_left = -190
+		achievement_ui.offset_right = 0
+		achievement_ui.offset_top = 300
+		achievement_ui.offset_bottom = 720
+		
+	# Reset depth indicator
+	if depth_indicator:
+		# Position at the bottom of the HUD
+		depth_indicator.size_flags_horizontal = Control.SIZE_FILL
+		depth_indicator.size_flags_vertical = Control.SIZE_SHRINK_END
+		depth_indicator.custom_minimum_size.y = 20 # Just enough height for the indicators
 
 # Different layout implementations
 func _apply_small_layout():
 	if hud:
 		# For small screens, make HUD slightly smaller in height
-		hud.offset_top = -90
+		hud.offset_bottom = 90
 		hud.custom_minimum_size.y = 90
 	
 	if inventory:
 		# Shrink inventory
 		inventory.scale = Vector2(0.8, 0.8)
 		inventory.offset_left = -180
+		inventory.offset_top = 90
+		
+	if achievement_ui:
+		# Position below inventory
+		achievement_ui.offset_top = 220 # 90 + size of inventory (estimated)
+		achievement_ui.scale = Vector2(0.8, 0.8)
 
 func _apply_medium_layout():
 	if hud:
 		# Medium height for medium screens
-		hud.offset_top = -110
+		hud.offset_bottom = 110
 		hud.custom_minimum_size.y = 110
 	
 	if inventory:
 		# Adjust inventory
 		inventory.scale = Vector2(0.9, 0.9)
 		inventory.offset_left = -210
+		inventory.offset_top = 110
+		
+	if achievement_ui:
+		# Position below inventory
+		achievement_ui.offset_top = 250 # 110 + size of inventory (estimated)
+		achievement_ui.scale = Vector2(0.9, 0.9)
 
 func _apply_large_layout():
 	if hud:
 		# Standard height for large screens
-		hud.offset_top = -120
+		hud.offset_bottom = 120
 		hud.custom_minimum_size.y = 120
 	
 	if inventory:
 		# Default inventory size
 		inventory.scale = Vector2(1.0, 1.0)
 		inventory.offset_left = -227
+		inventory.offset_top = 120
+		
+	if achievement_ui:
+		# Position below inventory
+		achievement_ui.offset_top = 300 # 120 + size of inventory (estimated)
+		achievement_ui.scale = Vector2(1.0, 1.0)
 
 func _apply_wide_layout():
 	if hud:
 		# Same as large layout for wide screens
-		hud.offset_top = -120
+		hud.offset_bottom = 120
 		hud.custom_minimum_size.y = 120
 	
 	if inventory:
 		# For ultrawide: give inventory more space
 		inventory.scale = Vector2(1.0, 1.0)
 		inventory.offset_left = -250
+		inventory.offset_top = 120
+		
+	if achievement_ui:
+		# Position below inventory
+		achievement_ui.offset_top = 300 # 120 + size of inventory (estimated)
+		achievement_ui.scale = Vector2(1.0, 1.0)
 
 func _apply_narrow_layout():
 	if hud:
 		# Slightly taller for narrow screens
-		hud.offset_top = -130
+		hud.offset_bottom = 130
 		hud.custom_minimum_size.y = 130
 	
 	if inventory:
 		# For narrow screens: adjust inventory placement
 		inventory.scale = Vector2(0.9, 0.9)
 		inventory.offset_left = -200
+		inventory.offset_top = 130
+		
+	if achievement_ui:
+		# Position below inventory
+		achievement_ui.offset_top = 280 # 130 + size of inventory (estimated)
+		achievement_ui.scale = Vector2(0.9, 0.9)
 
 # Sets tooltip settings globally for all controls
 func _set_global_tooltip_settings():
