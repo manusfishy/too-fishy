@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dd8g1e8xx5s71"
 path.s3tc="res://.godot/imported/fishies painter_initialShadingGroup_BaseColor.png-1b7bc60216f80c66c15238a78d428953.s3tc.ctex"
+path.etc2="res://.godot/imported/fishies painter_initialShadingGroup_BaseColor.png-1b7bc60216f80c66c15238a78d428953.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://textures/fishes/fishies painter_initialShadingGroup_BaseColor.png"
-dest_files=["res://.godot/imported/fishies painter_initialShadingGroup_BaseColor.png-1b7bc60216f80c66c15238a78d428953.s3tc.ctex"]
+dest_files=["res://.godot/imported/fishies painter_initialShadingGroup_BaseColor.png-1b7bc60216f80c66c15238a78d428953.s3tc.ctex", "res://.godot/imported/fishies painter_initialShadingGroup_BaseColor.png-1b7bc60216f80c66c15238a78d428953.etc2.ctex"]
 
 [params]
 

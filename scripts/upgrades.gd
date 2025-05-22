@@ -263,19 +263,6 @@ func create_upgrade_button(key):
 	name_label.add_theme_color_override("font_color", Color(1, 1, 1)) # White
 	top_row.add_child(name_label)
 	
-	# Info icon for tooltip
-	var hint_icon = Label.new()
-	hint_icon.text = "ⓘ" # Info symbol
-	hint_icon.tooltip_text = "Hover for details"
-	hint_icon.add_theme_font_size_override("font_size", 14)
-	hint_icon.add_theme_color_override("font_color", Color(0.6, 0.8, 1.0)) # Light blue
-	# Set tooltip to appear immediately
-	hint_icon.mouse_filter = Control.MOUSE_FILTER_STOP
-	hint_icon.focus_mode = Control.FOCUS_ALL
-	hint_icon.mouse_default_cursor_shape = Control.CURSOR_HELP
-	# Add theme override to increase tooltip text size
-	hint_icon.add_theme_font_size_override("tooltip_font_size", 18)
-	top_row.add_child(hint_icon)
 	
 	# Middle row for level indicators
 	var level_row = HBoxContainer.new()

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cbldwr3bg2wrg"
 path.s3tc="res://.godot/imported/underfirst.png-bbd194195cc8d536d0a4691ebb2fa3fa.s3tc.ctex"
+path.etc2="res://.godot/imported/underfirst.png-bbd194195cc8d536d0a4691ebb2fa3fa.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://textures/backgrounds/underfirst.png"
-dest_files=["res://.godot/imported/underfirst.png-bbd194195cc8d536d0a4691ebb2fa3fa.s3tc.ctex"]
+dest_files=["res://.godot/imported/underfirst.png-bbd194195cc8d536d0a4691ebb2fa3fa.s3tc.ctex", "res://.godot/imported/underfirst.png-bbd194195cc8d536d0a4691ebb2fa3fa.etc2.ctex"]
 
 [params]
 

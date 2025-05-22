@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bs1me7q5k4e4n"
 path.s3tc="res://.godot/imported/fractal_perlin_noise.png-a0d0d0705cf1e3d01ee24d01dc489fe5.s3tc.ctex"
+path.etc2="res://.godot/imported/fractal_perlin_noise.png-a0d0d0705cf1e3d01ee24d01dc489fe5.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://textures/fractal_perlin_noise.png"
-dest_files=["res://.godot/imported/fractal_perlin_noise.png-a0d0d0705cf1e3d01ee24d01dc489fe5.s3tc.ctex"]
+dest_files=["res://.godot/imported/fractal_perlin_noise.png-a0d0d0705cf1e3d01ee24d01dc489fe5.s3tc.ctex", "res://.godot/imported/fractal_perlin_noise.png-a0d0d0705cf1e3d01ee24d01dc489fe5.etc2.ctex"]
 
 [params]
 

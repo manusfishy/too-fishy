@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://swfphkpd1qug"
 path.s3tc="res://.godot/imported/Loop_for_Deep.png-5536dcc750fb20223f25bcb73b2a4287.s3tc.ctex"
+path.etc2="res://.godot/imported/Loop_for_Deep.png-5536dcc750fb20223f25bcb73b2a4287.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://textures/backgrounds/Loop_for_Deep.png"
-dest_files=["res://.godot/imported/Loop_for_Deep.png-5536dcc750fb20223f25bcb73b2a4287.s3tc.ctex"]
+dest_files=["res://.godot/imported/Loop_for_Deep.png-5536dcc750fb20223f25bcb73b2a4287.s3tc.ctex", "res://.godot/imported/Loop_for_Deep.png-5536dcc750fb20223f25bcb73b2a4287.etc2.ctex"]
 
 [params]
 

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://kikuk1pg4qvp"
 path.s3tc="res://.godot/imported/trans_to_Lava.png-6e43cac71ef8d436f3bd5d262976f52a.s3tc.ctex"
+path.etc2="res://.godot/imported/trans_to_Lava.png-6e43cac71ef8d436f3bd5d262976f52a.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://textures/backgrounds/trans_to_Lava.png"
-dest_files=["res://.godot/imported/trans_to_Lava.png-6e43cac71ef8d436f3bd5d262976f52a.s3tc.ctex"]
+dest_files=["res://.godot/imported/trans_to_Lava.png-6e43cac71ef8d436f3bd5d262976f52a.s3tc.ctex", "res://.godot/imported/trans_to_Lava.png-6e43cac71ef8d436f3bd5d262976f52a.etc2.ctex"]
 
 [params]
 

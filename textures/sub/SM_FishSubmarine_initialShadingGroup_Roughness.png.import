@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://4eml8a4bksxs"
 path.s3tc="res://.godot/imported/SM_FishSubmarine_initialShadingGroup_Roughness.png-e7bfc6e4f93c1cbced35ad6f902d227f.s3tc.ctex"
+path.etc2="res://.godot/imported/SM_FishSubmarine_initialShadingGroup_Roughness.png-e7bfc6e4f93c1cbced35ad6f902d227f.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://textures/sub/SM_FishSubmarine_initialShadingGroup_Roughness.png"
-dest_files=["res://.godot/imported/SM_FishSubmarine_initialShadingGroup_Roughness.png-e7bfc6e4f93c1cbced35ad6f902d227f.s3tc.ctex"]
+dest_files=["res://.godot/imported/SM_FishSubmarine_initialShadingGroup_Roughness.png-e7bfc6e4f93c1cbced35ad6f902d227f.s3tc.ctex", "res://.godot/imported/SM_FishSubmarine_initialShadingGroup_Roughness.png-e7bfc6e4f93c1cbced35ad6f902d227f.etc2.ctex"]
 
 [params]
 

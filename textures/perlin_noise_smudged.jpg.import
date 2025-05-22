@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cv35uxhcsa76e"
 path.s3tc="res://.godot/imported/perlin_noise_smudged.jpg-401ee910b51a5dcd5d2a77ab6b2b4550.s3tc.ctex"
+path.etc2="res://.godot/imported/perlin_noise_smudged.jpg-401ee910b51a5dcd5d2a77ab6b2b4550.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://textures/perlin_noise_smudged.jpg"
-dest_files=["res://.godot/imported/perlin_noise_smudged.jpg-401ee910b51a5dcd5d2a77ab6b2b4550.s3tc.ctex"]
+dest_files=["res://.godot/imported/perlin_noise_smudged.jpg-401ee910b51a5dcd5d2a77ab6b2b4550.s3tc.ctex", "res://.godot/imported/perlin_noise_smudged.jpg-401ee910b51a5dcd5d2a77ab6b2b4550.etc2.ctex"]
 
 [params]
 

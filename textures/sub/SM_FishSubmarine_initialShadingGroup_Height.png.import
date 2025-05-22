@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dv4lvpdoor1bp"
 path.s3tc="res://.godot/imported/SM_FishSubmarine_initialShadingGroup_Height.png-a0d8e16b704b05d145ad41e7b7273e58.s3tc.ctex"
+path.etc2="res://.godot/imported/SM_FishSubmarine_initialShadingGroup_Height.png-a0d8e16b704b05d145ad41e7b7273e58.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://textures/sub/SM_FishSubmarine_initialShadingGroup_Height.png"
-dest_files=["res://.godot/imported/SM_FishSubmarine_initialShadingGroup_Height.png-a0d8e16b704b05d145ad41e7b7273e58.s3tc.ctex"]
+dest_files=["res://.godot/imported/SM_FishSubmarine_initialShadingGroup_Height.png-a0d8e16b704b05d145ad41e7b7273e58.s3tc.ctex", "res://.godot/imported/SM_FishSubmarine_initialShadingGroup_Height.png-a0d8e16b704b05d145ad41e7b7273e58.etc2.ctex"]
 
 [params]
 

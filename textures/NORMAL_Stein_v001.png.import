@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://ba5hdxbc7djed"
 path.s3tc="res://.godot/imported/NORMAL_Stein_v001.png-9c66a35c24fad0dab33d7c09a9a98524.s3tc.ctex"
+path.etc2="res://.godot/imported/NORMAL_Stein_v001.png-9c66a35c24fad0dab33d7c09a9a98524.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://textures/NORMAL_Stein_v001.png"
-dest_files=["res://.godot/imported/NORMAL_Stein_v001.png-9c66a35c24fad0dab33d7c09a9a98524.s3tc.ctex"]
+dest_files=["res://.godot/imported/NORMAL_Stein_v001.png-9c66a35c24fad0dab33d7c09a9a98524.s3tc.ctex", "res://.godot/imported/NORMAL_Stein_v001.png-9c66a35c24fad0dab33d7c09a9a98524.etc2.ctex"]
 
 [params]
 

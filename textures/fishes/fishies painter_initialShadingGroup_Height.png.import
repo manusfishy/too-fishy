@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://d0jppkuqjvmmy"
 path.s3tc="res://.godot/imported/fishies painter_initialShadingGroup_Height.png-468fbf00308b9d45706830e582379cb0.s3tc.ctex"
+path.etc2="res://.godot/imported/fishies painter_initialShadingGroup_Height.png-468fbf00308b9d45706830e582379cb0.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://textures/fishes/fishies painter_initialShadingGroup_Height.png"
-dest_files=["res://.godot/imported/fishies painter_initialShadingGroup_Height.png-468fbf00308b9d45706830e582379cb0.s3tc.ctex"]
+dest_files=["res://.godot/imported/fishies painter_initialShadingGroup_Height.png-468fbf00308b9d45706830e582379cb0.s3tc.ctex", "res://.godot/imported/fishies painter_initialShadingGroup_Height.png-468fbf00308b9d45706830e582379cb0.etc2.ctex"]
 
 [params]
 

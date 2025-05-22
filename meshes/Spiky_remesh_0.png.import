@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://hisd0b4ytxjt"
 path.s3tc="res://.godot/imported/Spiky_remesh_0.png-267bf1c9546cb691211c1c1dadee81a7.s3tc.ctex"
+path.etc2="res://.godot/imported/Spiky_remesh_0.png-267bf1c9546cb691211c1c1dadee81a7.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://meshes/Spiky_remesh_0.png"
-dest_files=["res://.godot/imported/Spiky_remesh_0.png-267bf1c9546cb691211c1c1dadee81a7.s3tc.ctex"]
+dest_files=["res://.godot/imported/Spiky_remesh_0.png-267bf1c9546cb691211c1c1dadee81a7.s3tc.ctex", "res://.godot/imported/Spiky_remesh_0.png-267bf1c9546cb691211c1c1dadee81a7.etc2.ctex"]
 
 [params]
 

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dv7ddnexjgjoi"
 path.s3tc="res://.godot/imported/voiD_v002.png-02f31ec91058304bfbc0a7ac05e313b6.s3tc.ctex"
+path.etc2="res://.godot/imported/voiD_v002.png-02f31ec91058304bfbc0a7ac05e313b6.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://textures/backgrounds/voiD_v002.png"
-dest_files=["res://.godot/imported/voiD_v002.png-02f31ec91058304bfbc0a7ac05e313b6.s3tc.ctex"]
+dest_files=["res://.godot/imported/voiD_v002.png-02f31ec91058304bfbc0a7ac05e313b6.s3tc.ctex", "res://.godot/imported/voiD_v002.png-02f31ec91058304bfbc0a7ac05e313b6.etc2.ctex"]
 
 [params]
 
