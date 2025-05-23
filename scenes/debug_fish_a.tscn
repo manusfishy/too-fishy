@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://o5ukbyh1vywb"]
+
+[ext_resource type="PackedScene" uid="uid://cllphursswpl2" path="res://scenes/mobs/BasicFishA.tscn" id="1_fish_a"]
+
+[sub_resource type="Sky" id="Sky_12345"]
+
+[sub_resource type="Environment" id="Environment_67890"]
+background_mode = 2
+sky = SubResource("Sky_12345")
+tonemap_mode = 2
+
+[node name="DebugFishAScene" type="Node3D"]
+
+[node name="BasicFishA" parent="." instance=ExtResource("1_fish_a")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.34203)
+current = true
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 2, 2)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_67890")

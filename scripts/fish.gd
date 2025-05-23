@@ -11,10 +11,36 @@ extends CharacterBody3D
 @export var is_shiny = false
 @export var shiny_particles: GPUParticles3D
 
+@export var mesh_instance_path: NodePath
+var mesh_instance: MeshInstance3D
+
 var rotation_cooldown_left = 0
 var speed = 0
 var home: int
 var type: int
+var accumulated_shader_time: float = 0.0 # Custom time accumulator for shader
+
+# --- Shader Animation Speed Control (names describe rate of accumulation) ---
+@export var base_anim_rate: float = 0.5 # Base rate for accumulated_shader_time
+@export var speed_to_anim_rate_factor: float = 1.25 # Increased from 0.75
+@export var min_effective_anim_rate: float = 0.2 # Min rate at which accumulated_shader_time advances
+@export var max_effective_anim_rate: float = 4.0 # Max rate at which accumulated_shader_time advances
+# --- End Shader Animation Speed Control ---
+
+func _ready():
+	print("Fish ", name, ": _ready() called.")
+	print("  Attempting to find mesh_instance at path: ", mesh_instance_path)
+	if mesh_instance_path:
+		mesh_instance = get_node_or_null(mesh_instance_path)
+		if !mesh_instance:
+			printerr("  ERROR: Fish script could not find MeshInstance3D at path: ", mesh_instance_path, " for node: ", name)
+		else:
+			print("  SUCCESS: Found mesh_instance: ", mesh_instance.name)
+	else:
+		printerr("  ERROR: mesh_instance_path is not set for node: ", name)
+	
+	accumulated_shader_time = randf() * 2.0 * PI
+	print("  Initial accumulated_shader_time: ", accumulated_shader_time)
 
 func removeFish():
 	var fish_data = {
@@ -23,29 +49,26 @@ func removeFish():
 		"id": get_instance_id()
 	}
 	var my_fish = InvItem.new()
-	my_fish.type = str(self.type) # Convert the numeric type to a string
+	my_fish.type = str(self.type)
 	my_fish.weight = fish_data.weight
 	my_fish.price = fish_data.price
 	my_fish.id = fish_data.id
-	my_fish.shiny = self.is_shiny # Also make sure to copy the shiny property
+	my_fish.shiny = self.is_shiny
 	queue_free()
 	return my_fish
 	
-
 func _physics_process(delta: float) -> void:
+	# print("Fish ", name, ": _physics_process, delta: ", delta) # Uncomment for very verbose logging
 	if rotation_cooldown_left > 0:
 		rotation_cooldown_left -= delta
 	
 	if get_slide_collision_count() > 0 && rotation_cooldown_left <= 0:
 		rotation_cooldown_left = rotation_cooldown
 		rotate_y(deg_to_rad(180))
-		
 		var deg = randf_range(min_angle, max_angle)
-		
 		set_z_rotation_and_velocity(deg)
 	
 	if global_position.y >= -0.5:
-		# Record this fish type as having reached the surface before deleting
 		record_surface_achievement()
 		queue_free()
 		return
@@ -59,10 +82,34 @@ func _physics_process(delta: float) -> void:
 			set_z_rotation_and_velocity(deg)
 	elif randf() < .004:
 		set_z_rotation_and_velocity(randf_range(min_angle, max_angle))
-		
-		
+			
 	move_and_slide()
 	
+	if !mesh_instance:
+		# print("Fish ", name, ": mesh_instance is null in _physics_process. Skipping animation update.") # Uncomment for verbose logging
+		return
+
+	var material_override = mesh_instance.get_surface_override_material(0)
+	if !material_override:
+		# print("Fish ", name, ": material_override is null. Skipping animation update.") # Uncomment for verbose logging
+		return
+
+	if !(material_override is ShaderMaterial):
+		# print("Fish ", name, ": material_override is not ShaderMaterial (Type: ", typeof(material_override), "). Skipping animation update.") # Uncomment for verbose logging
+		return
+
+	# If we reach here, mesh_instance and material are valid
+	var material: ShaderMaterial = material_override
+	
+	var current_speed: float = velocity.length()
+	var effective_anim_rate = base_anim_rate + (current_speed * speed_to_anim_rate_factor)
+	effective_anim_rate = clamp(effective_anim_rate, min_effective_anim_rate, max_effective_anim_rate)
+	
+	accumulated_shader_time += delta * effective_anim_rate
+	
+	# print("Fish ", name, ": current_speed: ", current_speed, ", effective_anim_rate: ", effective_anim_rate, ", new_accum_time: ", accumulated_shader_time) # Uncomment for verbose logging
+	material.set_shader_parameter("animation_time_input", accumulated_shader_time)
+
 func initialize(mStart_position, mHome, mMin_speed, mMax_speed,
 mDifficulty, mMin_weight, mMax_weight, price_weight_multiplier, mType, weight_multiplier, mIs_shiny = false):
 	self.home = mHome

@@ -1,8 +1,6 @@
-[gd_scene load_steps=51 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=46 format=3 uid="uid://vg72e433ggrx"]
 
-[ext_resource type="Material" uid="uid://c5n8hh7lc1h4b" path="res://materials/base_material_3d.tres" id="2_pu3yx"]
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
-[ext_resource type="Texture2D" uid="uid://b0r6xam3j6ui2" path="res://textures/backgrounds/background_beginning.jpg" id="4_c1pb6"]
 [ext_resource type="PackedScene" uid="uid://xqds4eqa4fys" path="res://scenes/section.tscn" id="4_gubc5"]
 [ext_resource type="PackedScene" uid="uid://durrtmu3i450r" path="res://scenes/player.tscn" id="4_pu3yx"]
 [ext_resource type="PackedScene" uid="uid://b3j6kki1bc2xs" path="res://scenes/boss_section.tscn" id="5_si52b"]
@@ -29,13 +27,6 @@
 [ext_resource type="PackedScene" uid="uid://cu74jh81r7l20" path="res://scenes/dock_3_remesh.tscn" id="23_k3g67"]
 [ext_resource type="Material" uid="uid://bupgrlcbs4i6k" path="res://materials/walls/veins.tres" id="24_k67gn"]
 [ext_resource type="PackedScene" uid="uid://peitbuaqkkcm" path="res://scenes/ui/achievement_panel.tscn" id="24_qr5t3"]
-
-[sub_resource type="QuadMesh" id="QuadMesh_c16ls"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6wevv"]
-albedo_texture = ExtResource("4_c1pb6")
-
-[sub_resource type="TorusMesh" id="TorusMesh_o3jxj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6u1mn"]
 bg_color = Color(0, 0.360784, 0.831373, 1)
@@ -153,26 +144,14 @@ boss_section = ExtResource("5_si52b")
 sectionHeight = 25.0
 preloadSectionsCount = 2
 
-[node name="StartSection" type="Node3D" parent="Level"]
+[node name="lava" type="Node3D" parent="Level"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
 visible = false
 
-[node name="Background" type="MeshInstance3D" parent="Level/StartSection"]
-transform = Transform3D(25, 0, 0, 0, 25, 0, 0, 0, 1, -15.8629, 0, -3.00963)
-mesh = SubResource("QuadMesh_c16ls")
-skeleton = NodePath("../../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_6wevv")
-
-[node name="Base" type="MeshInstance3D" parent="Level/StartSection"]
-transform = Transform3D(1, 0, 0, 0, 5, 0, 0, 0, 1, 0.0526396, 13.6304, -1.26619)
-material_override = ExtResource("2_pu3yx")
-mesh = SubResource("TorusMesh_o3jxj")
-skeleton = NodePath("../../..")
-
-[node name="Lava" parent="Level/StartSection" instance=ExtResource("7_r6p65")]
+[node name="Lava" parent="Level/lava" instance=ExtResource("7_r6p65")]
 transform = Transform3D(0.538622, 0, 0, 0, 4.32167, 0, 0, 0, 1, -19.2295, 0.180141, -2.69743)
 
-[node name="Lava2" parent="Level/StartSection" instance=ExtResource("7_r6p65")]
+[node name="Lava2" parent="Level/lava" instance=ExtResource("7_r6p65")]
 transform = Transform3D(2.45308, 0, 0, 0, 1.62324, 0, 0, 0, 1, -20.4469, -3.0248, -2.69743)
 
 [node name="FirstSection" parent="Level" instance=ExtResource("4_gubc5")]
@@ -181,7 +160,7 @@ background_mat = ExtResource("9_7nt27")
 particles_enabled = false
 
 [node name="SecondSection" parent="Level" instance=ExtResource("4_gubc5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -35, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -35.4018, 0)
 background_mat = ExtResource("9_bcnxi")
 
 [node name="UI" type="Control" parent="."]
@@ -653,6 +632,7 @@ text = "FPS"
 script = ExtResource("14_r6p65")
 
 [node name="Audiomanager" type="Node" parent="."]
+process_mode = 3
 script = ExtResource("22_k67gn")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Audiomanager"]
