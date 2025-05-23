@@ -229,6 +229,7 @@ func _on_player_detection_area_body_entered(body):
 		hint_shown = false
 
 func show_hint():
+	hint_shown = true
 	# Get the Popup_Manager to show the hint
 	var popup_manager = get_node_or_null("/root/PopupManager")
 	
@@ -328,7 +329,7 @@ func create_destruction_particles():
 	material.gravity = Vector3(0, -2, 0)
 	material.initial_velocity_min = 2.0
 	material.initial_velocity_max = 5.0
-	material.color = Color(0.259, 0.196, 0.129)
+	material.color = Color(0.4, 0.2, 0.1) # Dark brown color (was light brown)
 	particles.process_material = material
 
 	# Partikelform

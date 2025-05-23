@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cnicgksdkot2f"]
+[gd_scene load_steps=14 format=3 uid="uid://cnicgksdkot2f"]
 
 [ext_resource type="Script" uid="uid://dusm0c412ow3e" path="res://scripts/destroyable_barier.gd" id="1_yxy8j"]
 [ext_resource type="ArrayMesh" uid="uid://uh0m2hxeiiso" path="res://meshes/SM_Crate.obj" id="2_64ftb"]
@@ -7,7 +7,30 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_64ftb"]
 size = Vector3(3.67505, 3.5249, 3.45001)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_64ftb"]
+albedo_color = Color(0.182498, 0.109696, 0.0145838, 0.95)
+albedo_texture_force_srgb = true
+
+[sub_resource type="CurveTexture" id="CurveTexture_drlhn"]
+
+[sub_resource type="Gradient" id="Gradient_0uaoq"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ta0cf"]
+gradient = SubResource("Gradient_0uaoq")
+
+[sub_resource type="Gradient" id="Gradient_t0i8t"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_shlyu"]
+gradient = SubResource("Gradient_t0i8t")
+
+[sub_resource type="CurveTexture" id="CurveTexture_dmjvh"]
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yxy8j"]
+color = Color(0.182498, 0.109696, 0.0145838, 0.95)
+color_ramp = SubResource("GradientTexture1D_shlyu")
+color_initial_ramp = SubResource("GradientTexture1D_ta0cf")
+alpha_curve = SubResource("CurveTexture_drlhn")
+emission_curve = SubResource("CurveTexture_dmjvh")
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_yxy8j"]
 
@@ -26,6 +49,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.144622, 0.00805664, 0.0081
 shape = SubResource("BoxShape3D_64ftb")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+material_override = SubResource("StandardMaterial3D_64ftb")
 emitting = false
 collision_base_size = 0.0
 process_material = SubResource("ParticleProcessMaterial_yxy8j")

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://ckbs05slsrxf2" path="res://scripts/fish.gd" id="1_s4kbk"]
 [ext_resource type="ArrayMesh" uid="uid://ctklcadrxkjay" path="res://meshes/SM_AnglerFish.obj" id="2_2wna0"]
 [ext_resource type="Material" uid="uid://ntxihwik5ww0" path="res://materials/mobs/ShinyParticles.tres" id="3_pbdao"]
-[ext_resource type="Material" path="res://materials/fishes.tres" id="3_v3fgv"]
+[ext_resource type="Material" uid="uid://dxhaj24revj7w" path="res://materials/fishes.tres" id="3_v3fgv"]
 [ext_resource type="PrismMesh" uid="uid://dkttjpdmphyxv" path="res://materials/mobs/ShinyParticlesMesh.tres" id="4_v3fgv"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_b0grq"]
@@ -18,7 +18,7 @@ script = ExtResource("1_s4kbk")
 shiny_particles = NodePath("ShinyParticles")
 
 [node name="Pivot" type="Node3D" parent="."]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
 
 [node name="SmBasicFishB" type="MeshInstance3D" parent="Pivot"]
 transform = Transform3D(-0.7, 0, -1.05697e-07, 0, 0.7, 0, 1.05697e-07, 0, -0.7, 0, 0.559967, 0)
@@ -33,7 +33,7 @@ light_energy = 5.0
 omni_range = 2.2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.000111341, -0.0767789, 0)
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -0.0879799, 0.118642, 0)
 shape = SubResource("CapsuleShape3D_b0grq")
 
 [node name="ShinyParticles" type="GPUParticles3D" parent="."]

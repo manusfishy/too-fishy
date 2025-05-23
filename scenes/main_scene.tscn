@@ -145,17 +145,17 @@ sectionHeight = 25.0
 preloadSectionsCount = 2
 
 [node name="lava" type="Node3D" parent="Level"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 0)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 3.28338)
 
 [node name="Lava" parent="Level/lava" instance=ExtResource("7_r6p65")]
-transform = Transform3D(0.538622, 0, 0, 0, 4.32167, 0, 0, 0, 1, -19.2295, 0.180141, -2.69743)
+transform = Transform3D(0.538622, 0, 0, 0, 4.32167, 0, 0, 0, 1, -26.0128, 5.69699, -2.69743)
 
 [node name="Lava2" parent="Level/lava" instance=ExtResource("7_r6p65")]
-transform = Transform3D(2.45308, 0, 0, 0, 1.62324, 0, 0, 0, 1, -20.4469, -3.0248, -2.69743)
+transform = Transform3D(2.45308, 0, 0, 0, 1.62324, 0, 0, 0, 1, -20.3366, -3.0248, -2.69743)
+visible = false
 
 [node name="FirstSection" parent="Level" instance=ExtResource("4_gubc5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10.5, 0)
+transform = Transform3D(0.999998, 0.00193481, -0.00103434, -0.00193703, 0.999996, -0.00214899, 0.00103019, 0.00215098, 0.999997, 0, -10.5, 0)
 background_mat = ExtResource("9_7nt27")
 particles_enabled = false
 

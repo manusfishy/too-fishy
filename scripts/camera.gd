@@ -27,13 +27,14 @@ var environment_light_map = {
 	GameState.Stage.DEEP: 0.8,
 	GameState.Stage.DEEPER: 0.5,
 	GameState.Stage.SUPERDEEP: 0.1,
-	GameState.Stage.HOT:  0.2,
+	GameState.Stage.HOT: 0.2,
 	GameState.Stage.LAVA: 1.0,
 	GameState.Stage.VOID: 0.1,
 }
 
 func _ready():
-	environment.fog_light_color = environment_color_map[0]
+	# Initialize with SURFACE stage instead of integer 0
+	environment.fog_light_color = environment_color_map[GameState.Stage.SURFACE]
 	directional_light = get_node("/root/Node3D/DirectionalLight3D")
 	
 	# Connect to window resize signal to adjust camera parameters
@@ -64,9 +65,14 @@ func _adjust_camera_for_aspect_ratio():
 	print("Window size: ", window_size, " - Aspect ratio: ", current_aspect, " - FOV: ", fov)
 
 func change_section_environment(sectionType):
+	# Validate that the section type exists in our maps
+	if not environment_color_map.has(sectionType):
+		print("Warning: Unknown section type ", sectionType, " - using SURFACE default")
+		sectionType = GameState.Stage.SURFACE
+	
 	var tween = self.create_tween()
 	tween.tween_property(environment, "fog_light_color", environment_color_map[sectionType], 1)
-	if (directional_light):
+	if directional_light and environment_light_map.has(sectionType):
 		tween.tween_property(directional_light, "light_energy", environment_light_map[sectionType], 3)
 		
 func _process(_delta: float) -> void:

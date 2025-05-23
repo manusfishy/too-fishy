@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://bd1pb0emiskhm"]
+
+[ext_resource type="Script" uid="uid://ckbs05slsrxf2" path="res://scripts/fish.gd" id="1_hc20j"]
+[ext_resource type="PackedScene" uid="uid://ce2ae71y66bxm" path="res://scenes/mobs/short_submar_texture.tscn" id="2_hc20j"]
+[ext_resource type="Material" uid="uid://ntxihwik5ww0" path="res://materials/mobs/ShinyParticles.tres" id="3_5tb3v"]
+[ext_resource type="PrismMesh" uid="uid://dkttjpdmphyxv" path="res://materials/mobs/ShinyParticlesMesh.tres" id="4_8yj4f"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qs71y"]
+
+[node name="Drone" type="CharacterBody3D" groups=["fishes"]]
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+motion_mode = 1
+script = ExtResource("1_hc20j")
+
+[node name="Pivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.118526, 0, 0)
+
+[node name="short_submar_texture" parent="Pivot" instance=ExtResource("2_hc20j")]
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.991538, -0.129817, 0, 0.110658, 0.845208, 0.522856, -0.0678754, -0.518431, 0.852421, 0.100747, -0.02598, 0.044829)
+shape = SubResource("CapsuleShape3D_qs71y")
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00169754, 0, 0)
+aabb = AABB(-1.14471, -0.70854, -0.453892, 2.28942, 1.41708, 0.907783)
+
+[node name="ShinyParticles" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 200
+lifetime = 1.5
+randomness = 0.6
+process_material = ExtResource("3_5tb3v")
+draw_pass_1 = ExtResource("4_8yj4f")

@@ -1,16 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://dxs8yvtl2p4qr"]
+[gd_scene load_steps=2 format=3 uid="uid://dxs8yvtl2p4qr"]
 
 [ext_resource type="Script" path="res://scripts/damage_effects.gd" id="1_jkl4m"]
-[ext_resource type="Texture2D" path="res://textures/effects/screen_crack.png" id="2_nopqr"]
 
-[node name="DamageEffects" type="Node2D"]
+[node name="DamageEffects" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_jkl4m")
 
-[node name="CrackSprite" type="Sprite2D" parent="."]
-texture = ExtResource("2_nopqr")
-centered = false
-
 [node name="RedFlash" type="ColorRect" parent="."]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

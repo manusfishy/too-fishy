@@ -91,11 +91,22 @@ func setDepth(d: int):
 	depth = d
 	if (maxDepthReached < d):
 		maxDepthReached = d
-	if snapped(d, 100) <= depthStageMap.keys()[len(depthStageMap.keys()) - 1]:
-		GameState.playerInStage = depthStageMap[snapped(d, 100)]
-	else:
-		GameState.playerInStage = Stage.VOID
 	
+	# Calculate the appropriate stage based on depth
+	var snapped_depth = snapped(d, 100)
+	var new_stage = Stage.SURFACE # Default to SURFACE for shallow depths
+	
+	# Sort depth thresholds and find the highest one that we meet or exceed
+	var sorted_depths = depthStageMap.keys()
+	sorted_depths.sort()
+	
+	for depth_threshold in sorted_depths:
+		if snapped_depth >= depth_threshold:
+			new_stage = depthStageMap[depth_threshold]
+		# Continue to find the highest threshold we meet
+	
+	GameState.playerInStage = new_stage
+
 func getUpgradeCost(mUpgrade: Upgrade) -> int:
 	return int((upgrades[mUpgrade] + 1) * upgradeCosts[mUpgrade])
 

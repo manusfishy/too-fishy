@@ -45,6 +45,12 @@ signal section_changed(sectionType)
 # New inventory menu reference
 var inventory_menu = null
 
+# Track previous stage for section change detection
+var previous_stage = GameState.Stage.SURFACE
+
+# Lava damage tracking
+var is_in_lava_area = false
+
 var pickup_range := 1.5
 var can_swing = true
 var rotation_target = 0
@@ -218,11 +224,11 @@ func _physics_process(delta: float) -> void:
 	collision()
 	rockingMotion(delta)
 	
-	var depthSnapped = snapped(GameState.depth, 100)
-	if depthSnapped >= GameState.depthStageMap.keys()[len(GameState.depthStageMap.keys()) - 1]:
-		depthSnapped = GameState.depthStageMap.keys()[len(GameState.depthStageMap.keys()) - 1]
-		emit_signal("section_changed", depthSnapped)
-	var sectionType = GameState.depthStageMap[depthSnapped]
+	# Check if the current stage has changed and emit signal if so
+	var current_stage = GameState.playerInStage
+	if current_stage != previous_stage:
+		emit_signal("section_changed", current_stage)
+		previous_stage = current_stage
 	
 	process_death()
 
@@ -275,29 +281,57 @@ func setup_cooldown_timer(timer_name: String, wait_time: float) -> void:
 func activate_surface_buoy():
 	# Only works if player is below the surface
 	if position.y < -1:
-		# Create visual effect
-		var particles = CPUParticles3D.new()
-		particles.emitting = true
-		particles.one_shot = true
-		particles.explosiveness = 1.0
-		particles.amount = 30
-		particles.lifetime = 1.0
-		particles.mesh = SphereMesh.new()
-		particles.mesh.radius = 0.1
-		particles.mesh.height = 0.2
-		particles.direction = Vector3(0, 1, 0)
-		particles.spread = 45.0
-		particles.gravity = Vector3(0, 0, 0)
-		particles.initial_velocity_min = 2.0
-		particles.initial_velocity_max = 5.0
-		particles.color = Color(0.2, 0.7, 1.0, 0.8)
-		add_child(particles)
+		print("Surface buoy activated - surfacing in place")
+		
+		# Move player to surface (keep x/z position, just change y)
+		position.y = -1
 		
 		# Play sound effect
 		sound_player.play_sound("bup")
 		
-		# Move player to surface
-		position.y = -1
+		# Create visual effect at the submarine's actual surface position
+		var particles = CPUParticles3D.new()
+		particles.name = "SurfaceBuoyEffect"
+		
+		# Set position before adding to scene
+		particles.position = position
+		
+		# Basic particle setup
+		particles.emitting = true
+		particles.one_shot = true
+		particles.explosiveness = 1.0
+		particles.amount = 50
+		particles.lifetime = 2.0
+		
+		# Particle appearance
+		var sphere_mesh = SphereMesh.new()
+		sphere_mesh.radius = 0.05
+		sphere_mesh.height = 0.1
+		particles.mesh = sphere_mesh
+		
+		# Movement settings
+		particles.direction = Vector3(0, 1, 0)
+		particles.spread = 45.0
+		particles.initial_velocity_min = 3.0
+		particles.initial_velocity_max = 8.0
+		particles.gravity = Vector3(0, -5, 0)
+		
+		# Color - light blue water splash
+		particles.color = Color(0.6, 0.9, 1.0, 1.0)
+		
+		# Add to scene
+		get_parent().add_child(particles)
+		
+		print("Submarine surfaced at: ", position)
+		print("Particles at: ", particles.position)
+		print("Particles emitting: ", particles.emitting)
+		
+		# Simple cleanup after 3 seconds
+		get_tree().create_timer(3.0).timeout.connect(func():
+			if is_instance_valid(particles):
+				print("Cleaning up surface buoy particles")
+				particles.queue_free()
+		)
 		
 		# Start cooldown
 		cooldown_timer_buoy.start()
@@ -427,6 +461,36 @@ func process_depth_effects(delta):
 	if GameState.headroom < 0:
 		add_trauma(0.1)
 		GameState.health += GameState.headroom * delta
+	
+	# Lava damage only when actually in lava area (not just lava stage)
+	if is_in_lava_area:
+		process_lava_damage(delta)
+
+func process_lava_damage(delta):
+	# Lava damage: 10 damage per second when in lava stage
+	var lava_damage_per_second = 10.0
+	GameState.health -= lava_damage_per_second * delta
+	
+	# Add trauma for being in lava (screen shake)
+	add_trauma(0.05)
+	
+	# Play damage sound occasionally
+	if randf() < 0.1: # 10% chance per frame to play sound
+		sound_player.play_sound("ughhh")
+	
+	# Visual feedback - add red tint effect when taking lava damage
+	var ui_node = get_node("/root/Node3D/UI")
+	if ui_node:
+		if ui_node.has_node("DamageEffects"):
+			# Trigger subtle damage effects more frequently in lava
+			if randf() < 0.02: # 2% chance per frame
+				ui_node.get_node("DamageEffects").show_damage_effects()
+		else:
+			# Create damage effects instance if it doesn't exist
+			if randf() < 0.02:
+				var damage_effects = load("res://scenes/damage_effects.tscn").instantiate()
+				ui_node.add_child(damage_effects)
+				damage_effects.show_damage_effects()
 
 func process_death():
 	if GameState.health <= 0:
@@ -534,7 +598,7 @@ func add_trauma(trauma_amount: float):
 
 func activate_selling_drone():
 	# Load the dummy fish model to use as a drone
-	var drone_scene = preload("res://scenes/mobs/short_submar_texture.tscn")
+	var drone_scene = preload("res://scenes/mobs/drone.tscn")
 	var drone = drone_scene.instantiate()
 	
 	# Set up the drone
@@ -543,21 +607,38 @@ func activate_selling_drone():
 	drone.scale = Vector3(0.5, 0.5, 0.5) # Make it a bit smaller than regular fish
 	get_parent().add_child(drone)
 	
-
 	# Create visual effect for the drone
-	var particles = $dronefart
+	var particles = $dronefart.duplicate()
 	particles.color = Color(0.8, 0.8, 0.2) # Give it a golden color
-
 	drone.add_child(particles)
-	var duration = drone.position.y * 0.3 * -1
+	particles.emitting = true
 	
-	# Animate the drone swimming upward
+	# Define dock position (based on process_dock logic: y >= -1 && x > -7)
+	var dock_position = Vector3(-5, -0.5, position.z) # Slightly above surface, within dock area
+	
+	# Calculate durations for smooth movement
+	var distance_to_dock = drone.position.distance_to(dock_position)
+	var swim_duration = distance_to_dock / 3.0 # Drone moves at ~3 units per second
+	
+	# Create animation sequence
 	var tween = get_tree().create_tween()
-	tween.tween_property(drone, "position", Vector3(position.x, 0, position.z), duration)
 	
+	# First: swim toward dock
+	tween.tween_property(drone, "position", dock_position, swim_duration)
 	
-	onDock() # sell items
-
+	# Then: fade out and remove (using tween_callback to start fade after movement)
+	tween.tween_callback(func():
+		var fade_tween = get_tree().create_tween()
+		fade_tween.tween_property(drone, "modulate:a", 0.0, 0.5)
+		fade_tween.tween_callback(func():
+			if is_instance_valid(drone):
+				drone.queue_free()
+		)
+	)
+	
+	# Sell items immediately when drone is deployed
+	onDock()
+	
 	# Start cooldown
 	cooldown_timer_drone.start()
 
@@ -579,3 +660,24 @@ func toggle_inventory_menu():
 func connect_achievement_system(system):
 	achievement_system = system
 	print("Achievement system connected to player")
+
+# Called when player enters a lava area (connect this to lava Area3D nodes)
+func _on_lava_area_entered(area):
+	is_in_lava_area = true
+	print("Player entered lava area - taking damage!")
+
+# Called when player exits a lava area (connect this to lava Area3D nodes)  
+func _on_lava_area_exited(area):
+	is_in_lava_area = false
+	print("Player exited lava area - damage stopped")
+
+# Alternative method using body detection for Area3D
+func _on_lava_area_body_entered(body):
+	if body == self: # Make sure it's the player entering
+		is_in_lava_area = true
+		print("Player entered lava area - taking damage!")
+
+func _on_lava_area_body_exited(body):
+	if body == self: # Make sure it's the player exiting
+		is_in_lava_area = false
+		print("Player exited lava area - damage stopped")
