@@ -7,7 +7,7 @@ var sfx_volume: float = 1.0
 var is_muted: bool = false
 
 # Display settings
-var show_particles: bool = true
+var show_particles: bool = true # Controls environmental particles (Bubbles, Debris) - not fish shiny effects or mining particles
 var show_fps: bool = true
 
 # Settings file
@@ -39,8 +39,12 @@ func load_settings():
 	sfx_volume = config.get_value("audio", "sfx_volume", 1.0)
 	is_muted = config.get_value("audio", "mute", false)
 	
-	# Load display settings
-	show_particles = config.get_value("display", "particles", true)
+	# Load display settings with web-specific defaults for environmental particles
+	var default_particles = true
+	if OS.get_name() == "Web":
+		default_particles = false # Disable environmental particles by default on web for performance
+	
+	show_particles = config.get_value("display", "particles", default_particles)
 	show_fps = config.get_value("display", "fps_counter", true)
 	
 	# Apply settings
@@ -116,9 +120,29 @@ func set_mute(muted: bool):
 	apply_audio_settings()
 	save_settings()
 
+# Helper function to check if environmental particles should be disabled
+func should_disable_environmental_particles() -> bool:
+	return not show_particles or OS.get_name() == "Web"
+
 func set_show_particles(show: bool):
 	show_particles = show
 	apply_display_settings()
+	
+	# Apply to all existing sections
+	var sections = get_tree().get_nodes_in_group("sections")
+	for section in sections:
+		if section.has_method("disableParticles"):
+			if should_disable_environmental_particles():
+				section.disableParticles()
+			else:
+				# Re-enable particles if setting is turned on and not on web
+				if section.has_node("Bubbles"):
+					section.get_node("Bubbles").visible = true
+					section.get_node("Bubbles").emitting = true
+				if section.has_node("Debris"):
+					section.get_node("Debris").visible = true
+					section.get_node("Debris").emitting = true
+	
 	save_settings()
 
 func set_show_fps(show: bool):

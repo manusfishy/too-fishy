@@ -137,7 +137,15 @@ func add_barrier_boxes():
 			add_child(barrier)
 
 func _ready() -> void:
-	if not particles_enabled:
+	# Add this section to the sections group for settings management
+	add_to_group("sections")
+	
+	# Disable environmental particles on web platform for performance
+	# Also respect the global particle setting and local particles_enabled setting
+	var should_disable_particles = (not particles_enabled or
+									SettingsManager.should_disable_environmental_particles())
+	
+	if should_disable_particles:
 		disableParticles()
 	spawn_fish(true)
 	
