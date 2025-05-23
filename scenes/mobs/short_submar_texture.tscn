@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ce2ae71y66bxm"]
+
+[ext_resource type="PackedScene" uid="uid://brkgvtgmnsjj0" path="res://meshes/short_submar_texture.fbx" id="1_a04qd"]
+
+[node name="short_submar_texture" instance=ExtResource("1_a04qd")]
+
+[node name="Mesh1" parent="." index="0"]
+transform = Transform3D(-2.43506, 99.861, 4.67471, -85.3104, -4.51348, 51.9785, 52.1172, -2.72231, 85.3017, 0, 0, 0)

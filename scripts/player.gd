@@ -324,7 +324,7 @@ func shoot_harpoon():
 	if not harpoon_launch_point_node or not harpoon_scene: return # Add camera check if needed
 	# Instance the harpoon
 	var harpoon = harpoon_scene.instantiate()
-	get_parent().add_child(harpoon) # Or add to specific container
+	get_parent().add_child(harpoon)
 	sound_player.play_sound("harp")
 
 	var launch_position = harpoon_launch_point_node.global_position
@@ -534,7 +534,7 @@ func add_trauma(trauma_amount: float):
 
 func activate_selling_drone():
 	# Load the dummy fish model to use as a drone
-	var drone_scene = preload("res://scenes/mobs/dummy_fish.tscn")
+	var drone_scene = preload("res://scenes/mobs/short_submar_texture.tscn")
 	var drone = drone_scene.instantiate()
 	
 	# Set up the drone

@@ -65,6 +65,5 @@ emitting = false
 amount = 200
 lifetime = 1.5
 randomness = 0.6
-fixed_fps = 30
 process_material = ExtResource("2_dox8b")
 draw_pass_1 = ExtResource("3_o1r2o")
