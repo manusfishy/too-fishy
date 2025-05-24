@@ -16,7 +16,8 @@
 [ext_resource type="Texture2D" uid="uid://dftjv217nkd1s" path="res://textures/sub/SM_FishSubmarine_initialShadingGroup_Normal.png" id="9_fv6xg"]
 [ext_resource type="Texture2D" uid="uid://4eml8a4bksxs" path="res://textures/sub/SM_FishSubmarine_initialShadingGroup_Roughness.png" id="10_ok7n6"]
 [ext_resource type="ArrayMesh" uid="uid://gw7pdmvoe3yh" path="res://meshes/gestein_v003.obj" id="11_c2oyf"]
-[ext_resource type="Material" uid="uid://bf8hfoo5qmcgc" path="res://materials/shaders/lava_shader_material.tres" id="12_fddag"]
+[ext_resource type="PackedScene" uid="uid://cj100dmxx12lt" path="res://scenes/lava_side.tscn" id="17_h4431"]
+[ext_resource type="PackedScene" uid="uid://bh0pe37m6demo" path="res://scenes/lava.tscn" id="18_ihsky"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qha0t"]
 albedo_color = Color(1, 1, 0.152941, 1)
@@ -40,8 +41,6 @@ normal_texture = ExtResource("8_fddag")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vk6kq"]
 size = Vector3(6.53244, 9.52234, 16.658)
-
-[sub_resource type="QuadMesh" id="QuadMesh_c2oyf"]
 
 [node name="BossSection" type="Node3D"]
 
@@ -119,20 +118,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.7442, -54.631, -0.33)
 max_health = 1
 current_health = 1
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(4.84606, 0, 0, 0, 2.25327, 0, 0, 0, 1.90589, -22.0165, -7.27025, -1.77842)
-mesh = SubResource("QuadMesh_c2oyf")
-surface_material_override/0 = ExtResource("12_fddag")
+[node name="Lava_side" parent="." instance=ExtResource("17_h4431")]
+transform = Transform3D(1.52204, 0, 0, 0, 1.40241, 0, 0, 0, 1, -5.79982, -5.23136, 7.79199)
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1.02997, 0, 0, 0, 13.8471, 0, 0, 0, 1.90589, -6.61208, -14.7586, -1.77842)
-mesh = SubResource("QuadMesh_c2oyf")
-surface_material_override/0 = ExtResource("12_fddag")
+[node name="Lava" parent="." instance=ExtResource("18_ihsky")]
+transform = Transform3D(10.2079, 0, 0, 0, 1, 0, 0, 0, 1, -19.5684, -4.75327, 0)
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
-transform = Transform3D(4.84606, 0, 0, 0, 2.25327, 0, 0, 0, 1.90589, -20.6599, -14.7586, -1.77841)
-mesh = SubResource("QuadMesh_c2oyf")
-surface_material_override/0 = ExtResource("12_fddag")
+[node name="Lava" parent="Lava" instance=ExtResource("18_ihsky")]
+transform = Transform3D(1.28968, 0, 0, 0, 1, 0, 0, 0, 1, 1.08293, -7.2533, 0)
+
+[node name="Lava" parent="Lava/Lava" instance=ExtResource("18_ihsky")]
+transform = Transform3D(0.661976, 0, 0, 0, 1, 0, 0, 0, 1, -0.763632, -7.2533, 0)
 
 [connection signal="body_entered" from="Friend/Area3D" to="Friend" method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Friend/Area3D" to="Friend" method="_on_area_3d_body_exited"]
