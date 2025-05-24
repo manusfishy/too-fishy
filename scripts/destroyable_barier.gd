@@ -10,6 +10,10 @@ var hint_cooldown = 3.0 # Cooldown between showing hints
 var pickaxe_icon_material = null
 var cracks_texture = null
 
+# Static variable to track if any barrier is showing a hint
+static var global_hint_shown = false
+static var global_hint_cooldown = 5.0 # Cooldown between ANY barrier showing a hint
+
 # Reward configuration
 var min_money_reward = 5
 var max_money_reward = 40
@@ -219,14 +223,22 @@ func add_crack_decals():
 	add_child(decal)
 
 func _on_player_detection_area_body_entered(body):
-	# Check if it's the player
-	if body.is_in_group("player") and !hint_shown:
+	# Check if it's the player and no hint is currently shown by ANY barrier
+	if body.is_in_group("player") and !hint_shown and !DestroyableBarrier.global_hint_shown:
 		show_hint()
 		
-		# Set hint as shown and start cooldown
+		# Set hint as shown and start cooldown for this barrier
 		hint_shown = true
+		# Set global hint flag
+		DestroyableBarrier.global_hint_shown = true
+		
+		# Start cooldown timers
 		await get_tree().create_timer(hint_cooldown).timeout
 		hint_shown = false
+		
+		# Global cooldown (slightly longer to prevent rapid successive hints)
+		await get_tree().create_timer(global_hint_cooldown - hint_cooldown).timeout
+		DestroyableBarrier.global_hint_shown = false
 
 func show_hint():
 	hint_shown = true

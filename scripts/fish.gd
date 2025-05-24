@@ -40,12 +40,13 @@ func _ready():
 	if is_webgl_build:
 		shader_update_interval = 0.05 # 20fps for shader updates on WebGL
 	
-	if mesh_instance_path:
-		mesh_instance = get_node_or_null(mesh_instance_path)
-		if !mesh_instance:
-			printerr("  ERROR: Fish script could not find MeshInstance3D at path: ", mesh_instance_path, " for node: ", name)
-	else:
-		printerr("  ERROR: mesh_instance_path is not set for node: ", name)
+	if type == 0 or type == 1: # Only update animation for fish_a (0) and fish_b (1)
+		if mesh_instance_path:
+			mesh_instance = get_node_or_null(mesh_instance_path)
+			if !mesh_instance:
+				printerr("  ERROR: Fish script could not find MeshInstance3D at path: ", mesh_instance_path, " for node: ", name)
+		else:
+			printerr("  ERROR: mesh_instance_path is not set for node: ", name)
 	
 	accumulated_shader_time = randf() * 2.0 * PI
 	
@@ -96,25 +97,26 @@ func _physics_process(delta: float) -> void:
 		set_z_rotation_and_velocity(randf_range(min_angle, max_angle))
 			
 	move_and_slide()
-	
 	# Update shader animation with timer-based optimization
-	shader_update_timer += delta
-	if shader_update_timer >= shader_update_interval:
-		update_shader_animation(shader_update_timer)
-		shader_update_timer = 0.0
+	if type == 0 or type == 1: # Only update animation for fish_a (0) and fish_b (1)
+		shader_update_timer += delta
+		if shader_update_timer >= shader_update_interval:
+			update_shader_animation(shader_update_timer)
+			shader_update_timer = 0.0
 
 func update_shader_animation(delta_time: float):
-	#if !mesh_instance:
+	if !mesh_instance: return
 		# print("Fish ", name, ": mesh_instance is null in _physics_process. Skipping animation update.") # Uncomment for verbose logging
-		#return
+		
 	var material_override = mesh_instance.get_surface_override_material(0)
-	#if !material_override:
+	if !material_override: return
 		# print("Fish ", name, ": material_override is null. Skipping animation update.") # Uncomment for verbose logging
-	#	return
+	
 
-	#if !(material_override is ShaderMaterial):
+	if !(material_override is ShaderMaterial): return
+		# return
 		# print("Fish ", name, ": material_override is not ShaderMaterial (Type: ", typeof(material_override), "). Skipping animation update.") # Uncomment for verbose logging
-		#return
+	
 
 	# If we reach here, mesh_instance and material are valid
 	var material: ShaderMaterial = material_override
