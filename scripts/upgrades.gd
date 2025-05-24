@@ -273,12 +273,11 @@ func create_upgrade_button(key):
 		level_indicator.size_flags_horizontal = SIZE_SHRINK_CENTER
 		
 		var indicator_style = StyleBoxFlat.new()
+		indicator_style.bg_color = Color(0.545, 0.545, 0.545) # bright gray for unachieved levels
+		
 		if i < current_level:
 			# Filled level
 			indicator_style.bg_color = Color(0.3, 0.7, 1.0) # Bright blue for achieved levels
-		else:
-			# Empty level
-			indicator_style.bg_color = Color(0.545, 0.545, 0.545) # bright gray for unachieved levels
 		
 		indicator_style.set_corner_radius_all(3)
 		level_indicator.add_theme_stylebox_override("panel", indicator_style)

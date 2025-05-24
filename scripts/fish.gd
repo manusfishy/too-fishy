@@ -104,18 +104,17 @@ func _physics_process(delta: float) -> void:
 		shader_update_timer = 0.0
 
 func update_shader_animation(delta_time: float):
-	if !mesh_instance:
+	#if !mesh_instance:
 		# print("Fish ", name, ": mesh_instance is null in _physics_process. Skipping animation update.") # Uncomment for verbose logging
-		return
-
+		#return
 	var material_override = mesh_instance.get_surface_override_material(0)
-	if !material_override:
+	#if !material_override:
 		# print("Fish ", name, ": material_override is null. Skipping animation update.") # Uncomment for verbose logging
-		return
+	#	return
 
-	if !(material_override is ShaderMaterial):
+	#if !(material_override is ShaderMaterial):
 		# print("Fish ", name, ": material_override is not ShaderMaterial (Type: ", typeof(material_override), "). Skipping animation update.") # Uncomment for verbose logging
-		return
+		#return
 
 	# If we reach here, mesh_instance and material are valid
 	var material: ShaderMaterial = material_override
