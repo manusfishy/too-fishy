@@ -542,7 +542,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="InventoryMenu" parent="UI/CenterContainer" instance=ExtResource("14_4bgka")]
-visible = false
 layout_mode = 2
 
 [node name="BossDialog" type="PanelContainer" parent="UI/CenterContainer"]
@@ -619,7 +618,6 @@ text = "Respawn
 "
 
 [node name="PauseMenu" parent="UI/CenterContainer" instance=ExtResource("17_k3g67")]
-visible = false
 layout_mode = 2
 
 [node name="Cheats" parent="UI" instance=ExtResource("13_4w45t")]

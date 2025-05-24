@@ -274,7 +274,7 @@ func create_upgrade_button(key):
 		
 		var indicator_style = StyleBoxFlat.new()
 		indicator_style.bg_color = Color(0.545, 0.545, 0.545) # bright gray for unachieved levels
-		
+
 		if i < current_level:
 			# Filled level
 			indicator_style.bg_color = Color(0.3, 0.7, 1.0) # Bright blue for achieved levels
@@ -429,12 +429,11 @@ func update_button_state(key):
 		var indicator = level_indicators[i]
 		var indicator_style = indicator.get_theme_stylebox("panel")
 		
+		# Empty level
+		indicator_style.bg_color = Color(0.307, 0.307, 0.307, 0.5)
 		if i < current_level:
 			# Filled level
 			indicator_style.bg_color = Color(0.3, 0.7, 1.0)
-		else:
-			# Empty level
-			indicator_style.bg_color = Color(0.2, 0.2, 0.25, 0.5)
 	
 	# Update cost/level info
 	if is_max_level:
@@ -535,13 +534,7 @@ func refresh_all_upgrades():
 
 # Add variable to track visibility changes
 var was_visible = false
-
-# Also use _unhandled_key_input to catch the ESC key directly if the shortcut doesn't work
-func _unhandled_key_input(event):
-	if event is InputEventKey and event.keycode == KEY_ESCAPE and event.pressed and not event.echo:
-		if GameState.isDocked and visible:
-			close_upgrade_menu()
-			get_viewport().set_input_as_handled()
+var man_override = false
 
 # Function to close the upgrade menu
 func close_upgrade_menu():
@@ -551,8 +544,10 @@ func close_upgrade_menu():
 
 func _process(_delta):
 	if GameState.isDocked:
-		visible = true
+		if !man_override:
+			visible = true
 		if Input.is_action_pressed("esc"):
+			man_override = true
 			close_upgrade_menu()
 			return
 
@@ -566,3 +561,4 @@ func _process(_delta):
 	else:
 		visible = false
 		was_visible = false
+		man_override = false
