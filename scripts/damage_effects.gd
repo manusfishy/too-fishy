@@ -37,19 +37,13 @@ func _ready():
 	
 	# Preload crack texture once to avoid repeated loading
 	preloaded_crack_texture = load("res://textures/effects/screen_crack.png")
-	if preloaded_crack_texture == null:
-		print("WARNING: Could not preload crack texture!")
 	
 	# Initialize with invisible effects
 	red_flash.modulate.a = 0
 	red_flash.color = Color(1, 0, 0, 0) # Pure red, fully transparent initially
-	print("Damage effects initialized (WebGL: ", is_webgl_build, ")")
 
 # Called when player takes regular damage
 func show_damage_effects():
-	print("Showing damage effects - red flash and adding crack layer")
-	print("Current crack count before: ", current_crack_count, "/", max_cracks)
-	
 	# Show red flash - make it more visible
 	red_flash.modulate.a = 1.0 # Fully opaque
 	red_flash.color = Color(1, 0, 0, 0.6) # Semi-transparent red
@@ -59,15 +53,12 @@ func show_damage_effects():
 	# Add a new crack layer if we haven't reached the maximum
 	if current_crack_count < max_cracks:
 		add_crack_layer()
-	else:
-		print("Max cracks reached, not adding more")
 
 # Called every frame while player is taking pressure damage
 func process_pressure_damage(delta):
 	if not is_under_pressure:
 		is_under_pressure = true
 		pressure_accumulation_timer = 0.0
-		print("PRESSURE DAMAGE STARTED - all cracks will persist")
 		# Cancel all existing crack fade timers
 		cancel_all_crack_fades()
 	
@@ -85,11 +76,9 @@ func process_pressure_damage(delta):
 func end_pressure_damage():
 	if is_under_pressure:
 		is_under_pressure = false
-		print("PRESSURE DAMAGE ENDED - all cracks will start fading")
 		start_all_cracks_fade()
 
 func add_crack_layer():
-	print("Adding crack layer...")
 	current_crack_count += 1
 	
 	# Create a new crack sprite
@@ -98,11 +87,9 @@ func add_crack_layer():
 	
 	# Use preloaded texture instead of loading each time
 	if preloaded_crack_texture == null:
-		print("ERROR: Preloaded crack texture is null!")
 		return
 	
 	crack_sprite.texture = preloaded_crack_texture
-	print("Using preloaded crack texture")
 	
 	# Set up the crack sprite properties for positioned cracks
 	crack_sprite.layout_mode = 0 # Free positioning
@@ -148,9 +135,6 @@ func add_crack_layer():
 	add_child(crack_sprite)
 	crack_sprites.append(crack_sprite)
 	
-	print("Added crack layer ", current_crack_count, "/", max_cracks, " at position: ", random_pos, " with size: ", crack_size, " and alpha: ", crack_alpha)
-	print("Total crack sprites: ", crack_sprites.size())
-	
 	# Only start fade timer if NOT under pressure
 	if not is_under_pressure:
 		start_crack_fade_timer(crack_sprite)
@@ -173,7 +157,6 @@ func remove_crack_layer(crack_sprite):
 		crack_sprites.erase(crack_sprite)
 		crack_sprite.queue_free()
 		current_crack_count = max(0, current_crack_count - 1)
-		print("Removed crack layer, remaining: ", current_crack_count)
 
 # Call this when player heals or resets
 func clear_all_cracks():
@@ -188,17 +171,14 @@ func clear_all_cracks():
 			crack.queue_free()
 	pressure_cracks.clear()
 	current_pressure_cracks = 0
-	print("Cleared all crack layers")
 
 # Test function - call this to manually test crack accumulation
 func test_add_cracks():
-	print("TEST: Adding multiple cracks for testing...")
 	for i in range(3):
 		show_damage_effects()
 		await get_tree().create_timer(0.2).timeout # Small delay between cracks
 
 func add_pressure_crack():
-	print("Adding pressure crack...")
 	current_pressure_cracks += 1
 	
 	# Create a new pressure crack sprite
@@ -208,7 +188,6 @@ func add_pressure_crack():
 	# Load the texture
 	var crack_texture = load("res://textures/effects/screen_crack.png")
 	if crack_texture == null:
-		print("ERROR: Could not load crack texture!")
 		return
 	
 	crack_sprite.texture = crack_texture
@@ -252,8 +231,6 @@ func add_pressure_crack():
 	# Add to scene
 	add_child(crack_sprite)
 	pressure_cracks.append(crack_sprite)
-	
-	print("Added pressure crack ", current_pressure_cracks, "/", max_pressure_cracks, " at: ", initial_pos)
 
 func grow_pressure_cracks(delta):
 	for crack in pressure_cracks:
@@ -291,12 +268,8 @@ func grow_pressure_cracks(delta):
 			
 			# Set next growth time (random interval between 1-3 seconds)
 			crack.set_meta("next_growth_time", randf_range(1.0, 3.0))
-			
-			print("Pressure crack grew to stage ", growth_stage, "/4, size: ", new_size)
 
 func start_all_cracks_fade():
-	print("Starting fade for ALL cracks - regular: ", crack_sprites.size(), " pressure: ", pressure_cracks.size())
-	
 	# Fade regular cracks
 	for crack in crack_sprites:
 		if is_instance_valid(crack) and not crack.get_meta("is_fading", false):
@@ -318,10 +291,8 @@ func remove_pressure_crack(crack_sprite):
 		pressure_cracks.erase(crack_sprite)
 		crack_sprite.queue_free()
 		current_pressure_cracks = max(0, current_pressure_cracks - 1)
-		print("Removed pressure crack, remaining: ", current_pressure_cracks)
 
 func cancel_all_crack_fades():
-	print("Canceling all crack fade timers")
 	# Cancel fade timers for regular cracks
 	for crack in crack_sprites:
 		if is_instance_valid(crack):

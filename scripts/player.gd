@@ -346,7 +346,8 @@ func onDock():
 		sound_player.play_sound("coins")
 	# Show popup with amount sold
 	var price_str = "Drone sold items for: $" + str(sold)
-	PopupManager.show_popup(price_str, $PopupSpawnPosition.global_position, Color.YELLOW)
+	if (GameState.upgrades[GameState.Upgrade.DRONE_SELLING] == 1):
+		PopupManager.show_popup(price_str, $PopupSpawnPosition.global_position, Color.YELLOW)
 
 func shoot_harpoon():
 	if cooldown_timer_harpoon.time_left > 0:
@@ -391,7 +392,7 @@ func shoot_harpoon():
 	cooldown_timer_harpoon.start()
 
 func catch_fish(fish):
-	print("Caught fish: ", fish.name) # Replace with inventory logic
+	# Replace with inventory logic
 	if fish.has_method("removeFish"):
 		# Store fish properties before removing it
 		var is_shiny = "is_shiny" in fish and fish.is_shiny
@@ -401,9 +402,6 @@ func catch_fish(fish):
 		
 		# Get the fish details and remove it from the scene
 		var fish_details = fish.removeFish()
-		
-		# Print fish details for debugging
-		print("Fish details - Type: ", fish_details.type, " Shiny: ", fish_details.shiny)
 		
 		# Spawn the catch effect at the fish's position using preloaded scene
 		var catch_effect = catch_effect_scene.instantiate()
@@ -679,25 +677,20 @@ func toggle_inventory_menu():
 
 func connect_achievement_system(system):
 	achievement_system = system
-	print("Achievement system connected to player")
 
 # Called when player enters a lava area (connect this to lava Area3D nodes)
 func _on_lava_area_entered(area):
 	is_in_lava_area = true
-	print("Player entered lava area - taking damage!")
 
 # Called when player exits a lava area (connect this to lava Area3D nodes)  
 func _on_lava_area_exited(area):
 	is_in_lava_area = false
-	print("Player exited lava area - damage stopped")
 
 # Alternative method using body detection for Area3D
 func _on_lava_area_body_entered(body):
 	if body == self: # Make sure it's the player entering
 		is_in_lava_area = true
-		print("Player entered lava area - taking damage!")
 
 func _on_lava_area_body_exited(body):
 	if body == self: # Make sure it's the player exiting
 		is_in_lava_area = false
-		print("Player exited lava area - damage stopped")

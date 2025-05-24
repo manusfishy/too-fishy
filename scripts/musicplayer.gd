@@ -48,20 +48,18 @@ func _ready():
 		print("Started playing initial music: ", _get_track_name(current_track))
 
 func _configure_players():
-	print("Configuring audio players...")
-	
 	# Set up player1 with surface music initially
 	player1.stream = surface
 	player1.volume_db = base_volume
-	player1.stream.loop = true  # Ensure looping is enabled
+	player1.stream.loop = true # Ensure looping is enabled
 	
 	# Set up player2 (silent initially)
 	player2.stream = deep
-	player2.volume_db = -80.0  # Silent
-	player2.stream.loop = true  # Ensure looping is enabled
+	player2.volume_db = -80.0 # Silent
+	player2.stream.loop = true # Ensure looping is enabled
 	
 	current_track = surface
-	print("Players configured. Current track: ", _get_track_name(current_track))
+	print("Players configured. Current music track: ", _get_track_name(current_track))
 
 func _connect_to_player():
 	var player_node = get_node_or_null("/root/Node3D/CharacterBody3D")
@@ -72,7 +70,6 @@ func _connect_to_player():
 			
 		# Connect to the signal
 		player_node.section_changed.connect(_on_character_body_3d_section_changed)
-		print("Connected to player's section_changed signal")
 	else:
 		print("ERROR: Music player could not find player node at /root/Node3D/CharacterBody3D")
 
@@ -91,7 +88,6 @@ func _process(delta):
 		debug_timer = 0.0
 		if GameState.playerInStage != last_section_type:
 			last_section_type = GameState.playerInStage
-			print("Player section changed to: ", GameState.playerInStage)
 			_check_section_based_music()
 	
 	# Periodically check if we should change the music based on section
@@ -99,7 +95,7 @@ func _process(delta):
 
 func _process_crossfade(delta):
 	fade_timer += delta
-	var t = min(fade_timer / fade_duration, 1.0)  # Clamp t to [0,1]
+	var t = min(fade_timer / fade_duration, 1.0) # Clamp t to [0,1]
 	
 	# Calculate volumes using linear interpolation in decibels
 	var out_vol = lerp(base_volume, -80.0, t)
@@ -110,9 +106,8 @@ func _process_crossfade(delta):
 	player2.volume_db = in_vol
 	
 	# Print debug info during fade
-	if fade_timer >= 0.5 and fade_timer < 0.51:
-		print("Fading - halfway point. Player1 vol: ", player1.volume_db, ", Player2 vol: ", player2.volume_db)
-	
+	#if fade_timer >= 0.5 and fade_timer < 0.51:
+		# print("Fading - halfway point. Player1 vol: ", player1.volume_db, ", Player2 vol: ", player2.volume_db)
 	if fade_timer >= fade_duration:
 		# Crossfade is complete
 		is_crossfading = false
@@ -124,7 +119,7 @@ func _process_crossfade(delta):
 		# Stop the first player now that it's silent
 		player1.stop()
 		
-		print("Crossfade complete. Stopping player1, final volumes - Player1: ", player1.volume_db, ", Player2: ", player2.volume_db)
+		#print("Crossfade complete. Stopping player1, final volumes - Player1: ", player1.volume_db, ", Player2: ", player2.volume_db)
 		
 		# Swap players for next crossfade
 		var temp = player1
@@ -132,7 +127,7 @@ func _process_crossfade(delta):
 		player2 = temp
 		
 		current_track = next_track
-		print("Now playing: ", _get_track_name(current_track))
+	#	print("Now playing: ", _get_track_name(current_track))
 
 func _ensure_music_playing():
 	# If not muted and player1 isn't playing and we're not in the middle of a crossfade
@@ -148,7 +143,7 @@ func _check_section_based_music():
 	
 	# If we don't have the right track playing, and we're not already transitioning
 	if expected_track != current_track and !is_crossfading:
-		print("Section music mismatch. Current: ", _get_track_name(current_track), 
+		print("Section music mismatch. Current: ", _get_track_name(current_track),
 			  " Expected: ", _get_track_name(expected_track))
 		start_crossfade(expected_track)
 
@@ -181,12 +176,12 @@ func start_crossfade(new_track):
 	if new_track == current_track or is_muted:
 		return # Don't crossfade if it's the same track or if muted
 	
-	print("Starting crossfade from ", _get_track_name(current_track), " to ", _get_track_name(new_track))
+	#print("Starting crossfade from ", _get_track_name(current_track), " to ", _get_track_name(new_track))
 	
 	# Prepare player2 for the next track
 	next_track = new_track
 	player2.stream = next_track
-	player2.stream.loop = true  # Ensure looping is enabled
+	player2.stream.loop = true # Ensure looping is enabled
 	
 	# Start at silent volume
 	player2.volume_db = -80.0
@@ -198,7 +193,7 @@ func start_crossfade(new_track):
 	fade_timer = 0.0
 	is_crossfading = true
 	
-	print("Crossfade started. Initial volumes - Player1: ", player1.volume_db, ", Player2: ", player2.volume_db)
+	#print("Crossfade started. Initial volumes - Player1: ", player1.volume_db, ", Player2: ", player2.volume_db)
 
 func play_sound(sound_name: String):
 	var sound_to_play
@@ -242,6 +237,6 @@ func _on_mute_button_pressed():
 	is_muted = !is_muted # Toggle mute state
 
 func _on_character_body_3d_section_changed(sectionType):
-	print("Signal received: Section changed to ", sectionType)
+	#print("Signal received: Section changed to ", sectionType)
 	var track_to_play = _get_track_for_section(sectionType)
 	start_crossfade(track_to_play)

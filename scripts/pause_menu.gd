@@ -9,6 +9,8 @@ extends Control
 @onready var settings_button = $Panel/MarginContainer/VBoxContainer/ButtonsContainer/SettingsButton
 @onready var quit_button = $Panel/MarginContainer/VBoxContainer/ButtonsContainer/QuitButton
 @onready var title_section = $Panel/MarginContainer/VBoxContainer/TitleSection
+@onready var player = get_tree().get_first_node_in_group("player")
+@onready var upgrade_menu = get_tree().get_first_node_in_group("upgrades_menu")
 var is_paused = false
 
 func _ready():
@@ -47,6 +49,8 @@ func _style_buttons():
 
 
 func _input(event):
+	if Input.is_action_pressed("esc") and GameState.isDocked:
+		return
 	if Input.is_action_just_pressed("esc"):
 		if is_paused:
 			resume_game()

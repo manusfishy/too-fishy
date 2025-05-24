@@ -38,5 +38,3 @@ for _ in range(3):
 # Save the image
 os.makedirs('textures/effects', exist_ok=True)
 img.save('textures/effects/screen_crack.png')
-
-print("Screen crack texture generated successfully!")

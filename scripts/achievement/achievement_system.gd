@@ -20,7 +20,6 @@ func _ready():
 			"shiny": false,
 			"surface": false
 		}
-	print("Achievement System: Initialized with types: ", fish_achievements.keys())
 
 # Connect to GameState
 func connect_to_gamestate(state):
@@ -83,11 +82,8 @@ func _on_inventory_updated():
 
 # Called when a fish is brought to the surface
 func record_fish_surface(fish_type_id):
-	#print("Achievement System: Recording surface for fish ID: ", fish_type_id)
-	
 	# Ensure fish_type_id is an integer
 	if typeof(fish_type_id) != TYPE_INT:
-		#print("WARNING: Non-integer fish type ID in record_fish_surface: ", fish_type_id)
 		if str(fish_type_id).is_valid_int():
 			fish_type_id = int(fish_type_id)
 		else:
@@ -96,14 +92,10 @@ func record_fish_surface(fish_type_id):
 				fish_type_id = FishesConfig.FishType[fish_type_id]
 			else:
 				# If all else fails, assume it's the first fish type (0)
-				print("ERROR: Could not determine fish type ID for: ", fish_type_id, ", using default 0")
 				fish_type_id = 0
-	
-	#print("Achievement System: Using numeric fish ID: ", fish_type_id)
 	
 	# Make sure we have this fish type in our achievements
 	if not fish_achievements.has(fish_type_id):
-		#print("Achievement System: Creating new achievement for surface fish ID: ", fish_type_id)
 		fish_achievements[fish_type_id] = {
 			"caught": true, # If brought to surface, it was caught
 			"shiny": false,
@@ -111,7 +103,6 @@ func record_fish_surface(fish_type_id):
 		}
 	
 	if not fish_achievements[fish_type_id]["surface"]:
-		#print("Achievement System: Marking fish ID ", fish_type_id, " as brought to surface")
 		fish_achievements[fish_type_id]["surface"] = true
 		# Also mark as caught if not already
 		if not fish_achievements[fish_type_id]["caught"]:
@@ -121,7 +112,6 @@ func record_fish_surface(fish_type_id):
 # Clear the incorrect string key if it exists
 func fix_achievements():
 	#print("Achievement System: Checking for invalid achievement keys")
-	
 	# Look for string keys
 	var keys_to_fix = []
 	for key in fish_achievements.keys():
@@ -232,6 +222,5 @@ func load_data(data):
 		var fish_type_id = int(fish_type_str)
 		fish_achievements[fish_type_id] = data[fish_type_str]
 	
-	print("Achievement System: Loaded achievement data")
-	print_achievements()
+	#print_achievements()
 	emit_signal("achievement_updated", "", "") # Signal that all achievements were updated

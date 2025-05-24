@@ -35,9 +35,6 @@ func _ready():
 	# Make the panel significantly bigger to display all upgrades without scrolling
 	custom_minimum_size = Vector2(900, 570)
 	
-	# Load descriptions once at initialization
-	upgrade_descriptions = load("res://scripts/upgrade_descriptions.gd").new()
-	
 	# Apply a style to the panel itself instead of adding a background image
 	var panel_style = StyleBoxFlat.new()
 	panel_style.bg_color = Color(0.05, 0.2, 0.3, 0.95) # Deep blue with high opacity
@@ -45,22 +42,6 @@ func _ready():
 	panel_style.border_color = Color(0.2, 0.4, 0.7)
 	panel_style.set_corner_radius_all(12)
 	add_theme_stylebox_override("panel", panel_style)
-	
-	# Set up ESC key shortcut
-	var esc_shortcut = Shortcut.new()
-	var esc_event = InputEventKey.new()
-	esc_event.keycode = KEY_ESCAPE
-	esc_shortcut.events = [esc_event]
-	
-	# Create invisible button to capture ESC key
-	var esc_button = Button.new()
-	esc_button.shortcut = esc_shortcut
-	esc_button.flat = true
-	esc_button.focus_mode = Control.FOCUS_NONE
-	esc_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	esc_button.size = Vector2(0, 0) # Make it invisible
-	esc_button.pressed.connect(func(): close_upgrade_menu())
-	add_child(esc_button)
 	
 	# Create main container
 	var main_container = VBoxContainer.new()
@@ -135,14 +116,6 @@ func _ready():
 	# Set initial text (function defined below)
 	money_margin.add_child(money_label)
 	update_money_display()
-	
-	# Add a label indicating ESC can close the menu
-	var esc_hint = Label.new()
-	esc_hint.text = "Press ESC to close"
-	esc_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	esc_hint.add_theme_font_size_override("font_size", 14)
-	esc_hint.add_theme_color_override("font_color", Color(0.7, 0.7, 0.8))
-	right_header.add_child(esc_hint)
 	
 	# Add some spacing after header
 	var spacer = Control.new()
@@ -305,7 +278,7 @@ func create_upgrade_button(key):
 			indicator_style.bg_color = Color(0.3, 0.7, 1.0) # Bright blue for achieved levels
 		else:
 			# Empty level
-			indicator_style.bg_color = Color(0.2, 0.2, 0.25, 0.5) # Dark gray for unachieved levels
+			indicator_style.bg_color = Color(0.545, 0.545, 0.545) # bright gray for unachieved levels
 		
 		indicator_style.set_corner_radius_all(3)
 		level_indicator.add_theme_stylebox_override("panel", indicator_style)
@@ -580,7 +553,10 @@ func close_upgrade_menu():
 func _process(_delta):
 	if GameState.isDocked:
 		visible = true
-		
+		if Input.is_action_pressed("esc"):
+			close_upgrade_menu()
+			return
+
 		# If just became visible, do a full refresh
 		if not was_visible:
 			refresh_all_upgrades()

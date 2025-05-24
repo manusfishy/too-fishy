@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cthmw8332pgtc" path="res://scripts/pause_menu.gd" id="1_2rcfx"]
 [ext_resource type="PackedScene" uid="uid://c3r2h7a47y6m8" path="res://scenes/ui/save_menu.tscn" id="2_i6vla"]
-[ext_resource type="PackedScene" path="res://scenes/ui/settings_menu.tscn" id="3_m6j3v"]
+[ext_resource type="PackedScene" uid="uid://c13eirhopjftr" path="res://scenes/ui/settings_menu.tscn" id="3_m6j3v"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
 bg_color = Color(0.05, 0.2, 0.3, 0.95)

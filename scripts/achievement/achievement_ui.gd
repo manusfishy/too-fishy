@@ -34,11 +34,6 @@ func _connect_to_achievement_system():
 
 	#print("Achievement UI: Successfully connected to achievement system")
 	achievement_system.connect("achievement_updated", Callable(self, "_on_achievement_updated"))
-	
-	# DEBUG: Print the current achievements
-	if achievement_system.has_method("print_achievements"):
-		achievement_system.print_achievements()
-	
 	_populate_achievements()
 
 # Populate the achievements list

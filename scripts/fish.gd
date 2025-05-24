@@ -40,19 +40,14 @@ func _ready():
 	if is_webgl_build:
 		shader_update_interval = 0.05 # 20fps for shader updates on WebGL
 	
-	print("Fish ", name, ": _ready() called.")
-	print("  Attempting to find mesh_instance at path: ", mesh_instance_path)
 	if mesh_instance_path:
 		mesh_instance = get_node_or_null(mesh_instance_path)
 		if !mesh_instance:
 			printerr("  ERROR: Fish script could not find MeshInstance3D at path: ", mesh_instance_path, " for node: ", name)
-		else:
-			print("  SUCCESS: Found mesh_instance: ", mesh_instance.name)
 	else:
 		printerr("  ERROR: mesh_instance_path is not set for node: ", name)
 	
 	accumulated_shader_time = randf() * 2.0 * PI
-	print("  Initial accumulated_shader_time: ", accumulated_shader_time)
 	
 	# Disable shiny particles on WebGL for performance
 	if is_webgl_build and shiny_particles:
@@ -217,7 +212,4 @@ func record_surface_achievement():
 	if achievement_manager and achievement_manager.has_method("get_achievement_system"):
 		var achievement_system = achievement_manager.get_achievement_system()
 		if achievement_system:
-			print("Fish reached surface! Recording achievement for type: ", self.type)
 			achievement_system.record_fish_surface(self.type)
-	else:
-		print("Could not record surface achievement - achievement system not found")
