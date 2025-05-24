@@ -46,6 +46,22 @@ func _ready():
 	panel_style.set_corner_radius_all(12)
 	add_theme_stylebox_override("panel", panel_style)
 	
+	# Set up ESC key shortcut
+	var esc_shortcut = Shortcut.new()
+	var esc_event = InputEventKey.new()
+	esc_event.keycode = KEY_ESCAPE
+	esc_shortcut.events = [esc_event]
+	
+	# Create invisible button to capture ESC key
+	var esc_button = Button.new()
+	esc_button.shortcut = esc_shortcut
+	esc_button.flat = true
+	esc_button.focus_mode = Control.FOCUS_NONE
+	esc_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	esc_button.size = Vector2(0, 0) # Make it invisible
+	esc_button.pressed.connect(func(): close_upgrade_menu())
+	add_child(esc_button)
+	
 	# Create main container
 	var main_container = VBoxContainer.new()
 	main_container.size_flags_horizontal = SIZE_EXPAND_FILL
@@ -119,6 +135,14 @@ func _ready():
 	# Set initial text (function defined below)
 	money_margin.add_child(money_label)
 	update_money_display()
+	
+	# Add a label indicating ESC can close the menu
+	var esc_hint = Label.new()
+	esc_hint.text = "Press ESC to close"
+	esc_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	esc_hint.add_theme_font_size_override("font_size", 14)
+	esc_hint.add_theme_color_override("font_color", Color(0.7, 0.7, 0.8))
+	right_header.add_child(esc_hint)
 	
 	# Add some spacing after header
 	var spacer = Control.new()
@@ -537,6 +561,22 @@ func refresh_all_upgrades():
 	for key in buttons:
 		update_button_affordability(key)
 
+# Add variable to track visibility changes
+var was_visible = false
+
+# Also use _unhandled_key_input to catch the ESC key directly if the shortcut doesn't work
+func _unhandled_key_input(event):
+	if event is InputEventKey and event.keycode == KEY_ESCAPE and event.pressed and not event.echo:
+		if GameState.isDocked and visible:
+			close_upgrade_menu()
+			get_viewport().set_input_as_handled()
+
+# Function to close the upgrade menu
+func close_upgrade_menu():
+	GameState.isDocked = false
+	visible = false
+	was_visible = false
+
 func _process(_delta):
 	if GameState.isDocked:
 		visible = true
@@ -551,6 +591,3 @@ func _process(_delta):
 	else:
 		visible = false
 		was_visible = false
-
-# Add variable to track visibility changes
-var was_visible = false

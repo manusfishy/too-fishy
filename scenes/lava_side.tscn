@@ -1,26 +1,28 @@
-[gd_scene load_steps=5 format=3 uid="uid://bh0pe37m6demo"]
+[gd_scene load_steps=5 format=3 uid="uid://cj100dmxx12lt"]
 
-[ext_resource type="Script" uid="uid://b1ctdjo32wraq" path="res://scripts/lava_area.gd" id="1_o1o1k"]
-[ext_resource type="Material" uid="uid://bf8hfoo5qmcgc" path="res://materials/shaders/lava_shader_material.tres" id="2_8j3x5"]
+[ext_resource type="Material" uid="uid://bf8hfoo5qmcgc" path="res://materials/shaders/lava_shader_material.tres" id="1_a5s42"]
+[ext_resource type="Script" uid="uid://b1ctdjo32wraq" path="res://scripts/lava_area.gd" id="2_lava_script"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_r6p65"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_dw3wf"]
+height = 0.192413
+radius = 0.424805
 
-[node name="Lava" type="Node3D"]
-script = ExtResource("1_o1o1k")
+[node name="Lava_side" type="Node3D"]
+script = ExtResource("2_lava_script")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 mesh = SubResource("QuadMesh_r6p65")
 skeleton = NodePath("../..")
-surface_material_override/0 = ExtResource("2_8j3x5")
+surface_material_override/0 = ExtResource("1_a5s42")
 
 [node name="LavaDamageArea" type="Area3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0.70497)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LavaDamageArea"]
-transform = Transform3D(1, 0, 0, 0, 0.0521095, 0.998641, 0, -0.998641, 0.0521095, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.0521095, 0.998641, 0, -0.998641, 0.0521095, 0, 0.0159113, -0.304929)
 shape = SubResource("CylinderShape3D_dw3wf")
 
 [connection signal="body_entered" from="LavaDamageArea" to="." method="_on_lava_area_body_entered"]

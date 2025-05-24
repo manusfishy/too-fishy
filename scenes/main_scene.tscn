@@ -1,11 +1,12 @@
-[gd_scene load_steps=46 format=3 uid="uid://vg72e433ggrx"]
+[gd_scene load_steps=47 format=3 uid="uid://vg72e433ggrx"]
 
 [ext_resource type="Script" uid="uid://co3y5aldsk5jh" path="res://scripts/level.gd" id="3_c16ls"]
 [ext_resource type="PackedScene" uid="uid://xqds4eqa4fys" path="res://scenes/section.tscn" id="4_gubc5"]
 [ext_resource type="PackedScene" uid="uid://durrtmu3i450r" path="res://scenes/player.tscn" id="4_pu3yx"]
 [ext_resource type="PackedScene" uid="uid://b3j6kki1bc2xs" path="res://scenes/boss_section.tscn" id="5_si52b"]
 [ext_resource type="Script" uid="uid://cldevqp1odjtl" path="res://scripts/hud.gd" id="7_c16ls"]
-[ext_resource type="PackedScene" uid="uid://cj100dmxx12lt" path="res://scenes/lava.tscn" id="7_r6p65"]
+[ext_resource type="PackedScene" uid="uid://cj100dmxx12lt" path="res://scenes/lava_side.tscn" id="7_r6p65"]
+[ext_resource type="PackedScene" uid="uid://bh0pe37m6demo" path="res://scenes/lava.tscn" id="8_k3g67"]
 [ext_resource type="StyleBox" uid="uid://bx8skthds5uiu" path="res://scenes/inventory/main_scene.tres" id="9_6u1mn"]
 [ext_resource type="Material" uid="uid://bq68gffx25aw4" path="res://materials/backgrounds/bg_first.tres" id="9_7nt27"]
 [ext_resource type="Material" uid="uid://dohoucrjnnkwp" path="res://materials/backgrounds/bg_afterfirst.tres" id="9_bcnxi"]
@@ -147,12 +148,17 @@ preloadSectionsCount = 2
 [node name="lava" type="Node3D" parent="Level"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10, 3.28338)
 
-[node name="Lava" parent="Level/lava" instance=ExtResource("7_r6p65")]
-transform = Transform3D(0.538622, 0, 0, 0, 4.32167, 0, 0, 0, 1, -26.0128, 5.69699, -2.69743)
-
 [node name="Lava2" parent="Level/lava" instance=ExtResource("7_r6p65")]
-transform = Transform3D(2.45308, 0, 0, 0, 1.62324, 0, 0, 0, 1, -20.3366, -3.0248, -2.69743)
-visible = false
+transform = Transform3D(1.38184, 0, -0.826246, 0, 1.62324, 0, 2.02685, 0, 0.56331, -1.95878, -10.4057, -2.69743)
+
+[node name="Lava3" parent="Level/lava" instance=ExtResource("8_k3g67")]
+transform = Transform3D(0.623252, 0, 0, 0, 3.47559, 0, 0, 0, 1, -24.9548, -31.233, -2.50529)
+
+[node name="Lava4" parent="Level/lava" instance=ExtResource("8_k3g67")]
+transform = Transform3D(0.623252, 0, 0, 0, 3.47559, 0, 0, 0, 1, -24.9548, -31.233, -3.09665)
+
+[node name="Lava5" parent="Level/lava" instance=ExtResource("8_k3g67")]
+transform = Transform3D(0.623252, 0, 0, 0, 3.47559, 0, 0, 0, 1, -24.9548, -31.233, -3.49109)
 
 [node name="FirstSection" parent="Level" instance=ExtResource("4_gubc5")]
 transform = Transform3D(0.999998, 0.00193481, -0.00103434, -0.00193703, 0.999996, -0.00214899, 0.00103019, 0.00215098, 0.999997, 0, -10.5, 0)
@@ -588,7 +594,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="UI/CenterContainer/Upgrades/VBoxContainer"]
 layout_mode = 2
-text = "Upgrades"
+text = ""
 horizontal_alignment = 1
 vertical_alignment = 1
 
