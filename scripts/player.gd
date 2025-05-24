@@ -458,9 +458,29 @@ func process_dock(delta):
 
 func process_depth_effects(delta):
 	GameState.headroom = ((GameState.upgrades[GameState.Upgrade.DEPTH_RESISTANCE] + 1) * 100 - GameState.depth)
+	
+	# Get reference to damage effects
+	var ui_node = get_node("/root/Node3D/UI")
+	var damage_effects = null
+	if ui_node:
+		if ui_node.has_node("DamageEffects"):
+			damage_effects = ui_node.get_node("DamageEffects")
+		else:
+			# Create damage effects instance if it doesn't exist
+			damage_effects = load("res://scenes/damage_effects.tscn").instantiate()
+			ui_node.add_child(damage_effects)
+	
 	if GameState.headroom < 0:
 		add_trauma(0.1)
 		GameState.health += GameState.headroom * delta
+		
+		# Trigger pressure crack effects
+		if damage_effects:
+			damage_effects.process_pressure_damage(delta)
+	else:
+		# Safe depth - allow pressure cracks to start fading
+		if damage_effects:
+			damage_effects.end_pressure_damage()
 	
 	# Lava damage only when actually in lava area (not just lava stage)
 	if is_in_lava_area:
