@@ -27,7 +27,19 @@ var accumulated_shader_time: float = 0.0 # Custom time accumulator for shader
 @export var max_effective_anim_rate: float = 4.0 # Max rate at which accumulated_shader_time advances
 # --- End Shader Animation Speed Control ---
 
+# WebGL Performance optimizations
+var shader_update_timer: float = 0.0
+var shader_update_interval: float = 0.033 # Update shader ~30fps instead of every frame
+var is_webgl_build: bool = false
+
 func _ready():
+	# Detect WebGL build for performance optimizations
+	is_webgl_build = OS.get_name() == "Web"
+	
+	# Reduce shader update frequency on WebGL
+	if is_webgl_build:
+		shader_update_interval = 0.05 # 20fps for shader updates on WebGL
+	
 	print("Fish ", name, ": _ready() called.")
 	print("  Attempting to find mesh_instance at path: ", mesh_instance_path)
 	if mesh_instance_path:
@@ -41,6 +53,11 @@ func _ready():
 	
 	accumulated_shader_time = randf() * 2.0 * PI
 	print("  Initial accumulated_shader_time: ", accumulated_shader_time)
+	
+	# Disable shiny particles on WebGL for performance
+	if is_webgl_build and shiny_particles:
+		shiny_particles.visible = false
+		shiny_particles.emitting = false
 
 func removeFish():
 	var fish_data = {
@@ -85,6 +102,13 @@ func _physics_process(delta: float) -> void:
 			
 	move_and_slide()
 	
+	# Update shader animation with timer-based optimization
+	shader_update_timer += delta
+	if shader_update_timer >= shader_update_interval:
+		update_shader_animation(shader_update_timer)
+		shader_update_timer = 0.0
+
+func update_shader_animation(delta_time: float):
 	if !mesh_instance:
 		# print("Fish ", name, ": mesh_instance is null in _physics_process. Skipping animation update.") # Uncomment for verbose logging
 		return
@@ -105,7 +129,7 @@ func _physics_process(delta: float) -> void:
 	var effective_anim_rate = base_anim_rate + (current_speed * speed_to_anim_rate_factor)
 	effective_anim_rate = clamp(effective_anim_rate, min_effective_anim_rate, max_effective_anim_rate)
 	
-	accumulated_shader_time += delta * effective_anim_rate
+	accumulated_shader_time += delta_time * effective_anim_rate
 	
 	# print("Fish ", name, ": current_speed: ", current_speed, ", effective_anim_rate: ", effective_anim_rate, ", new_accum_time: ", accumulated_shader_time) # Uncomment for verbose logging
 	material.set_shader_parameter("animation_time_input", accumulated_shader_time)

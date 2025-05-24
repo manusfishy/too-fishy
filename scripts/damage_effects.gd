@@ -19,11 +19,31 @@ var is_under_pressure = false
 var pressure_accumulation_timer = 0.0
 var pressure_crack_spawn_interval = 1.0 # Spawn new crack every second under pressure
 
+# WebGL Performance optimizations
+var is_webgl_build = false
+var preloaded_crack_texture = null
+var webgl_max_cracks = 3 # Reduced max cracks for WebGL
+var webgl_max_pressure_cracks = 4 # Reduced pressure cracks for WebGL
+
 func _ready():
+	# Detect WebGL and apply optimizations
+	is_webgl_build = OS.get_name() == "Web"
+	
+	if is_webgl_build:
+		max_cracks = webgl_max_cracks
+		max_pressure_cracks = webgl_max_pressure_cracks
+		crack_fade_time = 2.0 # Faster fade on WebGL
+		pressure_crack_spawn_interval = 2.0 # Slower spawn rate
+	
+	# Preload crack texture once to avoid repeated loading
+	preloaded_crack_texture = load("res://textures/effects/screen_crack.png")
+	if preloaded_crack_texture == null:
+		print("WARNING: Could not preload crack texture!")
+	
 	# Initialize with invisible effects
 	red_flash.modulate.a = 0
 	red_flash.color = Color(1, 0, 0, 0) # Pure red, fully transparent initially
-	print("Damage effects initialized")
+	print("Damage effects initialized (WebGL: ", is_webgl_build, ")")
 
 # Called when player takes regular damage
 func show_damage_effects():
@@ -76,14 +96,13 @@ func add_crack_layer():
 	var crack_sprite = TextureRect.new()
 	crack_sprite.name = "CrackLayer" + str(current_crack_count)
 	
-	# Load the texture and check if it loaded successfully
-	var crack_texture = load("res://textures/effects/screen_crack.png")
-	if crack_texture == null:
-		print("ERROR: Could not load crack texture!")
+	# Use preloaded texture instead of loading each time
+	if preloaded_crack_texture == null:
+		print("ERROR: Preloaded crack texture is null!")
 		return
 	
-	crack_sprite.texture = crack_texture
-	print("Crack texture loaded successfully")
+	crack_sprite.texture = preloaded_crack_texture
+	print("Using preloaded crack texture")
 	
 	# Set up the crack sprite properties for positioned cracks
 	crack_sprite.layout_mode = 0 # Free positioning
@@ -91,9 +110,14 @@ func add_crack_layer():
 	crack_sprite.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
 	crack_sprite.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	
+	# Smaller cracks on WebGL for better performance
+	var base_size = Vector2(200, 200)
+	if is_webgl_build:
+		base_size = Vector2(150, 150) # Smaller base size for WebGL
+	
 	# Random size for variety (between 50% and 150% of base size)
 	var scale_factor = randf_range(0.5, 1.5)
-	var crack_size = Vector2(200, 200) * scale_factor # Base size 200x200
+	var crack_size = base_size * scale_factor
 	crack_sprite.custom_minimum_size = crack_size
 	crack_sprite.size = crack_size
 	
@@ -109,6 +133,9 @@ func add_crack_layer():
 	
 	# Make cracks more visible with different opacities
 	var crack_alpha = 0.8 - (current_crack_count * 0.1) # Start at 0.8, decrease slightly
+	# Slightly more opaque on WebGL for visibility with fewer cracks
+	if is_webgl_build:
+		crack_alpha = 0.9 - (current_crack_count * 0.15)
 	crack_sprite.modulate = Color(1, 1, 1, crack_alpha)
 	
 	# Randomize the crack appearance

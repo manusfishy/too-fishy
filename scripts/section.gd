@@ -140,13 +140,17 @@ func _ready() -> void:
 	# Add this section to the sections group for settings management
 	add_to_group("sections")
 	
-	# Disable environmental particles on web platform for performance
-	# Also respect the global particle setting and local particles_enabled setting
+	# More aggressive particle optimization for WebGL
+	var is_webgl = OS.get_name() == "Web"
 	var should_disable_particles = (not particles_enabled or
 									SettingsManager.should_disable_environmental_particles())
 	
-	if should_disable_particles:
+	if should_disable_particles or is_webgl:
 		disableParticles()
+	elif is_webgl:
+		# Reduce particle counts for WebGL performance
+		optimizeParticlesForWebGL()
+	
 	spawn_fish(true)
 	
 	# Add destructible barriers if enabled
@@ -190,6 +194,25 @@ func disableParticles() -> void:
 		$Bubbles.visible = false
 		$Debris.emitting = false
 		$Bubbles.emitting = false
+
+func optimizeParticlesForWebGL() -> void:
+	# Reduce particle counts significantly for WebGL performance
+	if has_node("Bubbles"):
+		var bubbles = $Bubbles
+		var bubble_material = bubbles.process_material as ParticleProcessMaterial
+		if bubble_material:
+			# Reduce from 400 to 50 particles
+			bubbles.amount = 50
+			bubble_material.emission_shape_scale = Vector3(1.0, 1.0, 1.0) # Smaller emission area
+	
+	if has_node("Debris"):
+		var debris = $Debris
+		var debris_material = debris.process_material as ParticleProcessMaterial
+		if debris_material:
+			# Reduce from 5000 to 100 particles
+			debris.amount = 100
+			debris_material.emission_shape_scale = Vector3(1.0, 1.0, 1.0) # Smaller emission area
+			debris.lifetime = 2.0 # Shorter lifetime
 
 func respawn_timer_expired() -> void:
 	if !is_on_screen:
