@@ -175,12 +175,13 @@ func movement(_delta: float):
 		velocity_x = move_toward(velocity_x, 0, deceleration_x * _delta)
 
 	direction.x = velocity_x
-	
+	if position.y >= -0.2: # don't stick out too far from surface
+			input_y = -0.2
 	# Get vertical input
 	if Input.is_action_pressed("move_up"):
 		input_y = 1.0
-		if position.y >= -0.15: # Surface limit
-			input_y = -0.15
+		if position.y >= -0.2: # Surface limit
+			input_y = -0.2
 	elif Input.is_action_pressed("move_down"):
 		input_y = -1.0
 	# Handle touch input for vertical movement

@@ -24,7 +24,7 @@ var accumulated_shader_time: float = 0.0 # Custom time accumulator for shader
 @export var base_anim_rate: float = 0.5 # Base rate for accumulated_shader_time
 @export var speed_to_anim_rate_factor: float = 1.25 # Increased from 0.75
 @export var min_effective_anim_rate: float = 0.2 # Min rate at which accumulated_shader_time advances
-@export var max_effective_anim_rate: float = 4.0 # Max rate at which accumulated_shader_time advances
+@export var max_effective_anim_rate: float = 1.6 # Max rate at which accumulated_shader_time advances
 # --- End Shader Animation Speed Control ---
 
 # WebGL Performance optimizations
@@ -111,13 +111,11 @@ func update_shader_animation(delta_time: float):
 	var material_override = mesh_instance.get_surface_override_material(0)
 	if !material_override: return
 		# print("Fish ", name, ": material_override is null. Skipping animation update.") # Uncomment for verbose logging
-	
 
 	if !(material_override is ShaderMaterial): return
 		# return
 		# print("Fish ", name, ": material_override is not ShaderMaterial (Type: ", typeof(material_override), "). Skipping animation update.") # Uncomment for verbose logging
 	
-
 	# If we reach here, mesh_instance and material are valid
 	var material: ShaderMaterial = material_override
 	
