@@ -175,20 +175,27 @@ func movement(_delta: float):
 		velocity_x = move_toward(velocity_x, 0, deceleration_x * _delta)
 
 	direction.x = velocity_x
-	if position.y >= -0.2: # don't stick out too far from surface
-			input_y = -0.2
+	
+	# Reset vertical velocity when at surface to prevent momentum issues
+	if position.y >= -0.2 and velocity_y > 0:
+		velocity_y = 0
+	
 	# Get vertical input
 	if Input.is_action_pressed("move_up"):
 		input_y = 1.0
-		if position.y >= -0.2: # Surface limit
-			input_y = -0.2
+		if position.y >= -0.2: # Surface limit - prevent going too far above surface
+			input_y = 0
 	elif Input.is_action_pressed("move_down"):
 		input_y = -1.0
 	# Handle touch input for vertical movement
 	elif touch_direction.y != 0:
 		input_y = touch_direction.y
-		if touch_direction.y > 0 and position.y >= 0:
+		if touch_direction.y > 0 and position.y >= -0.2:
 			input_y = 0
+	
+	# Auto-sink when above surface (submarine naturally sinks)
+	if position.y >= -0.2 and input_y == 0:
+		input_y = -0.3 # Gentle automatic sinking
 	
 	# Apply vertical acceleration/deceleration like horizontal
 	if input_y != 0:
@@ -208,6 +215,10 @@ func movement(_delta: float):
 	# Boost upward movement slightly for better control
 	if direction.y > 0:
 		target_velocity.y = target_velocity.y * 1.2
+	
+	# Boost downward movement when above surface for faster descent (only when actively pressing down)
+	if direction.y < 0 and position.y >= -0.2 and (Input.is_action_pressed("move_down") or touch_direction.y < 0):
+		target_velocity.y = target_velocity.y * 2.0 # Double speed when actively diving from surface
 	
 	target_velocity.z = 0
 	
@@ -393,8 +404,6 @@ func shoot_harpoon():
 	cooldown_timer_harpoon.start()
 
 func catch_fish(fish):
-	# Replace with inventory logic
-	if fish.has_method("removeFish"):
 		# Store fish properties before removing it
 		var is_shiny = "is_shiny" in fish and fish.is_shiny
 		var fish_weight = fish.weight if "weight" in fish else 1
