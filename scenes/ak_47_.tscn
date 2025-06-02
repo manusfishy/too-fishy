@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dk2e78xplfhbv"]
+
+[ext_resource type="PackedScene" uid="uid://b6k114l5an6ao" path="res://meshes/ak47_texture.fbx" id="1_oxmco"]
+
+[node name="ak47_" instance=ExtResource("1_oxmco")]
+
+[node name="Muzzle" type="Node3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.982369, 0.228667, 0.0308859)

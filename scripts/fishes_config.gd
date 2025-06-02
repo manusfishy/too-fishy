@@ -2,15 +2,15 @@ extends Node
 
 
 enum FishType {
-	FISH_A,
-	FISH_B,
-	ANGLER_FISH,
-	DUMMY_FISH,
-	SPIKEY_FISH
+	FLAMY,
+	GREENY,
+	ANGLER,
+	SMALLY,
+	SPIKEY
 }
 
 var fishConfigMap = {
-	FishType.FISH_A: {
+	FishType.FLAMY: {
 		weight_min = 1,
 		weight_max = 10,
 		price_weight_multiplier = 1,
@@ -20,7 +20,7 @@ var fishConfigMap = {
 		scene = preload("res://scenes/mobs/BasicFishA.tscn"),
 		icon = preload("res://textures/icons/fish_a.png")
 	},
-	FishType.FISH_B: {
+	FishType.GREENY: {
 		weight_min = 1,
 		weight_max = 5,
 		price_weight_multiplier = 1.2,
@@ -30,7 +30,7 @@ var fishConfigMap = {
 		scene = preload("res://scenes/mobs/BasicFishB.tscn"),
 		icon = preload("res://textures/icons/fish_b.png")
 	},
-	FishType.ANGLER_FISH: {
+	FishType.ANGLER: {
 		weight_min = 5,
 		weight_max = 10,
 		price_weight_multiplier = 3,
@@ -40,7 +40,7 @@ var fishConfigMap = {
 		scene = preload("res://scenes/mobs/AnglerFish.tscn"),
 		icon = preload("res://textures/icons/angler_fish.png")
 	},
-	FishType.DUMMY_FISH: {
+	FishType.SMALLY: {
 		weight_min = 5,
 		weight_max = 10,
 		price_weight_multiplier = 10,
@@ -50,7 +50,7 @@ var fishConfigMap = {
 		scene = preload("res://scenes/mobs/dummy_fish.tscn"),
 		icon = preload("res://textures/icons/dummy_fish.png")
 	},
-	FishType.SPIKEY_FISH: {
+	FishType.SPIKEY: {
 		weight_min = 5,
 		weight_max = 10,
 		price_weight_multiplier = 3,
@@ -68,8 +68,8 @@ var fishSectionMap = {
 		shiny_rate = .02,
 		weight_multiplier = .8,
 		spawnRates = {
-			FishType.FISH_A: .9,
-			FishType.FISH_B: .1,
+			FishType.FLAMY: .9,
+			FishType.GREENY: .1,
 		}
 	},
 	GameState.Stage.DEEP: {
@@ -77,8 +77,8 @@ var fishSectionMap = {
 		shiny_rate = .02,
 		weight_multiplier = .9,
 		spawnRates = {
-			FishType.FISH_A: .7,
-			FishType.FISH_B: .3,
+			FishType.FLAMY: .7,
+			FishType.GREENY: .3,
 		}
 	},
 	GameState.Stage.DEEPER: {
@@ -86,9 +86,9 @@ var fishSectionMap = {
 		shiny_rate = .04,
 		weight_multiplier = 1,
 		spawnRates = {
-			FishType.FISH_A: .5,
-			FishType.FISH_B: .4,
-			FishType.SPIKEY_FISH: .1
+			FishType.FLAMY: .5,
+			FishType.GREENY: .4,
+			FishType.SPIKEY: .1
 		}
 	},
 	GameState.Stage.SUPERDEEP: {
@@ -96,11 +96,11 @@ var fishSectionMap = {
 		shiny_rate = .04,
 		weight_multiplier = 1.1,
 		spawnRates = {
-			FishType.FISH_A: .2,
-			FishType.FISH_B: .45,
-			FishType.ANGLER_FISH: .14,
-			FishType.DUMMY_FISH: .01,
-			FishType.SPIKEY_FISH: .2
+			FishType.FLAMY: .2,
+			FishType.GREENY: .45,
+			FishType.ANGLER: .14,
+			FishType.SMALLY: .01,
+			FishType.SPIKEY: .2
 		}
 	},
 	GameState.Stage.HOT: {
@@ -108,10 +108,10 @@ var fishSectionMap = {
 		shiny_rate = .05,
 		weight_multiplier = 1.15,
 		spawnRates = {
-			FishType.FISH_B: .2,
-			FishType.ANGLER_FISH: .55,
-			FishType.DUMMY_FISH: .05,
-			FishType.SPIKEY_FISH: .2
+			FishType.GREENY: .2,
+			FishType.ANGLER: .55,
+			FishType.SMALLY: .05,
+			FishType.SPIKEY: .2
 		}
 	},
 	GameState.Stage.LAVA: {
@@ -119,9 +119,9 @@ var fishSectionMap = {
 		shiny_rate = .06,
 		weight_multiplier = 1.15,
 		spawnRates = {
-			FishType.ANGLER_FISH: .7,
-			FishType.DUMMY_FISH: .2,
-			FishType.SPIKEY_FISH: .1
+			FishType.ANGLER: .7,
+			FishType.SMALLY: .2,
+			FishType.SPIKEY: .1
 		}
 	},
 	GameState.Stage.VOID: {
@@ -129,9 +129,9 @@ var fishSectionMap = {
 		shiny_rate = .08,
 		weight_multiplier = 1.2,
 		spawnRates = {
-			FishType.DUMMY_FISH: .1,
-			FishType.ANGLER_FISH: .1,
-			FishType.FISH_A: .8,
+			FishType.SMALLY: .1,
+			FishType.ANGLER: .1,
+			FishType.FLAMY: .8,
 		}
 	}
 }

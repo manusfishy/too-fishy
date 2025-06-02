@@ -141,7 +141,7 @@ func release_fish(fish_item: InvItem) -> void:
 		
 	# Determine which fish type to spawn based on price/weight ratio
 	var price_per_weight = fish_item.price / float(fish_item.weight)
-	var fish_type = FishesConfig.FishType.FISH_A # Default type
+	var fish_type = FishesConfig.FishType.FLAMY # Default type
 	
 	# Find the closest matching fish type based on price/weight ratio
 	var best_match_diff = INF

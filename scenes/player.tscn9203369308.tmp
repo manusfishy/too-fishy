@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cwlmu2g8odpra" path="res://scenes/pickaxe.tscn" id="4_qlg0r"]
 [ext_resource type="ArrayMesh" uid="uid://dva5riw4x0j1l" path="res://meshes/SM_FishSubmarine_FINAL.obj" id="5_smehm"]
 [ext_resource type="Material" uid="uid://dat2e8q6cpmmp" path="res://materials/submarine.tres" id="6_smehm"]
-[ext_resource type="PackedScene" uid="uid://cv7cru1o8ec0" path="res://scenes/ak47.tscn" id="6_tuyoq"]
+[ext_resource type="PackedScene" uid="uid://cv7cru1o8ec0" path="res://scenes/ak47_old.tscn" id="6_tuyoq"]
 [ext_resource type="PackedScene" uid="uid://dk2e78xplfhbv" path="res://scenes/ak_47_.tscn" id="8_ur7pv"]
 [ext_resource type="Script" uid="uid://dws0iatvikhls" path="res://scripts/items/secondAk47.gd" id="9_ur7pv"]
 
@@ -53,6 +53,13 @@ axis_lock_linear_z = true
 axis_lock_angular_z = true
 motion_mode = 1
 script = ExtResource("1_3vyb7")
+speed_vertical = null
+speed_horizontal = null
+traumaShakeMode = null
+max_x = null
+max_y = null
+max_z = null
+noise_speed = null
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.0102715, 0.129017, 0.00199914)

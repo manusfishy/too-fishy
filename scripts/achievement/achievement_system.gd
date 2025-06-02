@@ -125,8 +125,8 @@ func fix_achievements():
 		fish_achievements.erase(bad_key)
 		
 		# Try to map to correct fish type
-		if bad_key == "fish":
-			var fish_id = FishesConfig.FishType.FISH_A
+		if bad_key == "FLAMY":
+			var fish_id = FishesConfig.FishType.FLAMY
 			#print("Achievement System: Mapping 'fish' to Fish A (ID: ", fish_id, ")")
 			if not fish_achievements.has(fish_id):
 				fish_achievements[fish_id] = data
@@ -157,7 +157,7 @@ func fix_achievements():
 # Get all fish achievements
 func get_all_achievements():
 	# Fix any erroneous string keys
-	fix_achievements()
+	#fix_achievements()
 	return fish_achievements
 
 # Get achievement status for a specific fish type

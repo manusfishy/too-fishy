@@ -85,7 +85,7 @@ func setup(items: Array):
 	
 	# Find matching fish type based on price/weight ratio
 	var price_per_weight = item.price / float(item.weight)
-	fish_type = FishesConfig.FishType.FISH_A # Default type
+	fish_type = FishesConfig.FishType.FLAMY # Default type
 	
 	# Find the closest matching fish type based on price/weight ratio
 	var best_match_diff = INF
