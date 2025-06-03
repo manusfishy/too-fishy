@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bc3y2fahvepfq"
-path="res://.godot/imported/dummy_fish.png-1a24e8d737670e824826229c2516232a.ctex"
+uid="uid://e57gqyyst76t"
+path="res://.godot/imported/anglerfish.svg-227371461736a7b298d33da8c3be4cb4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/icons/dummy_fish.png"
-dest_files=["res://.godot/imported/dummy_fish.png-1a24e8d737670e824826229c2516232a.ctex"]
+source_file="res://textures/icons/anglerfish.svg"
+dest_files=["res://.godot/imported/anglerfish.svg-227371461736a7b298d33da8c3be4cb4.ctex"]
 
 [params]
 
@@ -32,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

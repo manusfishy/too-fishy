@@ -43,6 +43,10 @@ window/size/window_height_override=720
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/scene-library/plugin.cfg")
+
 [global_group]
 
 fishes=""
