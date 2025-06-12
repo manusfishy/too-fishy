@@ -36,7 +36,7 @@ func _ready():
 		pressure_crack_spawn_interval = 2.0 # Slower spawn rate
 	
 	# Preload crack texture once to avoid repeated loading
-	preloaded_crack_texture = load("res://textures/effects/screen_crack.png")
+	preloaded_crack_texture = preload("res://textures/effects/screen_crack2.png")
 	
 	# Initialize with invisible effects
 	red_flash.modulate.a = 0
@@ -44,8 +44,8 @@ func _ready():
 
 # Called when player takes regular damage
 func show_damage_effects():
-	# Show red flash - make it more visible
-	red_flash.modulate.a = 1.0 # Fully opaque
+	# Show red flash 
+	red_flash.modulate.a = 0.8 #
 	red_flash.color = Color(1, 0, 0, 0.6) # Semi-transparent red
 	var flash_tween = create_tween()
 	flash_tween.tween_property(red_flash, "color:a", 0.0, flash_duration)
@@ -103,15 +103,15 @@ func add_crack_layer():
 		base_size = Vector2(150, 150) # Smaller base size for WebGL
 	
 	# Random size for variety (between 50% and 150% of base size)
-	var scale_factor = randf_range(0.5, 1.5)
+	var scale_factor = current_crack_count * 0.1 + randf_range(0.5, 1.5)
 	var crack_size = base_size * scale_factor
 	crack_sprite.custom_minimum_size = crack_size
 	crack_sprite.size = crack_size
 	
 	# Random position on screen (ensure cracks stay within screen bounds)
 	var screen_size = get_viewport().get_visible_rect().size
-	var max_x = screen_size.x - crack_size.x
-	var max_y = screen_size.y - crack_size.y
+	var max_x = screen_size.x - crack_size.x - 20
+	var max_y = screen_size.y - crack_size.y - 20 # 50 aribitrary offset to ensure cracks stay on screen
 	var random_pos = Vector2(
 		randf_range(0, max_x),
 		randf_range(0, max_y)
@@ -136,8 +136,8 @@ func add_crack_layer():
 	crack_sprites.append(crack_sprite)
 	
 	# Only start fade timer if NOT under pressure
-	if not is_under_pressure:
-		start_crack_fade_timer(crack_sprite)
+	#if not is_under_pressure:
+	#	start_crack_fade_timer(crack_sprite)
 
 func start_crack_fade_timer(crack_sprite):
 	# Store original alpha for restoration if needed
@@ -186,7 +186,7 @@ func add_pressure_crack():
 	crack_sprite.name = "PressureCrack" + str(current_pressure_cracks)
 	
 	# Load the texture
-	var crack_texture = load("res://textures/effects/screen_crack.png")
+	var crack_texture = load("res://textures/effects/screen_crack2.png")
 	if crack_texture == null:
 		return
 	
